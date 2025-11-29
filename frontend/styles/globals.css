@@ -1,0 +1,5 @@
+html,body,#__next{height:100%} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto}
+.container{max-width:720px;margin:40px auto;padding:16px}
+label{display:block;margin:8px 0 4px} input,select,textarea{width:100%;padding:8px}
+button{padding:8px 12px;margin-top:12px;cursor:pointer}
+.nav{display:flex;gap:12px;margin-bottom:16px}

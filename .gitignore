@@ -1,0 +1,159 @@
+# =========================
+#   OS & IDE
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*.tmp
+.vscode/
+.idea/
+*.log
+
+# =========================
+#   Python / FastAPI backend
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+*.pyo
+*.pyd
+*.whl
+.Python
+.pytest_cache/
+.mypy_cache/
+coverage/
+htmlcov/
+.tox/
+dist/
+build/
+.env
+.env.*
+.venv/
+venv/
+ENV/
+instance/
+# local SQLite DB (dev only)
+*.sqlite3
+*.db
+# alembic migrations cache
+alembic/versions/*.pyc
+
+# =========================
+#   Node / React frontend
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+# Next.js / React build output
+.next/
+out/
+build/
+dist/
+# dotenv configs
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+# cache
+.cache/
+*.tsbuildinfo
+
+# =========================
+#   OS-level & misc
+# =========================
+*.bak
+*.orig
+*.rej
+*.tmp
+*.temp
+*~
+# JetBrains
+out/
+# macOS specific
+.AppleDouble
+.LSOverride
+
+# =========================
+#   Logs & coverage
+# =========================
+logs/
+*.log
+log.txt
+coverage.xml
+test-results.xml
+
+# =========================
+#   Uploads / user data
+# =========================
+uploads/
+media/
+staticfiles/
+frontend/public/uploads/
+backend/app/static/uploads/
+backend/app/media/
+
+# =========================
+#   Database credentials / secrets
+# =========================
+backend/.env
+frontend/.env
+secrets.json
+config.json
+credentials.json
+
+# =========================
+#   Python notebook / data
+# =========================
+*.ipynb_checkpoints
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.parquet
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+
+# =========================
+#   Local test / cache
+# =========================
+tmp/
+temp/
+__debug__/
+*.coverage
+.cache/
+frontend/.next/
+frontend/.turbo/
+frontend/coverage/
+frontend/dist/
+
+# =========================
+#   Docker / CI
+# =========================
+*.pid
+*.seed
+*.pid.lock
+docker-compose.override.yml
+.env.docker.local
+.env.dev
+.env.test
+
+# =========================
+#   Custom project
+# =========================
+# Ignore compiled static exports
+frontend/export/
+# Ignore local database
+backend/app/data/*.db
+# Ignore local FastAPI SQLite file
+backend/app/app.db
+# Ignore compiled swagger
+backend/app/openapi.json

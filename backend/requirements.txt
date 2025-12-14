@@ -9,3 +9,4 @@ python-multipart==0.0.9
 bcrypt==4.1.2
 alembic==1.13.2
 pycountry==24.6.1      
+python-dotenv==1.0.1

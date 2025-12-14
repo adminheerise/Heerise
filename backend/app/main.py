@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .db import Base, engine
-from .routers import auth, onboarding, me
+from .routers import auth, onboarding, me, admin
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -19,6 +19,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(onboarding.router)
 app.include_router(me.router)
+app.include_router(admin.router)
 
 
 @app.on_event("startup")

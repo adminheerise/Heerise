@@ -115,63 +115,134 @@ export default function ProfilePage() {
     return <p>Loading…</p>;
   }
 
-  return (
-    <div style={{ maxWidth: 900, margin: "2rem auto" }}>
-      <h1>User Profile</h1>
+  const displayName = profile.name || profile.username || profile.email;
+  const initials = (displayName || "U")
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((s) => s[0]?.toUpperCase())
+    .join("");
 
+  const headline =
+    profile.headline ||
+    `${profile.major_of_study ? `${profile.major_of_study} ` : ""}${
+      profile.current_career_stage ? `${profile.current_career_stage} ` : ""
+    }${profile.target_role ? `| Aspiring ${profile.target_role}` : ""}`.trim() ||
+    "Aspiring Professional";
+
+  const locationText = profile.location || [profile.current_city, profile.state].filter(Boolean).join(", ") || "—";
+
+  return (
+    <div style={{ maxWidth: 1120, margin: "24px auto", padding: "0 12px" }}>
       {err && <p style={{ color: "crimson" }}>{err}</p>}
 
-      {/* Top summary card */}
-      <div
-        style={{
-          border: "1px solid #ddd",
-          borderRadius: 8,
-          padding: "1rem 1.5rem",
-          marginBottom: "1.5rem",
-          background: "#fafafa",
-        }}
-      >
-        <p>
-          <strong>Email:</strong> {profile.email}
-        </p>
-        <p>
-          <strong>Full Name:</strong> {profile.name ?? "—"}
-        </p>
-        <p>
-          <strong>User Name:</strong> {profile.username ?? "—"}
-        </p>
-        <p>
-          <strong>Headline:</strong> {profile.headline ?? "—"}
-        </p>
-        <p>
-          <strong>Location:</strong> {profile.location ?? "—"}
-        </p>
-        <p>
-          <strong>Major of Study:</strong> {profile.major_of_study ?? "—"}
-        </p>
-        <p>
-          <strong>Current Career Stage:</strong>{" "}
-          {profile.current_career_stage ?? "—"}
-        </p>
-        <p>
-          <strong>Commitment Level:</strong> {profile.commitment_level ?? "—"}
-        </p>
+      {/* Header card */}
+      <div className="card" style={{ marginBottom: 16 }}>
+        <div className="cardHeader">
+          <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
+            <div
+              style={{
+                width: 64,
+                height: 64,
+                borderRadius: 999,
+                background: "linear-gradient(135deg, rgba(79,70,229,.25), rgba(45,212,191,.25))",
+                border: "1px solid rgba(0,0,0,.08)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight: 800,
+              }}
+              aria-label="avatar"
+            >
+              {initials}
+            </div>
+            <div>
+              <div style={{ fontSize: 22, fontWeight: 800, lineHeight: 1.2 }}>
+                {displayName}
+              </div>
+              <div className="muted" style={{ marginTop: 4 }}>
+                {headline}
+              </div>
+              <div className="muted" style={{ marginTop: 2, fontSize: 13 }}>
+                {locationText}
+              </div>
+            </div>
+          </div>
 
-        <button onClick={() => setEditing((v) => !v)} disabled={saving}>
-          {editing ? "Cancel" : "Edit profile"}
-        </button>
+          <button
+            className="btnGhost"
+            onClick={() => setEditing((v) => !v)}
+            disabled={saving}
+            title="Edit"
+            aria-label="edit"
+            style={{ fontSize: 18, marginTop: 0 }}
+          >
+            ⚙️
+          </button>
+        </div>
       </div>
 
-      {/* Edit form */}
-      {editing && (
-        <div
-          style={{
-            border: "1px solid #ddd",
-            borderRadius: 8,
-            padding: "1rem 1.5rem",
-          }}
-        >
-          <h2>Edit Details</h2>
+      {/* Body layout: left content + right learning profile */}
+      <div className="grid2" style={{ gridTemplateColumns: "1fr 360px" }}>
+        <div className="sideStack">
+          <div className="card">
+            <div className="cardTitle">About Me</div>
+            <div style={{ marginTop: 8, lineHeight: 1.5 }}>
+              {profile.about_you || profile.about_me || (
+                <span className="muted">Add a short introduction about yourself.</span>
+              )}
+            </div>
+          </div>
+
+          <div className="card">
+            <div className="cardTitle">Details</div>
+            <div style={{ marginTop: 10, display: "grid", gap: 8 }}>
+              <div>
+                <span className="muted">User Name:</span> {profile.username || "—"}
+              </div>
+              <div>
+                <span className="muted">Date of Birth:</span>{" "}
+                {profile.date_of_birth || "—"}
+              </div>
+              <div>
+                <span className="muted">Major of Study:</span>{" "}
+                {profile.major_of_study || "—"}
+              </div>
+              <div>
+                <span className="muted">Interested Professions:</span>{" "}
+                {profile.interested_work_professions || "—"}
+              </div>
+            </div>
+          </div>
+
+          <div className="card">
+            <div className="cardTitle">Goals</div>
+            <div style={{ marginTop: 8, lineHeight: 1.5 }}>
+              {profile.goals_objectives || (
+                <span className="muted">Add your goals/objectives to personalize recommendations.</span>
+              )}
+            </div>
+          </div>
+
+          {/* Edit form (expand under cards) */}
+          {editing && (
+            <div className="card">
+              <div className="cardHeader">
+                <div>
+                  <div className="cardTitle">Edit Profile</div>
+                  <div className="muted" style={{ fontSize: 12, marginTop: 2 }}>
+                    Save will update your profile immediately.
+                  </div>
+                </div>
+                <button
+                  className="btnGhost"
+                  onClick={() => setEditing(false)}
+                  disabled={saving}
+                  style={{ marginTop: 0 }}
+                >
+                  Close
+                </button>
+              </div>
 
           <label>Date of Birth</label>
           <input
@@ -346,12 +417,70 @@ export default function ProfilePage() {
           />
 
           <div style={{ marginTop: 16 }}>
-            <button onClick={save} disabled={saving}>
+            <button className="btnPrimary" onClick={save} disabled={saving}>
               {saving ? "Saving..." : "Save"}
             </button>
           </div>
+            </div>
+          )}
         </div>
-      )}
+
+        <div className="sideStack">
+          <div className="card">
+            <div className="cardTitle">Learning Profile</div>
+            <div style={{ marginTop: 10 }}>
+              <div>
+                <span className="muted">Current Level:</span>{" "}
+                {profile.learning_progress || "Phase 2"}
+              </div>
+              <div style={{ marginTop: 10 }}>
+                <div className="muted" style={{ fontSize: 12, marginBottom: 6 }}>
+                  Badges
+                </div>
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                  {["AI Literacy", "Resume", "Interview", "Networking"].map((b) => (
+                    <div
+                      key={b}
+                      title={b}
+                      style={{
+                        width: 44,
+                        height: 44,
+                        borderRadius: 14,
+                        border: "1px solid rgba(0,0,0,.10)",
+                        background: "rgba(79,70,229,.06)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 11,
+                        fontWeight: 800,
+                        color: "#3730a3",
+                        textAlign: "center",
+                        padding: 6,
+                      }}
+                    >
+                      {b.split(" ").map((w) => w[0]).join("")}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ marginTop: 12 }}>
+                <span className="muted">Commitment Level:</span>{" "}
+                {profile.commitment_level || "—"}
+              </div>
+
+              {profile.learning_achievement && (
+                <div style={{ marginTop: 10, lineHeight: 1.5 }}>
+                  <div className="muted" style={{ fontSize: 12 }}>
+                    Achievements
+                  </div>
+                  <div style={{ marginTop: 4 }}>{profile.learning_achievement}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

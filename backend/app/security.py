@@ -1,4 +1,5 @@
-import os, jwt
+import os
+from jose import jwt
 from datetime import datetime, timedelta
 from passlib.hash import argon2  
 from typing import Any

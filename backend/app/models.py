@@ -103,7 +103,6 @@ class AuthSession(Base):
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     expires_at = Column(DateTime, nullable=False)
 
-    # 注意：这里要和 User.auth_sessions 对应
     user = relationship("User", back_populates="auth_sessions")
 
 

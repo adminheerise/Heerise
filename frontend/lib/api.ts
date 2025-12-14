@@ -26,7 +26,7 @@ async function call(path: string, opts: RequestInit = {}, withAuth = false) {
         const data = await rr.json();
         localStorage.setItem("access", data.access_token);
         localStorage.setItem("refresh", data.refresh_token);
-        headers["Authorization"] = `Bearer data.access_token`;
+        headers["Authorization"] = `Bearer ${data.access_token}`;
         res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
       }
     }

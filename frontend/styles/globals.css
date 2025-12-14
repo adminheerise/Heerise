@@ -1,5 +1,59 @@
-html,body,#__next{height:100%} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto}
-.container{max-width:720px;margin:40px auto;padding:16px}
-label{display:block;margin:8px 0 4px} input,select,textarea{width:100%;padding:8px}
-button{padding:8px 12px;margin-top:12px;cursor:pointer}
-.nav{display:flex;gap:12px;margin-bottom:16px}
+html,body,#__next{height:100%}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto;background:#f6f7fb;color:#111}
+
+:root{
+  --card:#fff;
+  --border:rgba(0,0,0,.08);
+  --muted:#6b7280;
+  --brand:#4f46e5;
+  --brand2:#2dd4bf;
+}
+
+.container{max-width:1120px;margin:24px auto;padding:16px}
+.nav{display:flex;gap:12px;align-items:center;margin-bottom:16px}
+.nav a{color:#111;text-decoration:none}
+.nav a:hover{text-decoration:underline}
+
+label{display:block;margin:8px 0 4px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;background:#fff}
+textarea{min-height:88px}
+button{padding:10px 12px;margin-top:12px;cursor:pointer;border:1px solid var(--border);border-radius:10px;background:#fff}
+button:hover{border-color:rgba(0,0,0,.16)}
+
+.pageTitle{font-size:22px;margin:0 0 10px}
+.muted{color:var(--muted)}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+.cardHeader{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}
+.cardTitle{font-weight:700}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(79,70,229,.08);color:var(--brand);font-weight:600;font-size:12px}
+
+.grid2{display:grid;grid-template-columns:1fr 320px;gap:16px}
+@media (max-width: 960px){.grid2{grid-template-columns:1fr}}
+
+.metricRow{display:grid;grid-template-columns:1.4fr .8fr .8fr;gap:12px}
+@media (max-width: 960px){.metricRow{grid-template-columns:1fr}}
+.metricLabel{font-size:12px;color:var(--muted);margin-bottom:6px}
+.metricValue{font-size:20px;font-weight:800}
+
+.progressOuter{height:12px;background:rgba(0,0,0,.06);border-radius:999px;overflow:hidden}
+.progressInner{height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2))}
+
+.btnPrimary{background:var(--brand);border-color:rgba(79,70,229,.4);color:#fff}
+.btnPrimary:hover{filter:brightness(.98)}
+.btnGhost{background:transparent}
+.btnRow{display:flex;gap:10px;flex-wrap:wrap}
+
+.list{margin:10px 0 0;padding:0;list-style:none}
+.list li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--border)}
+.list li:first-child{border-top:0}
+
+.sideStack{display:flex;flex-direction:column;gap:12px}
+.sideButton{display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid var(--border);border-radius:14px;background:#fff;text-decoration:none;color:#111}
+.sideButton:hover{border-color:rgba(0,0,0,.16)}
+.sideButton strong{font-size:14px}
+.sideButton span{color:var(--muted);font-size:12px}
+
+.barWrap{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.barCol{padding:10px;border:1px dashed rgba(0,0,0,.12);border-radius:12px}
+.barCol h4{margin:0 0 8px;font-size:13px}

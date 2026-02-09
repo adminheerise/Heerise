@@ -13,8 +13,15 @@ from pydantic import BaseModel, EmailStr, Field
 class RegisterIn(BaseModel):
     email: EmailStr
     password: str = Field(min_length=8, max_length=1024)
+    password_confirm: str = Field(min_length=8, max_length=1024)
     name: Optional[str] = None
     username: Optional[str] = None
+
+
+class RegisterOut(BaseModel):
+    message: str = "verification_sent"
+    next: str = "/verify-sent"
+    dev_verify_url: Optional[str] = None
 
 
 class LoginIn(BaseModel):
@@ -30,6 +37,10 @@ class TokenOut(BaseModel):
 
 class RefreshIn(BaseModel):
     refresh_token: str
+
+
+class EmailIn(BaseModel):
+    email: EmailStr
 
 
 # ---------- Profile ----------

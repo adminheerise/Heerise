@@ -1,0 +1,9 @@
+weight: 1
+title: "Welcome to Heerise"
+description: >
+  <ul class="list-style-none">
+    <li>AI-powered career coaching</li>
+    <li>Personalized growth plans</li>
+  </ul>
+image: "img/carousel/template-easy-code.png"
+href: "#"

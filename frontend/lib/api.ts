@@ -47,10 +47,16 @@ async function call(path: string, opts: RequestInit = {}, withAuth = false) {
 }
 
 export const api = {
-  register: (email: string, password: string, name: string, username: string) =>
+  register: (
+    email: string,
+    password: string,
+    password_confirm: string,
+    name: string,
+    username: string
+  ) =>
     call("/auth/register", {
       method: "POST",
-      body: JSON.stringify({ email, password, name, username }),
+      body: JSON.stringify({ email, password, password_confirm, name, username }),
     }),
 
   login: (email: string, password: string) =>
@@ -83,6 +89,14 @@ export const api = {
     call("/auth/logout", {
       method: "POST",
       body: JSON.stringify({ refresh_token: refresh }),
+    }),
+
+  deleteMe: () => call("/me", { method: "DELETE" }, true),
+
+  resendVerification: (email: string) =>
+    call("/auth/resend-verification", {
+      method: "POST",
+      body: JSON.stringify({ email }),
     }),
 };
 

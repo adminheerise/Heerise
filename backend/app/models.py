@@ -106,6 +106,22 @@ class AuthSession(Base):
     user = relationship("User", back_populates="auth_sessions")
 
 
+class EmailVerification(Base):
+    __tablename__ = "email_verifications"
+
+    user_id = Column(
+        String,
+        ForeignKey("users.id", ondelete="CASCADE"),
+        primary_key=True,
+    )
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    last_sent_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    expires_at = Column(DateTime, nullable=False)
+    verified_at = Column(DateTime, nullable=True)
+
+    user = relationship("User")
+
+
 # ---------- Onboarding flow ----------
 
 class OnboardingFlow(Base):

@@ -58,13 +58,25 @@ def _profile_to_out(user: User, prof: UserProfile) -> ProfileOut:
 
 
 @router.get("", response_model=dict)
-def me(user: User = Depends(get_current_user)):
+def me(
+    db: Session = Depends(db_sess),
+    user: User = Depends(get_current_user),
+):
+    # MVP heuristic:
+    # treat "has any onboarding response" as onboarding completed.
+    onboarding_completed = (
+        db.query(OnboardingResponse.id)
+        .filter(OnboardingResponse.user_id == user.id)
+        .first()
+        is not None
+    )
     return {
         "id": user.id,
         "email": user.email,
         "name": user.name,
         "username": user.username,
         "role": user.role.value,
+        "onboarding_completed": onboarding_completed,
     }
 
 

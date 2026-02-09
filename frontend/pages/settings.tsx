@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { apiGet } from "@/lib/api";
+import { api, apiGet } from "@/lib/api";
 import { clearTokens } from "@/lib/auth";
 import { useRouter } from "next/router";
 
@@ -43,26 +43,34 @@ export default function SettingsPage() {
     }
   };
 
+  const logout = async () => {
+    if (!confirm("Log out now?")) return;
+    setBusy(true);
+    setErr(null);
+    try {
+      const refresh = localStorage.getItem("refresh") || "";
+      if (refresh) {
+        try {
+          await api.logout(refresh);
+        } catch {
+          // best-effort; still clear local tokens
+        }
+      }
+      clearTokens();
+      router.push("/login");
+    } catch (e: any) {
+      setErr(e?.message || "Failed to log out");
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const deleteAccount = async () => {
     if (!confirm("Delete account? This cannot be undone.")) return;
     setBusy(true);
     setErr(null);
     try {
-      await apiGet("/me", true); // ensure authed
-      const base = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
-      const token = localStorage.getItem("access");
-      const res = await fetch(`${base}/me`, {
-        method: "DELETE",
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
-      });
-      if (!res.ok) {
-        let msg = `HTTP ${res.status}`;
-        try {
-          const j = await res.json();
-          if (j?.detail) msg = j.detail;
-        } catch {}
-        throw new Error(msg);
-      }
+      await api.deleteMe();
       clearTokens();
       router.push("/");
     } catch (e: any) {
@@ -154,19 +162,23 @@ export default function SettingsPage() {
 
           <div style={{ marginTop: 16, borderTop: "1px solid rgba(0,0,0,.08)", paddingTop: 16 }}>
             <div className="cardTitle">Account Actions</div>
-            <button
-              onClick={deleteAccount}
-              disabled={busy}
-              style={{
-                marginTop: 10,
-                background: "rgba(220,38,38,.08)",
-                borderColor: "rgba(220,38,38,.25)",
-                color: "#b91c1c",
-                fontWeight: 700,
-              }}
-            >
-              Delete Account
-            </button>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 10 }}>
+              <button onClick={logout} disabled={busy}>
+                Logout
+              </button>
+              <button
+                onClick={deleteAccount}
+                disabled={busy}
+                style={{
+                  background: "rgba(220,38,38,.08)",
+                  borderColor: "rgba(220,38,38,.25)",
+                  color: "#b91c1c",
+                  fontWeight: 700,
+                }}
+              >
+                Delete Account
+              </button>
+            </div>
           </div>
         </div>
       )}

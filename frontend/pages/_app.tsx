@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getAccess, clearTokens } from "@/lib/auth";
+import { getAccess } from "@/lib/auth";
 import { apiGet } from "@/lib/api";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -33,7 +33,6 @@ export default function App({ Component, pageProps }: AppProps) {
         {authed && isAdmin && <Link href="/admin">Admin</Link>}
         {!authed && <Link href="/login">Login</Link>}
         {!authed && <Link href="/register">Register</Link>}
-        {authed && <a href="#" onClick={() => { clearTokens(); location.href="/"; }}>Logout</a>}
       </nav>
       <Component {...pageProps} />
     </div>

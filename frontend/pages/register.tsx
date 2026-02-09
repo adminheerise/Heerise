@@ -1,13 +1,26 @@
 import { useState } from "react";
 import { api } from "@/lib/api";
-import { saveTokens } from "@/lib/auth";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
+  const [pw2, setPw2] = useState("");
   const [fullName, setFullName] = useState(""); 
   const [username, setUsername] = useState(""); 
   const [err, setErr] = useState<string | null>(null);
+
+  const validate = () => {
+    if (pw !== pw2) return "Passwords do not match";
+    if (pw.length < 8) return "Password must be at least 8 characters";
+    const hasLower = /[a-z]/.test(pw);
+    const hasUpper = /[A-Z]/.test(pw);
+    const hasDigit = /\d/.test(pw);
+    const hasSpecial = /[^A-Za-z0-9]/.test(pw);
+    if (!(hasLower && hasUpper && hasDigit && hasSpecial)) {
+      return "Password must include uppercase, lowercase, number, and special character";
+    }
+    return null;
+  };
 
   return (
     <div>
@@ -23,6 +36,16 @@ export default function Register() {
         value={pw}
         onChange={(e) => setPw(e.target.value)}
       />
+
+      <label>Confirm Password</label>
+      <input
+        type="password"
+        value={pw2}
+        onChange={(e) => setPw2(e.target.value)}
+      />
+      <p className="muted" style={{ marginTop: 6, fontSize: 12 }}>
+        Password must be 8+ chars and include uppercase, lowercase, number, and special character.
+      </p>
 
       {/* Full Name */}
       <label>Full Name</label>
@@ -43,9 +66,14 @@ export default function Register() {
       <button
         onClick={async () => {
           try {
-            const t = await api.register(email, pw, fullName, username);
-            saveTokens(t.access_token, t.refresh_token);
-            location.href = "/onboarding/1";
+            const v = validate();
+            if (v) {
+              setErr(v);
+              return;
+            }
+            const data: any = await api.register(email, pw, pw2, fullName, username);
+            const dev = data?.dev_verify_url ? `&dev=${encodeURIComponent(String(data.dev_verify_url))}` : "";
+            location.href = `/verify-sent?email=${encodeURIComponent(email)}${dev}`;
           } catch (err: any) {
             const msg = err?.message || "Registration failed";
             setErr(msg);

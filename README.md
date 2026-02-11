@@ -57,6 +57,10 @@ cd E:\Heerise\frontend\hugo-landing
 E:\Heerise\tools\hugo\hugo.exe --minify
 # 输出到 frontend/hugo-landing/public/ 目录
 ```
+### macOS / Linux
+cd frontend/hugo-landing
+hugo server -w
+# 打开 http://localhost:1313/
 
 ### 1.3 启动 Next.js（过渡期，迁移完成后移除）
 
@@ -72,6 +76,12 @@ npm run dev
 过渡期间两者并行：Hugo `:1313`（落地页 + 已迁移页面），Next.js `:3000`（尚未迁移的动态页面）。
 
 ---
+### macOS / Linux
+cd frontend
+npm install
+NEXT_PUBLIC_API_BASE="http://localhost:8000" npm run dev
+# 打开 http://localhost:3000/
+brew install hugo
 
 ## 2. 环境变量说明
 

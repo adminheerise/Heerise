@@ -1,0 +1,503 @@
+<!-- *** ACC ONBOARDING / CAREER ASSESSMENT *** -->
+
+<div class="ob-wrapper">
+    <!-- Progress indicator (hidden on step 0, analyzing, results, register) -->
+    <div class="ob-progress" id="ob-progress">
+        <div class="ob-progress-bar">
+            <div class="ob-progress-fill" id="ob-progress-fill"></div>
+        </div>
+        <span class="ob-progress-label" id="ob-progress-label"></span>
+    </div>
+
+    <!-- ========== STEP 0: START ========== -->
+    <div class="ob-step ob-active" data-step="0">
+        <div class="ob-start">
+            <div class="ob-start-visual">
+                <img src="/img/acc.png" alt="AI Career Co-Pilot" class="ob-start-img" />
+            </div>
+            <h1 class="ob-start-title">Your AI-Powered Career Co-pilot</h1>
+            <p class="ob-start-subtitle">Turn career uncertainty into a personalized path</p>
+            <div class="ob-start-steps">
+                <p class="ob-start-label">Next Steps:</p>
+                <ul>
+                    <li><span class="ob-check-icon">&#10003;</span> 5-minute assessment</li>
+                    <li><span class="ob-check-icon">&#10003;</span> Personalized career recommendation</li>
+                    <li><span class="ob-check-icon">&#10003;</span> Access to AI-powered resume builder</li>
+                </ul>
+            </div>
+            <button class="ob-btn-primary ob-btn-start" onclick="OB.next()">START YOUR ASSESSMENT</button>
+        </div>
+    </div>
+
+    <!-- ========== STEP 1: Q1 — Educational Background ========== -->
+    <div class="ob-step" data-step="1">
+        <div class="ob-question">
+            <h2 class="ob-q-title">What is your educational background?</h2>
+            <div class="ob-options ob-options-list" data-type="single" data-key="q1">
+                <div class="ob-option" data-value="Early Childhood Education">Early Childhood Education</div>
+                <div class="ob-option" data-value="K-12 Education Teaching">K–12 Education Teaching (Teacher Education)</div>
+                <div class="ob-option" data-value="Higher Education Administration">Higher Education Administration</div>
+                <div class="ob-option" data-value="Special Education">Special Education</div>
+                <div class="ob-option" data-value="Education Technology">Education Technology</div>
+                <div class="ob-option" data-value="Non-profit / Social Work">Non-profit / Social Work</div>
+                <div class="ob-option" data-value="Professional Counseling">Professional Counseling</div>
+                <div class="ob-option" data-value="Education Entrepreneurship">Education Entrepreneurship</div>
+                <div class="ob-option" data-value="Education Policy">Education Policy</div>
+                <div class="ob-option" data-value="Data Analytics">Data Analytics</div>
+            </div>
+            <div class="ob-nav">
+                <button class="ob-btn-back" onclick="OB.prev()">BACK</button>
+                <button class="ob-btn-next" onclick="OB.next()" disabled>NEXT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== STEP 2: Q2 — Skills Selection (up to 5) ========== -->
+    <div class="ob-step" data-step="2">
+        <div class="ob-question">
+            <h2 class="ob-q-title">From the list below, select up to 5 skills where you feel you have the strongest proficiency, gained through your education or work experience.</h2>
+            <div class="ob-options ob-options-grid" data-type="multi" data-max="5" data-key="q2">
+                <div class="ob-chip" data-value="Assessment &amp; Evaluation">Assessment &amp; Evaluation</div>
+                <div class="ob-chip" data-value="Communication (Verbal &amp; Written)">Communication (Verbal &amp; Written)</div>
+                <div class="ob-chip" data-value="Team Collaboration">Team Collaboration</div>
+                <div class="ob-chip" data-value="Adaptability">Adaptability</div>
+                <div class="ob-chip" data-value="Curriculum Development">Curriculum Development</div>
+                <div class="ob-chip" data-value="Training &amp; Facilitation">Training &amp; Facilitation</div>
+                <div class="ob-chip" data-value="Stakeholder Management">Stakeholder Management</div>
+                <div class="ob-chip" data-value="Leadership">Leadership</div>
+                <div class="ob-chip" data-value="Research &amp; Synthesis">Research &amp; Synthesis</div>
+                <div class="ob-chip" data-value="Content Creation">Content Creation</div>
+                <div class="ob-chip" data-value="Digital Literacy (general)">Digital Literacy (general)</div>
+                <div class="ob-chip" data-value="Problem-Solving">Problem-Solving</div>
+                <div class="ob-chip" data-value="Networking">Networking</div>
+                <div class="ob-chip" data-value="Conflict Management">Conflict Management</div>
+                <div class="ob-chip" data-value="Presentation Skills">Presentation Skills</div>
+                <div class="ob-chip" data-value="Public Speaking">Public Speaking</div>
+                <div class="ob-chip" data-value="Project Coordination/Management">Project Coordination/Management</div>
+                <div class="ob-chip" data-value="Data Analysis (basic)">Data Analysis (basic)</div>
+                <div class="ob-chip" data-value="Mentoring &amp; Coaching">Mentoring &amp; Coaching</div>
+                <div class="ob-chip" data-value="Empathy &amp; Interpersonal Skills">Empathy &amp; Interpersonal Skills</div>
+            </div>
+            <div class="ob-nav">
+                <button class="ob-btn-back" onclick="OB.prev()">BACK</button>
+                <button class="ob-btn-next" onclick="OB.next()" disabled>NEXT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== STEP 3: Q3 — Work Enjoyment ========== -->
+    <div class="ob-step" data-step="3">
+        <div class="ob-question">
+            <h2 class="ob-q-title">What kind of work would you most enjoy doing?</h2>
+            <div class="ob-options ob-options-list" data-type="single-other" data-key="q3">
+                <div class="ob-option" data-value="Designing engaging learning experiences">Designing engaging learning experiences</div>
+                <div class="ob-option" data-value="Solving business &amp; performance problems">Solving business &amp; performance problems</div>
+                <div class="ob-option" data-value="Creating clear, structured content">Creating clear, structured content</div>
+                <div class="ob-option" data-value="Supporting customers or sales teams">Supporting customers or sales teams</div>
+                <div class="ob-option" data-value="Managing learning programs at scale">Managing learning programs at scale</div>
+                <div class="ob-option ob-option-other" data-value="Other">Other (please specify)</div>
+            </div>
+            <div class="ob-other-input" style="display:none;">
+                <input type="text" class="ob-text-input" placeholder="Please specify" data-key="q3_other" />
+            </div>
+            <div class="ob-nav">
+                <button class="ob-btn-back" onclick="OB.prev()">BACK</button>
+                <button class="ob-btn-next" onclick="OB.next()" disabled>NEXT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== STEP 4: Q4 — Motivation ========== -->
+    <div class="ob-step" data-step="4">
+        <div class="ob-question">
+            <h2 class="ob-q-title">What is your primary motivation for seeking a career change or upskilling?</h2>
+            <div class="ob-options ob-options-list" data-type="single-other" data-key="q4">
+                <div class="ob-option" data-value="Higher Salary">Higher Salary</div>
+                <div class="ob-option" data-value="Better Work-Life Balance">Better Work-Life Balance</div>
+                <div class="ob-option" data-value="More Challenging Work">More Challenging Work</div>
+                <div class="ob-option" data-value="Personal Growth">Personal Growth</div>
+                <div class="ob-option" data-value="New Industry Interest">New Industry Interest</div>
+                <div class="ob-option" data-value="Impact of AI on my field">Impact of AI on my field</div>
+                <div class="ob-option" data-value="Job Security">Job Security</div>
+                <div class="ob-option ob-option-other" data-value="Other">Other</div>
+            </div>
+            <div class="ob-other-input" style="display:none;">
+                <input type="text" class="ob-text-input" placeholder="Please specify" data-key="q4_other" />
+            </div>
+            <div class="ob-nav">
+                <button class="ob-btn-back" onclick="OB.prev()">BACK</button>
+                <button class="ob-btn-next" onclick="OB.next()" disabled>NEXT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== STEP 5: Q5 — Time Per Week ========== -->
+    <div class="ob-step" data-step="5">
+        <div class="ob-question">
+            <h2 class="ob-q-title">How much time per week are you realistically able to dedicate to learning and skill development?</h2>
+            <div class="ob-options ob-options-list" data-type="single" data-key="q5">
+                <div class="ob-option" data-value="0-2 hours">0-2 hours</div>
+                <div class="ob-option" data-value="3-5 hours">3-5 hours</div>
+                <div class="ob-option" data-value="6-10 hours">6-10 hours</div>
+                <div class="ob-option" data-value="10+ hours">10+ hours</div>
+            </div>
+            <div class="ob-nav">
+                <button class="ob-btn-back" onclick="OB.prev()">BACK</button>
+                <button class="ob-btn-next" onclick="OB.next()" disabled>NEXT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== STEP 6: Q6 — Transferrable Skills ========== -->
+    <div class="ob-step" data-step="6">
+        <div class="ob-question">
+            <h2 class="ob-q-title">Briefly describe your top 3 transferrable skills</h2>
+            <div class="ob-textarea-wrap">
+                <textarea class="ob-textarea" id="ob-textarea-q6" data-key="q6" maxlength="900"
+                    placeholder="Example: Strong research skills, excellent written communication, data analysis (Optional)"></textarea>
+                <div class="ob-word-count">Word Count: <span id="ob-wc">0</span>/150</div>
+            </div>
+            <div class="ob-nav">
+                <button class="ob-btn-back" onclick="OB.prev()">BACK</button>
+                <button class="ob-btn-next ob-btn-complete" onclick="OB.complete()">COMPLETE ASSESSMENT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== STEP 7: ANALYZING ========== -->
+    <div class="ob-step" data-step="7">
+        <div class="ob-analyzing">
+            <div class="ob-spinner-wrap">
+                <svg class="ob-spinner-svg" viewBox="0 0 120 120">
+                    <defs>
+                        <linearGradient id="obGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#017AFF" />
+                            <stop offset="100%" stop-color="#5A0199" />
+                        </linearGradient>
+                    </defs>
+                    <circle class="ob-spinner-track" cx="60" cy="60" r="52" />
+                    <circle class="ob-spinner-arc" cx="60" cy="60" r="52" />
+                </svg>
+                <div class="ob-spinner-pct" id="ob-spinner-pct">0%</div>
+            </div>
+            <p class="ob-analyzing-text">analyzing...</p>
+        </div>
+    </div>
+
+    <!-- ========== STEP 8: ANALYSIS COMPLETE ========== -->
+    <div class="ob-step" data-step="8">
+        <div class="ob-result">
+            <div class="ob-result-badge">
+                <div class="ob-result-circle">
+                    <span class="ob-result-pct">90%</span>
+                    <span class="ob-result-match">Match</span>
+                </div>
+            </div>
+            <h2 class="ob-result-title">You're a good fit for Instructional Designer</h2>
+            <div class="ob-result-stats">
+                <div class="ob-result-stat">
+                    <span class="ob-stat-label">Avg. Starting Salary</span>
+                    <span class="ob-stat-value">$70,000</span>
+                </div>
+                <div class="ob-result-stat">
+                    <span class="ob-stat-label">Annual Job Growth Rate</span>
+                    <span class="ob-stat-value">9%</span>
+                </div>
+            </div>
+            <div class="ob-result-unlock">
+                <h3>Unlock Your Full Career Report for Free</h3>
+                <p>With our free account, you also gain access to</p>
+                <ul>
+                    <li><span class="ob-check-icon">&#10003;</span> Detailed skill gap analysis</li>
+                    <li><span class="ob-check-icon">&#10003;</span> Personalized learning path</li>
+                    <li><span class="ob-check-icon">&#10003;</span> AI-powered resume builder</li>
+                    <li><span class="ob-check-icon">&#10003;</span> Guided simulation courses</li>
+                </ul>
+            </div>
+            <button class="ob-btn-primary" onclick="OB.next()">Create Account &amp; unlock reports</button>
+        </div>
+    </div>
+
+    <!-- ========== STEP 9: CREATE ACCOUNT ========== -->
+    <div class="ob-step" data-step="9">
+        <div class="ob-account">
+            <h2 class="ob-account-title">Create Your Account</h2>
+            <p class="ob-account-subtitle">Unlock your full career report and access to AI-powered career tools</p>
+            <form class="ob-account-form" id="ob-register-form" onsubmit="OB.register(event)">
+                <div class="ob-form-row">
+                    <div class="ob-form-group">
+                        <label>First Name</label>
+                        <input type="text" name="first_name" placeholder="Jane" required />
+                    </div>
+                    <div class="ob-form-group">
+                        <label>Last Name</label>
+                        <input type="text" name="last_name" placeholder="Doe" required />
+                    </div>
+                </div>
+                <div class="ob-form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="jane-doe@gmail.com" required />
+                </div>
+                <div class="ob-form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;" required minlength="8" />
+                </div>
+                <div class="ob-form-group">
+                    <label>Re-enter Password</label>
+                    <input type="password" name="password_confirm" placeholder="&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;" required minlength="8" />
+                </div>
+                <label class="ob-checkbox-label">
+                    <input type="checkbox" name="agree" required />
+                    <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                </label>
+                <button type="submit" class="ob-btn-primary ob-btn-register">Create Account &amp; unlock reports</button>
+            </form>
+            <p class="ob-account-signin">Already have an account? <a href="#">Sign In</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- Minimal footer for onboarding pages -->
+<div class="ob-footer">
+    <p>&copy; 2026 Heerise Academy. All Rights Reserved.</p>
+</div>
+
+<!-- Hide the default site footer on this page -->
+<script>document.body.classList.add('ob-page');</script>
+
+<!-- ========== ONBOARDING JS ========== -->
+<script>
+(function() {
+    'use strict';
+
+    var steps = document.querySelectorAll('.ob-step');
+    var progressBar = document.getElementById('ob-progress');
+    var progressFill = document.getElementById('ob-progress-fill');
+    var progressLabel = document.getElementById('ob-progress-label');
+    var totalQuestions = 6; // Q1-Q6
+    var current = 0;
+    var answers = {};
+
+    window.OB = {};
+
+    function showStep(n) {
+        steps.forEach(function(s) { s.classList.remove('ob-active'); });
+        steps[n].classList.add('ob-active');
+        current = n;
+        updateProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateProgress() {
+        // Show progress bar only during questions (steps 1-6)
+        if (current >= 1 && current <= totalQuestions) {
+            progressBar.classList.add('ob-progress-visible');
+            var pct = ((current) / totalQuestions) * 100;
+            progressFill.style.width = pct + '%';
+            progressLabel.textContent = current + ' / ' + totalQuestions;
+        } else {
+            progressBar.classList.remove('ob-progress-visible');
+        }
+    }
+
+    function getStepEl(n) { return steps[n]; }
+
+    function isStepValid(n) {
+        var el = getStepEl(n);
+        if (!el) return true;
+        var opts = el.querySelector('.ob-options');
+        if (!opts) return true;
+        var type = opts.getAttribute('data-type');
+        var key = opts.getAttribute('data-key');
+
+        if (type === 'single' || type === 'single-other') {
+            var selected = opts.querySelector('.ob-selected');
+            if (!selected) return false;
+            // If "Other" selected and has other-input, check it
+            if (selected.classList.contains('ob-option-other')) {
+                var otherInput = el.querySelector('.ob-other-input input');
+                if (otherInput && !otherInput.value.trim()) return false;
+            }
+            return true;
+        }
+        if (type === 'multi') {
+            var selectedCount = opts.querySelectorAll('.ob-selected').length;
+            return selectedCount > 0;
+        }
+        return true;
+    }
+
+    function saveAnswer(n) {
+        var el = getStepEl(n);
+        if (!el) return;
+        var opts = el.querySelector('.ob-options');
+        if (!opts) return;
+        var type = opts.getAttribute('data-type');
+        var key = opts.getAttribute('data-key');
+        if (!key) return;
+
+        if (type === 'single' || type === 'single-other') {
+            var selected = opts.querySelector('.ob-selected');
+            if (selected) {
+                var val = selected.getAttribute('data-value');
+                if (val === 'Other') {
+                    var otherInput = el.querySelector('.ob-other-input input');
+                    val = 'Other: ' + (otherInput ? otherInput.value.trim() : '');
+                }
+                answers[key] = val;
+            }
+        }
+        if (type === 'multi') {
+            var chips = opts.querySelectorAll('.ob-selected');
+            var vals = [];
+            chips.forEach(function(c) { vals.push(c.getAttribute('data-value')); });
+            answers[key] = vals;
+        }
+    }
+
+    function updateNextButton(stepEl) {
+        var nextBtn = stepEl.querySelector('.ob-btn-next, .ob-btn-complete');
+        if (!nextBtn) return;
+        var stepIndex = parseInt(stepEl.getAttribute('data-step'));
+        nextBtn.disabled = !isStepValid(stepIndex);
+    }
+
+    OB.next = function() {
+        if (current < steps.length - 1) {
+            saveAnswer(current);
+            showStep(current + 1);
+        }
+    };
+
+    OB.prev = function() {
+        if (current > 0) {
+            showStep(current - 1);
+        }
+    };
+
+    OB.complete = function() {
+        // Save last answer
+        var textarea = document.getElementById('ob-textarea-q6');
+        if (textarea) answers['q6'] = textarea.value.trim();
+        saveAnswer(current);
+
+        // Go to analyzing step
+        showStep(7);
+        runAnalyzing();
+    };
+
+    function runAnalyzing() {
+        var pctEl = document.getElementById('ob-spinner-pct');
+        var progress = 0;
+        var interval = setInterval(function() {
+            progress += Math.random() * 8 + 2;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+                pctEl.textContent = '100%';
+                setTimeout(function() { showStep(8); }, 600);
+            } else {
+                pctEl.textContent = Math.floor(progress) + '%';
+            }
+        }, 200);
+    }
+
+    OB.register = function(e) {
+        e.preventDefault();
+        var form = document.getElementById('ob-register-form');
+        var pw = form.querySelector('[name="password"]').value;
+        var pwc = form.querySelector('[name="password_confirm"]').value;
+        if (pw !== pwc) {
+            alert('Passwords do not match.');
+            return;
+        }
+        // Collect form data
+        var data = {
+            first_name: form.querySelector('[name="first_name"]').value,
+            last_name: form.querySelector('[name="last_name"]').value,
+            email: form.querySelector('[name="email"]').value,
+            password: pw,
+            assessment: answers
+        };
+        console.log('Registration data:', data);
+        // TODO: POST to backend API
+        alert('Account created successfully! (Backend integration pending)');
+    };
+
+    // ── Event delegation for options ──
+    document.addEventListener('click', function(e) {
+        // Single-select options
+        var opt = e.target.closest('.ob-option');
+        if (opt) {
+            var parent = opt.closest('.ob-options');
+            var type = parent.getAttribute('data-type');
+            if (type === 'single' || type === 'single-other') {
+                parent.querySelectorAll('.ob-option').forEach(function(o) { o.classList.remove('ob-selected'); });
+                opt.classList.add('ob-selected');
+                // Handle "Other" expand
+                var stepEl = opt.closest('.ob-step');
+                var otherWrap = stepEl.querySelector('.ob-other-input');
+                if (otherWrap) {
+                    if (opt.classList.contains('ob-option-other')) {
+                        otherWrap.style.display = 'block';
+                        var inp = otherWrap.querySelector('input');
+                        if (inp) inp.focus();
+                    } else {
+                        otherWrap.style.display = 'none';
+                    }
+                }
+            }
+            updateNextButton(opt.closest('.ob-step'));
+            return;
+        }
+
+        // Multi-select chips
+        var chip = e.target.closest('.ob-chip');
+        if (chip) {
+            var parent = chip.closest('.ob-options');
+            var max = parseInt(parent.getAttribute('data-max') || '99');
+            if (chip.classList.contains('ob-selected')) {
+                chip.classList.remove('ob-selected');
+            } else {
+                var count = parent.querySelectorAll('.ob-selected').length;
+                if (count < max) {
+                    chip.classList.add('ob-selected');
+                }
+            }
+            updateNextButton(chip.closest('.ob-step'));
+            return;
+        }
+    });
+
+    // Other input validation → enable/disable next
+    document.querySelectorAll('.ob-other-input input').forEach(function(inp) {
+        inp.addEventListener('input', function() {
+            updateNextButton(inp.closest('.ob-step'));
+        });
+    });
+
+    // Word count for textarea
+    var ta = document.getElementById('ob-textarea-q6');
+    var wc = document.getElementById('ob-wc');
+    if (ta && wc) {
+        ta.addEventListener('input', function() {
+            var words = ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0;
+            wc.textContent = words;
+            if (words > 150) {
+                wc.style.color = '#E53935';
+            } else {
+                wc.style.color = '';
+            }
+        });
+        // Q6 is optional — always allow complete
+        var q6Step = ta.closest('.ob-step');
+        var completeBtn = q6Step.querySelector('.ob-btn-complete');
+        if (completeBtn) completeBtn.disabled = false;
+    }
+
+    // Init
+    showStep(0);
+})();
+</script>
+
+<!-- *** ACC ONBOARDING END *** -->

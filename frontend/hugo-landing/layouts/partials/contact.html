@@ -1,0 +1,90 @@
+<!-- *** CONTACT PAGE *** -->
+
+<!-- Hero Banner — Figma: Frame 13, 1280×190, gradient + looper-1 decoration -->
+<section class="contact-hero">
+    <img src="/img/looper-1.png" alt="" class="contact-looper" />
+    <div class="contact-hero-content">
+        <h1 class="contact-hero-title">Let's work together.</h1>
+        <p class="contact-hero-subtitle">Interested in a consultation together? Fill out some info and we will be in touch shortly! We can't wait to hear from you!</p>
+    </div>
+</section>
+
+<!-- Form Section — Figma: Frame 111, 1280×645, centered form card -->
+<section class="contact-form-section">
+    <div class="contact-form-card">
+        <div id="contact-message" class="contact-feedback" style="display:none;"></div>
+
+        <form id="contact-form" method="post" action="#">
+            <!-- Row 1: First Name + Last Name -->
+            <div class="cf-row">
+                <div class="cf-field">
+                    <label class="cf-label">First Name</label>
+                    <input type="text" class="cf-input" id="first-name" name="first_name" placeholder="Enter first name" required />
+                </div>
+                <div class="cf-field">
+                    <label class="cf-label">Last Name</label>
+                    <input type="text" class="cf-input" id="last-name" name="last_name" placeholder="Enter your last name" required />
+                </div>
+            </div>
+
+            <!-- Row 2: Email + Phone Number -->
+            <div class="cf-row">
+                <div class="cf-field">
+                    <label class="cf-label">Email</label>
+                    <input type="email" class="cf-input" id="email" name="email" placeholder="Enter your email" required />
+                </div>
+                <div class="cf-field">
+                    <label class="cf-label">Phone Number</label>
+                    <input type="tel" class="cf-input" id="phone" name="phone" placeholder="Enter your phone number" />
+                </div>
+            </div>
+
+            <!-- Row 3: How did you hear about us? (dropdown) -->
+            <div class="cf-field cf-field-full">
+                <label class="cf-label">How did you hear about us?</label>
+                <select class="cf-select" id="hear-about" name="hear_about">
+                    <option value="" disabled selected>Please select</option>
+                    <option value="social_media">Social Media</option>
+                    <option value="search_engine">Search Engine</option>
+                    <option value="referral">Referral / Word of Mouth</option>
+                    <option value="university">University / Career Center</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <!-- Row 4: Service interest (checkboxes) -->
+            <div class="cf-field cf-field-full">
+                <label class="cf-label">How did you hear about us?</label>
+                <div class="cf-checkbox-row">
+                    <label class="cf-checkbox-label">
+                        <input type="checkbox" name="service_interest" value="job_assessment" />
+                        <span class="cf-checkbox-box"></span>
+                        <span class="cf-checkbox-text">Job Assessment</span>
+                    </label>
+                    <label class="cf-checkbox-label">
+                        <input type="checkbox" name="service_interest" value="bootcamp" />
+                        <span class="cf-checkbox-box"></span>
+                        <span class="cf-checkbox-text">Bootcamp</span>
+                    </label>
+                    <label class="cf-checkbox-label">
+                        <input type="checkbox" name="service_interest" value="consultation" />
+                        <span class="cf-checkbox-box"></span>
+                        <span class="cf-checkbox-text">Consultation</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Row 5: Your Message -->
+            <div class="cf-field cf-field-full">
+                <label class="cf-label">Your Message</label>
+                <textarea class="cf-textarea" id="message" name="message" placeholder="Please Enter Your Message" required></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="cf-submit">SEND</button>
+        </form>
+    </div>
+</section>
+
+<script src="/js/contact.js"></script>
+<!-- *** CONTACT PAGE END *** -->

@@ -1,0 +1,65 @@
+<!-- *** FEATURED EVENT *** -->
+{{ if .Site.Params.featured_event.enable }}
+<section class="featured-event">
+    <div class="fe-wrapper">
+        <!-- Top label -->
+        <div class="fe-top-label">
+            <span class="fe-label-text">{{ .Site.Params.featured_event.label }}</span>
+        </div>
+
+        <div class="fe-content-row">
+            <!-- Left: Image -->
+            <div class="fe-image-col">
+                <div class="fe-image-wrapper">
+                    <img src="/img/homepic.jpg" alt="Career Lab" class="fe-image" />
+                    <span class="fe-featured-badge">
+                        <span class="fe-badge-icon">⚡</span>
+                        <span>{{ .Site.Params.featured_event.badge }}</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Right: Info -->
+            <div class="fe-info-col">
+                <div class="fe-info-top">
+                    <div class="fe-title-row">
+                        <div class="fe-title-block">
+                            <h2 class="fe-title">{{ .Site.Params.featured_event.title }}</h2>
+                            <div class="fe-title-bar"></div>
+                        </div>
+                        <span class="fe-cohort-badge">{{ .Site.Params.featured_event.subtitle }}</span>
+                    </div>
+                    <p class="fe-desc">{{ .Site.Params.featured_event.description1 }}</p>
+                    <p class="fe-desc">{{ .Site.Params.featured_event.description2 }}</p>
+                </div>
+
+                <!-- Stats row -->
+                <div class="fe-stats-row">
+                    <div class="fe-stat">
+                        <div class="fe-stat-number">{{ .Site.Params.featured_event.stat1_number }}</div>
+                        <div class="fe-stat-label">{{ .Site.Params.featured_event.stat1_label }}</div>
+                    </div>
+                    <div class="fe-stat">
+                        <div class="fe-stat-number">{{ .Site.Params.featured_event.stat2_number }}</div>
+                        <div class="fe-stat-label">{{ .Site.Params.featured_event.stat2_label }}</div>
+                    </div>
+                    <div class="fe-stat">
+                        <div class="fe-stat-number">{{ .Site.Params.featured_event.stat3_number }}</div>
+                        <div class="fe-stat-label">{{ .Site.Params.featured_event.stat3_label }}</div>
+                    </div>
+                    <div class="fe-stat">
+                        <div class="fe-stat-number">{{ .Site.Params.featured_event.stat4_number }}</div>
+                        <div class="fe-stat-label">{{ .Site.Params.featured_event.stat4_label }}</div>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <a href="{{ .Site.Params.featured_event.cta_url }}" class="fe-cta-btn">
+                    {{ .Site.Params.featured_event.cta_text }} <span class="fe-cta-arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{{ end }}
+<!-- *** FEATURED EVENT END *** -->

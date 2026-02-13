@@ -157,3 +157,4 @@ backend/app/data/*.db
 backend/app/app.db
 # Ignore compiled swagger
 backend/app/openapi.json
+frontend/hugo-landing/public/

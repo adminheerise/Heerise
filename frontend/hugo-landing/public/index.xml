@@ -2,52 +2,52 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Heerise</title>
-    <link>http://localhost:62720/</link>
+    <link>http://localhost:58402/</link>
     <description>Recent content on Heerise</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 25 Jan 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:62720/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:58402/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Welcome to Heerise</title>
-      <link>http://localhost:62720/blog/2026/01/25/welcome-to-heerise/</link>
+      <link>http://localhost:58402/blog/2026/01/25/welcome-to-heerise/</link>
       <pubDate>Sun, 25 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:62720/blog/2026/01/25/welcome-to-heerise/</guid>
+      <guid>http://localhost:58402/blog/2026/01/25/welcome-to-heerise/</guid>
       <description>&lt;p&gt;Welcome to Heerise! We are excited to launch our career coaching platform. Stay tuned for more updates on how we can help you achieve your career goals.&lt;/p&gt;</description>
     </item>
     <item>
       <title>5 Tips for Career Growth in 2026</title>
-      <link>http://localhost:62720/blog/2026/01/20/5-tips-for-career-growth-in-2026/</link>
+      <link>http://localhost:58402/blog/2026/01/20/5-tips-for-career-growth-in-2026/</link>
       <pubDate>Tue, 20 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:62720/blog/2026/01/20/5-tips-for-career-growth-in-2026/</guid>
+      <guid>http://localhost:58402/blog/2026/01/20/5-tips-for-career-growth-in-2026/</guid>
       <description>&lt;p&gt;Looking to accelerate your career in 2026? Here are five actionable tips to help you grow professionally.&lt;/p&gt;</description>
     </item>
     <item>
       <title>About</title>
-      <link>http://localhost:62720/about/</link>
+      <link>http://localhost:58402/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:62720/about/</guid>
+      <guid>http://localhost:58402/about/</guid>
       <description></description>
     </item>
     <item>
       <title>AI Career Co-pilot</title>
-      <link>http://localhost:62720/acc/</link>
+      <link>http://localhost:58402/acc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:62720/acc/</guid>
+      <guid>http://localhost:58402/acc/</guid>
       <description>&lt;h2 id=&#34;your-ai-powered-career-co-pilot&#34;&gt;Your AI-Powered Career Co-pilot&lt;/h2&gt;&#xA;&lt;p&gt;Turn career uncertainty into a personalized path.&lt;/p&gt;&#xA;&lt;p&gt;This page is under construction. The full AI Career Assessment and personalized career tools are coming soon.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Career Lab</title>
-      <link>http://localhost:62720/career-lab/</link>
+      <link>http://localhost:58402/career-lab/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:62720/career-lab/</guid>
+      <guid>http://localhost:58402/career-lab/</guid>
       <description></description>
     </item>
     <item>
       <title>Contact</title>
-      <link>http://localhost:62720/contact/</link>
+      <link>http://localhost:58402/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:62720/contact/</guid>
+      <guid>http://localhost:58402/contact/</guid>
       <description></description>
     </item>
   </channel>

@@ -20,51 +20,41 @@ pluralizelisttitles = false
   pagerSize = 10
 
 # ============================================================
-# Main Menu
+# Main Menu (matches Figma design)
+# HOME | ABOUT | AI CAREER CO-PILOT | CAREER LAB | CONTACT
 # ============================================================
 [menu]
 [[menu.main]]
-  name       = "Home"
+  name       = "HOME"
   identifier = "menu.home"
   url        = "/"
   weight     = 1
 
 [[menu.main]]
-  name       = "Blog"
-  identifier = "menu.blog"
-  url        = "/blog/"
+  name       = "ABOUT"
+  identifier = "menu.about"
+  url        = "/about/"
   weight     = 2
 
 [[menu.main]]
-  name       = "FAQ"
-  identifier = "menu.faq"
-  url        = "/faq/"
+  name       = "AI CAREER CO-PILOT"
+  identifier = "menu.acc"
+  url        = "/acc/"
   weight     = 3
 
 [[menu.main]]
-  identifier = "contact"
-  name       = "Contact"
-  url        = "/contact/"
+  name       = "CAREER LAB"
+  identifier = "menu.careerlab"
+  url        = "/career-lab/"
   weight     = 4
 
-# Top bar social links
-[[menu.topbar]]
-  weight = 1
-  name   = "Phone"
-  url    = "tel:+12 34 567 89 01"
-  pre    = "<i class='fas fa-2x fa-phone'></i>"
+[[menu.main]]
+  name       = "CONTACT"
+  identifier = "menu.contact"
+  url        = "/contact/"
+  weight     = 5
 
-[[menu.topbar]]
-  weight = 2
-  name   = "GitHub"
-  url    = "https://github.com"
-  pre    = "<i class='fab fa-2x fa-github'></i>"
-
-[[menu.topbar]]
-  weight = 3
-  name   = "Email"
-  url    = "mailto:hello@heerise.com"
-  pre    = "<i class='fas fa-2x fa-envelope'></i>"
+# No topbar menu entries (new design has no top info bar)
 
 # ============================================================
 # Site Params
@@ -72,33 +62,33 @@ pluralizelisttitles = false
 [params]
   viewMorePostLink = "/blog/"
   author = "Heerise Team"
-  defaultKeywords = ["heerise", "career", "coaching"]
+  defaultKeywords = ["heerise", "career", "coaching", "instructional design", "LXD"]
   mainSections = ["blog"]
-  defaultDescription = "Heerise - Your Career Coach Platform"
+  defaultDescription = "Heerise - Design Your Future With Confidence"
 
   # Social media
   facebook_site = ""
   twitter_site = ""
   default_sharing_image = "img/sharing-default.png"
 
-  # Google Maps (disabled by default)
+  # Google Maps (disabled)
   enableGoogleMaps = false
   googleMapsApiKey = ""
 
   latitude = ""
   longitude = ""
 
-  # Style: default (light-blue), blue, green, marsala, pink, red, turquoise, violet
+  # Style: default (light-blue) — we override colors via custom.css
   style = "default"
 
-  # Contact form (Formspree)
+  # Contact form (Formspree — configure when ready)
   formspree_action = ""
   contact_form_ajax = false
   enableRecaptchaInContactForm = false
   googleRecaptchaKey = ""
 
-  about_us = "<p>Heerise is your AI-powered career coaching platform.</p>"
-  copyright = "Copyright (c) 2025 - 2026, Heerise. All rights reserved."
+  about_us = "<p>Heerise Academy is your AI-powered career coaching platform for education and social science professionals.</p>"
+  copyright = "© 2026 Heerise Academy. All Rights Reserved."
 
   date_format = "January 2, 2006"
 
@@ -107,30 +97,33 @@ pluralizelisttitles = false
   disabled_logo = false
   logo_text = "Heerise"
 
-  logo = "img/logo.png"
-  logo_small = "img/logo-small.png"
+  logo = "img/logo-silver.png"
+  logo_small = "img/logo-silver.png"
   contact_url = "/contact"
-  address = """<p class="text-uppercase"><strong>Heerise</strong>
-    <br>Your Career Coach
-    <br><strong>Online Platform</strong>
+  address = """<p class="text-uppercase"><strong>Heerise Academy</strong>
+    <br>Design Your Future With Confidence
   </p>
   """
 
 [permalinks]
   blog = "/blog/:year/:month/:day/:slug/"
 
-# Top bar
+# ============================================================
+# Top bar — DISABLED (new design has no top info bar)
+# ============================================================
 [params.topbar]
-  enable = true
-  text = """<p>Contact us at hello@heerise.com</p>"""
+  enable = false
+  text = ""
 
-# Sidebar widgets
+# Sidebar widgets (for blog pages, if accessed directly)
 [params.widgets]
   categories = true
   tags = true
   search = true
 
-# Carousel settings
+# ============================================================
+# OLD homepage sections — ALL DISABLED
+# ============================================================
 [params.carouselCustomers]
   items = 6
   auto_play = false
@@ -144,46 +137,81 @@ pluralizelisttitles = false
   pagination_speed = 1000
 
 [params.carouselHomepage]
-  enable = true
-  auto_play = true
+  enable = false
+  auto_play = false
   slide_speed = 2000
   pagination_speed = 1000
 
-# Features section
 [params.features]
-  enable = true
+  enable = false
   cols = 3
 
-# Testimonials section
 [params.testimonials]
-  enable = true
-  title = "Testimonials"
-  subtitle = "Hear from our users about their career transformation journey."
-
-# See more section
-[params.see_more]
-  enable = true
-  icon = "far fa-file-alt"
-  title = "Do you want to see more?"
-  subtitle = "Explore how Heerise can accelerate your career growth."
-  link_url = "#"
-  link_text = "Learn More"
-
-# Clients section
-[params.clients]
-  enable = true
-  title = "Our Partners"
+  enable = false
+  title = ""
   subtitle = ""
 
-# Recent posts section
+[params.see_more]
+  enable = false
+  icon = ""
+  title = ""
+  subtitle = ""
+  link_url = ""
+  link_text = ""
+
+[params.clients]
+  enable = false
+  title = ""
+  subtitle = ""
+
 [params.recent_posts]
-  enable = true
-  title = "From our blog"
-  subtitle = "Latest insights on career development and professional growth."
+  enable = false
+  title = ""
+  subtitle = ""
   hide_summary = false
 
 [params.footer.recent_posts]
+  enable = false
+
+# ============================================================
+# NEW: Homepage Hero (data-driven)
+# ============================================================
+[params.hero]
+  line1 = "Harvest"
+  line2 = "Empowerment"
+  line3 = "Excellence"
+  tagline = "To democratize career success by equipping individuals with the clarity, capabilities, and confidence to thrive in evolving and competitive job markets."
+
+# ============================================================
+# NEW: Featured Event (data-driven)
+# ============================================================
+[params.featured_event]
   enable = true
+  label = "Upcoming Event"
+  badge = "Featured"
+  title = "ID/LXD Career Lab"
+  subtitle = "Founding Cohort · Starts Feb 28 · 8-Week Intensive"
+  description1 = "An elite 8-week bootcamp for professionals who want to break into Learning Experience Design (LXD)/ Instructional Design (ID)."
+  description2 = "Build a portfolio with five hands-on projects, get 1:1 mentorship, and receive job-ready application coaching."
+  stat1_number = "8 Weeks"
+  stat1_label = "Intensive Training"
+  stat2_number = "5 Projects"
+  stat2_label = "Portfolio Pieces"
+  stat3_number = "1:1"
+  stat3_label = "Mentorship"
+  stat4_number = "Weekly"
+  stat4_label = "Live Sessions + Office Hours"
+  cta_text = "APPLY NOW"
+  cta_url = "/career-lab/"
+
+# ============================================================
+# NEW: Social links for footer
+# ============================================================
+[params.social]
+  facebook = "https://facebook.com"
+  linkedin = "https://linkedin.com"
+  youtube = "https://youtube.com"
+  rednote = "https://xiaohongshu.com"
 
 [taxonomies]
   category = "categories"

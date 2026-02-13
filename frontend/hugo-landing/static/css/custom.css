@@ -1,16 +1,2337 @@
-/* your styles go here */
-/* Example site test */
+/* ==========================================================================
+   Heerise Custom CSS
+   Design System: Inter font, #017AFF primary blue
+   Overrides hugo-universal-theme defaults
+   ========================================================================== */
 
-.box-image-text .image {
-    min-height: 190px;
-    max-height: 190px;
+/* --------------------------------------------------------------------------
+   1. GLOBAL: Font & Colors
+   -------------------------------------------------------------------------- */
+
+body,
+h1, h2, h3, h4, h5, h6,
+.navbar,
+.btn,
+input, select, textarea,
+p, a, li, span, label {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.box-image-text .image img {
-    max-height: 190px;
-    margin: auto;
+body {
+    color: #000000;
+    font-size: 16px;
+    line-height: 1.6;
 }
 
-.box-simple {
-    min-height: 230px;
+a {
+    color: #017AFF;
+}
+
+a:hover,
+a:focus {
+    color: #005bbf;
+}
+
+/* --------------------------------------------------------------------------
+   2. TYPOGRAPHY SCALE (from design system: 10px - 72px)
+   -------------------------------------------------------------------------- */
+
+h1 { font-size: 56px; font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
+h2 { font-size: 36px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+h3 { font-size: 24px; font-weight: 600; line-height: 1.3; margin-bottom: 12px; }
+h4 { font-size: 20px; font-weight: 600; line-height: 1.4; margin-bottom: 10px; }
+h5 { font-size: 18px; font-weight: 500; line-height: 1.4; }
+h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
+
+/* --------------------------------------------------------------------------
+   3. BUTTONS
+   -------------------------------------------------------------------------- */
+
+.btn-template-main {
+    background-color: #017AFF;
+    border-color: #017AFF;
+    color: #FFFFFF;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-template-main:hover,
+.btn-template-main:focus {
+    background-color: #005bbf;
+    border-color: #005bbf;
+    color: #FFFFFF;
+}
+
+.btn-cta-primary {
+    background-color: #017AFF;
+    border: 2px solid #017AFF;
+    color: #FFFFFF;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 14px 40px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    display: inline-block;
+}
+
+.btn-cta-primary:hover,
+.btn-cta-primary:focus {
+    background-color: #005bbf;
+    border-color: #005bbf;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.btn-template-transparent-black {
+    border-color: #017AFF;
+    color: #017AFF;
+}
+
+.btn-template-transparent-black:hover {
+    background-color: #017AFF;
+    color: #FFFFFF;
+}
+
+/* --------------------------------------------------------------------------
+   4. NAVBAR — Figma: Frame 10, height 72px, padding 16px 16px 0px
+   -------------------------------------------------------------------------- */
+
+.navbar.navbar-default {
+    background-color: #FFFFFF;
+    border-bottom: none;
+    box-shadow: none;
+    min-height: 72px;
+    max-height: 72px;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar.navbar-default .container {
+    padding: 16px 16px 0;
+}
+
+/* Nav items: Figma 12px, weight 600, color #2C2C2C */
+.navbar.navbar-default .navbar-nav > li > a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    color: #2C2C2C;
+    padding: 17px 20px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-top: 8px solid transparent;
+}
+
+.navbar.navbar-default .navbar-nav > li > a:hover,
+.navbar.navbar-default .navbar-nav > li > a:focus {
+    color: #017AFF;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+/* Active state: Figma — 8px top bar #017AFF + body rgba(1,122,255,0.8), white text */
+.navbar.navbar-default .navbar-nav > li.active > a,
+.navbar.navbar-default .navbar-nav > li.active > a:hover,
+.navbar.navbar-default .navbar-nav > li.active > a:focus {
+    color: #FFFFFF;
+    background-color: rgba(1, 122, 255, 0.8);
+    border-top: 8px solid #017AFF;
+    text-decoration: none;
+}
+
+.navbar.navbar-default .navbar-brand h4 {
+    color: #000000;
+    font-weight: 700;
+    font-size: 22px;
+    margin: 0;
+}
+
+/* Nav logo — Figma: 64×64, left 50px, top 15px (absolute in header) */
+.navbar-brand {
+    padding: 4px 0 0 34px;
+    height: auto;
+    margin: 0;
+}
+
+.navbar-brand img {
+    width: 64px;
+    height: 64px;
+    max-height: none;
+    object-fit: contain;
+}
+
+/* Hide top bar completely */
+#top {
+    display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. HERO HOME SECTION
+   -------------------------------------------------------------------------- */
+
+.hero-home {
+    background: linear-gradient(98.78deg, #017AFF -5.07%, #5A0199 108.39%);
+    width: 100%;
+    height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-topographic {
+    position: absolute;
+    width: 1328px;
+    height: 963px;
+    left: calc(50% - 640px - 24px);
+    top: -243px;
+    background: url('/img/topographic-bg.png') no-repeat;
+    background-size: 100% 100%;
+    mix-blend-mode: screen;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero-home .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+}
+
+.hero-home .hero-heading {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 64px;
+    line-height: 77px;
+    text-align: center;
+    color: #FFFFFF;
+    margin-bottom: 36px;
+    max-width: 1122px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-home .hero-line {
+    display: block;
+}
+
+.hero-home .hero-tagline {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    color: #FFFFFF;
+    max-width: 912px;
+    margin: 0 auto;
+}
+
+/* Responsive hero — keep proportions, scale text only on small screens */
+@media (max-width: 991px) {
+    .hero-home .hero-heading {
+        font-size: 48px;
+        line-height: 58px;
+    }
+    .hero-home .hero-tagline {
+        font-size: 20px;
+        line-height: 26px;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero-home {
+        height: 360px;
+        padding: 0 15px;
+    }
+    .hero-home .hero-heading {
+        font-size: 36px;
+        line-height: 44px;
+        margin-bottom: 24px;
+    }
+    .hero-home .hero-tagline {
+        font-size: 16px;
+        line-height: 22px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   6. FEATURED EVENT SECTION — Figma: Frame 27, 1280×400, bg #FFFFFF
+   -------------------------------------------------------------------------- */
+
+.featured-event {
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 400px;
+    position: relative;
+}
+
+.fe-wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    height: 100%;
+    padding: 0;
+}
+
+/* Top label — Figma: left 54px, top 26px */
+.fe-top-label {
+    position: absolute;
+    left: 54px;
+    top: 26px;
+}
+
+.fe-label-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+}
+
+/* Content row: image left + info right */
+.fe-content-row {
+    display: flex;
+    position: absolute;
+    left: 54px;
+    top: 60px;
+    right: 54px;
+    gap: 65px;
+}
+
+/* Left image — Figma: 454×303 */
+.fe-image-col {
+    flex-shrink: 0;
+    width: 454px;
+}
+
+.fe-image-wrapper {
+    position: relative;
+    width: 454px;
+    height: 303px;
+}
+
+.fe-image {
+    width: 454px;
+    height: 303px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Featured badge on image — Figma: #F07850 */
+.fe-featured-badge {
+    position: absolute;
+    left: 29px;
+    top: 0;
+    background: #F07850;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 5px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 8px;
+    line-height: 10px;
+    color: #FFFFFF;
+}
+
+.fe-badge-icon {
+    width: 8px;
+    height: 8px;
+    font-size: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Right info column — Figma: width 659px */
+.fe-info-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.fe-info-top {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Title row — title + cohort badge inline */
+.fe-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.fe-title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.fe-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+    margin: 0;
+}
+
+.fe-title-bar {
+    width: 60px;
+    height: 1px;
+    background: #017AFF;
+}
+
+/* Cohort badge — Figma: rgba(1,122,255,0.1) bg, #017AFF text, 10px */
+.fe-cohort-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    background: rgba(1, 122, 255, 0.1);
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 12px;
+    color: #017AFF;
+    white-space: nowrap;
+}
+
+/* Description text — Figma: 16px, weight 200, letter-spacing 0.25px */
+.fe-desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 200;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0.25px;
+    color: #000000;
+    margin: 0;
+}
+
+/* Stats row — Figma: gap 65px */
+.fe-stats-row {
+    display: flex;
+    align-items: center;
+    gap: 65px;
+}
+
+.fe-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.fe-stat-number {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #017AFF;
+}
+
+.fe-stat-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #2C2C2C;
+}
+
+/* CTA button — Figma: #017AFF, border-radius 8px, padding 12px 20px */
+.fe-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: #017AFF;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    width: fit-content;
+}
+
+.fe-cta-btn:hover {
+    background: #005bbf;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.fe-cta-arrow {
+    font-size: 12px;
+}
+
+/* Responsive featured event */
+@media (max-width: 991px) {
+    .featured-event {
+        height: auto;
+        padding: 30px 0;
+    }
+    .fe-content-row {
+        position: static;
+        flex-direction: column;
+        padding: 20px 30px;
+        gap: 30px;
+    }
+    .fe-top-label {
+        position: static;
+        padding: 20px 30px 0;
+    }
+    .fe-image-col,
+    .fe-image-wrapper,
+    .fe-image {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 767px) {
+    .fe-stats-row {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .fe-stat {
+        width: calc(50% - 10px);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   7. FOOTER
+   -------------------------------------------------------------------------- */
+
+#footer {
+    background-color: #1a1a1a;
+    color: #FFFFFF;
+    padding: 50px 0 30px;
+}
+
+.footer-heading {
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+}
+
+.footer-nav,
+.footer-social {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-nav li,
+.footer-social li {
+    margin-bottom: 10px;
+}
+
+.footer-nav a,
+.footer-social a {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-nav a:hover,
+.footer-social a:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.footer-social a i {
+    margin-right: 8px;
+    width: 18px;
+    text-align: center;
+}
+
+/* Newsletter */
+.footer-newsletter {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.newsletter-wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.newsletter-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #FFFFFF;
+    flex-shrink: 0;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    max-width: 400px;
+}
+
+.newsletter-input {
+    flex: 1;
+    padding: 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.newsletter-input:focus {
+    border-color: #017AFF;
+}
+
+.btn-newsletter {
+    background-color: #017AFF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-newsletter:hover {
+    background-color: #005bbf;
+    color: #FFFFFF;
+}
+
+/* Copyright */
+#copyright {
+    background-color: #001021;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+#copyright p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+/* Remove template attribution */
+#copyright .pull-right {
+    display: none;
+}
+
+/* Responsive footer */
+@media (max-width: 767px) {
+    .newsletter-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .newsletter-form {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   8. ABOUT PAGE — Figma: Frame 268, 1280×1277.54
+   -------------------------------------------------------------------------- */
+
+/* Who Are We? — Figma: Frame 266, 1280×520, padding 48px, bg #FFFFFF */
+.about-whoarewe {
+    background: #FFFFFF;
+    width: 100%;
+    min-height: 520px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 48px;
+}
+
+.about-whoarewe-inner {
+    max-width: 1184px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.about-text-col {
+    width: 545px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+}
+
+/* "Who Are We?" — Figma: 64px, weight 900, letter-spacing 2px, #017AFF */
+.about-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 64px;
+    line-height: 77px;
+    letter-spacing: 2px;
+    color: #017AFF;
+    margin: 0;
+}
+
+/* Body text — Figma: 20px, weight 300, #3C3C3C */
+.about-body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 24px;
+    color: #3C3C3C;
+    width: 468px;
+    margin: 0;
+}
+
+/* Image — Figma: 606×414, border-radius 8px */
+.about-image-col {
+    flex-shrink: 0;
+}
+
+.about-image {
+    width: 606px;
+    height: 414px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* MISSION — Figma: Frame 258, 1280×237.54, bg #017AFF, padding 48px 80px, gap 48px */
+.about-mission {
+    background: #017AFF;
+    width: 100%;
+    min-height: 238px;
+    display: flex;
+    justify-content: center;
+}
+
+.about-mission-inner {
+    max-width: 1280px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 48px 80px;
+    gap: 48px;
+}
+
+/* Divider between Mission and Vision — Figma: Line 5, opacity 0.6, 1px white */
+.about-divider {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    background: #017AFF;
+}
+
+/* VISION — Figma: Frame 259, 1280×360, bg #017AFF, padding 48px 80px, gap 91px */
+.about-vision {
+    background: #017AFF;
+    width: 100%;
+    min-height: 360px;
+    display: flex;
+    justify-content: center;
+}
+
+.about-vision-inner {
+    max-width: 1280px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 48px 80px;
+    gap: 91px;
+}
+
+/* Shared icon wrapper for MISSION / VISION — Figma: Frame 270, 146×141.54 */
+.about-mv-icon-wrapper {
+    flex-shrink: 0;
+    width: 146px;
+    height: 142px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    isolation: isolate;
+    padding: 48px 6px;
+}
+
+/* Looper decorations — positioned behind the label */
+.about-looper {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Looper-1 — Figma: 179.97×174.46, left -16.98, top -16.46 */
+.about-looper-1 {
+    width: 180px;
+    height: 174px;
+    left: -17px;
+    top: -16px;
+}
+
+/* Looper-3 — Figma: 184.42×188.91, left -19.21, top -19.68, opacity 0.5 */
+.about-looper-3 {
+    width: 184px;
+    height: 189px;
+    left: -19px;
+    top: -20px;
+    opacity: 0.5;
+}
+
+/* "MISSION" / "VISION" label — Figma: 24px, weight 900, letter-spacing 2px, white */
+.about-mv-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    letter-spacing: 2px;
+    color: #FFFFFF;
+    position: relative;
+    z-index: 1;
+}
+
+/* Mission text — Figma: width 877px, 20px, weight 400, white */
+.about-mission-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFFFFF;
+    max-width: 877px;
+    margin: 0;
+}
+
+/* Vision text — Figma: width 934px, 20px, weight 400, white */
+.about-vision-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFFFFF;
+    max-width: 934px;
+    margin: 0;
+}
+
+.about-body strong {
+    font-weight: 700;
+}
+
+.about-vision-text strong {
+    font-weight: 700;
+}
+
+.about-vision-list {
+    list-style: disc;
+    padding-left: 24px;
+    margin: 16px 0 0 0;
+}
+
+.about-vision-list li {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+}
+
+.about-vision-list li strong {
+    font-weight: 700;
+}
+
+/* Responsive about */
+@media (max-width: 991px) {
+    .about-whoarewe-inner {
+        flex-direction: column;
+        align-items: center;
+    }
+    .about-text-col {
+        width: 100%;
+        align-items: center;
+        text-align: center;
+    }
+    .about-body {
+        width: 100%;
+    }
+    .about-title {
+        font-size: 48px;
+        line-height: 58px;
+    }
+    .about-image {
+        width: 100%;
+        height: auto;
+    }
+    .about-mission-inner,
+    .about-vision-inner {
+        flex-direction: column;
+        padding: 36px 30px;
+        gap: 24px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 767px) {
+    .about-whoarewe {
+        padding: 30px 20px;
+    }
+    .about-title {
+        font-size: 36px;
+        line-height: 44px;
+    }
+    .about-body {
+        font-size: 16px;
+        line-height: 22px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   9. CONTACT PAGE — Figma: 1280×983
+   -------------------------------------------------------------------------- */
+
+/* Hero banner — Figma: Frame 13, 1280×190, gradient + looper-1 */
+.contact-hero {
+    width: 100%;
+    height: 190px;
+    background: linear-gradient(91.16deg, #017AFF 0.99%, #1F0199 130.31%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 61px 50px;
+}
+
+.contact-looper {
+    position: absolute;
+    width: 350px;
+    height: 340px;
+    left: calc(50% - 640px + 930px);
+    top: -74px;
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.contact-hero-content {
+    max-width: 1177px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Title — Figma: 40px, weight 700, white */
+.contact-hero-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 48px;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+/* Subtitle — Figma: 16px, weight 300, letter-spacing 0.25px, white */
+.contact-hero-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0.25px;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+/* Form section — Figma: Frame 111, 1280×645, centered */
+.contact-form-section {
+    width: 100%;
+    min-height: 645px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background: #FFFFFF;
+}
+
+/* Form card — Figma: Frame 110, 669×592, border, shadow, border-radius 8px */
+.contact-form-card {
+    width: 669px;
+    background: #FFFFFF;
+    border: 1px solid #DADADA;
+    box-shadow: 0px 4px 4.8px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Two-column row — Figma: gap 16px */
+.cf-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+/* Field — Figma: 300px wide in rows, gap 8px between label and input */
+.cf-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 300px;
+}
+
+.cf-field-full {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+/* Label — Figma: 14px, weight 400, color #364153 */
+.cf-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #364153;
+    margin: 0;
+}
+
+/* Input — Figma: 40px height, border #E5E5E5, border-radius 4px, padding 10px */
+.cf-input,
+.cf-select {
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.cf-input::placeholder {
+    color: #9CAEB5;
+}
+
+.cf-input:focus,
+.cf-select:focus {
+    border-color: #017AFF;
+    box-shadow: 0 0 0 2px rgba(1, 122, 255, 0.1);
+}
+
+.cf-select {
+    appearance: auto;
+    -webkit-appearance: auto;
+    color: #9CAEB5;
+}
+
+.cf-select:valid {
+    color: #000000;
+}
+
+/* Textarea — Figma: 116px height */
+.cf-textarea {
+    box-sizing: border-box;
+    width: 100%;
+    height: 116px;
+    padding: 10px;
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+}
+
+.cf-textarea::placeholder {
+    color: #9CAEB5;
+}
+
+.cf-textarea:focus {
+    border-color: #017AFF;
+    box-shadow: 0 0 0 2px rgba(1, 122, 255, 0.1);
+}
+
+/* Checkbox row — Figma: gap 16px */
+.cf-checkbox-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.cf-checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 0;
+    height: 48px;
+    margin: 0;
+    font-weight: 400;
+}
+
+.cf-checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+/* Custom checkbox box — Figma: 18×18, border 2px #20616D, border-radius 2px */
+.cf-checkbox-box {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #20616D;
+    border-radius: 2px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.cf-checkbox-label input[type="checkbox"]:checked + .cf-checkbox-box {
+    background: #017AFF;
+    border-color: #017AFF;
+}
+
+.cf-checkbox-label input[type="checkbox"]:checked + .cf-checkbox-box::after {
+    content: '✓';
+    color: #FFFFFF;
+    font-size: 12px;
+    position: absolute;
+    top: 0;
+    left: 2px;
+}
+
+/* Checkbox text — Figma: 14px, weight 400, #364153 */
+.cf-checkbox-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #364153;
+}
+
+/* Submit button — Figma: full width 621px, 40px height, #017AFF, border-radius 4px */
+.cf-submit {
+    width: 100%;
+    height: 40px;
+    background: #017AFF;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cf-submit:hover {
+    background: #005bbf;
+}
+
+/* Contact form feedback messages */
+.contact-feedback {
+    padding: 14px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.contact-feedback-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+.contact-feedback-error {
+    background-color: #fce4ec;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+/* Responsive contact */
+@media (max-width: 767px) {
+    .contact-hero {
+        height: auto;
+        padding: 30px 20px;
+    }
+    .contact-hero-title {
+        font-size: 28px;
+        line-height: 34px;
+    }
+    .contact-form-card {
+        width: 100%;
+    }
+    .cf-row {
+        flex-direction: column;
+    }
+    .cf-field {
+        width: 100%;
+    }
+    .cf-checkbox-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   10. CAREER LAB PAGE
+   -------------------------------------------------------------------------- */
+
+/* Hero — two columns */
+/* ---- Hero Section (Frame 27, 1280×400) ---- */
+.cl-hero {
+    width: 100%;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    padding: 60px 50px;
+}
+
+.cl-hero-inner {
+    display: flex;
+    gap: 65px;
+    max-width: 1180px;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.cl-hero-image {
+    width: 455px;
+    height: 304px;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cl-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cl-hero-content {
+    width: 658px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.cl-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #000000;
+    line-height: 29px;
+    margin: 0 0 4px 0;
+}
+
+.cl-title-underline {
+    position: relative;
+    display: inline-block;
+}
+
+.cl-title-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 60px;
+    height: 1px;
+    background-color: #017AFF;
+}
+
+.cl-tag {
+    display: inline-block;
+    background-color: #D5F3F8;
+    color: #017AFF;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 12px;
+    margin-bottom: 12px;
+}
+
+.cl-desc {
+    color: #000000;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 200;
+    line-height: 19px;
+    letter-spacing: 0.25px;
+}
+
+.cl-desc p {
+    margin: 0 0 8px 0;
+}
+.cl-desc p:last-child {
+    margin-bottom: 0;
+}
+
+/* Stats (gap: 65px per Figma) */
+.cl-stats {
+    display: flex;
+    gap: 65px;
+    margin-bottom: 18px;
+}
+
+.cl-stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.cl-stat-number {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #017AFF;
+    line-height: 24px;
+    text-align: center;
+}
+
+.cl-stat-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #2C2C2C;
+    line-height: 15px;
+    text-align: center;
+}
+
+/* CTA Buttons (210×41 primary, 155×41 secondary) */
+.cl-cta-buttons {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.cl-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #017AFF;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.cl-btn-primary:hover {
+    background-color: #005bbf;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.cl-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    color: #017AFF;
+    border: 1px solid #017AFF;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.cl-btn-secondary:hover {
+    background-color: #eff6ff;
+    color: #017AFF;
+    text-decoration: none;
+}
+
+/* ---- Tab Navigation (48px height, gap: 25px, left: 50px) ---- */
+.cl-tabs-nav {
+    background: #FFFFFF;
+    position: sticky;
+    top: 72px;
+    z-index: 90;
+    height: 48px;
+    display: flex;
+    align-items: center;
+}
+
+.cl-tabs-inner {
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 50px;
+}
+
+.cl-tabs {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cl-tab {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #017AFF;
+    cursor: pointer;
+    padding: 12px 0;
+    position: relative;
+    transition: color 0.2s;
+    line-height: 24px;
+}
+
+.cl-tab:hover {
+    color: #017AFF;
+    font-weight: 700;
+}
+
+.cl-tab.active {
+    color: #017AFF;
+    font-weight: 700;
+}
+
+.cl-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #017AFF;
+    border-radius: 1px;
+}
+
+/* Tab Content */
+.cl-tab-content {
+    display: none;
+}
+
+.cl-tab-content.active {
+    display: block;
+}
+
+.cl-section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 10px 50px;
+}
+
+/* ---- Section Header (badge + title) ---- */
+.cl-section-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.cl-section-tag {
+    display: inline-block;
+    background-color: rgba(1, 122, 255, 0.1);
+    color: #017AFF;
+    padding: 2px 12px;
+    border-radius: 4px;
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.cl-section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    color: #2C2C2C;
+    line-height: 40px;
+    margin: 0;
+}
+
+/* ---- Cards Grid (Outcomes) ---- */
+.cl-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 42px;
+    max-width: 1180px;
+}
+
+.cl-card {
+    background-color: #FFFFFF;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 36px;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.cl-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Per-card color borders — Outcome cards */
+.cl-card-yellow { border-color: #FEF3C6; }
+.cl-card-blue   { border-color: #DBEAFE; }
+.cl-card-green  { border-color: #D0FAE5; }
+.cl-card-purple { border-color: #F3E8FF; }
+
+/* Card Icons — 64×64, border-radius 14px */
+.cl-card-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 17px;
+    background-color: #f3f4f6;
+}
+
+.cl-card-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* Outcome icon color variants */
+.cl-icon-yellow    { background-color: #FEF3C6; }
+.cl-icon-blue      { background-color: #DBEAFE; }
+.cl-icon-blue-dark { background-color: #DBEAFE; }
+.cl-icon-green     { background-color: #D0FAE5; }
+.cl-icon-purple    { background-color: #F3E8FF; }
+
+/* Project icon — 48×48, blue bg, white SVG */
+.cl-icon-project {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background-color: #017AFF;
+}
+.cl-icon-project svg {
+    width: 24px;
+    height: 24px;
+}
+
+.cl-card-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #0A0A0A;
+    line-height: 28px;
+    margin-bottom: 10px;
+}
+
+/* Project tab card titles are bold */
+.cl-project-title {
+    font-weight: 700;
+}
+
+.cl-card-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #717182;
+    line-height: 17px;
+}
+
+/* ---- Project cards — blue tinted ---- */
+.cl-project-card {
+    background-color: rgba(1, 122, 255, 0.1);
+    border: 1px solid #DBEAFE;
+}
+
+/* Row gap between card rows (54px per Figma) */
+.cl-cards-grid {
+    row-gap: 54px;
+    column-gap: 42px;
+}
+
+/* ---- Instructors (bg: rgba(164,241,255,0.1)) ---- */
+.cl-instructors-section {
+    background-color: rgba(164, 241, 255, 0.1);
+    width: 100%;
+    padding: 10px 0;
+}
+
+.cl-instructors-wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 10px 50px;
+}
+
+.cl-instructors-section .cl-section-inner {
+    padding: 0;
+}
+
+.cl-instructors-grid {
+    display: flex;
+    gap: 69px;
+    justify-content: center;
+    padding: 8px 0;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.cl-instructor-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    flex: 1;
+    max-width: 347px;
+    text-align: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.cl-instructor-card:hover {
+    box-shadow: none;
+}
+
+.cl-instructor-avatar-wrap {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(135deg, #DBEAFE 0%, #EFF6FF 100%);
+    flex-shrink: 0;
+}
+
+.cl-instructor-avatar {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: none;
+    margin: 0;
+}
+
+.cl-instructor-name {
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: #0A0A0A;
+    line-height: 32px;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.cl-instructor-desc {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #4A5565;
+    line-height: 24px;
+    text-align: center;
+}
+
+/* ---- Pricing Section ---- */
+.cl-pricing-section {
+    padding: 10px 0;
+}
+
+.cl-pricing-container {
+    max-width: 1260px;
+    margin: 0 auto;
+    background-color: rgba(164, 241, 255, 0.15);
+    padding: 24px 40px;
+    border-radius: 0;
+}
+
+.cl-pricing-header {
+    justify-content: center;
+}
+
+.cl-pricing-announcement {
+    font-family: 'Arial', sans-serif;
+    text-align: left;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #4A5565;
+    margin-bottom: 24px;
+    max-width: 1180px;
+}
+
+.cl-pricing-offers {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    max-width: 1180px;
+}
+
+.cl-offer-box {
+    padding: 12px 24px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    border: 2px solid;
+}
+
+.cl-offer-yellow {
+    background-color: #FFFBEB;
+    color: #7B3306;
+    border-color: #FEE685;
+}
+
+.cl-offer-green {
+    background-color: #F0FDF4;
+    color: #0D542B;
+    border-color: #B9F8CF;
+}
+
+.cl-pricing-grid {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-top: 0;
+    max-width: 1181px;
+}
+
+/* Basic / Elite — 361×712 */
+.cl-pricing-card {
+    background-color: #FFFFFF;
+    border: 1px solid #D6D6D6;
+    border-radius: 8px;
+    padding: 24px;
+    position: relative;
+    width: 361px;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.cl-pricing-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Premium Recommended — 409×760, border 6px solid #017AFF */
+.cl-pricing-recommended {
+    border: 6px solid #017AFF;
+    border-radius: 8px;
+    padding: 48px;
+    width: 409px;
+    box-shadow: none;
+}
+
+.cl-recommended-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #017AFF;
+    color: #FFFFFF;
+    padding: 2px 13px;
+    border-radius: 4px;
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Elite — border color #20616D */
+.cl-pricing-elite {
+    border-color: #20616D;
+}
+
+.cl-pricing-tier {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: #0A0A0A;
+    line-height: 32px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.cl-pricing-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #717182;
+    line-height: 28px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.cl-pricing-price {
+    margin-bottom: 24px;
+    padding-bottom: 0;
+    border-bottom: none;
+    text-align: center;
+}
+
+.cl-price-original {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: #99A1AF;
+    text-decoration: line-through;
+    line-height: 32px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.cl-price-amount {
+    font-family: 'Inter', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 48px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.cl-price-dark {
+    color: #101828;
+}
+
+.cl-price-blue {
+    color: #017AFF;
+}
+
+.cl-price-note {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #4A5565;
+    line-height: 20px;
+    text-align: center;
+}
+
+.cl-price-note-blue {
+    color: #017AFF;
+    font-weight: 700;
+    opacity: 0.8;
+}
+
+.cl-pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 56px 0 0 0;
+    text-align: left;
+}
+
+.cl-pf-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #364153;
+    line-height: 24px;
+}
+
+.cl-pf-check {
+    color: #00A63E;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.cl-pf-cross {
+    color: #99A1AF;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.cl-pf-no {
+    color: #99A1AF;
+}
+
+.cl-pricing-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 20px;
+    border: none;
+    margin-top: 56px;
+}
+
+.cl-pricing-btn-primary {
+    background-color: #017AFF;
+    color: #FFFFFF;
+}
+
+.cl-pricing-btn-primary:hover {
+    background-color: #005bbf;
+}
+
+.cl-pricing-btn-secondary {
+    background-color: #FFFFFF;
+    color: #0A0A0A;
+    border: 1px solid #000000;
+}
+
+.cl-pricing-btn-secondary:hover {
+    background-color: #f9fafb;
+    border-color: #017AFF;
+    color: #017AFF;
+}
+
+/* ---- Apply Section — Always visible below tabs (Frame 111, 1280×688) ---- */
+.cl-apply-always {
+    display: block !important;
+}
+
+.cl-apply-scholarship {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #017AFF;
+    line-height: 28px;
+    margin-bottom: 16px;
+    max-width: 1180px;
+}
+
+.cl-apply-form-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.cl-apply-form {
+    background-color: #FFFFFF;
+    border: 1px solid #DADADA;
+    border-radius: 8px;
+    padding: 24px;
+    width: 669px;
+    max-width: 669px;
+    box-shadow: 0px 4px 4.8px rgba(0, 0, 0, 0.08);
+    margin: 0;
+}
+
+.cl-form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.cl-form-group {
+    flex: 1;
+    margin-bottom: 8px;
+}
+
+.cl-form-full {
+    margin-bottom: 8px;
+}
+
+.cl-form-label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #364153;
+    line-height: 20px;
+    margin-bottom: 8px;
+}
+
+.cl-form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #111827;
+    line-height: 17px;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+    background: #FFFFFF;
+}
+
+.cl-form-input::placeholder {
+    color: #9CAEB5;
+}
+
+.cl-form-input:focus {
+    outline: none;
+    border-color: #017AFF;
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.1);
+}
+
+.cl-form-textarea {
+    width: 100%;
+    min-height: 116px;
+    padding: 10px;
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #111827;
+    line-height: 17px;
+    resize: vertical;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+    background: #FFFFFF;
+}
+
+.cl-form-textarea::placeholder {
+    color: #9CAEB5;
+}
+
+.cl-form-textarea:focus {
+    outline: none;
+    border-color: #017AFF;
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.1);
+}
+
+.cl-next-steps {
+    background-color: rgba(164, 241, 255, 0.2);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 17px;
+    margin-bottom: 17px;
+}
+
+.cl-next-steps-title {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #101828;
+    line-height: 24px;
+    margin-bottom: 5px;
+}
+
+.cl-next-steps-list {
+    list-style: none;
+    padding: 0 0 0 16px;
+    margin: 0;
+}
+
+.cl-next-steps-list li {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #364153;
+    line-height: 20px;
+    margin-bottom: 5px;
+    padding-left: 0;
+    position: relative;
+}
+
+.cl-next-steps-list li::before {
+    content: none;
+}
+
+.cl-next-steps-list li:last-child {
+    margin-bottom: 0;
+}
+
+.cl-submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #017AFF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cl-submit-btn:hover {
+    background-color: #005bbf;
+}
+
+/* Apply form feedback */
+.cl-apply-feedback {
+    padding: 14px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.cl-apply-feedback-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+.cl-apply-feedback-error {
+    background-color: #fce4ec;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+/* ---- Back to Top (Frame 114, 1280×72) ---- */
+.cl-back-to-top {
+    width: 100%;
+    padding: 24px;
+}
+
+.cl-back-to-top-inner {
+    max-width: 1232px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cl-back-to-top-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #017AFF;
+    text-transform: uppercase;
+    text-decoration: none;
+    line-height: 20px;
+}
+
+.cl-back-to-top-link:hover {
+    color: #005bbf;
+    text-decoration: none;
+}
+
+/* ---- Career Lab Responsive ---- */
+@media (max-width: 1024px) {
+    .cl-hero-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
+    .cl-hero-image {
+        width: 100%;
+        max-width: 455px;
+        height: auto;
+        aspect-ratio: 455 / 304;
+    }
+    .cl-hero-content {
+        width: 100%;
+        max-width: 658px;
+    }
+    .cl-stats {
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+    .cl-pricing-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+    .cl-pricing-card,
+    .cl-pricing-recommended {
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cl-hero { padding: 30px 20px; }
+    .cl-section-inner { padding: 10px 20px; }
+    .cl-tabs-inner { padding: 0 20px; }
+    .cl-tabs {
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+    .cl-section-title {
+        font-size: 20px;
+        line-height: 28px;
+    }
+    .cl-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .cl-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .cl-instructors-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
+    .cl-form-row {
+        flex-direction: column;
+    }
+    .cl-cta-buttons {
+        flex-direction: column;
+    }
+    .cl-btn-primary,
+    .cl-btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+    .cl-instructors-section {
+        padding: 10px 0;
+    }
+    .cl-instructors-wrapper {
+        padding: 10px 20px;
+    }
+    .cl-pricing-container {
+        padding: 24px 20px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   11. BREADCRUMBS (inner pages: About, Contact, Career Lab, ACC)
+   -------------------------------------------------------------------------- */
+
+#breadcrumb {
+    background-color: #f8f9fa;
+    background-image: none;
+    padding: 40px 0;
+    min-height: auto;
+}
+
+#breadcrumb h1 {
+    color: #000000;
+    font-size: 36px;
+    font-weight: 700;
+    text-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   12. PLACEHOLDER PAGES (ACC)
+   -------------------------------------------------------------------------- */
+
+#content .container h2 {
+    margin-top: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   13. FORM CONTROLS (from design system PDF Page 3)
+   -------------------------------------------------------------------------- */
+
+.form-control:focus {
+    border-color: #017AFF;
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   14. MISC OVERRIDES
+   -------------------------------------------------------------------------- */
+
+/* Override theme bar sections background */
+.bar.background-white {
+    padding: 40px 0;
+}
+
+/* Ensure no double scrollbar */
+html {
+    overflow-x: hidden;
+}
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fix navbar affixed spacing */
+body {
+    padding-top: 0;
 }

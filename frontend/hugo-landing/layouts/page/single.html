@@ -13,16 +13,14 @@
 
         {{ partial "nav.html" . }}
 
-        {{ if ne .Params.id "services" }}
-        {{ partial "breadcrumbs.html" . }}
-        {{ end }}
-
         <div id="content">
             {{ if isset .Params "id" }}
 
               {{ partial .Params.id . }}
 
             {{ else }}
+
+            {{ partial "breadcrumbs.html" . }}
 
             <div class="container">
 

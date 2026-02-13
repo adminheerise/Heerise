@@ -2,54 +2,54 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:50093/tags/announcement/</loc>
+    <loc>http://localhost:62720/tags/announcement/</loc>
     <lastmod>2026-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/authors/</loc>
+    <loc>http://localhost:62720/authors/</loc>
     <lastmod>2026-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/blog/</loc>
+    <loc>http://localhost:62720/blog/</loc>
     <lastmod>2026-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/tags/career/</loc>
+    <loc>http://localhost:62720/tags/career/</loc>
     <lastmod>2026-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/categories/</loc>
+    <loc>http://localhost:62720/categories/</loc>
     <lastmod>2026-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/</loc>
+    <loc>http://localhost:62720/</loc>
     <lastmod>2026-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/authors/heerise-team/</loc>
+    <loc>http://localhost:62720/authors/heerise-team/</loc>
     <lastmod>2026-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/categories/news/</loc>
+    <loc>http://localhost:62720/categories/news/</loc>
     <lastmod>2026-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/tags/</loc>
+    <loc>http://localhost:62720/tags/</loc>
     <lastmod>2026-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/blog/2026/01/25/welcome-to-heerise/</loc>
+    <loc>http://localhost:62720/blog/2026/01/25/welcome-to-heerise/</loc>
     <lastmod>2026-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/blog/2026/01/20/5-tips-for-career-growth-in-2026/</loc>
+    <loc>http://localhost:62720/blog/2026/01/20/5-tips-for-career-growth-in-2026/</loc>
     <lastmod>2026-01-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/categories/advice/</loc>
+    <loc>http://localhost:62720/categories/advice/</loc>
     <lastmod>2026-01-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/tags/growth/</loc>
+    <loc>http://localhost:62720/tags/growth/</loc>
     <lastmod>2026-01-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/tags/tips/</loc>
+    <loc>http://localhost:62720/tags/tips/</loc>
     <lastmod>2026-01-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:50093/about/</loc>
+    <loc>http://localhost:62720/about/</loc>
   </url><url>
-    <loc>http://localhost:50093/acc/</loc>
+    <loc>http://localhost:62720/acc/</loc>
   </url><url>
-    <loc>http://localhost:50093/career-lab/</loc>
+    <loc>http://localhost:62720/career-lab/</loc>
   </url><url>
-    <loc>http://localhost:50093/contact/</loc>
+    <loc>http://localhost:62720/contact/</loc>
   </url>
 </urlset>

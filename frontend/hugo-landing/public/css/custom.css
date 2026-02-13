@@ -124,6 +124,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     font-size: 12px;
     line-height: 15px;
     text-transform: uppercase;
+    text-decoration: none;
     text-align: center;
     color: #2C2C2C;
     padding: 17px 20px;
@@ -139,6 +140,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 .navbar.navbar-default .navbar-nav > li > a:focus {
     color: #017AFF;
     background-color: transparent;
+    text-decoration: none;
 }
 
 /* Active state: Figma — 8px top bar #017AFF + body rgba(1,122,255,0.8), white text */
@@ -148,6 +150,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     color: #FFFFFF;
     background-color: rgba(1, 122, 255, 0.8);
     border-top: 8px solid #017AFF;
+    text-decoration: none;
 }
 
 .navbar.navbar-default .navbar-brand h4 {
@@ -1246,7 +1249,1036 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 }
 
 /* --------------------------------------------------------------------------
-   10. BREADCRUMBS (inner pages: About, Contact, Career Lab, ACC)
+   10. CAREER LAB PAGE
+   -------------------------------------------------------------------------- */
+
+/* Hero — two columns */
+/* ---- Hero Section (Frame 27, 1280×400) ---- */
+.cl-hero {
+    width: 100%;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    padding: 60px 50px;
+}
+
+.cl-hero-inner {
+    display: flex;
+    gap: 65px;
+    max-width: 1180px;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.cl-hero-image {
+    width: 455px;
+    height: 304px;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cl-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cl-hero-content {
+    width: 658px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.cl-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #000000;
+    line-height: 29px;
+    margin: 0 0 4px 0;
+}
+
+.cl-title-underline {
+    position: relative;
+    display: inline-block;
+}
+
+.cl-title-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 60px;
+    height: 1px;
+    background-color: #017AFF;
+}
+
+.cl-tag {
+    display: inline-block;
+    background-color: #D5F3F8;
+    color: #017AFF;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 12px;
+    margin-bottom: 12px;
+}
+
+.cl-desc {
+    color: #000000;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 200;
+    line-height: 19px;
+    letter-spacing: 0.25px;
+}
+
+.cl-desc p {
+    margin: 0 0 8px 0;
+}
+.cl-desc p:last-child {
+    margin-bottom: 0;
+}
+
+/* Stats (gap: 65px per Figma) */
+.cl-stats {
+    display: flex;
+    gap: 65px;
+    margin-bottom: 18px;
+}
+
+.cl-stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.cl-stat-number {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #017AFF;
+    line-height: 24px;
+    text-align: center;
+}
+
+.cl-stat-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #2C2C2C;
+    line-height: 15px;
+    text-align: center;
+}
+
+/* CTA Buttons (210×41 primary, 155×41 secondary) */
+.cl-cta-buttons {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.cl-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #017AFF;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.cl-btn-primary:hover {
+    background-color: #005bbf;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.cl-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    color: #017AFF;
+    border: 1px solid #017AFF;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.cl-btn-secondary:hover {
+    background-color: #eff6ff;
+    color: #017AFF;
+    text-decoration: none;
+}
+
+/* ---- Tab Navigation (48px height, gap: 25px, left: 50px) ---- */
+.cl-tabs-nav {
+    background: #FFFFFF;
+    position: sticky;
+    top: 72px;
+    z-index: 90;
+    height: 48px;
+    display: flex;
+    align-items: center;
+}
+
+.cl-tabs-inner {
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 50px;
+}
+
+.cl-tabs {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cl-tab {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #017AFF;
+    cursor: pointer;
+    padding: 12px 0;
+    position: relative;
+    transition: color 0.2s;
+    line-height: 24px;
+}
+
+.cl-tab:hover {
+    color: #017AFF;
+    font-weight: 700;
+}
+
+.cl-tab.active {
+    color: #017AFF;
+    font-weight: 700;
+}
+
+.cl-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #017AFF;
+    border-radius: 1px;
+}
+
+/* Tab Content */
+.cl-tab-content {
+    display: none;
+}
+
+.cl-tab-content.active {
+    display: block;
+}
+
+.cl-section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 10px 50px;
+}
+
+/* ---- Section Header (badge + title) ---- */
+.cl-section-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.cl-section-tag {
+    display: inline-block;
+    background-color: rgba(1, 122, 255, 0.1);
+    color: #017AFF;
+    padding: 2px 12px;
+    border-radius: 4px;
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.cl-section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    color: #2C2C2C;
+    line-height: 40px;
+    margin: 0;
+}
+
+/* ---- Cards Grid (Outcomes) ---- */
+.cl-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 42px;
+    max-width: 1180px;
+}
+
+.cl-card {
+    background-color: #FFFFFF;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 36px;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.cl-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Per-card color borders — Outcome cards */
+.cl-card-yellow { border-color: #FEF3C6; }
+.cl-card-blue   { border-color: #DBEAFE; }
+.cl-card-green  { border-color: #D0FAE5; }
+.cl-card-purple { border-color: #F3E8FF; }
+
+/* Card Icons — 64×64, border-radius 14px */
+.cl-card-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 17px;
+    background-color: #f3f4f6;
+}
+
+.cl-card-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* Outcome icon color variants */
+.cl-icon-yellow    { background-color: #FEF3C6; }
+.cl-icon-blue      { background-color: #DBEAFE; }
+.cl-icon-blue-dark { background-color: #DBEAFE; }
+.cl-icon-green     { background-color: #D0FAE5; }
+.cl-icon-purple    { background-color: #F3E8FF; }
+
+/* Project icon — 48×48, blue bg, white SVG */
+.cl-icon-project {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background-color: #017AFF;
+}
+.cl-icon-project svg {
+    width: 24px;
+    height: 24px;
+}
+
+.cl-card-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #0A0A0A;
+    line-height: 28px;
+    margin-bottom: 10px;
+}
+
+/* Project tab card titles are bold */
+.cl-project-title {
+    font-weight: 700;
+}
+
+.cl-card-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #717182;
+    line-height: 17px;
+}
+
+/* ---- Project cards — blue tinted ---- */
+.cl-project-card {
+    background-color: rgba(1, 122, 255, 0.1);
+    border: 1px solid #DBEAFE;
+}
+
+/* Row gap between card rows (54px per Figma) */
+.cl-cards-grid {
+    row-gap: 54px;
+    column-gap: 42px;
+}
+
+/* ---- Instructors (bg: rgba(164,241,255,0.1)) ---- */
+.cl-instructors-section {
+    background-color: rgba(164, 241, 255, 0.1);
+    width: 100%;
+    padding: 10px 0;
+}
+
+.cl-instructors-wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 10px 50px;
+}
+
+.cl-instructors-section .cl-section-inner {
+    padding: 0;
+}
+
+.cl-instructors-grid {
+    display: flex;
+    gap: 69px;
+    justify-content: center;
+    padding: 8px 0;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.cl-instructor-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    flex: 1;
+    max-width: 347px;
+    text-align: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.cl-instructor-card:hover {
+    box-shadow: none;
+}
+
+.cl-instructor-avatar-wrap {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(135deg, #DBEAFE 0%, #EFF6FF 100%);
+    flex-shrink: 0;
+}
+
+.cl-instructor-avatar {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: none;
+    margin: 0;
+}
+
+.cl-instructor-name {
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: #0A0A0A;
+    line-height: 32px;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.cl-instructor-desc {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #4A5565;
+    line-height: 24px;
+    text-align: center;
+}
+
+/* ---- Pricing Section ---- */
+.cl-pricing-section {
+    padding: 10px 0;
+}
+
+.cl-pricing-container {
+    max-width: 1260px;
+    margin: 0 auto;
+    background-color: rgba(164, 241, 255, 0.15);
+    padding: 24px 40px;
+    border-radius: 0;
+}
+
+.cl-pricing-header {
+    justify-content: center;
+}
+
+.cl-pricing-announcement {
+    font-family: 'Arial', sans-serif;
+    text-align: left;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #4A5565;
+    margin-bottom: 24px;
+    max-width: 1180px;
+}
+
+.cl-pricing-offers {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    max-width: 1180px;
+}
+
+.cl-offer-box {
+    padding: 12px 24px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    border: 2px solid;
+}
+
+.cl-offer-yellow {
+    background-color: #FFFBEB;
+    color: #7B3306;
+    border-color: #FEE685;
+}
+
+.cl-offer-green {
+    background-color: #F0FDF4;
+    color: #0D542B;
+    border-color: #B9F8CF;
+}
+
+.cl-pricing-grid {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-top: 0;
+    max-width: 1181px;
+}
+
+/* Basic / Elite — 361×712 */
+.cl-pricing-card {
+    background-color: #FFFFFF;
+    border: 1px solid #D6D6D6;
+    border-radius: 8px;
+    padding: 24px;
+    position: relative;
+    width: 361px;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.cl-pricing-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Premium Recommended — 409×760, border 6px solid #017AFF */
+.cl-pricing-recommended {
+    border: 6px solid #017AFF;
+    border-radius: 8px;
+    padding: 48px;
+    width: 409px;
+    box-shadow: none;
+}
+
+.cl-recommended-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #017AFF;
+    color: #FFFFFF;
+    padding: 2px 13px;
+    border-radius: 4px;
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Elite — border color #20616D */
+.cl-pricing-elite {
+    border-color: #20616D;
+}
+
+.cl-pricing-tier {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: #0A0A0A;
+    line-height: 32px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.cl-pricing-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #717182;
+    line-height: 28px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.cl-pricing-price {
+    margin-bottom: 24px;
+    padding-bottom: 0;
+    border-bottom: none;
+    text-align: center;
+}
+
+.cl-price-original {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: #99A1AF;
+    text-decoration: line-through;
+    line-height: 32px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.cl-price-amount {
+    font-family: 'Inter', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 48px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.cl-price-dark {
+    color: #101828;
+}
+
+.cl-price-blue {
+    color: #017AFF;
+}
+
+.cl-price-note {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #4A5565;
+    line-height: 20px;
+    text-align: center;
+}
+
+.cl-price-note-blue {
+    color: #017AFF;
+    font-weight: 700;
+    opacity: 0.8;
+}
+
+.cl-pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 56px 0 0 0;
+    text-align: left;
+}
+
+.cl-pf-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #364153;
+    line-height: 24px;
+}
+
+.cl-pf-check {
+    color: #00A63E;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.cl-pf-cross {
+    color: #99A1AF;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.cl-pf-no {
+    color: #99A1AF;
+}
+
+.cl-pricing-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 20px;
+    border: none;
+    margin-top: 56px;
+}
+
+.cl-pricing-btn-primary {
+    background-color: #017AFF;
+    color: #FFFFFF;
+}
+
+.cl-pricing-btn-primary:hover {
+    background-color: #005bbf;
+}
+
+.cl-pricing-btn-secondary {
+    background-color: #FFFFFF;
+    color: #0A0A0A;
+    border: 1px solid #000000;
+}
+
+.cl-pricing-btn-secondary:hover {
+    background-color: #f9fafb;
+    border-color: #017AFF;
+    color: #017AFF;
+}
+
+/* ---- Apply Section — Always visible below tabs (Frame 111, 1280×688) ---- */
+.cl-apply-always {
+    display: block !important;
+}
+
+.cl-apply-scholarship {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #017AFF;
+    line-height: 28px;
+    margin-bottom: 16px;
+    max-width: 1180px;
+}
+
+.cl-apply-form-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.cl-apply-form {
+    background-color: #FFFFFF;
+    border: 1px solid #DADADA;
+    border-radius: 8px;
+    padding: 24px;
+    width: 669px;
+    max-width: 669px;
+    box-shadow: 0px 4px 4.8px rgba(0, 0, 0, 0.08);
+    margin: 0;
+}
+
+.cl-form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.cl-form-group {
+    flex: 1;
+    margin-bottom: 8px;
+}
+
+.cl-form-full {
+    margin-bottom: 8px;
+}
+
+.cl-form-label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #364153;
+    line-height: 20px;
+    margin-bottom: 8px;
+}
+
+.cl-form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #111827;
+    line-height: 17px;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+    background: #FFFFFF;
+}
+
+.cl-form-input::placeholder {
+    color: #9CAEB5;
+}
+
+.cl-form-input:focus {
+    outline: none;
+    border-color: #017AFF;
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.1);
+}
+
+.cl-form-textarea {
+    width: 100%;
+    min-height: 116px;
+    padding: 10px;
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #111827;
+    line-height: 17px;
+    resize: vertical;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+    background: #FFFFFF;
+}
+
+.cl-form-textarea::placeholder {
+    color: #9CAEB5;
+}
+
+.cl-form-textarea:focus {
+    outline: none;
+    border-color: #017AFF;
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.1);
+}
+
+.cl-next-steps {
+    background-color: rgba(164, 241, 255, 0.2);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 17px;
+    margin-bottom: 17px;
+}
+
+.cl-next-steps-title {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #101828;
+    line-height: 24px;
+    margin-bottom: 5px;
+}
+
+.cl-next-steps-list {
+    list-style: none;
+    padding: 0 0 0 16px;
+    margin: 0;
+}
+
+.cl-next-steps-list li {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #364153;
+    line-height: 20px;
+    margin-bottom: 5px;
+    padding-left: 0;
+    position: relative;
+}
+
+.cl-next-steps-list li::before {
+    content: none;
+}
+
+.cl-next-steps-list li:last-child {
+    margin-bottom: 0;
+}
+
+.cl-submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #017AFF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cl-submit-btn:hover {
+    background-color: #005bbf;
+}
+
+/* Apply form feedback */
+.cl-apply-feedback {
+    padding: 14px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.cl-apply-feedback-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+.cl-apply-feedback-error {
+    background-color: #fce4ec;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+/* ---- Back to Top (Frame 114, 1280×72) ---- */
+.cl-back-to-top {
+    width: 100%;
+    padding: 24px;
+}
+
+.cl-back-to-top-inner {
+    max-width: 1232px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cl-back-to-top-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #017AFF;
+    text-transform: uppercase;
+    text-decoration: none;
+    line-height: 20px;
+}
+
+.cl-back-to-top-link:hover {
+    color: #005bbf;
+    text-decoration: none;
+}
+
+/* ---- Career Lab Responsive ---- */
+@media (max-width: 1024px) {
+    .cl-hero-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
+    .cl-hero-image {
+        width: 100%;
+        max-width: 455px;
+        height: auto;
+        aspect-ratio: 455 / 304;
+    }
+    .cl-hero-content {
+        width: 100%;
+        max-width: 658px;
+    }
+    .cl-stats {
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+    .cl-pricing-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+    .cl-pricing-card,
+    .cl-pricing-recommended {
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cl-hero { padding: 30px 20px; }
+    .cl-section-inner { padding: 10px 20px; }
+    .cl-tabs-inner { padding: 0 20px; }
+    .cl-tabs {
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+    .cl-section-title {
+        font-size: 20px;
+        line-height: 28px;
+    }
+    .cl-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .cl-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .cl-instructors-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
+    .cl-form-row {
+        flex-direction: column;
+    }
+    .cl-cta-buttons {
+        flex-direction: column;
+    }
+    .cl-btn-primary,
+    .cl-btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+    .cl-instructors-section {
+        padding: 10px 0;
+    }
+    .cl-instructors-wrapper {
+        padding: 10px 20px;
+    }
+    .cl-pricing-container {
+        padding: 24px 20px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   11. BREADCRUMBS (inner pages: About, Contact, Career Lab, ACC)
    -------------------------------------------------------------------------- */
 
 #breadcrumb {
@@ -1264,7 +2296,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 }
 
 /* --------------------------------------------------------------------------
-   11. PLACEHOLDER PAGES (Career Lab, ACC)
+   12. PLACEHOLDER PAGES (ACC)
    -------------------------------------------------------------------------- */
 
 #content .container h2 {
@@ -1272,7 +2304,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 }
 
 /* --------------------------------------------------------------------------
-   12. FORM CONTROLS (from design system PDF Page 3)
+   13. FORM CONTROLS (from design system PDF Page 3)
    -------------------------------------------------------------------------- */
 
 .form-control:focus {
@@ -1281,7 +2313,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 }
 
 /* --------------------------------------------------------------------------
-   13. MISC OVERRIDES
+   14. MISC OVERRIDES
    -------------------------------------------------------------------------- */
 
 /* Override theme bar sections background */

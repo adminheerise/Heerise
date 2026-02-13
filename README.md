@@ -6,6 +6,7 @@
 
 - **前端**：`frontend/hugo-landing/`（Hugo + hugo-universal-theme，默认 `http://localhost:1313`）
 - **前端（过渡）**：`frontend/pages/`（Next.js 14，默认 `http://localhost:3000`）— 逐步迁移到 Hugo 后删除
+- **Career Lab Bootcamp 原型**：`Bootcamp/`（React + Vite + Tailwind，独立单页应用，待集成至 Hugo）
 - **后端**：`backend/`（FastAPI，默认 `http://localhost:8000`）
 - **默认数据库**：SQLite（`backend/app.db`）
 
@@ -42,10 +43,12 @@ E:\Heerise\tools\hugo\hugo.exe server -w
 ```
 
 打开：
-- Landing Page：`http://localhost:1313/`
+- Home：`http://localhost:1313/`（Hero + Featured Event）
+- About：`http://localhost:1313/about/`
+- Contact：`http://localhost:1313/contact/`（表单 + 后端集成）
+- Career Lab：`http://localhost:1313/career-lab/`（placeholder）
+- AI Career Co-pilot：`http://localhost:1313/acc/`（placeholder）
 - Blog：`http://localhost:1313/blog/`
-- FAQ：`http://localhost:1313/faq/`
-- Contact：`http://localhost:1313/contact/`
 - （后续迁移完成后）Login / Dashboard / Profile / Settings / Admin 等页面也将在此
 
 > **依赖说明**：Hugo 是独立二进制文件（已下载到 `tools/hugo/hugo.exe`），无需 pip/npm 安装。
@@ -249,40 +252,127 @@ pip install -r requirements.txt
 
 ---
 
-## 8. Hugo 前端说明（主前端）
+## 8. 网站 Redesign（Figma → Hugo 落地实现）
+
+基于 Figma 设计稿（`Career Lab & ACC.pdf`、`Heerise Ecosystem Info Arch.png`）对 Hugo 前端进行了全面重设计。
+
+### 8.1 设计系统（Design System）
+
+| 项 | 值 |
+|---|---|
+| **主字体** | Inter（Google Fonts），权重 100–900 |
+| **主色** | `#017AFF`（蓝） |
+| **辅助色** | `#5A0199`（紫）、`#F07850`（橙） |
+| **渐变** | `linear-gradient(98.78deg, #017AFF -5.07%, #5A0199 108.39%)` |
+| **深色底** | `#001021`（页脚） |
+| **文字色** | `#2C2C2C`（正文）、`#3C3C3C`（副文）、`#364153`（表单标签） |
+| **内容区最大宽度** | 1280px（居中） |
+| **导航栏高度** | 72px |
+
+### 8.2 导航（全局）
+
+- 5 个菜单项：**HOME、ABOUT、AI CAREER CO-PILOT、CAREER LAB、CONTACT**
+- Logo：`logo-silver.png`（64×64px），左上角
+- Active 态：8px solid `#017AFF` 顶边 + `rgba(1,122,255,0.8)` 背景 + 白色文字
+- 非 active 态：透明背景 + `#2C2C2C` 文字
+
+### 8.3 已完成页面
+
+#### Home（`/`）
+
+| 区域 | 描述 |
+|---|---|
+| **Hero** | 蓝紫渐变背景（98.78deg），叠加 topographic-bg.png（`mix-blend-mode: screen`，opacity 0.6），三行白色大标题 "Harvest / Empowerment / Excellence"（Inter 900, 64px），tagline 副标题 |
+| **Featured Event** | 两列布局：左侧 `homepic.jpg`（455×312px，圆角 4px，叠加 "Featured" badge），右侧 "ID/LXD Career Lab" 信息区（标题、描述、4 个 stats 卡片、APPLY NOW CTA 按钮） |
+| **Footer** | 深色 `#001021`，3 列（COMPANY 链接、FOLLOW US 社交、空间），newsletter 栏，版权 "© 2026 Heerise Academy" |
+
+#### About（`/about/`）
+
+| 区域 | 描述 |
+|---|---|
+| **Who Are We?** | 白色背景，两列：左侧 "Who Are We?"（Inter 900, 64px, `#017AFF`）+ 正文描述，右侧 `aboutpic.png`（606×414px, 圆角 8px） |
+| **Mission** | `#017AFF` 蓝色背景，左侧 `looper-1.png` 装饰 + "MISSION" 标签，右侧使命宣言文字（白色，20px） |
+| **分割线** | 白色半透明线条 |
+| **Vision** | `#017AFF` 蓝色背景，左侧 `looper-3.png` 装饰（opacity 0.5）+ "VISION" 标签，右侧愿景文字（白色，20px），三个要点以 bullet list 呈现 |
+
+#### Contact（`/contact/`）
+
+| 区域 | 描述 |
+|---|---|
+| **Hero Banner** | 蓝紫渐变（91.16deg, `#017AFF` → `#1F0199`），190px 高，"Let's work together."（40px/700）+ 副标题，右侧叠加 `looper-1.png`（350×340px, opacity 0.4） |
+| **Form Card** | 居中卡片（669px 宽），border `#DADADA`，shadow `0px 4px 4.8px rgba(0,0,0,0.08)`，圆角 8px |
+| **表单字段** | First Name + Last Name（并排 300px），Email + Phone Number（并排），How did you hear about us?（dropdown），Service interest（3 个 checkbox：Job Assessment / Bootcamp / Consultation），Your Message（textarea 116px），SEND 按钮（全宽 `#017AFF`） |
+| **后端集成** | `POST /contact` → FastAPI，发送回执邮件（`noreply@heeriseacademy.com`）+ 团队通知邮件 |
+
+#### Career Lab（`/career-lab/`）、AI Career Co-pilot（`/acc/`）
+
+- 目前为 placeholder 页面（"Coming Soon"），待后续集成 Bootcamp 独立应用内容
+- `Bootcamp/` 文件夹包含 Larry 开发的 React + Vite + Tailwind 原型（tab 切换式单页应用：Outcomes / Projects / Instructors / Pricing / Apply），待适配至 Hugo 站点
+
+### 8.4 Contact Form 后端
+
+| 文件 | 描述 |
+|---|---|
+| `backend/app/routers/contact.py` | FastAPI router，`POST /contact`，接收 `ContactIn` schema（first_name, last_name, email, phone, hear_about, service_interest, message），使用 `send_email()` 发送回执 + 团队通知 |
+| `backend/app/main.py` | 已注册 `contact.router`，CORS 已添加 `http://localhost:1313` |
+| `frontend/hugo-landing/static/js/contact.js` | 客户端表单提交处理，`fetch()` 到 FastAPI，支持多选 checkbox |
+
+---
+
+## 9. Hugo 前端说明（主前端）
 
 Hugo Universal Theme 是本项目的 **唯一确定前端方案**，承载所有页面（落地页、博客、FAQ，以及登录、Dashboard、Profile 等应用页面）。
 
-### 8.1 目录结构（当前 + 规划）
+### 9.1 目录结构（当前）
 
 ```
 frontend/hugo-landing/
-├── hugo.toml                  # 站点配置（菜单/参数/组件开关）
-├── content/                   # Markdown 页面内容
-│   ├── blog/                  # 博客文章
-│   ├── contact.md             # 联系页面
-│   └── faq.md                 # FAQ 页面
-├── data/                      # YAML 数据驱动组件
-│   ├── carousel/              # 首页轮播
-│   ├── features/              # 特性卡片
-│   ├── testimonials/          # 用户评价
-│   └── clients/               # 合作伙伴 Logo
-├── static/                    # 静态资源
-│   ├── css/custom.css         # 自定义 CSS
-│   ├── img/                   # 图片
-│   └── js/                    # ★ 应用 JavaScript（API 调用、认证、动态渲染）
-│       ├── auth.js            # (待建) Token 管理、登录/注册逻辑
-│       ├── api.js             # (待建) FastAPI 请求封装
-│       ├── dashboard.js       # (待建) Dashboard 动态内容
-│       └── profile.js         # (待建) Profile 编辑
-├── layouts/                   # ★ 自定义页面模板（覆盖主题默认）
-│   └── page/                  # (待建) Login/Dashboard/Profile 等应用页面模板
+├── hugo.toml                          # 站点配置（菜单/参数/组件开关）
+├── content/                           # Markdown 页面内容
+│   ├── blog/                          # 博客文章
+│   │   ├── first-post.md
+│   │   └── career-tips.md
+│   ├── about.md                       # ★ About 页面 (id="about")
+│   ├── contact.md                     # ★ Contact 页面 (id="contact")
+│   ├── career-lab.md                  # Career Lab placeholder
+│   └── acc.md                         # AI Career Co-pilot placeholder
+├── layouts/                           # ★ 自定义页面模板（覆盖主题默认）
+│   ├── index.html                     # ★ 首页模板覆盖（hero + featured event）
+│   ├── page/
+│   │   └── single.html                # ★ 页面模板覆盖（id 分发 + 去掉 breadcrumbs）
+│   └── partials/
+│       ├── custom_headers.html        # ★ 注入 Google Fonts (Inter)
+│       ├── hero_home.html             # ★ 首页 Hero 区域
+│       ├── featured_event.html        # ★ 首页 Featured Event 区域
+│       ├── footer.html                # ★ 页脚覆盖（新 3 列布局）
+│       ├── about.html                 # ★ About 页面完整内容
+│       └── contact.html               # ★ Contact 页面（hero banner + form card）
+├── static/                            # 静态资源
+│   ├── css/
+│   │   └── custom.css                 # ★ 全站自定义 CSS（~1200 行，设计系统 + 各页面样式）
+│   ├── img/                           # ★ 图片资源（详见下表）
+│   └── js/
+│       └── contact.js                 # ★ Contact 表单 fetch() 提交处理
+├── data/                              # YAML 数据驱动组件（主题原有，部分已禁用）
 ├── themes/
-│   └── hugo-universal-theme/  # 主题（git clone，不要直接修改）
-└── HUGO_THEME_README.md       # 详细使用文档（中英双语）
+│   └── hugo-universal-theme/          # 主题（git clone，不要直接修改）
+└── HUGO_THEME_README.md               # 详细使用文档
 ```
 
-### 8.2 常见操作
+**`static/img/` 资源清单**：
+
+| 文件 | 用途 | 来源 |
+|---|---|---|
+| `logo-silver.png` | 导航栏 Logo（64×64） | Figma 设计稿 |
+| `logo-transparent.png` | 透明 Logo（备用） | 项目原有 |
+| `logo.png` / `logo-1.png` | 其他 Logo 版本 | 项目原有 |
+| `topographic-bg.png` | Home Hero 区域背景纹理（1328×963px，mix-blend-mode: screen） | Figma 设计稿 |
+| `homepic.jpg` | Home Featured Event 左侧图片（455×312px） | 项目提供 |
+| `aboutpic.png` | About "Who Are We?" 右侧图片（606×414px） | 项目提供 |
+| `looper-1.png` | 装饰图案（Mission 区域 + Contact hero 右侧） | Figma 设计稿 |
+| `looper-3.png` | 装饰图案（Vision 区域，opacity 0.5） | Figma 设计稿 |
+
+### 9.2 常见操作
 
 | 操作 | 方法 |
 |---|---|
@@ -293,7 +383,7 @@ frontend/hugo-landing/
 | 关闭某区域 | 在 `hugo.toml` 中设置对应 `enable = false` |
 | 新增应用页面 | 创建 `content/xxx.md` + `layouts/page/xxx.html` + `static/js/xxx.js` |
 
-### 8.3 动态页面开发模式
+### 9.3 动态页面开发模式
 
 Hugo 中的动态页面由三部分组成：
 
@@ -325,9 +415,9 @@ static/js/auth.js             → JavaScript（表单处理、API 调用、DOM �
 
 ---
 
-## 9. 架构方向与云端部署
+## 10. 架构方向与云端部署
 
-### 9.1 确定架构：Hugo + FastAPI（两层）
+### 10.1 确定架构：Hugo + FastAPI（两层）
 
 项目最终架构为 **Hugo 前端 + FastAPI 后端**，共两个服务：
 
@@ -352,7 +442,7 @@ static/js/auth.js             → JavaScript（表单处理、API 调用、DOM �
 | 服务数量 | 3 个 | **2 个** |
 | 部署复杂度 | 高（3 个容器/服务） | **低（静态文件 + 1 个容器）** |
 
-### 9.2 Next.js → Hugo 迁移路径
+### 10.2 Next.js → Hugo 迁移路径
 
 | 阶段 | 说明 |
 |---|---|
@@ -376,7 +466,7 @@ Hugo 模板 (layouts/page/xxx.html)
               └── fetch("/api/auth/login", ...) → render DOM
 ```
 
-### 9.3 本地开发
+### 10.3 本地开发
 
 **迁移完成后**，本地只需启动 2 个服务：
 
@@ -387,7 +477,7 @@ Hugo 模板 (layouts/page/xxx.html)
 
 **过渡期间**，Hugo 和 Next.js 可以并行运行（`:1313` + `:3000` + `:8000`），逐步迁移。
 
-### 9.4 云端部署（统一方案）
+### 10.4 云端部署（统一方案）
 
 部署到云端后，统一到一个域名：
 
@@ -433,7 +523,7 @@ Firebase Hosting 通过 `rewrites` 将 `/api/**` 代理到 Cloud Run，其余全
 - 无需 Next.js 服务器，无 Node.js 运行时成本
 - 所有页面共享同一套 Hugo Universal Theme CSS，风格 100% 统一
 
-### 9.5 构建与部署脚本
+### 10.5 构建与部署脚本
 
 ```bash
 #!/bin/bash
@@ -453,7 +543,7 @@ gcloud run deploy heerise-backend \
   --region us-central1
 ```
 
-### 9.6 部署时的路由调整
+### 10.6 部署时的路由调整
 
 | 调整项 | 说明 |
 |---|---|

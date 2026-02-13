@@ -941,7 +941,86 @@ document.getElementById("login-form").addEventListener("submit", function(e) {
 
 ---
 
-## 五、覆盖主题文件的规则
+## 五、Redesign 新增文件清单
+
+以下为基于 Figma 设计稿重建网站后新增/覆盖的全部自定义文件。标注 ★ 的为新建文件，标注 ▲ 的为覆盖主题默认。
+
+### 布局覆盖（`layouts/`）
+
+| 文件路径 | 类型 | 说明 |
+|---|---|---|
+| `layouts/index.html` | ▲ 覆盖 | 首页模板，替换原有 carousel/features 等，改为调用 `hero_home.html` + `featured_event.html` |
+| `layouts/page/single.html` | ▲ 覆盖 | 独立页面模板，新增逻辑：当 front matter 含 `id` 参数时跳过 `breadcrumbs.html`，直接渲染对应 partial |
+| `layouts/partials/custom_headers.html` | ▲ 覆盖 | 注入 Google Fonts Inter（wght 100–900） |
+| `layouts/partials/footer.html` | ▲ 覆盖 | 全新页脚：深色 `#001021` 背景，3 列布局（COMPANY / FOLLOW US / 空间），newsletter bar，版权 |
+| `layouts/partials/hero_home.html` | ★ 新建 | 首页 Hero：蓝紫渐变 + topographic 背景 + 三行标题 + tagline |
+| `layouts/partials/featured_event.html` | ★ 新建 | 首页 Featured Event：两列布局，左图 + 右信息区（标题/描述/stats/CTA） |
+| `layouts/partials/about.html` | ★ 新建 | About 页面完整内容（Who Are We? + Mission + Vision） |
+| `layouts/partials/contact.html` | ★ 新建 | Contact 页面（gradient hero banner + 居中 form card） |
+
+### 内容页面（`content/`）
+
+| 文件路径 | 说明 |
+|---|---|
+| `content/about.md` | About 页面，`id = "about"` 触发 `partials/about.html` |
+| `content/contact.md` | Contact 页面，`id = "contact"` 触发 `partials/contact.html` |
+| `content/career-lab.md` | Career Lab placeholder 页面（待集成 Bootcamp 内容） |
+| `content/acc.md` | AI Career Co-pilot placeholder 页面 |
+
+### 静态资源 — CSS（`static/css/`）
+
+| 文件路径 | 说明 |
+|---|---|
+| `static/css/custom.css` | 全站自定义样式（~1200 行），包含以下章节：|
+
+**`custom.css` 结构目录**（按内部注释分段）：
+
+| 段 | 内容 |
+|---|---|
+| 1. GLOBAL / DESIGN SYSTEM | Inter 字体、主色 `#017AFF`、排版比例 |
+| 2. BUTTONS | 主 CTA 按钮、二级按钮样式 |
+| 3. NAVBAR | 导航栏 72px、Logo 64×64、active 态蓝色高亮 |
+| 4. HERO HOME | 蓝紫渐变、topographic 背景定位、标题/tagline 排版 |
+| 5. FEATURED EVENT | 两列布局（图 + 信息区）、stats 卡片、badge、CTA |
+| 6. FOOTER | 深色页脚、3 列、newsletter bar、版权 |
+| 7. ABOUT PAGE | Who Are We?（两列）、Mission/Vision（蓝色背景）、looper 装饰定位 |
+| 8. ABOUT MISC | About 页面文字加粗、Vision bullet list |
+| 9. CONTACT PAGE | hero banner（gradient + looper）、form card（669px）、输入框/checkbox/button |
+| 10. BREADCRUMBS | 内页标题横幅样式覆盖 |
+| 11. PLACEHOLDER PAGES | Career Lab / ACC 占位页 |
+| 12. FORM CONTROLS | 全局 focus 态 |
+| 13. MISC OVERRIDES | 滚动、overflow、padding 修正 |
+
+### 静态资源 — 图片（`static/img/`）
+
+| 文件名 | 尺寸 / 格式 | 用途 | 引用位置 |
+|---|---|---|---|
+| `logo-silver.png` | 64×64 PNG | 导航栏 Logo | `hugo.toml` → `params.logo` |
+| `logo-transparent.png` | PNG | 透明 Logo（备用） | — |
+| `logo.png` / `logo-1.png` | PNG | 其他 Logo 版本 | — |
+| `topographic-bg.png` | 1328×963 PNG | Home Hero 背景纹理 | `custom.css` → `.hero-topographic` |
+| `homepic.jpg` | 455×312 JPG | Home Featured Event 左侧图片 | `featured_event.html` |
+| `aboutpic.png` | 606×414 PNG | About "Who Are We?" 右侧图片 | `about.html` |
+| `looper-1.png` | ~180×174 PNG | 装饰图案（Mission + Contact hero） | `about.html`、`contact.html` |
+| `looper-3.png` | ~184×189 PNG | 装饰图案（Vision 区域） | `about.html` |
+
+### 静态资源 — JavaScript（`static/js/`）
+
+| 文件名 | 说明 |
+|---|---|
+| `contact.js` | Contact 表单提交处理：收集表单数据 → `fetch()` POST 到 FastAPI `/contact` → 显示 success/error 反馈 |
+
+### 站点配置变更（`hugo.toml`）
+
+主要变更：
+- **菜单**：5 项（HOME / ABOUT / AI CAREER CO-PILOT / CAREER LAB / CONTACT）
+- **Logo**：`logo-silver.png`（64×64）
+- **禁用组件**：carousel、features、testimonials、see_more、recent_posts、clients、topbar 全部 `enable = false`
+- **新增参数**：`[params.hero]`（首页标题/tagline）、`[params.featured_event]`（Featured Event 数据）、`[params.social]`（社交链接）
+
+---
+
+## 六、覆盖主题文件的规则
 
 Hugo 的查找顺序：**你的站点文件优先于主题文件**。
 
@@ -960,7 +1039,7 @@ Hugo 的查找顺序：**你的站点文件优先于主题文件**。
 
 ---
 
-## 六、CSS 颜色主题
+## 七、CSS 颜色主题
 
 在 `hugo.toml` 中设置 `params.style` 切换颜色：
 
@@ -979,7 +1058,7 @@ Hugo 的查找顺序：**你的站点文件优先于主题文件**。
 
 ---
 
-## 七、常用 CSS 类名
+## 八、常用 CSS 类名
 
 在自定义页面中可以直接使用以下主题提供的 CSS 类：
 

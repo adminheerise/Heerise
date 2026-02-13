@@ -1,1 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Career on Heerise</title><link>http://localhost:1313/tags/career/</link><description>Recent content in Career on Heerise</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sun, 25 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/career/index.xml" rel="self" type="application/rss+xml"/><item><title>Welcome to Heerise</title><link>http://localhost:1313/blog/2026/01/25/welcome-to-heerise/</link><pubDate>Sun, 25 Jan 2026 00:00:00 +0000</pubDate><guid>http://localhost:1313/blog/2026/01/25/welcome-to-heerise/</guid><description>&lt;p>Welcome to Heerise! We are excited to launch our career coaching platform. Stay tuned for more updates on how we can help you achieve your career goals.&lt;/p></description></item><item><title>5 Tips for Career Growth in 2026</title><link>http://localhost:1313/blog/2026/01/20/5-tips-for-career-growth-in-2026/</link><pubDate>Tue, 20 Jan 2026 00:00:00 +0000</pubDate><guid>http://localhost:1313/blog/2026/01/20/5-tips-for-career-growth-in-2026/</guid><description>&lt;p>Looking to accelerate your career in 2026? Here are five actionable tips to help you grow professionally.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Career on Heerise</title>
+    <link>http://localhost:50093/tags/career/</link>
+    <description>Recent content in Career on Heerise</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 25 Jan 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:50093/tags/career/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Welcome to Heerise</title>
+      <link>http://localhost:50093/blog/2026/01/25/welcome-to-heerise/</link>
+      <pubDate>Sun, 25 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:50093/blog/2026/01/25/welcome-to-heerise/</guid>
+      <description>&lt;p&gt;Welcome to Heerise! We are excited to launch our career coaching platform. Stay tuned for more updates on how we can help you achieve your career goals.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>5 Tips for Career Growth in 2026</title>
+      <link>http://localhost:50093/blog/2026/01/20/5-tips-for-career-growth-in-2026/</link>
+      <pubDate>Tue, 20 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:50093/blog/2026/01/20/5-tips-for-career-growth-in-2026/</guid>
+      <description>&lt;p&gt;Looking to accelerate your career in 2026? Here are five actionable tips to help you grow professionally.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -12,10 +12,10 @@
 
 ---
 
-## 1. 快速开始（Windows PowerShell）
+## 1. 快速开始（Windows / macOS / Linux）
 
 ### 1.1 启动后端（FastAPI）
-
+#### window
 ```powershell
 cd E:\Heerise\backend
 python -m venv .venv
@@ -27,19 +27,39 @@ $env:JWT_SECRET="dev_secret"
 
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
-
+#### macOS / Linux
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate  
+pip install -r requirements.txt
+export JWT_SECRET="dev_secret" 
+uvicorn app.main:app --reload --port 8000
+```
 健康检查：
 - `http://localhost:8000/health` 期望返回 `{"ok": true}`
 
 ### 1.2 启动前端（Hugo — 主前端）
 
 另开一个 PowerShell 窗口：
-
+Window:
 ```powershell
 cd E:\Heerise\frontend\hugo-landing
 
 # 使用项目内置的 Hugo 可执行文件
 E:\Heerise\tools\hugo\hugo.exe server -w
+```
+
+macOS / Linux: 
+安装 Hugo（首次需要，建议 Extended）:
+```bash
+brew install hugo
+hugo version
+```
+启动 Hugo:
+```bash
+cd ~/Heerise/frontend/hugo-landing
+hugo server -w
 ```
 
 打开：
@@ -51,41 +71,43 @@ E:\Heerise\tools\hugo\hugo.exe server -w
 - Blog：`http://localhost:1313/blog/`
 - （后续迁移完成后）Login / Dashboard / Profile / Settings / Admin 等页面也将在此
 
-> **依赖说明**：Hugo 是独立二进制文件（已下载到 `tools/hugo/hugo.exe`），无需 pip/npm 安装。
+> **依赖说明**：Hugo 是独立二进制文件（已下载到 `tools/hugo/hugo.exe`），无需 pip/npm 安装。(仅限window)
 
 #### Hugo 生产构建
-
+##### window
 ```powershell
 cd E:\Heerise\frontend\hugo-landing
 E:\Heerise\tools\hugo\hugo.exe --minify
 # 输出到 frontend/hugo-landing/public/ 目录
 ```
-### macOS / Linux
-cd frontend/hugo-landing
-hugo server -w
-# 打开 http://localhost:1313/
+##### macOS / Linux
+```bash
+cd ~/Heerise/frontend/hugo-landing
+hugo --minify
+# 输出到 frontend/hugo-landing/public/ 目录
+```
 
 ### 1.3 启动 Next.js（过渡期，迁移完成后移除）
 
 > 以下 Next.js 开发服务器仅在 Hugo 侧页面尚未重建时使用。当 Hugo 中对应页面就绪后，此步骤将不再需要。
-
+#### window
 ```powershell
 cd E:\Heerise\frontend
 npm install
 $env:NEXT_PUBLIC_API_BASE="http://localhost:8000"
 npm run dev
 ```
-
-过渡期间两者并行：Hugo `:1313`（落地页 + 已迁移页面），Next.js `:3000`（尚未迁移的动态页面）。
+#### macOS / Linux
+```bash
+cd ~/Heerise/frontend
+npm install
+export NEXT_PUBLIC_API_BASE="http://localhost:8000"
+npm run dev
+```
+打开：http://localhost:3000/
 
 ---
-### macOS / Linux
-cd frontend
-npm install
-NEXT_PUBLIC_API_BASE="http://localhost:8000" npm run dev
-# 打开 http://localhost:3000/
-brew install hugo
-
+过渡期间两者并行：Hugo `:1313`（落地页 + 已迁移页面），Next.js `:3000`（尚未迁移的动态页面）。
 ## 2. 环境变量说明
 
 ### 2.1 后端（`backend/`）

@@ -31,7 +31,10 @@
 
     <!-- ========== STEP 1: Q1 — Educational Background ========== -->
     <div class="ob-step" data-step="1">
-        <div class="ob-question">
+        <div class="ob-question ob-progress-1">
+            <div class="ob-progress-segments">
+                <div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div>
+            </div>
             <h2 class="ob-q-title">What is your educational background?</h2>
             <div class="ob-options ob-options-list" data-type="single" data-key="q1">
                 <div class="ob-option" data-value="Early Childhood Education">Early Childhood Education</div>
@@ -52,9 +55,33 @@
         </div>
     </div>
 
-    <!-- ========== STEP 2: Q2 — Skills Selection (up to 5) ========== -->
+    <!-- ========== STEP 2: Q2 — Career Stage ========== -->
     <div class="ob-step" data-step="2">
-        <div class="ob-question">
+        <div class="ob-question ob-progress-2">
+            <div class="ob-progress-segments">
+                <div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div>
+            </div>
+            <h2 class="ob-q-title">What best describes your current career stage?</h2>
+            <div class="ob-options ob-options-list" data-type="single" data-key="career_stage">
+                <div class="ob-option" data-value="Student, Recent Graduate (<2 years of experience)">Student, Recent Graduate (&lt;2 years of experience)</div>
+                <div class="ob-option" data-value="Early Career (2-5 years of experience)">Early Career (2-5 years of experience)</div>
+                <div class="ob-option" data-value="Mid-Career (5-10 years of experience)">Mid-Career (5-10 years of experience)</div>
+                <div class="ob-option" data-value="Experienced Professional (10+ years of experience)">Experienced Professional (10+ years of experience)</div>
+                <div class="ob-option" data-value="Looking to Re-enter Workforce">Looking to Re-enter Workforce</div>
+            </div>
+            <div class="ob-nav">
+                <button class="ob-btn-back" onclick="OB.prev()">BACK</button>
+                <button class="ob-btn-next" onclick="OB.next()" disabled>NEXT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== STEP 3: Q3 — Skills Selection (up to 5) ========== -->
+    <div class="ob-step" data-step="3">
+        <div class="ob-question ob-progress-3">
+            <div class="ob-progress-segments">
+                <div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div>
+            </div>
             <h2 class="ob-q-title">From the list below, select up to 5 skills where you feel you have the strongest proficiency, gained through your education or work experience.</h2>
             <div class="ob-options ob-options-grid" data-type="multi" data-max="5" data-key="q2">
                 <div class="ob-chip" data-value="Assessment &amp; Evaluation">Assessment &amp; Evaluation</div>
@@ -85,9 +112,12 @@
         </div>
     </div>
 
-    <!-- ========== STEP 3: Q3 — Work Enjoyment ========== -->
-    <div class="ob-step" data-step="3">
-        <div class="ob-question">
+    <!-- ========== STEP 4: Q4 — Work Enjoyment ========== -->
+    <div class="ob-step" data-step="4">
+        <div class="ob-question ob-progress-4">
+            <div class="ob-progress-segments">
+                <div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div>
+            </div>
             <h2 class="ob-q-title">What kind of work would you most enjoy doing?</h2>
             <div class="ob-options ob-options-list" data-type="single-other" data-key="q3">
                 <div class="ob-option" data-value="Designing engaging learning experiences">Designing engaging learning experiences</div>
@@ -107,9 +137,12 @@
         </div>
     </div>
 
-    <!-- ========== STEP 4: Q4 — Motivation ========== -->
-    <div class="ob-step" data-step="4">
-        <div class="ob-question">
+    <!-- ========== STEP 5: Q5 — Motivation ========== -->
+    <div class="ob-step" data-step="5">
+        <div class="ob-question ob-progress-5">
+            <div class="ob-progress-segments">
+                <div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div>
+            </div>
             <h2 class="ob-q-title">What is your primary motivation for seeking a career change or upskilling?</h2>
             <div class="ob-options ob-options-list" data-type="single-other" data-key="q4">
                 <div class="ob-option" data-value="Higher Salary">Higher Salary</div>
@@ -131,9 +164,12 @@
         </div>
     </div>
 
-    <!-- ========== STEP 5: Q5 — Time Per Week ========== -->
-    <div class="ob-step" data-step="5">
-        <div class="ob-question">
+    <!-- ========== STEP 6: Q6 — Time Per Week ========== -->
+    <div class="ob-step" data-step="6">
+        <div class="ob-question ob-progress-6">
+            <div class="ob-progress-segments">
+                <div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div>
+            </div>
             <h2 class="ob-q-title">How much time per week are you realistically able to dedicate to learning and skill development?</h2>
             <div class="ob-options ob-options-list" data-type="single" data-key="q5">
                 <div class="ob-option" data-value="0-2 hours">0-2 hours</div>
@@ -148,9 +184,12 @@
         </div>
     </div>
 
-    <!-- ========== STEP 6: Q6 — Transferrable Skills ========== -->
-    <div class="ob-step" data-step="6">
-        <div class="ob-question">
+    <!-- ========== STEP 7: Q7 — Transferrable Skills ========== -->
+    <div class="ob-step" data-step="7">
+        <div class="ob-question ob-progress-7">
+            <div class="ob-progress-segments">
+                <div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div>
+            </div>
             <h2 class="ob-q-title">Briefly describe your top 3 transferrable skills</h2>
             <div class="ob-textarea-wrap">
                 <textarea class="ob-textarea" id="ob-textarea-q6" data-key="q6" maxlength="900"
@@ -164,8 +203,8 @@
         </div>
     </div>
 
-    <!-- ========== STEP 7: ANALYZING ========== -->
-    <div class="ob-step" data-step="7">
+    <!-- ========== STEP 8: ANALYZING ========== -->
+    <div class="ob-step" data-step="8">
         <div class="ob-analyzing">
             <div class="ob-spinner-wrap">
                 <svg class="ob-spinner-svg" viewBox="0 0 120 120">
@@ -184,8 +223,8 @@
         </div>
     </div>
 
-    <!-- ========== STEP 8: ANALYSIS COMPLETE ========== -->
-    <div class="ob-step" data-step="8">
+    <!-- ========== STEP 9: ANALYSIS COMPLETE ========== -->
+    <div class="ob-step" data-step="9">
         <div class="ob-result">
             <div class="ob-result-badge">
                 <div class="ob-result-circle">
@@ -218,8 +257,8 @@
         </div>
     </div>
 
-    <!-- ========== STEP 9: CREATE ACCOUNT ========== -->
-    <div class="ob-step" data-step="9">
+    <!-- ========== STEP 10: CREATE ACCOUNT ========== -->
+    <div class="ob-step" data-step="10">
         <div class="ob-account">
             <h2 class="ob-account-title">Create Your Account</h2>
             <p class="ob-account-subtitle">Unlock your full career report and access to AI-powered career tools</p>
@@ -274,7 +313,7 @@
     var progressBar = document.getElementById('ob-progress');
     var progressFill = document.getElementById('ob-progress-fill');
     var progressLabel = document.getElementById('ob-progress-label');
-    var totalQuestions = 6; // Q1-Q6
+    var totalQuestions = 7; // Q1-Q7
     var current = 0;
     var answers = {};
 
@@ -382,7 +421,7 @@
         saveAnswer(current);
 
         // Go to analyzing step
-        showStep(7);
+        showStep(8);
         runAnalyzing();
     };
 
@@ -395,7 +434,7 @@
                 progress = 100;
                 clearInterval(interval);
                 pctEl.textContent = '100%';
-                setTimeout(function() { showStep(8); }, 600);
+                setTimeout(function() { showStep(9); }, 600);
             } else {
                 pctEl.textContent = Math.floor(progress) + '%';
             }

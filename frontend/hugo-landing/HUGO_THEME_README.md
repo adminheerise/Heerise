@@ -999,7 +999,7 @@ document.getElementById("login-form").addEventListener("submit", function(e) {
 | `logo-transparent.png` | PNG | 透明 Logo（备用） | — |
 | `logo.png` / `logo-1.png` | PNG | 其他 Logo 版本 | — |
 | `topographic-bg.png` | 1328×963 PNG | Home Hero 背景纹理 | `custom.css` → `.hero-topographic` |
-| `homepic.jpg` | 455×312 JPG | Home Featured Event 左侧图片 | `featured_event.html` |
+| `homepic1.jpg` | JPG | Home Featured Event 左侧图片 | `featured_event.html` |
 | `aboutpic.png` | 606×414 PNG | About "Who Are We?" 右侧图片 | `about.html` |
 | `looper-1.png` | ~180×174 PNG | 装饰图案（Mission + Contact hero） | `about.html`、`contact.html` |
 | `looper-3.png` | ~184×189 PNG | 装饰图案（Vision 区域） | `about.html` |

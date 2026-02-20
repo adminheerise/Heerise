@@ -97,8 +97,8 @@ pluralizelisttitles = false
   disabled_logo = false
   logo_text = "Heerise"
 
-  logo = "img/logo-silver.png"
-  logo_small = "img/logo-silver.png"
+  logo = "img/logo-transparent.png"
+  logo_small = "img/logo-transparent.png"
   contact_url = "/contact"
   address = """<p class="text-uppercase"><strong>Heerise Academy</strong>
     <br>Design Your Future With Confidence
@@ -208,10 +208,8 @@ pluralizelisttitles = false
 # NEW: Social links for footer
 # ============================================================
 [params.social]
-  facebook = "https://facebook.com"
-  linkedin = "https://linkedin.com"
-  youtube = "https://youtube.com"
-  rednote = "https://xiaohongshu.com"
+  linkedin = "https://www.linkedin.com/in/heerise-academy-a778553a9"
+  rednote = "#"
 
 [taxonomies]
   category = "categories"

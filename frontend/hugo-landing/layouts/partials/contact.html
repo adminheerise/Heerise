@@ -35,7 +35,7 @@
                 </div>
                 <div class="cf-field">
                     <label class="cf-label">Phone Number</label>
-                    <input type="tel" class="cf-input" id="phone" name="phone" placeholder="Enter your phone number" />
+                    <input type="tel" class="cf-input" id="phone" name="phone" placeholder="Enter your phone number" pattern="[0-9+\-\s\(\)]*" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9+\-\s\(\)]/g,'')" />
                 </div>
             </div>
 
@@ -54,7 +54,7 @@
 
             <!-- Row 4: Service interest (checkboxes) -->
             <div class="cf-field cf-field-full">
-                <label class="cf-label">How did you hear about us?</label>
+                <label class="cf-label">What service are you interested in?</label>
                 <div class="cf-checkbox-row">
                     <label class="cf-checkbox-label">
                         <input type="checkbox" name="service_interest" value="job_assessment" />

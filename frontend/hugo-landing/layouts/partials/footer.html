@@ -1,66 +1,42 @@
-<!-- *** FOOTER *** -->
+<!-- *** FOOTER *** — Figma Frame 21: 1280×430, bg #001021 -->
 <footer id="footer">
-    <div class="container">
-        <div class="row footer-links">
-            <!-- Column 1: Company -->
-            <div class="col-md-4 col-sm-6">
-                <h4 class="footer-heading">Company</h4>
-                <ul class="footer-nav">
+    <img src="/img/accfooter.png" alt="" class="footer-bg-decoration" />
+    <div class="footer-inner-wrap">
+        <!-- Main content row: Logo+Tagline | Company | Follow us -->
+        <div class="footer-content-row">
+            <div class="footer-left">
+                <div class="footer-logo">
+                    <img src="/img/logo-silver.png" alt="Heerise Academy" />
+                </div>
+                <p class="footer-tagline">Design Your Future<br>With Confidence.</p>
+            </div>
+            <div class="footer-col-links">
+                <h4>Company</h4>
+                <ul>
                     <li><a href="/about/">About</a></li>
                     <li><a href="/acc/">AI Career Copilot</a></li>
                     <li><a href="/career-lab/">Career Lab</a></li>
                     <li><a href="/contact/">Contact Us</a></li>
                 </ul>
             </div>
-
-            <!-- Column 2: Follow us -->
-            <div class="col-md-4 col-sm-6">
-                <h4 class="footer-heading">Follow us</h4>
-                <ul class="footer-social">
-                    {{ with .Site.Params.social.facebook }}
-                    <li><a href="{{ . }}" target="_blank" rel="noopener"><i class="fab fa-facebook"></i> Facebook</a></li>
-                    {{ end }}
+            <div class="footer-col-social">
+                <h4>Follow us</h4>
+                <ul>
                     {{ with .Site.Params.social.linkedin }}
-                    <li><a href="{{ . }}" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> Linkedin</a></li>
-                    {{ end }}
-                    {{ with .Site.Params.social.youtube }}
-                    <li><a href="{{ . }}" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> Youtube</a></li>
+                    <li><a href="{{ . }}" target="_blank" rel="noopener">Linkedin</a></li>
                     {{ end }}
                     {{ with .Site.Params.social.rednote }}
-                    <li><a href="{{ . }}" target="_blank" rel="noopener"><i class="fas fa-book"></i> RedNote</a></li>
+                    <li><a href="{{ . }}" target="_blank" rel="noopener">RedNote</a></li>
                     {{ end }}
                 </ul>
             </div>
-
-            <!-- Column 3: spacer / reserved -->
-            <div class="col-md-4 col-sm-12">
-            </div>
         </div>
 
-        <!-- Newsletter Row -->
-        <div class="row footer-newsletter">
-            <div class="col-md-12">
-                <div class="newsletter-wrapper">
-                    <span class="newsletter-text">Stay Updated with Our Latest News</span>
-                    <form class="newsletter-form" action="#" method="post">
-                        <input type="email" class="newsletter-input" placeholder="Enter your email" required>
-                        <button type="submit" class="btn btn-newsletter">Subscribe</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <!-- Line 6: divider -->
+        <div class="footer-divider-line"></div>
+
+        <!-- Copyright -->
+        <p class="footer-copyright">&copy; 2026 Heerise Academy. All Rights Reserved.</p>
     </div>
 </footer>
 <!-- *** FOOTER END *** -->
-
-<!-- *** COPYRIGHT *** -->
-<div id="copyright">
-    <div class="container">
-        <div class="col-md-12 text-center">
-            {{ if isset .Site.Params "copyright" }}
-            <p>{{ .Site.Params.copyright | safeHTML }}</p>
-            {{ end }}
-        </div>
-    </div>
-</div>
-<!-- *** COPYRIGHT END *** -->

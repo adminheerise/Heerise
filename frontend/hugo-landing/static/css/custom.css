@@ -3212,8 +3212,34 @@ body.ob-page #copyright {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 32px;
-    padding-top: 48px;
+    gap: 24px;
+    padding-top: 32px;
+}
+/* 7-segment progress bar — Figma: 8px height, gap 8px */
+.ob-progress-segments {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 501px;
+    height: 8px;
+}
+.ob-progress-segments .ob-seg {
+    flex: 1;
+    height: 8px;
+    background: #EEEEEE;
+    border-radius: 4px;
+    min-width: 0;
+}
+.ob-progress-1 .ob-progress-segments .ob-seg:nth-child(-n+1),
+.ob-progress-2 .ob-progress-segments .ob-seg:nth-child(-n+2),
+.ob-progress-3 .ob-progress-segments .ob-seg:nth-child(-n+3),
+.ob-progress-4 .ob-progress-segments .ob-seg:nth-child(-n+4),
+.ob-progress-5 .ob-progress-segments .ob-seg:nth-child(-n+5),
+.ob-progress-6 .ob-progress-segments .ob-seg:nth-child(-n+6),
+.ob-progress-7 .ob-progress-segments .ob-seg:nth-child(-n+7) {
+    background: #017AFF;
 }
 .ob-q-title {
     font-family: 'Inter', sans-serif;
@@ -3254,6 +3280,20 @@ body.ob-page #copyright {
     background: rgba(1, 122, 255, 0.08);
     color: #017AFF;
     font-weight: 500;
+}
+.ob-option.ob-selected::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #1B1B1B;
+    border-radius: 50%;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+.ob-options-list .ob-option {
+    display: flex;
+    align-items: center;
 }
 
 /* ── Chip grid (multi select) ── */

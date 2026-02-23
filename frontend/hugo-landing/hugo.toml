@@ -209,7 +209,7 @@ pluralizelisttitles = false
 # ============================================================
 [params.social]
   linkedin = "https://www.linkedin.com/in/heerise-academy-a778553a9"
-  rednote = "#"
+  rednote = "https://www.xiaohongshu.com/user/profile/56a2ba9c4775a729d5355df6"
 
 [taxonomies]
   category = "categories"

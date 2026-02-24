@@ -2,6 +2,7 @@
  * Career Lab page — tab switching + modal handlers.
  */
 (() => {
+  const init = () => {
   const $$ = (s) => document.querySelectorAll(s);
   const $ = (s) => document.querySelector(s);
 
@@ -16,6 +17,9 @@
   };
   tabs.forEach(t => t.addEventListener("click", () => switchTab(t.dataset.tab)));
   window.switchTab = switchTab;
+
+  // Reusable countdown module
+  window.HeeriseCountdown?.initAll(".cl-countdown");
 
   // Syllabus modal
   const modal = $("#cl-syllabus-modal");
@@ -365,4 +369,11 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && bootcampModal?.classList.contains("is-open")) closeBootcamp();
   });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
 })();

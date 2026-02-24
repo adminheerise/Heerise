@@ -40,6 +40,35 @@
                         <div class="cl-stat-label">Live Sessions + Office Hours</div>
                     </div>
                 </div>
+                <!--CountDown 倒计时-->
+                <section
+                    class="cl-countdown"
+                    data-deadline="2026-03-15T23:59:59-08:00"
+                    aria-live="polite"
+                >
+                    <div class="cl-countdown-label">Enrollment Closes in:</div>
+                    <div class="cl-countdown-track">
+                        <div class="cl-countdown-unit">
+                            <div class="cl-countdown-value" data-countdown-days>0</div>
+                            <div class="cl-countdown-unit-label">DAYS</div>
+                        </div>
+                        <div class="cl-countdown-sep">:</div>
+                        <div class="cl-countdown-unit">
+                            <div class="cl-countdown-value" data-countdown-hours>0</div>
+                            <div class="cl-countdown-unit-label">HRS</div>
+                        </div>
+                        <div class="cl-countdown-sep">:</div>
+                        <div class="cl-countdown-unit">
+                            <div class="cl-countdown-value" data-countdown-minutes>0</div>
+                            <div class="cl-countdown-unit-label">MINS</div>
+                        </div>
+                        <div class="cl-countdown-sep">:</div>
+                        <div class="cl-countdown-unit">
+                            <div class="cl-countdown-value" data-countdown-seconds>0</div>
+                            <div class="cl-countdown-unit-label">SECS</div>
+                        </div>
+                    </div>
+                </section>
                 <div class="cl-cta-buttons">
                     <a href="#" class="cl-btn-primary cl-bootcamp-open" onclick="return false;">APPLY FOR COHORT 1 <span>→</span></a>
                     <a href="#" class="cl-btn-secondary cl-syllabus-open" onclick="return false;">PREVIEW SYLLABUS</a>
@@ -572,5 +601,6 @@
     </div>
 </div>
 
-<script src="/js/career-lab.js"></script>
+<script src='{{ "js/countdown.js" | relURL }}'></script>
+<script src='{{ "js/career-lab.js" | relURL }}'></script>
 <!-- *** CAREER LAB PAGE END *** -->

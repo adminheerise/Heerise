@@ -1459,6 +1459,76 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     text-align: center;
 }
 
+.cl-countdown {
+    background: #f2f2f2;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin: 8px 0 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+}
+
+.cl-countdown-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #2c2c2c;
+    line-height: 1.2;
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+.cl-countdown-track {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.cl-countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.cl-countdown-value {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    background: #2f3135;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.cl-countdown-sep {
+    color: #2f3135;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1;
+    margin-top: -12px;
+}
+
+.cl-countdown-unit-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    line-height: 1;
+    color: #2f3135;
+}
+
+.cl-countdown.is-expired .cl-countdown-label {
+    color: #b42318;
+}
+
 /* CTA Buttons (210×41 primary, 155×41 secondary) */
 .cl-cta-buttons {
     display: flex;
@@ -2523,6 +2593,26 @@ body.cl-modal-open {
         flex-wrap: wrap;
         gap: 24px;
     }
+    .cl-countdown {
+        flex-direction: column;
+        gap: 14px;
+    }
+    .cl-countdown-label {
+        font-size: 14px;
+        text-align: center;
+    }
+    .cl-countdown-value {
+        width: 56px;
+        height: 56px;
+        font-size: 24px;
+    }
+    .cl-countdown-unit-label {
+        font-size: 11px;
+    }
+    .cl-countdown-sep {
+        font-size: 28px;
+        margin-top: -10px;
+    }
     .cl-pricing-grid {
         flex-direction: column;
         align-items: center;
@@ -2561,6 +2651,28 @@ body.cl-modal-open {
     }
     .cl-cta-buttons {
         flex-direction: column;
+    }
+    .cl-countdown {
+        padding: 16px 12px;
+        gap: 14px;
+    }
+    .cl-countdown-track {
+        gap: 8px;
+    }
+    .cl-countdown-label {
+        font-size: 13px;
+    }
+    .cl-countdown-value {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+    }
+    .cl-countdown-unit-label {
+        font-size: 10px;
+    }
+    .cl-countdown-sep {
+        font-size: 20px;
+        margin-top: -8px;
     }
     .cl-btn-primary,
     .cl-btn-secondary {

@@ -54,7 +54,7 @@
         email: document.getElementById("cl-email").value.trim(),
         phone: null,
         hear_about: null,
-        service_interest: "bootcamp",
+        service_interest: "career_lab",
         message: "Career Lab Application:\n\n" + document.getElementById("cl-essay").value.trim(),
       };
 

@@ -1,19 +1,35 @@
 <!-- *** HERO HOME *** -->
 <section class="hero-home">
+    <!-- ========== VANTA.JS WAVES EFFECT - START (remove this block to restore static gradient) ========== -->
+    <div id="vanta-hero-waves" class="hero-vanta"></div>
+    <!-- ========== VANTA.JS WAVES EFFECT - END ========== -->
     <div class="hero-topographic"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1 text-center">
-                <h1 class="hero-heading">
-                    <span class="hero-line">{{ .Site.Params.hero.line1 }}</span>
-                    <span class="hero-line">{{ .Site.Params.hero.line2 }}</span>
-                    <span class="hero-line">{{ .Site.Params.hero.line3 }}</span>
-                </h1>
-                <p class="hero-tagline">
-                    {{ .Site.Params.hero.tagline }}
-                </p>
-            </div>
-        </div>
+    <div class="hero-home-inner">
+        <h1 class="hero-heading">
+            <span class="hero-line">{{ .Site.Params.hero.line1 }}</span>
+            <span class="hero-line">{{ .Site.Params.hero.line2 }}</span>
+            <span class="hero-line">{{ .Site.Params.hero.line3 }}</span>
+        </h1>
+        <p class="hero-tagline">
+            {{ .Site.Params.hero.tagline }}
+        </p>
     </div>
+    <!-- ========== VANTA.JS WAVES - SCRIPTS (remove with block above to disable) ========== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+    <script>
+    (function() {
+        var el = document.getElementById('vanta-hero-waves');
+        if (!el) return;
+        VANTA.WAVES({
+            el: '#vanta-hero-waves',
+            color: 0x017aff,
+            waveHeight: 15,
+            waveSpeed: 1.2,
+            zoom: 0.8
+        });
+    })();
+    </script>
+    <!-- ========== VANTA.JS WAVES - SCRIPTS END ========== -->
 </section>
 <!-- *** HERO HOME END *** -->

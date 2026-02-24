@@ -2002,9 +2002,9 @@ body.cl-modal-open {
 .cl-instructor-card {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 24px;
+    gap: 16px;
     flex: 1;
     max-width: 347px;
     text-align: center;
@@ -2031,6 +2031,7 @@ body.cl-modal-open {
     height: 128px;
     border-radius: 50%;
     object-fit: cover;
+    object-position: center top;
     display: block;
     border: none;
     margin: 0;
@@ -2053,7 +2054,21 @@ body.cl-modal-open {
     font-weight: 400;
     color: #4A5565;
     line-height: 24px;
-    text-align: center;
+    text-align: justify;
+    margin: 0;
+}
+
+.cl-instructor-link {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #017AFF;
+    text-decoration: none;
+}
+
+.cl-instructor-link:hover {
+    color: #005bbf;
+    text-decoration: underline;
 }
 
 /* ---- Pricing Section ---- */

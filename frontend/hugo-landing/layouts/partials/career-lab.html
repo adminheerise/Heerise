@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="cl-cta-buttons">
-                    <a href="#cl-apply-section" class="cl-btn-primary">APPLY FOR COHORT 1 <span>→</span></a>
+                    <a href="#" class="cl-btn-primary cl-bootcamp-open" onclick="return false;">APPLY FOR COHORT 1 <span>→</span></a>
                     <a href="#" class="cl-btn-secondary cl-syllabus-open" onclick="return false;">PREVIEW SYLLABUS</a>
                 </div>
             </div>
@@ -248,7 +248,7 @@
                         <li class="cl-pf-item"><span class="cl-pf-check">✓</span>Student Procures Own Software</li>
                         <li class="cl-pf-item"><span class="cl-pf-check">✓</span>Certificate of Completion</li>
                     </ul>
-                    <button class="cl-pricing-btn cl-pricing-btn-secondary" onclick="document.getElementById('cl-apply-section').scrollIntoView({behavior:'smooth'})">APPLY NOW</button>
+                    <button class="cl-pricing-btn cl-pricing-btn-secondary cl-bootcamp-open">APPLY NOW</button>
                 </div>
 
                 <!-- Premium Tier — RECOMMENDED -->
@@ -270,7 +270,7 @@
                         <li class="cl-pf-item"><span class="cl-pf-check">✓</span>Student Procures Own Software</li>
                         <li class="cl-pf-item"><span class="cl-pf-check">✓</span>Certificate of Completion</li>
                     </ul>
-                    <button class="cl-pricing-btn cl-pricing-btn-primary" onclick="document.getElementById('cl-apply-section').scrollIntoView({behavior:'smooth'})">APPLY NOW</button>
+                    <button class="cl-pricing-btn cl-pricing-btn-primary cl-bootcamp-open">APPLY NOW</button>
                 </div>
 
                 <!-- Elite Mastery -->
@@ -291,57 +291,12 @@
                         <li class="cl-pf-item"><span class="cl-pf-check">✓</span>Student Procures Own Software</li>
                         <li class="cl-pf-item"><span class="cl-pf-check">✓</span>Certificate of Completion</li>
                     </ul>
-                    <button class="cl-pricing-btn cl-pricing-btn-secondary" onclick="document.getElementById('cl-apply-section').scrollIntoView({behavior:'smooth'})">APPLY NOW</button>
+                    <button class="cl-pricing-btn cl-pricing-btn-secondary cl-bootcamp-open">APPLY NOW</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- ========== APPLY SECTION — Always visible below every tab (Frame 111, 1280×688) ========== -->
-<section class="cl-apply-always" id="cl-apply-section">
-    <div class="cl-section-inner">
-        <div class="cl-section-header">
-            <span class="cl-section-tag">APPLY NOW</span>
-            <h2 class="cl-section-title">Join the Founding Cohort</h2>
-        </div>
-
-        <p class="cl-apply-scholarship"><strong>Starts February 28, 2026.</strong> Submit your application to schedule an interview with our instructors.<br>Limited to <strong>20 students</strong> Accepted candidates receive a <strong>$500 scholarship</strong></p>
-
-        <div class="cl-apply-form-wrap">
-            <form class="cl-apply-form" id="cl-apply-form">
-                <div class="cl-form-row">
-                    <div class="cl-form-group">
-                        <label class="cl-form-label" for="cl-name">Name</label>
-                        <input type="text" id="cl-name" name="name" class="cl-form-input" placeholder="Enter your name" required />
-                    </div>
-                    <div class="cl-form-group">
-                        <label class="cl-form-label" for="cl-email">Email</label>
-                        <input type="email" id="cl-email" name="email" class="cl-form-input" placeholder="Enter your email" required />
-                    </div>
-                </div>
-
-                <div class="cl-form-group cl-form-full">
-                    <label class="cl-form-label" for="cl-essay">Why do you want to become a Learning Experience Designer/Instructional Designer?</label>
-                    <textarea id="cl-essay" name="essay" class="cl-form-textarea" placeholder="Tell us about your background, career goals, and why you're interested in this program..." required></textarea>
-                </div>
-
-                <div class="cl-next-steps">
-                    <h3 class="cl-next-steps-title">Next Steps:</h3>
-                    <ul class="cl-next-steps-list">
-                        <li>We'll review your application within 24-48 hours</li>
-                        <li>If selected, we'll invite you to interview with our instructors</li>
-                        <li>Upon acceptance, you'll receive a $500 scholarship</li>
-                        <li>Choose your tier and complete enrollment</li>
-                    </ul>
-                </div>
-
-                <div id="cl-apply-message" class="cl-apply-feedback" style="display:none;"></div>
-                <button type="submit" class="cl-submit-btn">SUBMIT APPLICATION FOR INTERVIEW</button>
-            </form>
-        </div>
-    </div>
-</section>
 
 <!-- Back to Top (Frame 114, 1280×72) -->
 <div class="cl-back-to-top">
@@ -353,6 +308,230 @@
     </div>
 </div>
 
+<!-- bootcamp application servey (9 question）-->
+<div class="cl-bootcamp-modal" id="cl-bootcamp-modal" aria-hidden="true">
+    <div class="cl-bootcamp-backdrop" data-bootcamp-close></div>
+    <div class="cl-bootcamp-dialog" role="dialog" aria-modal="true" aria-labelledby="cl-bootcamp-modal-title">
+        <div class="cl-bootcamp-header">
+            <img src="/img/logo-transparent.png" alt="HeeRise Academy logo" />
+            <div class="cl-bootcamp-title-group">
+                <h2 id="cl-bootcamp-modal-title">ID/LXD BOOTCAMP APPLICATION</h2>
+                <p>Founding Cohort · Starts Feb 28 · 8-Week Intensive</p>
+            </div>
+        </div>
+
+        <form class="cl-syllabus-form cl-bootcamp-form" id="cl-bootcamp-form">
+            <div class="ob-progress-segments cl-bootcamp-progress">
+                <div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div>
+            </div>
+
+            <div class="cl-bootcamp-step" data-step="1">
+                <div class="cl-syllabus-grid">
+                    <div class="cl-syllabus-field">
+                        <label for="cl-bootcamp-first-name">First Name</label>
+                        <input id="cl-bootcamp-first-name" name="first_name" type="text" placeholder="Enter First Name" />
+                    </div>
+                    <div class="cl-syllabus-field">
+                        <label for="cl-bootcamp-last-name">Last Name</label>
+                        <input id="cl-bootcamp-last-name" name="last_name" type="text" placeholder="Enter Last Name" />
+                    </div>
+                    <div class="cl-syllabus-field cl-syllabus-field-full">
+                        <label for="cl-bootcamp-email">Email</label>
+                        <input id="cl-bootcamp-email" name="email" type="email" placeholder="Please Enter Your Email" />
+                    </div>
+                </div>
+
+                <p class="cl-syllabus-error" id="cl-bootcamp-error" aria-live="polite"></p>
+                <div class="cl-bootcamp-actions">
+                    <button type="button" class="cl-syllabus-close-btn" data-bootcamp-close>BACK</button>
+                    <button type="button" class="cl-syllabus-preview-btn" id="cl-bootcamp-next-step">NEXT</button>
+                </div>
+            </div>
+
+            <div class="cl-bootcamp-step" data-step="2" hidden>
+                <h3 class="ob-q-title cl-bootcamp-question">Which of the following topics are you <span>most interested</span> in learning about during the bootcamp? (Up to 2)</h3>
+                <div class="ob-options ob-options-list cl-bootcamp-topics" id="cl-bootcamp-topics">
+                    <div class="ob-option" data-value="Curriculum Development">Curriculum Development</div>
+                    <div class="ob-option" data-value="E-learning Design">E-learning Design</div>
+                    <div class="ob-option" data-value="Adult Learning Theories">Adult Learning Theories</div>
+                    <div class="ob-option" data-value="Assessment Design">Assessment Design</div>
+                    <div class="ob-option" data-value="Instructional Technology">Instructional Technology</div>
+                    <div class="ob-option" data-value="Project Management for Instructional Design">Project Management for Instructional Design</div>
+                </div>
+                <p class="cl-syllabus-error" id="cl-bootcamp-step2-error" aria-live="polite"></p>
+                <div class="cl-bootcamp-actions">
+                    <button type="button" class="cl-syllabus-close-btn" id="cl-bootcamp-prev-step">BACK</button>
+                    <button type="button" class="cl-syllabus-preview-btn" id="cl-bootcamp-next-step-2">NEXT</button>
+                </div>
+            </div>
+
+            <div class="cl-bootcamp-step" data-step="3" hidden>
+                <h3 class="ob-q-title cl-bootcamp-question cl-bootcamp-question-education">Highest Education Level</h3>
+                <div class="ob-options ob-options-list cl-bootcamp-education" id="cl-bootcamp-education">
+                    <div class="ob-option" data-value="High School Diploma">High School Diploma</div>
+                    <div class="ob-option" data-value="Associate's Degree">Associate's Degree</div>
+                    <div class="ob-option" data-value="Bachelor's Degree">Bachelor's Degree</div>
+                    <div class="ob-option" data-value="Master's Degree">Master's Degree</div>
+                    <div class="ob-option" data-value="Doctorate">Doctorate</div>
+                </div>
+                <p class="cl-syllabus-error" id="cl-bootcamp-step3-error" aria-live="polite"></p>
+                <div class="cl-bootcamp-actions">
+                    <button type="button" class="cl-syllabus-close-btn" id="cl-bootcamp-prev-step-2">BACK</button>
+                    <button type="button" class="cl-syllabus-preview-btn" id="cl-bootcamp-next-step-3">NEXT</button>
+                </div>
+            </div>
+
+            <div class="cl-bootcamp-step" data-step="4" hidden>
+                <h3 class="ob-q-title cl-bootcamp-question">What is your <span>academic major</span>?</h3>
+                <div class="cl-bootcamp-major-wrap">
+                    <input id="cl-bootcamp-major" name="academic_major" type="text" placeholder="Please enter" />
+                </div>
+                <p class="cl-syllabus-error" id="cl-bootcamp-step4-error" aria-live="polite"></p>
+                <div class="cl-bootcamp-actions">
+                    <button type="button" class="cl-syllabus-close-btn" id="cl-bootcamp-prev-step-3">BACK</button>
+                    <button type="button" class="cl-syllabus-preview-btn" id="cl-bootcamp-next-step-4">NEXT</button>
+                </div>
+            </div>
+
+            <div class="cl-bootcamp-step" data-step="5" hidden>
+                <h3 class="ob-q-title cl-bootcamp-question cl-bootcamp-question-education">Years of Work Experience</h3>
+                <div class="ob-options ob-options-list cl-bootcamp-work-exp" id="cl-bootcamp-work-exp">
+                    <div class="ob-option" data-value="<2 years of experience">&lt;2 years of experience</div>
+                    <div class="ob-option" data-value="2-5 years of experience">2-5 years of experience</div>
+                    <div class="ob-option" data-value="5-10 years of experience">5-10 years of experience</div>
+                    <div class="ob-option" data-value="10+ years of experience">10+ years of experience</div>
+                </div>
+                <p class="cl-syllabus-error" id="cl-bootcamp-step5-error" aria-live="polite"></p>
+                <div class="cl-bootcamp-actions">
+                    <button type="button" class="cl-syllabus-close-btn" id="cl-bootcamp-prev-step-4">BACK</button>
+                    <button type="button" class="cl-syllabus-preview-btn" id="cl-bootcamp-next-step-5">NEXT</button>
+                </div>
+            </div>
+
+            <div class="cl-bootcamp-step" data-step="6" hidden>
+                <h3 class="ob-q-title cl-bootcamp-question">How would you rate your <span>proficiency</span> in the following instructional design software/tools?</h3>
+                <div class="cl-bootcamp-scroll-area">
+                    <div class="cl-bootcamp-select-group">
+                        <label for="cl-bootcamp-tool-storyline">Articulate Storyline</label>
+                        <select id="cl-bootcamp-tool-storyline">
+                            <option value="">Select level</option>
+                            <option>Beginner</option>
+                            <option>Intermediate</option>
+                            <option>Advanced</option>
+                            <option>Expert</option>
+                            <option>I don't have any experience with it</option>
+                        </select>
+                    </div>
+                    <div class="cl-bootcamp-select-group">
+                        <label for="cl-bootcamp-tool-captivate">Adobe Captivate</label>
+                        <select id="cl-bootcamp-tool-captivate">
+                            <option value="">Select level</option>
+                            <option>Beginner</option>
+                            <option>Intermediate</option>
+                            <option>Advanced</option>
+                            <option>Expert</option>
+                            <option>I don't have any experience with it</option>
+                        </select>
+                    </div>
+                    <div class="cl-bootcamp-select-group">
+                        <label for="cl-bootcamp-tool-camtasia">Camtasia</label>
+                        <select id="cl-bootcamp-tool-camtasia">
+                            <option value="">Select level</option>
+                            <option>Beginner</option>
+                            <option>Intermediate</option>
+                            <option>Advanced</option>
+                            <option>Expert</option>
+                            <option>I don't have any experience with it</option>
+                        </select>
+                    </div>
+                    <div class="cl-bootcamp-select-group">
+                        <label for="cl-bootcamp-tool-lms">Learning Management Systems (LMS)</label>
+                        <select id="cl-bootcamp-tool-lms">
+                            <option value="">Select level</option>
+                            <option>Beginner</option>
+                            <option>Intermediate</option>
+                            <option>Advanced</option>
+                            <option>Expert</option>
+                            <option>I don't have any experience with it</option>
+                        </select>
+                    </div>
+                    <div class="cl-bootcamp-select-group">
+                        <label for="cl-bootcamp-tool-graphic">Graphic design tools (e.g., Canva, Adobe Illustrator)</label>
+                        <select id="cl-bootcamp-tool-graphic">
+                            <option value="">Select level</option>
+                            <option>Beginner</option>
+                            <option>Intermediate</option>
+                            <option>Advanced</option>
+                            <option>Expert</option>
+                            <option>I don't have any experience with it</option>
+                        </select>
+                    </div>
+                    <div class="cl-bootcamp-select-group">
+                        <label for="cl-bootcamp-tool-h5p">H5P</label>
+                        <select id="cl-bootcamp-tool-h5p">
+                            <option value="">Select level</option>
+                            <option>Beginner</option>
+                            <option>Intermediate</option>
+                            <option>Advanced</option>
+                            <option>Expert</option>
+                            <option>I don't have any experience with it</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="cl-syllabus-error" id="cl-bootcamp-step6-error" aria-live="polite"></p>
+                <div class="cl-bootcamp-actions">
+                    <button type="button" class="cl-syllabus-close-btn" id="cl-bootcamp-prev-step-5">BACK</button>
+                    <button type="button" class="cl-syllabus-preview-btn" id="cl-bootcamp-next-step-6">NEXT</button>
+                </div>
+            </div>
+
+            <div class="cl-bootcamp-step" data-step="7" hidden>
+                <h3 class="ob-q-title cl-bootcamp-question">How many hours <span>per week</span> can you dedicate to the bootcamp?</h3>
+                <div class="ob-options ob-options-list cl-bootcamp-hours" id="cl-bootcamp-hours">
+                    <div class="ob-option" data-value="0-2 hours">0-2 hours</div>
+                    <div class="ob-option" data-value="3-5 hours">3-5 hours</div>
+                    <div class="ob-option" data-value="6-10 hours">6-10 hours</div>
+                    <div class="ob-option" data-value="10+ hours">10+ hours</div>
+                </div>
+                <p class="cl-syllabus-error" id="cl-bootcamp-step7-error" aria-live="polite"></p>
+                <div class="cl-bootcamp-actions">
+                    <button type="button" class="cl-syllabus-close-btn" id="cl-bootcamp-prev-step-6">BACK</button>
+                    <button type="button" class="cl-syllabus-preview-btn" id="cl-bootcamp-next-step-7">NEXT</button>
+                </div>
+            </div>
+
+            <div class="cl-bootcamp-step" data-step="8" hidden>
+                <h3 class="ob-q-title cl-bootcamp-question">What is your <span>preferred learning style</span> for professional development?</h3>
+                <div class="ob-options ob-options-list cl-bootcamp-learning-style" id="cl-bootcamp-learning-style">
+                    <div class="ob-option" data-value="Self-paced online modules">Self-paced online modules</div>
+                    <div class="ob-option" data-value="Instructor-led virtual sessions">Instructor-led virtual sessions</div>
+                    <div class="ob-option" data-value="Hands-on projects and assignments">Hands-on projects and assignments</div>
+                    <div class="ob-option" data-value="Mentorship and one-on-one coaching">Mentorship and one-on-one coaching</div>
+                    <div class="ob-option" data-value="Collaborative group work">Collaborative group work</div>
+                </div>
+                <p class="cl-syllabus-error" id="cl-bootcamp-step8-error" aria-live="polite"></p>
+                <div class="cl-bootcamp-actions">
+                    <button type="button" class="cl-syllabus-close-btn" id="cl-bootcamp-prev-step-7">BACK</button>
+                    <button type="button" class="cl-syllabus-preview-btn" id="cl-bootcamp-next-step-8">NEXT</button>
+                </div>
+            </div>
+
+            <div class="cl-bootcamp-step" data-step="9" hidden>
+                <h3 class="ob-q-title cl-bootcamp-question">Please provide a short answer of <span>why</span> you are interested in becoming an instructional designer.</h3>
+                <div class="cl-bootcamp-why-wrap">
+                    <textarea id="cl-bootcamp-why" placeholder="Please enter here"></textarea>
+                </div>
+                <p class="cl-syllabus-error" id="cl-bootcamp-step9-error" aria-live="polite"></p>
+                <div class="cl-bootcamp-actions">
+                    <button type="button" class="cl-syllabus-close-btn" id="cl-bootcamp-prev-step-8">BACK</button>
+                    <button type="submit" class="cl-syllabus-preview-btn">SUBMIT</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- bootcamp syllabus form and view-->
 <div class="cl-syllabus-modal" id="cl-syllabus-modal" aria-hidden="true">
     <div class="cl-syllabus-backdrop" data-syllabus-close></div>
     <div class="cl-syllabus-dialog" role="dialog" aria-modal="true" aria-labelledby="cl-syllabus-modal-title">

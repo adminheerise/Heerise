@@ -2245,193 +2245,230 @@ body.cl-modal-open {
     color: #017AFF;
 }
 
-/* ---- Apply Section — Always visible below tabs (Frame 111, 1280×688) ---- */
-.cl-apply-always {
-    display: block !important;
+/* ---- Bootcamp application modal ---- */
+.cl-bootcamp-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: none;
 }
 
-.cl-apply-scholarship {
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: #017AFF;
-    line-height: 28px;
-    margin-bottom: 16px;
-    max-width: 1180px;
+.cl-bootcamp-modal.is-open {
+    display: block;
 }
 
-.cl-apply-form-wrap {
+.cl-bootcamp-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.55);
+}
+
+.cl-bootcamp-dialog {
+    position: relative;
+    width: min(980px, calc(100% - 32px));
+    margin: 72px auto 24px;
+    max-height: calc(100vh - 96px);
+    background: #FFFFFF;
+    border-radius: 6px;
+    padding: 74px 56px 50px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.24);
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.cl-bootcamp-header {
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 34px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #E5E7EB;
 }
 
-.cl-apply-form {
-    background-color: #FFFFFF;
-    border: 1px solid #DADADA;
-    border-radius: 8px;
-    padding: 24px;
-    width: 669px;
-    max-width: 669px;
-    box-shadow: 0px 4px 4.8px rgba(0, 0, 0, 0.08);
-    margin: 0;
+.cl-bootcamp-header img {
+    width: 88px;
+    height: auto;
 }
 
-.cl-form-row {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 8px;
-}
-
-.cl-form-group {
-    flex: 1;
-    margin-bottom: 8px;
-}
-
-.cl-form-full {
-    margin-bottom: 8px;
-}
-
-.cl-form-label {
-    display: block;
+.cl-bootcamp-title-group h2 {
+    margin: 0 0 8px;
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: #364153;
-    line-height: 20px;
-    margin-bottom: 8px;
+    font-size: 20px;
+    line-height: 1.18;
+    font-weight: 700;
+    color: #2C2C2C;
+    text-transform: uppercase;
 }
 
-.cl-form-input {
+.cl-bootcamp-title-group p {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 400;
+    color: #595959;
+}
+
+.cl-bootcamp-form {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #E5E5E5;
+    max-width: none;
+    background: #FFFFFF;
+    border-color: #BFD7FF;
+    padding: 38px 34px 36px;
+}
+
+.cl-bootcamp-progress {
+    width: 100%;
+    max-width: 501px;
+    margin: 0 auto 28px;
+}
+
+.cl-bootcamp-progress .ob-seg {
+    min-width: 0;
+}
+
+.cl-bootcamp-progress .ob-seg.is-active {
+    background: #017AFF;
+}
+
+.cl-bootcamp-step[hidden] {
+    display: none !important;
+}
+
+.cl-bootcamp-question {
+    text-align: left;
+    font-size: 20px;
+    line-height: 1.45;
+    max-width: 100%;
+    margin: 4px 0 18px;
+}
+
+.cl-bootcamp-question span {
+    color: #017AFF;
+}
+
+.cl-bootcamp-topics {
+    gap: 12px;
+}
+
+.cl-bootcamp-question-education {
+    margin-bottom: 14px;
+}
+
+.cl-bootcamp-major-wrap {
+    border-top: 1px solid #E5E7EB;
+    padding-top: 14px;
+}
+
+.cl-bootcamp-major-wrap input {
+    width: 100%;
+    height: 42px;
+    border: 1px solid #E2E8F0;
     border-radius: 4px;
+    padding: 0 12px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     color: #111827;
-    line-height: 17px;
-    transition: border-color 0.2s;
-    box-sizing: border-box;
     background: #FFFFFF;
 }
 
-.cl-form-input::placeholder {
-    color: #9CAEB5;
+.cl-bootcamp-major-wrap input::placeholder {
+    color: #9CA3AF;
 }
 
-.cl-form-input:focus {
+.cl-bootcamp-major-wrap input:focus {
     outline: none;
     border-color: #017AFF;
-    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.12);
 }
 
-.cl-form-textarea {
+.cl-bootcamp-work-exp {
+    gap: 12px;
+}
+
+.cl-bootcamp-scroll-area {
+    max-height: 360px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.cl-bootcamp-select-group {
+    margin-bottom: 12px;
+}
+
+.cl-bootcamp-select-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #475569;
+}
+
+.cl-bootcamp-select-group select {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #D1D5DB;
+    border-radius: 4px;
+    padding: 0 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #2C2C2C;
+    background: #FFFFFF;
+}
+
+.cl-bootcamp-select-group select:focus {
+    outline: none;
+    border-color: #017AFF;
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.12);
+}
+
+.cl-bootcamp-hours {
+    gap: 12px;
+}
+
+.cl-bootcamp-learning-style {
+    gap: 12px;
+}
+
+.cl-bootcamp-why-wrap textarea {
     width: 100%;
     min-height: 116px;
-    padding: 10px;
-    border: 1px solid #E5E5E5;
+    border: 1px solid #E2E8F0;
     border-radius: 4px;
+    padding: 10px 12px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     color: #111827;
-    line-height: 17px;
-    resize: vertical;
-    transition: border-color 0.2s;
-    box-sizing: border-box;
     background: #FFFFFF;
+    resize: vertical;
 }
 
-.cl-form-textarea::placeholder {
-    color: #9CAEB5;
+.cl-bootcamp-why-wrap textarea::placeholder {
+    color: #9CA3AF;
 }
 
-.cl-form-textarea:focus {
+.cl-bootcamp-why-wrap textarea:focus {
     outline: none;
     border-color: #017AFF;
-    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.12);
 }
 
-.cl-next-steps {
-    background-color: rgba(164, 241, 255, 0.2);
-    border-radius: 8px;
-    padding: 16px;
-    margin-top: 17px;
-    margin-bottom: 17px;
+.cl-bootcamp-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
 }
 
-.cl-next-steps-title {
-    font-family: 'Arial', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: #101828;
-    line-height: 24px;
-    margin-bottom: 5px;
-}
-
-.cl-next-steps-list {
-    list-style: none;
-    padding: 0 0 0 16px;
+.cl-bootcamp-actions .cl-syllabus-close-btn {
     margin: 0;
 }
 
-.cl-next-steps-list li {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: #364153;
-    line-height: 20px;
-    margin-bottom: 5px;
-    padding-left: 0;
-    position: relative;
-}
-
-.cl-next-steps-list li::before {
-    content: none;
-}
-
-.cl-next-steps-list li:last-child {
-    margin-bottom: 0;
-}
-
-.cl-submit-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #017AFF;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 4px;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    text-transform: uppercase;
-    line-height: 20px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.cl-submit-btn:hover {
-    background-color: #005bbf;
-}
-
-/* Apply form feedback */
-.cl-apply-feedback {
-    padding: 14px 20px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 16px;
-}
-
-.cl-apply-feedback-success {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-    border: 1px solid #a5d6a7;
-}
-
-.cl-apply-feedback-error {
-    background-color: #fce4ec;
-    color: #c62828;
-    border: 1px solid #ef9a9a;
+.cl-bootcamp-actions .cl-syllabus-preview-btn {
+    margin: 0;
+    min-width: 152px;
 }
 
 /* ---- Back to Top (Frame 114, 1280×72) ---- */
@@ -2522,9 +2559,6 @@ body.cl-modal-open {
         align-items: center;
         gap: 32px;
     }
-    .cl-form-row {
-        flex-direction: column;
-    }
     .cl-cta-buttons {
         flex-direction: column;
     }
@@ -2550,6 +2584,37 @@ body.cl-modal-open {
     }
     .cl-syllabus-pdf-wrap {
         height: 420px;
+    }
+    .cl-bootcamp-dialog {
+        margin-top: 12px;
+        max-height: calc(100vh - 24px);
+        padding: 24px 20px;
+    }
+    .cl-bootcamp-header {
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 18px;
+        padding-bottom: 16px;
+    }
+    .cl-bootcamp-header img {
+        width: 52px;
+    }
+    .cl-bootcamp-title-group h2 {
+        font-size: 18px;
+    }
+    .cl-bootcamp-title-group p {
+        font-size: 14px;
+    }
+    .cl-bootcamp-progress {
+        margin-bottom: 20px;
+    }
+    .cl-bootcamp-question {
+        font-size: 16px;
+        line-height: 1.4;
+        margin-bottom: 14px;
+    }
+    .cl-bootcamp-actions {
+        margin-top: 14px;
     }
     .cl-instructors-section {
         padding: 10px 0;

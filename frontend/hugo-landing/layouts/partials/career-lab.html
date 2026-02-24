@@ -42,7 +42,7 @@
                 </div>
                 <div class="cl-cta-buttons">
                     <a href="#cl-apply-section" class="cl-btn-primary">APPLY FOR COHORT 1 <span>→</span></a>
-                    <a href="#" class="cl-btn-secondary" onclick="switchTab('projects');return false;">VIEW PROJECTS</a>
+                    <a href="#" class="cl-btn-secondary cl-syllabus-open" onclick="return false;">PREVIEW SYLLABUS</a>
                 </div>
             </div>
         </div>
@@ -350,6 +350,46 @@
             BACK TO TOP
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 15l6-6 6 6" stroke="#017AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
+    </div>
+</div>
+
+<div class="cl-syllabus-modal" id="cl-syllabus-modal" aria-hidden="true">
+    <div class="cl-syllabus-backdrop" data-syllabus-close></div>
+    <div class="cl-syllabus-dialog" role="dialog" aria-modal="true" aria-labelledby="cl-syllabus-modal-title">
+        <div class="cl-syllabus-step cl-syllabus-step-form" id="cl-syllabus-step-form">
+            <h2 class="cl-syllabus-title" id="cl-syllabus-modal-title">PREVIEW SYLLABUS</h2>
+            <form class="cl-syllabus-form" id="cl-syllabus-form">
+                <div class="cl-syllabus-grid">
+                    <div class="cl-syllabus-field">
+                        <label for="cl-syllabus-first-name">First Name</label>
+                        <input id="cl-syllabus-first-name" name="first_name" type="text" placeholder="Enter First Name" required />
+                    </div>
+                    <div class="cl-syllabus-field">
+                        <label for="cl-syllabus-last-name">Last Name</label>
+                        <input id="cl-syllabus-last-name" name="last_name" type="text" placeholder="Enter Last Name" required />
+                    </div>
+                    <div class="cl-syllabus-field cl-syllabus-field-full">
+                        <label for="cl-syllabus-email">Email</label>
+                        <input id="cl-syllabus-email" name="email" type="email" placeholder="Please Enter Your Email" required />
+                    </div>
+                </div>
+                <p class="cl-syllabus-error" id="cl-syllabus-error" aria-live="polite"></p>
+                <button type="submit" class="cl-syllabus-preview-btn">PREVIEW</button>
+            </form>
+        </div>
+
+        <div class="cl-syllabus-step cl-syllabus-step-pdf" id="cl-syllabus-step-pdf" hidden>
+            <h2 class="cl-syllabus-title">COURSE SYLLABUS</h2>
+            <div class="cl-syllabus-pdf-wrap">
+                <iframe
+                    id="cl-syllabus-pdf-frame"
+                    src="/pdf/LXD%26IDBootcampSyllabus.pdf#toolbar=0&navpanes=0&scrollbar=1"
+                    title="Course Syllabus Preview"
+                    referrerpolicy="no-referrer"
+                ></iframe>
+            </div>
+            <button type="button" class="cl-syllabus-close-btn" data-syllabus-close>CLOSE</button>
+        </div>
     </div>
 </div>
 

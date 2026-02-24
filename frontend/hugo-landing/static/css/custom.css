@@ -138,19 +138,20 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     border-top: 8px solid transparent;
 }
 
-.navbar.navbar-default .navbar-nav > li > a:hover,
-.navbar.navbar-default .navbar-nav > li > a:focus {
-    color: #017AFF;
-    background-color: transparent;
+/* Hover: #017AFF at 100% */
+#navbar.navbar.navbar-default .navbar-nav > li:not(.active) > a:hover,
+#navbar.navbar.navbar-default .navbar-nav > li:not(.active) > a:focus {
+    color: #017AFF !important;
+    background-color: transparent !important;
     text-decoration: none;
 }
 
-/* Active state: filled #017AFF rectangle, white text */
+/* Active/selected state: #017AFF at 80% */
 .navbar.navbar-default .navbar-nav > li.active > a,
 .navbar.navbar-default .navbar-nav > li.active > a:hover,
 .navbar.navbar-default .navbar-nav > li.active > a:focus {
     color: #FFFFFF;
-    background-color: #017AFF;
+    background-color: rgba(1, 122, 255, 0.8);
     border-top: none;
     border-radius: 6px;
     text-decoration: none;
@@ -211,6 +212,18 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     overflow: hidden;
 }
 
+/* ========== VANTA.JS WAVES - container (remove with hero_home.html block to disable) ========== */
+.hero-vanta {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+/* ========== VANTA.JS WAVES - container END ========== */
+
 .hero-topographic {
     position: absolute;
     width: 1328px;
@@ -225,10 +238,17 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     z-index: 0;
 }
 
-.hero-home .container {
-    position: relative;
+.hero-home-inner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     z-index: 1;
-    max-width: 1280px;
+    width: 100%;
+    max-width: 1122px;
+    text-align: center;
+    padding: 0 24px;
+    box-sizing: border-box;
 }
 
 .hero-home .hero-heading {

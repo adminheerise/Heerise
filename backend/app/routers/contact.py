@@ -1,17 +1,19 @@
 # backend/app/routers/contact.py
 """
 Public contact form endpoint.
-Sends a receipt email to the user and a notification to the team,
-using the same SMTP infrastructure as email verification.
+Stores submissions in DB, sends a receipt email to the user,
+and notifies helloashlee707@gmail.com (or CONTACT_NOTIFY_EMAIL).
 """
 from __future__ import annotations
 
 import os
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
 
+from ..deps import db_sess
 from ..emailer import send_email
+from ..models import ContactSubmission
 
 router = APIRouter(prefix="/contact", tags=["contact"])
 
@@ -44,19 +46,32 @@ def _mail_from_contact() -> str | None:
 
 def _team_email() -> str:
     """Where to send internal contact-form notifications."""
-    return os.getenv("CONTACT_NOTIFY_EMAIL", "hello@heeriseacademy.com").strip()
+    return os.getenv("CONTACT_NOTIFY_EMAIL", "helloashlee707@gmail.com").strip()
 
 
 # ---------- Endpoint ----------
 
 @router.post("")
-def submit_contact(body: ContactIn):
+def submit_contact(body: ContactIn, db=Depends(db_sess)):
     """
     Receive a contact form submission.
-    1) Send a receipt / confirmation email to the user.
-    2) Send a notification email to the Heerise team.
+    1) Store in DB.
+    2) Send a receipt / confirmation email to the user.
+    3) Send a notification email to helloashlee707@gmail.com.
     If SMTP is not configured, log to console (dev-friendly).
     """
+    row = ContactSubmission(
+        first_name=body.first_name,
+        last_name=body.last_name,
+        email=body.email,
+        phone=body.phone,
+        hear_about=body.hear_about,
+        service_interest=body.service_interest,
+        message=body.message,
+    )
+    db.add(row)
+    db.commit()
+
     full_name = f"{body.first_name} {body.last_name}"
     from_addr = _mail_from_contact()
 

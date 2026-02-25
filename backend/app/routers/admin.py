@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 
 from ..deps import db_sess, require_admin
-from ..models import User, AuthSession, UserProfile
+from ..models import User, AuthSession, UserProfile, ContactSubmission, SyllabusLead, CareerLabApplication
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -75,4 +75,80 @@ def list_users(
         )
     return out
 
+
+@router.get("/contact-submissions", response_model=list[dict])
+def list_contact_submissions(
+    limit: int = 50,
+    db: Session = Depends(db_sess),
+    _: User = Depends(require_admin),
+):
+    rows = (
+        db.query(ContactSubmission)
+        .order_by(ContactSubmission.created_at.desc())
+        .limit(max(1, min(200, limit)))
+        .all()
+    )
+    return [
+        {
+            "id": r.id,
+            "first_name": r.first_name,
+            "last_name": r.last_name,
+            "email": r.email,
+            "phone": r.phone,
+            "hear_about": r.hear_about,
+            "service_interest": r.service_interest,
+            "message": r.message,
+            "created_at": r.created_at.isoformat() if r.created_at else None,
+        }
+        for r in rows
+    ]
+
+
+@router.get("/syllabus-leads", response_model=list[dict])
+def list_syllabus_leads(
+    limit: int = 50,
+    db: Session = Depends(db_sess),
+    _: User = Depends(require_admin),
+):
+    rows = (
+        db.query(SyllabusLead)
+        .order_by(SyllabusLead.created_at.desc())
+        .limit(max(1, min(200, limit)))
+        .all()
+    )
+    return [
+        {
+            "id": r.id,
+            "first_name": r.first_name,
+            "last_name": r.last_name,
+            "email": r.email,
+            "created_at": r.created_at.isoformat() if r.created_at else None,
+        }
+        for r in rows
+    ]
+
+
+@router.get("/career-lab-applications", response_model=list[dict])
+def list_career_lab_applications(
+    limit: int = 50,
+    db: Session = Depends(db_sess),
+    _: User = Depends(require_admin),
+):
+    rows = (
+        db.query(CareerLabApplication)
+        .order_by(CareerLabApplication.created_at.desc())
+        .limit(max(1, min(200, limit)))
+        .all()
+    )
+    return [
+        {
+            "id": r.id,
+            "first_name": r.first_name,
+            "last_name": r.last_name,
+            "email": r.email,
+            "message": r.message,
+            "created_at": r.created_at.isoformat() if r.created_at else None,
+        }
+        for r in rows
+    ]
 

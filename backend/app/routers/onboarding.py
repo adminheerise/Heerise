@@ -5,6 +5,7 @@ from datetime import datetime
 import json
 
 from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from ..deps import db_sess, get_current_user
@@ -20,6 +21,7 @@ from ..models import (
     UserSkill,
     QType,
     CareerStageHistory,
+    OnboardingPreCache,
 )
 
 router = APIRouter(prefix="/onboarding", tags=["onboarding"])
@@ -281,6 +283,28 @@ def get_questions(flow_id: int, db: Session = Depends(db_sess)):
             )
         )
     return out
+
+
+# ---------- Pre-cache (unauthenticated, for ACC onboarding before register) ----------
+
+class PreCacheIn(BaseModel):
+    session_id: str
+    answers_json: str
+
+
+@router.post("/pre-cache")
+def pre_cache(body: PreCacheIn, db: Session = Depends(db_sess)):
+    """Store assessment answers before register. Used by ACC onboarding flow."""
+    existing = db.query(OnboardingPreCache).filter(
+        OnboardingPreCache.session_id == body.session_id
+    ).first()
+    if existing:
+        existing.answers_json = body.answers_json
+        existing.created_at = datetime.utcnow()
+    else:
+        db.add(OnboardingPreCache(session_id=body.session_id, answers_json=body.answers_json))
+    db.commit()
+    return {"message": "ok"}
 
 
 # ---------- Save answers & complete ----------

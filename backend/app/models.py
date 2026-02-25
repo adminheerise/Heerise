@@ -274,3 +274,47 @@ class CareerStageHistory(Base):
     changed_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     user = relationship("User", back_populates="career_stage_history")
+
+
+# ---------- Public forms / leads ----------
+
+class ContactSubmission(Base):
+    __tablename__ = "contact_submissions"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    first_name = Column(String(100), nullable=False)
+    last_name = Column(String(100), nullable=False)
+    email = Column(String(255), nullable=False, index=True)
+    phone = Column(String(30), nullable=True)
+    hear_about = Column(String(100), nullable=True)
+    service_interest = Column(String(255), nullable=True)
+    message = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class SyllabusLead(Base):
+    __tablename__ = "syllabus_leads"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    first_name = Column(String(100), nullable=False)
+    last_name = Column(String(100), nullable=False)
+    email = Column(String(255), nullable=False, index=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class CareerLabApplication(Base):
+    __tablename__ = "career_lab_applications"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    first_name = Column(String(100), nullable=False)
+    last_name = Column(String(100), nullable=False)
+    email = Column(String(255), nullable=False, index=True)
+    raw_data = Column(Text, nullable=True)
+    message = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class OnboardingPreCache(Base):
+    __tablename__ = "onboarding_pre_cache"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    session_id = Column(String(64), unique=True, nullable=False, index=True)
+    answers_json = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    user_id = Column(String, ForeignKey("users.id", ondelete="SET NULL"), nullable=True, index=True)

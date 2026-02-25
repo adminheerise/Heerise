@@ -16,6 +16,7 @@ from ..security import (
 )
 from ..emailer import send_email
 from ..deps import db_sess
+from ..services.onboarding import apply_pre_cache_to_profile
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -112,6 +113,10 @@ def register(
             verified_at=None,
         )
     )
+
+    if body.onboarding_session_id:
+        apply_pre_cache_to_profile(db, u.id, body.onboarding_session_id)
+
     db.commit()
 
     token = create_email_verify_token(u.id, u.email)

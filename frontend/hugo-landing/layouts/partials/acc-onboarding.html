@@ -316,6 +316,7 @@
     var totalQuestions = 7; // Q1-Q7
     var current = 0;
     var answers = {};
+    var onboardingSessionId = null;
 
     window.OB = {};
 
@@ -420,6 +421,15 @@
         if (textarea) answers['q6'] = textarea.value.trim();
         saveAnswer(current);
 
+        // Pre-cache assessment before register
+        onboardingSessionId = 'ob-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
+        var API_BASE = window.HEERISE_API_BASE || 'http://localhost:8000';
+        fetch(API_BASE + '/onboarding/pre-cache', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ session_id: onboardingSessionId, answers_json: JSON.stringify(answers) })
+        }).catch(function() { /* ignore */ });
+
         // Go to analyzing step
         showStep(8);
         runAnalyzing();
@@ -450,17 +460,40 @@
             alert('Passwords do not match.');
             return;
         }
-        // Collect form data
+        var firstName = form.querySelector('[name="first_name"]').value.trim();
+        var lastName = form.querySelector('[name="last_name"]').value.trim();
+        var email = form.querySelector('[name="email"]').value.trim();
         var data = {
-            first_name: form.querySelector('[name="first_name"]').value,
-            last_name: form.querySelector('[name="last_name"]').value,
-            email: form.querySelector('[name="email"]').value,
+            email: email,
             password: pw,
-            assessment: answers
+            password_confirm: pwc,
+            name: (firstName + ' ' + lastName).trim() || firstName,
+            onboarding_session_id: onboardingSessionId || undefined
         };
-        console.log('Registration data:', data);
-        // TODO: POST to backend API
-        alert('Account created successfully! (Backend integration pending)');
+        var API_BASE = window.HEERISE_API_BASE || 'http://localhost:8000';
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Creating...'; }
+        fetch(API_BASE + '/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(function(res) { return res.json().then(function(d) { return { ok: res.ok, data: d }; }); })
+        .then(function(r) {
+            if (r.ok) {
+                alert('Account created! Please check your email to verify.');
+                if (r.data.dev_verify_url) window.location.href = r.data.dev_verify_url;
+                else window.location.href = '/verify-sent/';
+            } else {
+                throw new Error(r.data.detail || (Array.isArray(r.data.detail) ? r.data.detail[0].msg : 'Registration failed'));
+            }
+        })
+        .catch(function(err) {
+            alert(err.message || 'Registration failed. Please try again.');
+        })
+        .finally(function() {
+            if (btn) { btn.disabled = false; btn.textContent = 'Create Account & unlock reports'; }
+        });
     };
 
     // ── Event delegation for options ──

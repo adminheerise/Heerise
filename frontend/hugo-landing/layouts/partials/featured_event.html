@@ -1,65 +1,82 @@
-<!-- *** FEATURED EVENT *** -->
+<!-- *** FEATURED EVENT — same structure as Career Lab hero *** -->
 {{ if .Site.Params.featured_event.enable }}
-<section class="featured-event">
-    <div class="fe-wrapper">
-        <!-- Top label -->
-        <div class="fe-top-label">
-            <span class="fe-label-text">{{ .Site.Params.featured_event.label }}</span>
+<section class="cl-hero">
+    <div class="cl-hero-inner">
+        <div class="cl-hero-image">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2070&q=80" alt="Career Lab" />
         </div>
-
-        <div class="fe-content-row">
-            <!-- Left: Image -->
-            <div class="fe-image-col">
-                <div class="fe-image-wrapper">
-                    <img src="/img/homepic1.jpg" alt="Career Lab" class="fe-image" />
-                    <span class="fe-featured-badge">
-                        <span class="fe-badge-icon">⚡</span>
-                        <span>{{ .Site.Params.featured_event.badge }}</span>
-                    </span>
+        <div class="cl-hero-content">
+            <div class="cl-hero-top">
+                <h1 class="cl-title">
+                    <span class="cl-title-underline">{{ .Site.Params.featured_event.title | replaceRE " .*" "" }}</span>
+                    <span> {{ .Site.Params.featured_event.title | replaceRE "^[^ ]+ " "" }}</span>
+                </h1>
+                <div class="cl-tag">{{ .Site.Params.featured_event.subtitle }}</div>
+                <div class="cl-desc">
+                    <p>{{ .Site.Params.featured_event.description1 }}</p>
+                    <p>{{ .Site.Params.featured_event.description2 }}</p>
                 </div>
             </div>
-
-            <!-- Right: Info -->
-            <div class="fe-info-col">
-                <div class="fe-info-top">
-                    <div class="fe-title-row">
-                        <div class="fe-title-block">
-                            <h2 class="fe-title">{{ .Site.Params.featured_event.title }}</h2>
-                            <div class="fe-title-bar"></div>
+            <div class="cl-hero-bottom">
+                <div class="cl-stats">
+                    <div class="cl-stat">
+                        <div class="cl-stat-number">{{ .Site.Params.featured_event.stat1_number }}</div>
+                        <div class="cl-stat-label">{{ .Site.Params.featured_event.stat1_label }}</div>
+                    </div>
+                    <div class="cl-stat">
+                        <div class="cl-stat-number">{{ .Site.Params.featured_event.stat2_number }}</div>
+                        <div class="cl-stat-label">{{ .Site.Params.featured_event.stat2_label }}</div>
+                    </div>
+                    <div class="cl-stat">
+                        <div class="cl-stat-number">{{ .Site.Params.featured_event.stat3_number }}</div>
+                        <div class="cl-stat-label">{{ .Site.Params.featured_event.stat3_label }}</div>
+                    </div>
+                    <div class="cl-stat">
+                        <div class="cl-stat-number">{{ .Site.Params.featured_event.stat4_number }}</div>
+                        <div class="cl-stat-label">{{ .Site.Params.featured_event.stat4_label }}</div>
+                    </div>
+                </div>
+                {{ if .Site.Params.featured_event.countdown_deadline }}
+                <section
+                    class="cl-countdown"
+                    data-deadline="{{ .Site.Params.featured_event.countdown_deadline }}"
+                    aria-live="polite"
+                >
+                    <div class="cl-countdown-label">Enrollment Closes in:</div>
+                    <div class="cl-countdown-track">
+                        <div class="cl-countdown-unit">
+                            <div class="cl-countdown-value" data-countdown-days>0</div>
+                            <div class="cl-countdown-unit-label">DAYS</div>
                         </div>
-                        <span class="fe-cohort-badge">{{ .Site.Params.featured_event.subtitle }}</span>
+                        <div class="cl-countdown-sep">:</div>
+                        <div class="cl-countdown-unit">
+                            <div class="cl-countdown-value" data-countdown-hours>0</div>
+                            <div class="cl-countdown-unit-label">HRS</div>
+                        </div>
+                        <div class="cl-countdown-sep">:</div>
+                        <div class="cl-countdown-unit">
+                            <div class="cl-countdown-value" data-countdown-minutes>0</div>
+                            <div class="cl-countdown-unit-label">MINS</div>
+                        </div>
+                        <div class="cl-countdown-sep">:</div>
+                        <div class="cl-countdown-unit">
+                            <div class="cl-countdown-value" data-countdown-seconds>0</div>
+                            <div class="cl-countdown-unit-label">SECS</div>
+                        </div>
                     </div>
-                    <p class="fe-desc">{{ .Site.Params.featured_event.description1 }}</p>
-                    <p class="fe-desc">{{ .Site.Params.featured_event.description2 }}</p>
+                </section>
+                {{ end }}
+                <div class="cl-cta-buttons">
+                    <a href="{{ .Site.Params.featured_event.cta_url }}" class="cl-btn-primary">APPLY FOR COHORT 1 <span>→</span></a>
+                    <a href="{{ .Site.Params.featured_event.cta_url }}" class="cl-btn-secondary">PREVIEW SYLLABUS</a>
                 </div>
-
-                <!-- Stats row -->
-                <div class="fe-stats-row">
-                    <div class="fe-stat">
-                        <div class="fe-stat-number">{{ .Site.Params.featured_event.stat1_number }}</div>
-                        <div class="fe-stat-label">{{ .Site.Params.featured_event.stat1_label }}</div>
-                    </div>
-                    <div class="fe-stat">
-                        <div class="fe-stat-number">{{ .Site.Params.featured_event.stat2_number }}</div>
-                        <div class="fe-stat-label">{{ .Site.Params.featured_event.stat2_label }}</div>
-                    </div>
-                    <div class="fe-stat">
-                        <div class="fe-stat-number">{{ .Site.Params.featured_event.stat3_number }}</div>
-                        <div class="fe-stat-label">{{ .Site.Params.featured_event.stat3_label }}</div>
-                    </div>
-                    <div class="fe-stat">
-                        <div class="fe-stat-number">{{ .Site.Params.featured_event.stat4_number }}</div>
-                        <div class="fe-stat-label">{{ .Site.Params.featured_event.stat4_label }}</div>
-                    </div>
-                </div>
-
-                <!-- CTA -->
-                <a href="{{ .Site.Params.featured_event.cta_url }}" class="fe-cta-btn">
-                    {{ .Site.Params.featured_event.cta_text }} <span class="fe-cta-arrow">→</span>
-                </a>
             </div>
         </div>
     </div>
 </section>
+{{ if .Site.Params.featured_event.countdown_deadline }}
+<script src="/js/countdown.js"></script>
+<script>document.addEventListener("DOMContentLoaded", function() { if (window.HeeriseCountdown) HeeriseCountdown.initAll(".cl-countdown"); });</script>
+{{ end }}
 {{ end }}
 <!-- *** FEATURED EVENT END *** -->

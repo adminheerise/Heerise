@@ -36,7 +36,7 @@ def _validate_password_complexity(pw: str) -> None:
 
 
 def _frontend_base() -> str:
-    return os.getenv("FRONTEND_BASE", "http://localhost:3000").rstrip("/")
+    return os.getenv("FRONTEND_BASE", "http://localhost:1313").rstrip("/")
 
 def _mail_from(key: str) -> str | None:
     """Return a configured sender address for a given mail type."""
@@ -180,10 +180,25 @@ def verify_email(token: str, request: Request, db: Session = Depends(db_sess)):
         ver.verified_at = datetime.utcnow()
         db.commit()
 
+    # Auto-login: create session and return tokens (no password needed)
+    access = create_access_token(u.id)
+    refresh = create_refresh_token(u.id)
+    sess = AuthSession(
+        user_id=u.id,
+        refresh_token=refresh,
+        user_agent=request.headers.get("user-agent"),
+        ip_address=request.client.host if request.client else None,
+        expires_at=datetime.utcnow() + timedelta(days=14),
+    )
+    db.add(sess)
+    db.commit()
+
     return {
         "message": "already_verified" if already else "verified",
-        # Flow B: verify -> login -> onboarding
-        "next": f"/login?next=/onboarding/1&email={u.email}",
+        "access_token": access,
+        "refresh_token": refresh,
+        "token_type": "bearer",
+        "next": "/acc/",
     }
 
 

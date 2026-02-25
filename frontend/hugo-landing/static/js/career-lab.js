@@ -52,7 +52,7 @@
   closeBtns.forEach(b => b.addEventListener("click", close));
   document.addEventListener("keydown", (e) => e.key === "Escape" && modal?.classList.contains("is-open") && close());
 
-  form?.addEventListener("submit", (e) => {
+  form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const first = $("#cl-syllabus-first-name")?.value.trim();
     const last = $("#cl-syllabus-last-name")?.value.trim();
@@ -60,8 +60,21 @@
     const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email || "");
     if (!first || !last || !okEmail) return err && (err.textContent = "Please complete all fields with a valid email.");
     err && (err.textContent = "");
+    const API_BASE = window.HEERISE_API_BASE || "http://localhost:8000";
+    try {
+      const r = await fetch(`${API_BASE}/syllabus/lead`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ first_name: first, last_name: last, email }),
+      });
+      if (!r.ok) throw new Error((await r.json())?.detail || "Failed to submit.");
+    } catch (ex) {
+      return err && (err.textContent = ex.message || "Failed to submit.");
+    }
     stepForm && (stepForm.hidden = true);
     stepPdf && (stepPdf.hidden = false);
+    const pdfFrame = $("#cl-syllabus-pdf-frame");
+    if (pdfFrame?.dataset.src && !pdfFrame.src) pdfFrame.src = pdfFrame.dataset.src;
   });
 
   // Bootcamp apply modal
@@ -340,7 +353,7 @@
     }
 
     try {
-      const res = await fetch(`${API_BASE}/contact`, {
+      const res = await fetch(`${API_BASE}/career-lab/apply`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -349,7 +362,7 @@
           email,
           phone: null,
           hear_about: null,
-          service_interest: "bootcamp",
+          service_interest: "career_lab",
           message: `Career Lab Bootcamp Application\n\nTopics: ${selectedTopics.join(", ")}\nHighest Education Level: ${selectedEducation}\nAcademic Major: ${major}\nYears of Work Experience: ${selectedWorkExp}\nHours Per Week: ${selectedHours}\nPreferred Learning Style: ${selectedLearningStyle}\nWhy Interested: ${why}\n\nSoftware Proficiency:\n${proficiencySummary}`,
         }),
       });

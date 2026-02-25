@@ -16,6 +16,7 @@ class RegisterIn(BaseModel):
     password_confirm: str = Field(min_length=8, max_length=1024)
     name: Optional[str] = None
     username: Optional[str] = None
+    onboarding_session_id: Optional[str] = None
 
 
 class RegisterOut(BaseModel):

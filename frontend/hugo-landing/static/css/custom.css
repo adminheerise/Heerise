@@ -456,6 +456,23 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     white-space: nowrap;
 }
 
+/* Featured event countdown */
+.fe-countdown {
+    font-family: 'Inter', monospace;
+    font-weight: 600;
+    font-size: 18px;
+    color: #017AFF;
+}
+.fe-countdown [data-countdown-days],
+.fe-countdown [data-countdown-hours],
+.fe-countdown [data-countdown-minutes],
+.fe-countdown [data-countdown-seconds] {
+    display: inline-block;
+    min-width: 1.8em;
+    text-align: center;
+}
+.fe-countdown.is-expired { color: #666; }
+
 /* Description text — Figma: 16px, weight 200, letter-spacing 0.25px */
 .fe-desc {
     font-family: 'Inter', sans-serif;

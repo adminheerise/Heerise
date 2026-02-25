@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .db import Base, engine
-from .routers import auth, onboarding, me, admin, contact
+from .routers import auth, onboarding, me, admin, contact, syllabus, career_lab
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -21,6 +21,8 @@ app.include_router(onboarding.router)
 app.include_router(me.router)
 app.include_router(admin.router)
 app.include_router(contact.router)
+app.include_router(syllabus.router)
+app.include_router(career_lab.router)
 
 
 @app.on_event("startup")

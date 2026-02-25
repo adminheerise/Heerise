@@ -1326,7 +1326,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     background: #FFFFFF;
     display: flex;
     justify-content: center;
-    padding: 60px 50px;
+    padding: 60px 50px 5px;
 }
 
 .cl-hero-inner {
@@ -1459,6 +1459,76 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     text-align: center;
 }
 
+.cl-countdown {
+    background: #f2f2f2;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin: 8px 0 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+}
+
+.cl-countdown-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #2c2c2c;
+    line-height: 1.2;
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+.cl-countdown-track {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.cl-countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.cl-countdown-value {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    background: #2f3135;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.cl-countdown-sep {
+    color: #2f3135;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1;
+    margin-top: -12px;
+}
+
+.cl-countdown-unit-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    line-height: 1;
+    color: #2f3135;
+}
+
+.cl-countdown.is-expired .cl-countdown-label {
+    color: #b42318;
+}
+
 /* CTA Buttons (210×41 primary, 155×41 secondary) */
 .cl-cta-buttons {
     display: flex;
@@ -1513,6 +1583,193 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     background-color: #eff6ff;
     color: #017AFF;
     text-decoration: none;
+}
+
+/* ---- Syllabus preview modal ---- */
+body.cl-modal-open {
+    overflow: hidden;
+}
+
+.cl-syllabus-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+}
+
+.cl-syllabus-modal.is-open {
+    display: block;
+}
+
+.cl-syllabus-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.55);
+}
+
+.cl-syllabus-dialog {
+    position: relative;
+    width: min(860px, calc(100% - 32px));
+    margin: 108px auto 24px;
+    height: 700px;
+    background: #FFFFFF;
+    border-radius: 4px;
+    padding: 62px 52px 36px;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.3);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.cl-syllabus-step {
+    width: 100%;
+}
+
+.cl-syllabus-step[hidden] {
+    display: none !important;
+}
+
+.cl-syllabus-step-form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cl-syllabus-title {
+    margin: 0;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 30px;
+    line-height: 1.12;
+    font-weight: 600;
+    color: #2C2C2C;
+    letter-spacing: 0;
+}
+
+.cl-syllabus-form,
+.cl-syllabus-step-pdf {
+    max-width: 610px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cl-syllabus-form {
+    margin-top: 24px;
+    border: 1px solid #D8E9FF;
+    border-radius: 4px;
+    padding: 44px 42px 48px;
+}
+
+.cl-syllabus-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 16px;
+}
+
+.cl-syllabus-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.cl-syllabus-field-full {
+    grid-column: 1 / -1;
+}
+
+.cl-syllabus-field label {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #334155;
+    line-height: 1.2;
+}
+
+.cl-syllabus-field input {
+    height: 42px;
+    width: 100%;
+    border: 1px solid #E2E8F0;
+    border-radius: 4px;
+    padding: 0 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #111827;
+    background: #FFFFFF;
+}
+
+.cl-syllabus-field input::placeholder {
+    color: #9CA3AF;
+}
+
+.cl-syllabus-field input:focus {
+    outline: none;
+    border-color: #017AFF;
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.12);
+}
+
+.cl-syllabus-error {
+    min-height: 20px;
+    margin: 10px 0 0;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #c62828;
+}
+
+.cl-syllabus-preview-btn {
+    display: block;
+    min-width: 152px;
+    margin: 26px auto 0;
+    padding: 10px 18px;
+    border: 1px solid #0B6AE6;
+    border-radius: 2px;
+    background: #017AFF;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.cl-syllabus-preview-btn:hover {
+    background: #005fc7;
+}
+
+.cl-syllabus-step-pdf {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cl-syllabus-step-pdf .cl-syllabus-title {
+    margin-bottom: 28px;
+}
+
+.cl-syllabus-pdf-wrap {
+    width: 100%;
+    height: 470px;
+    border: 1px solid #D1D5DB;
+    background: #FFFFFF;
+}
+
+.cl-syllabus-pdf-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.cl-syllabus-close-btn {
+    display: block;
+    margin: 16px auto 0;
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: #017AFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
 /* ---- Tab Navigation (48px height, gap: 25px, left: 50px) ---- */
@@ -1735,9 +1992,10 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 
 .cl-instructors-grid {
     display: flex;
-    gap: 69px;
-    justify-content: center;
-    padding: 8px 0;
+    gap: 84px;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 8px 0 2px;
     max-width: 1180px;
     margin: 0 auto;
 }
@@ -1745,11 +2003,11 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 .cl-instructor-card {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 24px;
-    flex: 1;
-    max-width: 347px;
+    gap: 16px;
+    flex: 0 1 548px;
+    max-width: 548px;
     text-align: center;
     padding: 0;
     border: none;
@@ -1774,6 +2032,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     height: 128px;
     border-radius: 50%;
     object-fit: cover;
+    object-position: center top;
     display: block;
     border: none;
     margin: 0;
@@ -1796,7 +2055,21 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     font-weight: 400;
     color: #4A5565;
     line-height: 24px;
-    text-align: center;
+    text-align: left;
+    margin: 0;
+}
+
+.cl-instructor-link {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #017AFF;
+    text-decoration: none;
+}
+
+.cl-instructor-link:hover {
+    color: #005bbf;
+    text-decoration: underline;
 }
 
 /* ---- Pricing Section ---- */
@@ -2058,193 +2331,230 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     color: #017AFF;
 }
 
-/* ---- Apply Section — Always visible below tabs (Frame 111, 1280×688) ---- */
-.cl-apply-always {
-    display: block !important;
+/* ---- Bootcamp application modal ---- */
+.cl-bootcamp-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: none;
 }
 
-.cl-apply-scholarship {
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: #017AFF;
-    line-height: 28px;
-    margin-bottom: 16px;
-    max-width: 1180px;
+.cl-bootcamp-modal.is-open {
+    display: block;
 }
 
-.cl-apply-form-wrap {
+.cl-bootcamp-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.55);
+}
+
+.cl-bootcamp-dialog {
+    position: relative;
+    width: min(980px, calc(100% - 32px));
+    margin: 72px auto 24px;
+    max-height: calc(100vh - 96px);
+    background: #FFFFFF;
+    border-radius: 6px;
+    padding: 74px 56px 50px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.24);
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.cl-bootcamp-header {
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 34px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #E5E7EB;
 }
 
-.cl-apply-form {
-    background-color: #FFFFFF;
-    border: 1px solid #DADADA;
-    border-radius: 8px;
-    padding: 24px;
-    width: 669px;
-    max-width: 669px;
-    box-shadow: 0px 4px 4.8px rgba(0, 0, 0, 0.08);
-    margin: 0;
+.cl-bootcamp-header img {
+    width: 88px;
+    height: auto;
 }
 
-.cl-form-row {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 8px;
-}
-
-.cl-form-group {
-    flex: 1;
-    margin-bottom: 8px;
-}
-
-.cl-form-full {
-    margin-bottom: 8px;
-}
-
-.cl-form-label {
-    display: block;
+.cl-bootcamp-title-group h2 {
+    margin: 0 0 8px;
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: #364153;
-    line-height: 20px;
-    margin-bottom: 8px;
+    font-size: 20px;
+    line-height: 1.18;
+    font-weight: 700;
+    color: #2C2C2C;
+    text-transform: uppercase;
 }
 
-.cl-form-input {
+.cl-bootcamp-title-group p {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 400;
+    color: #595959;
+}
+
+.cl-bootcamp-form {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #E5E5E5;
+    max-width: none;
+    background: #FFFFFF;
+    border-color: #BFD7FF;
+    padding: 38px 34px 36px;
+}
+
+.cl-bootcamp-progress {
+    width: 100%;
+    max-width: 501px;
+    margin: 0 auto 28px;
+}
+
+.cl-bootcamp-progress .ob-seg {
+    min-width: 0;
+}
+
+.cl-bootcamp-progress .ob-seg.is-active {
+    background: #017AFF;
+}
+
+.cl-bootcamp-step[hidden] {
+    display: none !important;
+}
+
+.cl-bootcamp-question {
+    text-align: left;
+    font-size: 20px;
+    line-height: 1.45;
+    max-width: 100%;
+    margin: 4px 0 18px;
+}
+
+.cl-bootcamp-question span {
+    color: #017AFF;
+}
+
+.cl-bootcamp-topics {
+    gap: 12px;
+}
+
+.cl-bootcamp-question-education {
+    margin-bottom: 14px;
+}
+
+.cl-bootcamp-major-wrap {
+    border-top: 1px solid #E5E7EB;
+    padding-top: 14px;
+}
+
+.cl-bootcamp-major-wrap input {
+    width: 100%;
+    height: 42px;
+    border: 1px solid #E2E8F0;
     border-radius: 4px;
+    padding: 0 12px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     color: #111827;
-    line-height: 17px;
-    transition: border-color 0.2s;
-    box-sizing: border-box;
     background: #FFFFFF;
 }
 
-.cl-form-input::placeholder {
-    color: #9CAEB5;
+.cl-bootcamp-major-wrap input::placeholder {
+    color: #9CA3AF;
 }
 
-.cl-form-input:focus {
+.cl-bootcamp-major-wrap input:focus {
     outline: none;
     border-color: #017AFF;
-    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.12);
 }
 
-.cl-form-textarea {
+.cl-bootcamp-work-exp {
+    gap: 12px;
+}
+
+.cl-bootcamp-scroll-area {
+    max-height: 360px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.cl-bootcamp-select-group {
+    margin-bottom: 12px;
+}
+
+.cl-bootcamp-select-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #475569;
+}
+
+.cl-bootcamp-select-group select {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #D1D5DB;
+    border-radius: 4px;
+    padding: 0 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #2C2C2C;
+    background: #FFFFFF;
+}
+
+.cl-bootcamp-select-group select:focus {
+    outline: none;
+    border-color: #017AFF;
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.12);
+}
+
+.cl-bootcamp-hours {
+    gap: 12px;
+}
+
+.cl-bootcamp-learning-style {
+    gap: 12px;
+}
+
+.cl-bootcamp-why-wrap textarea {
     width: 100%;
     min-height: 116px;
-    padding: 10px;
-    border: 1px solid #E5E5E5;
+    border: 1px solid #E2E8F0;
     border-radius: 4px;
+    padding: 10px 12px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     color: #111827;
-    line-height: 17px;
-    resize: vertical;
-    transition: border-color 0.2s;
-    box-sizing: border-box;
     background: #FFFFFF;
+    resize: vertical;
 }
 
-.cl-form-textarea::placeholder {
-    color: #9CAEB5;
+.cl-bootcamp-why-wrap textarea::placeholder {
+    color: #9CA3AF;
 }
 
-.cl-form-textarea:focus {
+.cl-bootcamp-why-wrap textarea:focus {
     outline: none;
     border-color: #017AFF;
-    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.12);
 }
 
-.cl-next-steps {
-    background-color: rgba(164, 241, 255, 0.2);
-    border-radius: 8px;
-    padding: 16px;
-    margin-top: 17px;
-    margin-bottom: 17px;
+.cl-bootcamp-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
 }
 
-.cl-next-steps-title {
-    font-family: 'Arial', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: #101828;
-    line-height: 24px;
-    margin-bottom: 5px;
-}
-
-.cl-next-steps-list {
-    list-style: none;
-    padding: 0 0 0 16px;
+.cl-bootcamp-actions .cl-syllabus-close-btn {
     margin: 0;
 }
 
-.cl-next-steps-list li {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: #364153;
-    line-height: 20px;
-    margin-bottom: 5px;
-    padding-left: 0;
-    position: relative;
-}
-
-.cl-next-steps-list li::before {
-    content: none;
-}
-
-.cl-next-steps-list li:last-child {
-    margin-bottom: 0;
-}
-
-.cl-submit-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #017AFF;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 4px;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    text-transform: uppercase;
-    line-height: 20px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.cl-submit-btn:hover {
-    background-color: #005bbf;
-}
-
-/* Apply form feedback */
-.cl-apply-feedback {
-    padding: 14px 20px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 16px;
-}
-
-.cl-apply-feedback-success {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-    border: 1px solid #a5d6a7;
-}
-
-.cl-apply-feedback-error {
-    background-color: #fce4ec;
-    color: #c62828;
-    border: 1px solid #ef9a9a;
+.cl-bootcamp-actions .cl-syllabus-preview-btn {
+    margin: 0;
+    min-width: 152px;
 }
 
 /* ---- Back to Top (Frame 114, 1280×72) ---- */
@@ -2299,6 +2609,26 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
         flex-wrap: wrap;
         gap: 24px;
     }
+    .cl-countdown {
+        flex-direction: column;
+        gap: 14px;
+    }
+    .cl-countdown-label {
+        font-size: 14px;
+        text-align: center;
+    }
+    .cl-countdown-value {
+        width: 56px;
+        height: 56px;
+        font-size: 24px;
+    }
+    .cl-countdown-unit-label {
+        font-size: 11px;
+    }
+    .cl-countdown-sep {
+        font-size: 28px;
+        margin-top: -10px;
+    }
     .cl-pricing-grid {
         flex-direction: column;
         align-items: center;
@@ -2335,16 +2665,84 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
         align-items: center;
         gap: 32px;
     }
-    .cl-form-row {
-        flex-direction: column;
-    }
     .cl-cta-buttons {
         flex-direction: column;
+    }
+    .cl-countdown {
+        padding: 16px 12px;
+        gap: 14px;
+    }
+    .cl-countdown-track {
+        gap: 8px;
+    }
+    .cl-countdown-label {
+        font-size: 13px;
+    }
+    .cl-countdown-value {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+    }
+    .cl-countdown-unit-label {
+        font-size: 10px;
+    }
+    .cl-countdown-sep {
+        font-size: 20px;
+        margin-top: -8px;
     }
     .cl-btn-primary,
     .cl-btn-secondary {
         width: 100%;
         justify-content: center;
+    }
+    .cl-syllabus-dialog {
+        padding: 36px 20px 28px;
+        margin-top: 56px;
+        height: auto;
+    }
+    .cl-syllabus-title {
+        font-size: 30px;
+    }
+    .cl-syllabus-form {
+        margin-top: 30px;
+        padding: 26px 20px 30px;
+    }
+    .cl-syllabus-grid {
+        grid-template-columns: 1fr;
+    }
+    .cl-syllabus-pdf-wrap {
+        height: 420px;
+    }
+    .cl-bootcamp-dialog {
+        margin-top: 12px;
+        max-height: calc(100vh - 24px);
+        padding: 24px 20px;
+    }
+    .cl-bootcamp-header {
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 18px;
+        padding-bottom: 16px;
+    }
+    .cl-bootcamp-header img {
+        width: 52px;
+    }
+    .cl-bootcamp-title-group h2 {
+        font-size: 18px;
+    }
+    .cl-bootcamp-title-group p {
+        font-size: 14px;
+    }
+    .cl-bootcamp-progress {
+        margin-bottom: 20px;
+    }
+    .cl-bootcamp-question {
+        font-size: 16px;
+        line-height: 1.4;
+        margin-bottom: 14px;
+    }
+    .cl-bootcamp-actions {
+        margin-top: 14px;
     }
     .cl-instructors-section {
         padding: 10px 0;

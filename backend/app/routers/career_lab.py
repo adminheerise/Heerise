@@ -1,43 +1,41 @@
-# backend/app/routers/contact.py
+# backend/app/routers/career_lab.py
 """
-Public contact form endpoint.
-1) Store submission in DB (admin visible)
-2) Send receipt email to the user
+Career Lab bootcamp application.
+1) Store in DB (admin visible)
+2) Send receipt to user (noreply)
 3) Send notification to helloashlee707@gmail.com
 """
 from __future__ import annotations
 
 import os
+import json
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel, EmailStr, Field
-from typing import Optional
+from typing import Optional, Any
 from sqlalchemy.orm import Session
 
 from ..emailer import send_email
 from ..deps import db_sess
-from ..models import ContactSubmission
+from ..models import CareerLabApplication
 
-router = APIRouter(prefix="/contact", tags=["contact"])
+router = APIRouter(prefix="/career-lab", tags=["career-lab"])
 
 ADMIN_NOTIFY_EMAIL = "helloashlee707@gmail.com"
 
 
 # ---------- Schema ----------
 
-class ContactIn(BaseModel):
+class CareerLabApplyIn(BaseModel):
     first_name: str = Field(min_length=1, max_length=100)
     last_name: str = Field(min_length=1, max_length=100)
     email: EmailStr
-    phone: Optional[str] = Field(None, max_length=30)
-    hear_about: Optional[str] = Field(None, max_length=100)
-    service_interest: Optional[str] = Field(None, max_length=500)
-    message: str = Field(min_length=1, max_length=5000)
+    message: str = Field(min_length=1, max_length=10000)  # Full application text
+    raw_data: Optional[dict[str, Any]] = None  # Optional structured data
 
 
 # ---------- Helpers ----------
 
-def _mail_from_contact() -> str | None:
-    """Return the noreply sender address for contact receipts."""
+def _mail_from() -> str | None:
     v = os.getenv("MAIL_FROM_CONTACT", "").strip()
     if v:
         return v
@@ -49,83 +47,64 @@ def _mail_from_contact() -> str | None:
 
 
 def _admin_email() -> str:
-    """Where to send internal notifications."""
     return os.getenv("CONTACT_NOTIFY_EMAIL", ADMIN_NOTIFY_EMAIL).strip()
 
 
 # ---------- Endpoint ----------
 
-@router.post("")
-def submit_contact(body: ContactIn, db: Session = Depends(db_sess)):
+@router.post("/apply")
+def apply_bootcamp(body: CareerLabApplyIn, db: Session = Depends(db_sess)):
     """
-    Receive a contact form submission.
-    1) Store in DB (admin visible)
+    1) Store application in DB
     2) Send receipt to user
     3) Send notification to helloashlee707@gmail.com
     """
     full_name = f"{body.first_name} {body.last_name}"
-    from_addr = _mail_from_contact()
+    from_addr = _mail_from()
 
     # --- Store in DB ---
-    sub = ContactSubmission(
+    raw_json = json.dumps(body.raw_data, ensure_ascii=False) if body.raw_data else None
+    app = CareerLabApplication(
         first_name=body.first_name,
         last_name=body.last_name,
         email=body.email,
-        phone=body.phone,
-        hear_about=body.hear_about,
-        service_interest=body.service_interest,
+        raw_data=raw_json,
         message=body.message,
     )
-    db.add(sub)
+    db.add(app)
     db.commit()
 
-    # --- Receipt email to the user ---
-    receipt_subject = "Thanks for contacting Heerise!"
+    # --- Receipt to user ---
+    receipt_subject = "Your Career Lab Application Has Been Received"
     receipt_body = (
         f"Hi {body.first_name},\n\n"
-        "Thank you for reaching out to Heerise! We've received your message "
-        "and will get back to you within 24-48 hours.\n\n"
-        "Here's a summary of what you sent:\n"
-        f"  Name: {full_name}\n"
-        f"  Email: {body.email}\n"
-    )
-    if body.phone:
-        receipt_body += f"  Phone: {body.phone}\n"
-    if body.service_interest:
-        receipt_body += f"  Interest: {body.service_interest}\n"
-    receipt_body += (
-        f"\n  Message:\n  {body.message}\n\n"
+        "Thank you for applying to the ID/LXD Career Lab bootcamp!\n\n"
+        "We've received your application and will review it shortly. "
+        "You'll hear back from us within a few business days.\n\n"
+        "Here's a summary of what you submitted:\n\n"
+        f"{body.message}\n\n"
         "Best regards,\n"
         "The Heerise Team\n"
     )
 
-    # --- Internal notification to admin ---
-    notify_subject = f"[Heerise Contact] New inquiry from {full_name}"
+    # --- Notification to admin ---
+    notify_subject = f"[Career Lab] New application from {full_name}"
     notify_body = (
-        f"New contact form submission:\n\n"
+        f"New Career Lab bootcamp application:\n\n"
         f"  Name: {full_name}\n"
-        f"  Email: {body.email}\n"
-        f"  Phone: {body.phone or 'N/A'}\n"
-        f"  How they heard about us: {body.hear_about or 'N/A'}\n"
-        f"  Service interest: {body.service_interest or 'N/A'}\n"
-        f"\n  Message:\n  {body.message}\n"
+        f"  Email: {body.email}\n\n"
+        f"Application details:\n\n{body.message}\n"
     )
 
     smtp_configured = bool(os.getenv("SMTP_HOST", "").strip())
 
     if not smtp_configured:
-        print(f"[DEV] Contact form from {body.email}:")
-        print(f"  Name: {full_name}")
-        print(f"  Phone: {body.phone}")
-        print(f"  Hear about: {body.hear_about}")
-        print(f"  Interest: {body.service_interest}")
-        print(f"  Message: {body.message}")
+        print(f"[DEV] Career Lab application from {body.email}")
         print("[DEV] SMTP not configured — skipping emails.")
         return {"message": "received", "dev_note": "SMTP not configured; emails skipped."}
 
     errors = []
 
-    # Send receipt to user
     try:
         send_email(
             body.email,
@@ -137,7 +116,6 @@ def submit_contact(body: ContactIn, db: Session = Depends(db_sess)):
         print(f"[WARN] Failed to send receipt to {body.email}: {repr(e)}")
         errors.append("receipt")
 
-    # Send notification to admin
     try:
         send_email(
             _admin_email(),

@@ -3,8 +3,11 @@ from __future__ import annotations
 
 from datetime import datetime
 import json
+import secrets
 
 from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
+from typing import Any, Dict
 from sqlalchemy.orm import Session
 
 from ..deps import db_sess, get_current_user
@@ -14,6 +17,7 @@ from ..models import (
     OnboardingQuestion,
     OnboardingOption,
     OnboardingResponse,
+    OnboardingPreCache,
     User,
     UserProfile,
     Skill,
@@ -281,6 +285,63 @@ def get_questions(flow_id: int, db: Session = Depends(db_sess)):
             )
         )
     return out
+
+
+# ---------- Pre-cache (anonymous assessment before register) ----------
+
+class PreCacheIn(BaseModel):
+    answers: Dict[str, Any]
+
+
+class PreCacheOut(BaseModel):
+    session_id: str
+
+
+@router.post("/pre-cache", response_model=PreCacheOut)
+def pre_cache_assessment(body: PreCacheIn, db: Session = Depends(db_sess)):
+    """
+    Store anonymous assessment answers. Returns session_id.
+    Frontend stores session_id (e.g. localStorage), sends it with register.
+    On register, backend binds pre-cache to user and fills profile.
+    """
+    session_id = secrets.token_urlsafe(32)
+    answers_json = json.dumps(body.answers, ensure_ascii=False)
+    cache = OnboardingPreCache(
+        session_id=session_id,
+        answers_json=answers_json,
+    )
+    db.add(cache)
+    db.commit()
+    return PreCacheOut(session_id=session_id)
+
+
+def apply_pre_cache_to_profile(prof: UserProfile, answers: dict) -> None:
+    """Map frontend answer keys to UserProfile fields. Used when binding pre-cache to user."""
+    def get_single(key: str) -> str | None:
+        v = answers.get(key)
+        if isinstance(v, list):
+            return v[0] if v else None
+        return str(v).strip() if v else None
+
+    def get_multi(key: str) -> list:
+        v = answers.get(key)
+        if isinstance(v, list):
+            return [str(x) for x in v]
+        if v:
+            return [str(v)]
+        return []
+
+    # Frontend keys: q1=major, career_stage, q2=skills, q3=work enjoyment, q4=motivation, q5, q6
+    prof.major_of_study = get_single("q1") or prof.major_of_study
+    prof.current_career_stage = get_single("career_stage") or prof.current_career_stage
+    prof.interested_work_professions = get_single("q3") or prof.interested_work_professions
+    prof.goals_objectives = get_single("q4") or prof.goals_objectives
+    if answers.get("q6"):
+        prof.about_you = str(answers.get("q6", "")).strip() or prof.about_you
+
+    skills = get_multi("q2")
+    if skills:
+        prof.learning_progress = ", ".join(skills) if skills else prof.learning_progress
 
 
 # ---------- Save answers & complete ----------

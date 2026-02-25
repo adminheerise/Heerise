@@ -34,25 +34,28 @@
     modal?.classList.add("is-open");
     modal?.setAttribute("aria-hidden", "false");
     document.body.classList.add("cl-modal-open");
-    stepForm && (stepForm.hidden = false);
-    stepPdf && (stepPdf.hidden = true);
+    stepForm && stepForm.removeAttribute("hidden");
+    stepPdf && stepPdf.setAttribute("hidden", "");
     err && (err.textContent = "");
   };
   const close = () => {
     modal?.classList.remove("is-open");
     modal?.setAttribute("aria-hidden", "true");
     document.body.classList.remove("cl-modal-open");
-    stepForm && (stepForm.hidden = false);
-    stepPdf && (stepPdf.hidden = true);
+    stepForm && stepForm.removeAttribute("hidden");
+    stepPdf && stepPdf.setAttribute("hidden", "");
     form?.reset();
     err && (err.textContent = "");
+    // Clear iframe src so PDF is not loaded until user requests preview again
+    const frame = $("#cl-syllabus-pdf-frame");
+    if (frame) frame.removeAttribute("src");
   };
 
   openBtn?.addEventListener("click", (e) => (e.preventDefault(), open()));
   closeBtns.forEach(b => b.addEventListener("click", close));
   document.addEventListener("keydown", (e) => e.key === "Escape" && modal?.classList.contains("is-open") && close());
 
-  form?.addEventListener("submit", (e) => {
+  form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const first = $("#cl-syllabus-first-name")?.value.trim();
     const last = $("#cl-syllabus-last-name")?.value.trim();
@@ -60,8 +63,36 @@
     const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email || "");
     if (!first || !last || !okEmail) return err && (err.textContent = "Please complete all fields with a valid email.");
     err && (err.textContent = "");
-    stepForm && (stepForm.hidden = true);
-    stepPdf && (stepPdf.hidden = false);
+    const API_BASE = window.HEERISE_API_BASE || "http://localhost:8000";
+    try {
+      const res = await fetch(`${API_BASE}/syllabus/lead`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ first_name: first, last_name: last, email }),
+      });
+      let detailMsg = "Failed to submit.";
+      if (!res.ok) {
+        try {
+          const data = await res.json();
+          const d = data?.detail;
+          detailMsg = Array.isArray(d) ? d.map((x) => x.msg || String(x)).join("; ") : (d || detailMsg);
+        } catch (_) {
+          detailMsg = res.statusText || detailMsg;
+        }
+        throw new Error(detailMsg);
+      }
+    } catch (ex) {
+      err && (err.textContent = ex.message || "Failed to submit. Please try again.");
+      return;
+    }
+    // Show PDF step and load syllabus (always show after successful submit)
+    stepForm && stepForm.setAttribute("hidden", "");
+    stepPdf && stepPdf.removeAttribute("hidden");
+    const frame = document.getElementById("cl-syllabus-pdf-frame");
+    const pdfUrl = frame?.getAttribute("data-src");
+    if (frame && pdfUrl) {
+      frame.setAttribute("src", pdfUrl);
+    }
   });
 
   // Bootcamp apply modal
@@ -339,23 +370,32 @@
       submitBtn.textContent = "SUBMITTING...";
     }
 
+    const message = `Career Lab Bootcamp Application\n\nTopics: ${selectedTopics.join(", ")}\nHighest Education Level: ${selectedEducation}\nAcademic Major: ${major}\nYears of Work Experience: ${selectedWorkExp}\nHours Per Week: ${selectedHours}\nPreferred Learning Style: ${selectedLearningStyle}\nWhy Interested: ${why}\n\nSoftware Proficiency:\n${proficiencySummary}`;
+    const rawData = {
+      topics: selectedTopics,
+      education: selectedEducation,
+      major,
+      work_exp: selectedWorkExp,
+      hours: selectedHours,
+      learning_style: selectedLearningStyle,
+      why,
+      proficiency: proficiencyFields.map((f) => ({ label: f.label, value: f.el?.value })),
+    };
     try {
-      const res = await fetch(`${API_BASE}/contact`, {
+      const res = await fetch(`${API_BASE}/career-lab/apply`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           first_name: firstName,
           last_name: lastName,
           email,
-          phone: null,
-          hear_about: null,
-          service_interest: "bootcamp",
-          message: `Career Lab Bootcamp Application\n\nTopics: ${selectedTopics.join(", ")}\nHighest Education Level: ${selectedEducation}\nAcademic Major: ${major}\nYears of Work Experience: ${selectedWorkExp}\nHours Per Week: ${selectedHours}\nPreferred Learning Style: ${selectedLearningStyle}\nWhy Interested: ${why}\n\nSoftware Proficiency:\n${proficiencySummary}`,
+          message,
+          raw_data: rawData,
         }),
       });
       if (!res.ok) throw new Error((await res.json())?.detail || "Something went wrong.");
       closeBootcamp();
-      alert("Thanks! Your application has been received.");
+      alert("Thanks! Your application has been received. Check your email for a confirmation.");
     } catch (error) {
       if (bootcampErr) bootcampErr.textContent = error.message || "Failed to submit.";
     } finally {

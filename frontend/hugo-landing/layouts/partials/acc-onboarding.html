@@ -414,11 +414,23 @@
         }
     };
 
+    var preCacheSessionId = null;
+
     OB.complete = function() {
         // Save last answer
         var textarea = document.getElementById('ob-textarea-q6');
         if (textarea) answers['q6'] = textarea.value.trim();
         saveAnswer(current);
+
+        // Pre-cache assessment to backend (for binding on register)
+        var API_BASE = window.HEERISE_API_BASE || 'http://localhost:8000';
+        fetch(API_BASE + '/onboarding/pre-cache', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ answers: answers })
+        }).then(function(r) { return r.json(); }).then(function(data) {
+            if (data && data.session_id) preCacheSessionId = data.session_id;
+        }).catch(function() { /* ignore */ });
 
         // Go to analyzing step
         showStep(8);
@@ -450,17 +462,41 @@
             alert('Passwords do not match.');
             return;
         }
-        // Collect form data
-        var data = {
-            first_name: form.querySelector('[name="first_name"]').value,
-            last_name: form.querySelector('[name="last_name"]').value,
-            email: form.querySelector('[name="email"]').value,
+        var firstName = form.querySelector('[name="first_name"]').value.trim();
+        var lastName = form.querySelector('[name="last_name"]').value.trim();
+        var email = form.querySelector('[name="email"]').value.trim();
+        if (!firstName || !lastName || !email) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Creating...'; }
+        var API_BASE = window.HEERISE_API_BASE || 'http://localhost:8000';
+        var payload = {
+            email: email,
             password: pw,
-            assessment: answers
+            password_confirm: pwc,
+            name: firstName + ' ' + lastName,
+            onboarding_session_id: preCacheSessionId || undefined
         };
-        console.log('Registration data:', data);
-        // TODO: POST to backend API
-        alert('Account created successfully! (Backend integration pending)');
+        fetch(API_BASE + '/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).then(function(r) {
+            return r.json().then(function(data) {
+                if (!r.ok) throw new Error(data.detail || data.message || 'Registration failed');
+                return data;
+            });
+        }).then(function(data) {
+            alert('Account created! Please check your email to verify your account.');
+            if (data.dev_verify_url) window.location.href = data.dev_verify_url;
+            else window.location.href = '/verify-sent/';
+        }).catch(function(err) {
+            alert(err.message || 'Registration failed. Please try again.');
+        }).finally(function() {
+            if (btn) { btn.disabled = false; btn.textContent = 'Create Account & unlock reports'; }
+        });
     };
 
     // ── Event delegation for options ──

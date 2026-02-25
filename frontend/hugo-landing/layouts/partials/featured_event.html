@@ -53,7 +53,35 @@
                     </div>
                 </div>
 
-                <!-- CTA -->
+                <!-- Countdown (same as Career Lab) -->
+                {{ with .Site.Params.featured_event.countdown_deadline }}
+                <section class="cl-countdown fe-countdown" data-deadline="{{ . }}" aria-live="polite">
+                    <div class="cl-countdown-label">Enrollment Closes in:</div>
+                    <div class="cl-countdown-track">
+                        <div class="cl-countdown-unit">
+                            <div class="cl-countdown-value" data-countdown-days>0</div>
+                            <div class="cl-countdown-unit-label">DAYS</div>
+                        </div>
+                        <div class="cl-countdown-sep">:</div>
+                        <div class="cl-countdown-unit">
+                            <div class="cl-countdown-value" data-countdown-hours>0</div>
+                            <div class="cl-countdown-unit-label">HRS</div>
+                        </div>
+                        <div class="cl-countdown-sep">:</div>
+                        <div class="cl-countdown-unit">
+                            <div class="cl-countdown-value" data-countdown-minutes>0</div>
+                            <div class="cl-countdown-unit-label">MINS</div>
+                        </div>
+                        <div class="cl-countdown-sep">:</div>
+                        <div class="cl-countdown-unit">
+                            <div class="cl-countdown-value" data-countdown-seconds>0</div>
+                            <div class="cl-countdown-unit-label">SECS</div>
+                        </div>
+                    </div>
+                </section>
+                {{ end }}
+
+                <!-- CTA (always show) -->
                 <a href="{{ .Site.Params.featured_event.cta_url }}" class="fe-cta-btn">
                     {{ .Site.Params.featured_event.cta_text }} <span class="fe-cta-arrow">→</span>
                 </a>
@@ -61,5 +89,9 @@
         </div>
     </div>
 </section>
+{{ if .Site.Params.featured_event.countdown_deadline }}
+<script src='{{ "js/countdown.js" | relURL }}'></script>
+<script>window.HeeriseCountdown?.initAll(".fe-countdown");</script>
+{{ end }}
 {{ end }}
 <!-- *** FEATURED EVENT END *** -->

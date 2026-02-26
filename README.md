@@ -584,3 +584,42 @@ gcloud run deploy heerise-backend \
 | Hugo 页面中的链接 | "Get Started" → `/login`，"Dashboard" → `/dashboard`（都在同一 Hugo 站点内） |
 
 这些调整在准备部署时一次性完成，不影响当前本地开发（本地 JS 仍可用 `http://localhost:8000` 作为 API 地址）。
+
+## 11. Docker 部署（推荐本地/服务器一键启动）
+
+新增了 Docker 配置，默认启动 2 个容器：
+- `frontend`（Nginx，端口 `8080`）
+- `backend`（FastAPI，内部端口 `8000`，由前端反向代理 `/api`）
+
+### 11.1 启动
+```bash
+cd Heerise
+docker compose up -d --build
+```
+
+访问：
+- 前端：`http://localhost:8080`
+- 后端健康检查：`http://localhost:8080/api/health`
+
+### 11.2 停止
+```bash
+docker compose down
+```
+
+如需同时删除数据库卷（会清空数据）：
+```bash
+docker compose down -v
+```
+
+### 11.3 环境变量（生产建议）
+可在项目根目录放 `.env`（供 `docker compose` 读取）：
+
+```env
+JWT_SECRET=replace_with_a_strong_secret
+FRONTEND_BASE=https://your-domain.com
+```
+
+说明：
+- SQLite 数据库持久化在 Docker volume：`backend_data`
+- 前端静态资源由 Hugo 构建后交给 Nginx 提供
+- 前端请求 `/api/*` 会自动转发到 FastAPI（同域，无跨域问题）

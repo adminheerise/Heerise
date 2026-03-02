@@ -7,14 +7,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 
 from ..deps import db_sess, require_admin
-from ..models import (
-    User,
-    AuthSession,
-    UserProfile,
-    ContactSubmission,
-    SyllabusLead,
-    CareerLabApplication,
-)
+from ..models import User, AuthSession, UserProfile, ContactSubmission, SyllabusLead, CareerLabApplication
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -89,7 +82,6 @@ def list_contact_submissions(
     db: Session = Depends(db_sess),
     _: User = Depends(require_admin),
 ):
-    """Contact form submissions for admin view."""
     rows = (
         db.query(ContactSubmission)
         .order_by(ContactSubmission.created_at.desc())
@@ -118,7 +110,6 @@ def list_syllabus_leads(
     db: Session = Depends(db_sess),
     _: User = Depends(require_admin),
 ):
-    """Syllabus preview leads for admin view."""
     rows = (
         db.query(SyllabusLead)
         .order_by(SyllabusLead.created_at.desc())
@@ -143,7 +134,6 @@ def list_career_lab_applications(
     db: Session = Depends(db_sess),
     _: User = Depends(require_admin),
 ):
-    """Career Lab bootcamp applications for admin view."""
     rows = (
         db.query(CareerLabApplication)
         .order_by(CareerLabApplication.created_at.desc())
@@ -156,11 +146,9 @@ def list_career_lab_applications(
             "first_name": r.first_name,
             "last_name": r.last_name,
             "email": r.email,
-            "raw_data": r.raw_data,
             "message": r.message,
             "created_at": r.created_at.isoformat() if r.created_at else None,
         }
         for r in rows
     ]
-
 

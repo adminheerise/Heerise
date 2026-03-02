@@ -287,7 +287,7 @@
                 </div>
                 <label class="ob-checkbox-label">
                     <input type="checkbox" name="agree" required />
-                    <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                    <span>I agree to the <a href="/terms-of-service/" target="_blank" rel="noopener">Terms of Service</a> and <a href="/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a></span>
                 </label>
                 <button type="submit" class="ob-btn-primary ob-btn-register">Create Account &amp; unlock reports</button>
             </form>
@@ -316,6 +316,7 @@
     var totalQuestions = 7; // Q1-Q7
     var current = 0;
     var answers = {};
+    var onboardingSessionId = null;
 
     window.OB = {};
 
@@ -414,22 +415,19 @@
         }
     };
 
-    var preCacheSessionId = null;
-
     OB.complete = function() {
         // Save last answer
         var textarea = document.getElementById('ob-textarea-q6');
         if (textarea) answers['q6'] = textarea.value.trim();
         saveAnswer(current);
 
-        // Pre-cache assessment to backend (for binding on register)
+        // Pre-cache assessment before register
+        onboardingSessionId = 'ob-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
         var API_BASE = window.HEERISE_API_BASE || 'http://localhost:8000';
         fetch(API_BASE + '/onboarding/pre-cache', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ answers: answers })
-        }).then(function(r) { return r.json(); }).then(function(data) {
-            if (data && data.session_id) preCacheSessionId = data.session_id;
+            body: JSON.stringify({ session_id: onboardingSessionId, answers_json: JSON.stringify(answers) })
         }).catch(function() { /* ignore */ });
 
         // Go to analyzing step
@@ -465,36 +463,35 @@
         var firstName = form.querySelector('[name="first_name"]').value.trim();
         var lastName = form.querySelector('[name="last_name"]').value.trim();
         var email = form.querySelector('[name="email"]').value.trim();
-        if (!firstName || !lastName || !email) {
-            alert('Please fill in all required fields.');
-            return;
-        }
-        var btn = form.querySelector('button[type="submit"]');
-        if (btn) { btn.disabled = true; btn.textContent = 'Creating...'; }
-        var API_BASE = window.HEERISE_API_BASE || 'http://localhost:8000';
-        var payload = {
+        var data = {
             email: email,
             password: pw,
             password_confirm: pwc,
-            name: firstName + ' ' + lastName,
-            onboarding_session_id: preCacheSessionId || undefined
+            name: (firstName + ' ' + lastName).trim() || firstName,
+            onboarding_session_id: onboardingSessionId || undefined
         };
+        var API_BASE = window.HEERISE_API_BASE || 'http://localhost:8000';
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Creating...'; }
         fetch(API_BASE + '/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        }).then(function(r) {
-            return r.json().then(function(data) {
-                if (!r.ok) throw new Error(data.detail || data.message || 'Registration failed');
-                return data;
-            });
-        }).then(function(data) {
-            alert('Account created! Please check your email to verify your account.');
-            if (data.dev_verify_url) window.location.href = data.dev_verify_url;
-            else window.location.href = '/verify-sent/';
-        }).catch(function(err) {
+            body: JSON.stringify(data)
+        })
+        .then(function(res) { return res.json().then(function(d) { return { ok: res.ok, data: d }; }); })
+        .then(function(r) {
+            if (r.ok) {
+                alert('Account created! Please check your email to verify.');
+                if (r.data.dev_verify_url) window.location.href = r.data.dev_verify_url;
+                else window.location.href = '/verify-sent/';
+            } else {
+                throw new Error(r.data.detail || (Array.isArray(r.data.detail) ? r.data.detail[0].msg : 'Registration failed'));
+            }
+        })
+        .catch(function(err) {
             alert(err.message || 'Registration failed. Please try again.');
-        }).finally(function() {
+        })
+        .finally(function() {
             if (btn) { btn.disabled = false; btn.textContent = 'Create Account & unlock reports'; }
         });
     };

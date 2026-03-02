@@ -1,9 +1,8 @@
 # backend/app/routers/contact.py
 """
 Public contact form endpoint.
-1) Store submission in DB (admin visible)
-2) Send receipt email to the user
-3) Send notification to helloashlee707@gmail.com
+Stores submissions in DB, sends a receipt email to the user,
+and notifies helloashlee707@gmail.com (or CONTACT_NOTIFY_EMAIL).
 """
 from __future__ import annotations
 
@@ -11,15 +10,12 @@ import os
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
-from sqlalchemy.orm import Session
 
-from ..emailer import send_email
 from ..deps import db_sess
+from ..emailer import send_email
 from ..models import ContactSubmission
 
 router = APIRouter(prefix="/contact", tags=["contact"])
-
-ADMIN_NOTIFY_EMAIL = "helloashlee707@gmail.com"
 
 
 # ---------- Schema ----------
@@ -30,7 +26,7 @@ class ContactIn(BaseModel):
     email: EmailStr
     phone: Optional[str] = Field(None, max_length=30)
     hear_about: Optional[str] = Field(None, max_length=100)
-    service_interest: Optional[str] = Field(None, max_length=500)
+    service_interest: Optional[str] = Field(None, max_length=50)
     message: str = Field(min_length=1, max_length=5000)
 
 
@@ -48,26 +44,23 @@ def _mail_from_contact() -> str | None:
     return v or None
 
 
-def _admin_email() -> str:
-    """Where to send internal notifications."""
-    return os.getenv("CONTACT_NOTIFY_EMAIL", ADMIN_NOTIFY_EMAIL).strip()
+def _team_email() -> str:
+    """Where to send internal contact-form notifications."""
+    return os.getenv("CONTACT_NOTIFY_EMAIL", "helloashlee707@gmail.com").strip()
 
 
 # ---------- Endpoint ----------
 
 @router.post("")
-def submit_contact(body: ContactIn, db: Session = Depends(db_sess)):
+def submit_contact(body: ContactIn, db=Depends(db_sess)):
     """
     Receive a contact form submission.
-    1) Store in DB (admin visible)
-    2) Send receipt to user
-    3) Send notification to helloashlee707@gmail.com
+    1) Store in DB.
+    2) Send a receipt / confirmation email to the user.
+    3) Send a notification email to helloashlee707@gmail.com.
+    If SMTP is not configured, log to console (dev-friendly).
     """
-    full_name = f"{body.first_name} {body.last_name}"
-    from_addr = _mail_from_contact()
-
-    # --- Store in DB ---
-    sub = ContactSubmission(
+    row = ContactSubmission(
         first_name=body.first_name,
         last_name=body.last_name,
         email=body.email,
@@ -76,8 +69,11 @@ def submit_contact(body: ContactIn, db: Session = Depends(db_sess)):
         service_interest=body.service_interest,
         message=body.message,
     )
-    db.add(sub)
+    db.add(row)
     db.commit()
+
+    full_name = f"{body.first_name} {body.last_name}"
+    from_addr = _mail_from_contact()
 
     # --- Receipt email to the user ---
     receipt_subject = "Thanks for contacting Heerise!"
@@ -99,7 +95,7 @@ def submit_contact(body: ContactIn, db: Session = Depends(db_sess)):
         "The Heerise Team\n"
     )
 
-    # --- Internal notification to admin ---
+    # --- Internal notification to team ---
     notify_subject = f"[Heerise Contact] New inquiry from {full_name}"
     notify_body = (
         f"New contact form submission:\n\n"
@@ -137,17 +133,17 @@ def submit_contact(body: ContactIn, db: Session = Depends(db_sess)):
         print(f"[WARN] Failed to send receipt to {body.email}: {repr(e)}")
         errors.append("receipt")
 
-    # Send notification to admin
+    # Send notification to team
     try:
         send_email(
-            _admin_email(),
+            _team_email(),
             notify_subject,
             notify_body,
             from_email=from_addr,
             reply_to=body.email,
         )
     except Exception as e:
-        print(f"[WARN] Failed to send admin notification: {repr(e)}")
+        print(f"[WARN] Failed to send team notification: {repr(e)}")
         errors.append("notification")
 
     if errors:

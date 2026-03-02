@@ -279,9 +279,7 @@ class CareerStageHistory(Base):
 # ---------- Public forms / leads ----------
 
 class ContactSubmission(Base):
-    """Contact form submissions — stored in DB, admin visible."""
     __tablename__ = "contact_submissions"
-
     id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
@@ -294,9 +292,7 @@ class ContactSubmission(Base):
 
 
 class SyllabusLead(Base):
-    """Syllabus preview leads — first/last name, email, admin visible."""
     __tablename__ = "syllabus_leads"
-
     id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
@@ -305,29 +301,20 @@ class SyllabusLead(Base):
 
 
 class CareerLabApplication(Base):
-    """Career Lab bootcamp application — full form data, admin visible."""
     __tablename__ = "career_lab_applications"
-
     id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
     email = Column(String(255), nullable=False, index=True)
-    raw_data = Column(Text, nullable=True)  # JSON: topics, education, major, work_exp, etc.
-    message = Column(Text, nullable=True)  # Human-readable summary
+    raw_data = Column(Text, nullable=True)
+    message = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 
 class OnboardingPreCache(Base):
-    """Anonymous ACC assessment data before user registers. Bound to user on register."""
     __tablename__ = "onboarding_pre_cache"
-
     id = Column(Integer, primary_key=True, autoincrement=True)
     session_id = Column(String(64), unique=True, nullable=False, index=True)
-    answers_json = Column(Text, nullable=False)  # Frontend assessment answers
+    answers_json = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    user_id = Column(
-        String,
-        ForeignKey("users.id", ondelete="SET NULL"),
-        nullable=True,
-        index=True,
-    )  # Set when user registers
+    user_id = Column(String, ForeignKey("users.id", ondelete="SET NULL"), nullable=True, index=True)

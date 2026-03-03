@@ -1,74 +1,84 @@
 <!-- *** FEATURED EVENT — same structure as Career Lab hero *** -->
 {{ if .Site.Params.featured_event.enable }}
-<section class="cl-hero">
-    <div class="cl-hero-inner">
-        <div class="cl-hero-image">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2070&q=80" alt="Career Lab" />
+<section class="cl-hero cl-featured-event">
+    <div class="cl-hero-shell">
+        {{ if .Site.Params.featured_event.label }}
+        <div class="cl-featured-event-header">
+            <h2 class="cl-featured-event-title">{{ .Site.Params.featured_event.label }}</h2>
+            <div class="cl-featured-event-line" aria-hidden="true"></div>
         </div>
-        <div class="cl-hero-content">
-            <div class="cl-hero-top">
-                <h1 class="cl-title">
-                    <span class="cl-title-underline">{{ .Site.Params.featured_event.title | replaceRE " .*" "" }}</span>
-                    <span> {{ .Site.Params.featured_event.title | replaceRE "^[^ ]+ " "" }}</span>
-                </h1>
-                <div class="cl-tag">{{ .Site.Params.featured_event.subtitle }}</div>
-                <div class="cl-desc">
-                    <p>{{ .Site.Params.featured_event.description1 }}</p>
-                    <p>{{ .Site.Params.featured_event.description2 }}</p>
-                </div>
-            </div>
-            <div class="cl-hero-bottom">
-                <div class="cl-stats">
-                    <div class="cl-stat">
-                        <div class="cl-stat-number">{{ .Site.Params.featured_event.stat1_number }}</div>
-                        <div class="cl-stat-label">{{ .Site.Params.featured_event.stat1_label }}</div>
-                    </div>
-                    <div class="cl-stat">
-                        <div class="cl-stat-number">{{ .Site.Params.featured_event.stat2_number }}</div>
-                        <div class="cl-stat-label">{{ .Site.Params.featured_event.stat2_label }}</div>
-                    </div>
-                    <div class="cl-stat">
-                        <div class="cl-stat-number">{{ .Site.Params.featured_event.stat3_number }}</div>
-                        <div class="cl-stat-label">{{ .Site.Params.featured_event.stat3_label }}</div>
-                    </div>
-                    <div class="cl-stat">
-                        <div class="cl-stat-number">{{ .Site.Params.featured_event.stat4_number }}</div>
-                        <div class="cl-stat-label">{{ .Site.Params.featured_event.stat4_label }}</div>
-                    </div>
-                </div>
-                {{ if .Site.Params.featured_event.countdown_deadline }}
-                <section
-                    class="cl-countdown"
-                    data-deadline="{{ .Site.Params.featured_event.countdown_deadline }}"
-                    aria-live="polite"
-                >
-                    <div class="cl-countdown-label">Enrollment Closes in:</div>
-                    <div class="cl-countdown-track">
-                        <div class="cl-countdown-unit">
-                            <div class="cl-countdown-value" data-countdown-days>0</div>
-                            <div class="cl-countdown-unit-label">DAYS</div>
-                        </div>
-                        <div class="cl-countdown-sep">:</div>
-                        <div class="cl-countdown-unit">
-                            <div class="cl-countdown-value" data-countdown-hours>0</div>
-                            <div class="cl-countdown-unit-label">HRS</div>
-                        </div>
-                        <div class="cl-countdown-sep">:</div>
-                        <div class="cl-countdown-unit">
-                            <div class="cl-countdown-value" data-countdown-minutes>0</div>
-                            <div class="cl-countdown-unit-label">MINS</div>
-                        </div>
-                        <div class="cl-countdown-sep">:</div>
-                        <div class="cl-countdown-unit">
-                            <div class="cl-countdown-value" data-countdown-seconds>0</div>
-                            <div class="cl-countdown-unit-label">SECS</div>
-                        </div>
-                    </div>
-                </section>
+        {{ end }}
+        <div class="cl-hero-inner">
+            <div class="cl-hero-image">
+                {{ if .Site.Params.featured_event.badge }}
+                <div class="cl-featured-event-badge">{{ .Site.Params.featured_event.badge }}</div>
                 {{ end }}
-                <div class="cl-cta-buttons">
-                    <a href="{{ .Site.Params.featured_event.cta_url }}" class="cl-btn-primary">APPLY FOR COHORT 1 <span>→</span></a>
-                    <a href="{{ .Site.Params.featured_event.cta_url }}" class="cl-btn-secondary">PREVIEW SYLLABUS</a>
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2070&q=80" alt="Career Lab" />
+            </div>
+            <div class="cl-hero-content">
+                <div class="cl-hero-top">
+                    <h1 class="cl-title">
+                        <span class="cl-title-underline">{{ .Site.Params.featured_event.title | replaceRE " .*" "" }}</span>
+                        <span> {{ .Site.Params.featured_event.title | replaceRE "^[^ ]+ " "" }}</span>
+                    </h1>
+                    <div class="cl-tag">{{ .Site.Params.featured_event.subtitle }}</div>
+                    <div class="cl-desc">
+                        <p>{{ .Site.Params.featured_event.description1 }}</p>
+                        <p>{{ .Site.Params.featured_event.description2 }}</p>
+                    </div>
+                </div>
+                <div class="cl-hero-bottom">
+                    <div class="cl-stats">
+                        <div class="cl-stat">
+                            <div class="cl-stat-number">{{ .Site.Params.featured_event.stat1_number }}</div>
+                            <div class="cl-stat-label">{{ .Site.Params.featured_event.stat1_label }}</div>
+                        </div>
+                        <div class="cl-stat">
+                            <div class="cl-stat-number">{{ .Site.Params.featured_event.stat2_number }}</div>
+                            <div class="cl-stat-label">{{ .Site.Params.featured_event.stat2_label }}</div>
+                        </div>
+                        <div class="cl-stat">
+                            <div class="cl-stat-number">{{ .Site.Params.featured_event.stat3_number }}</div>
+                            <div class="cl-stat-label">{{ .Site.Params.featured_event.stat3_label }}</div>
+                        </div>
+                        <div class="cl-stat">
+                            <div class="cl-stat-number">{{ .Site.Params.featured_event.stat4_number }}</div>
+                            <div class="cl-stat-label">{{ .Site.Params.featured_event.stat4_label }}</div>
+                        </div>
+                    </div>
+                    {{ if .Site.Params.featured_event.countdown_deadline }}
+                    <section
+                        class="cl-countdown"
+                        data-deadline="{{ .Site.Params.featured_event.countdown_deadline }}"
+                        aria-live="polite"
+                    >
+                        <div class="cl-countdown-label">Enrollment Closes in:</div>
+                        <div class="cl-countdown-track">
+                            <div class="cl-countdown-unit">
+                                <div class="cl-countdown-value" data-countdown-days>0</div>
+                                <div class="cl-countdown-unit-label">DAYS</div>
+                            </div>
+                            <div class="cl-countdown-sep">:</div>
+                            <div class="cl-countdown-unit">
+                                <div class="cl-countdown-value" data-countdown-hours>0</div>
+                                <div class="cl-countdown-unit-label">HRS</div>
+                            </div>
+                            <div class="cl-countdown-sep">:</div>
+                            <div class="cl-countdown-unit">
+                                <div class="cl-countdown-value" data-countdown-minutes>0</div>
+                                <div class="cl-countdown-unit-label">MINS</div>
+                            </div>
+                            <div class="cl-countdown-sep">:</div>
+                            <div class="cl-countdown-unit">
+                                <div class="cl-countdown-value" data-countdown-seconds>0</div>
+                                <div class="cl-countdown-unit-label">SECS</div>
+                            </div>
+                        </div>
+                    </section>
+                    {{ end }}
+                    <div class="cl-cta-buttons">
+                        <a href="{{ .Site.Params.featured_event.cta_url }}" class="cl-btn-primary">View More <span>→</span></a>
+                    </div>
                 </div>
             </div>
         </div>

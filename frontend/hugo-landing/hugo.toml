@@ -201,9 +201,9 @@ pluralizelisttitles = false
   stat3_label = "Mentorship"
   stat4_number = "Weekly"
   stat4_label = "Live Sessions + Office Hours"
+  countdown_deadline = "2026-03-28T23:59:59-07:00"
   cta_text = "APPLY NOW"
   cta_url = "/career-lab/"
-  countdown_deadline = "2026-03-15T23:59:59-08:00"
 
 # ============================================================
 # NEW: Social links for footer

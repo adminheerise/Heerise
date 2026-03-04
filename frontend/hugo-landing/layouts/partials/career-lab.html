@@ -40,10 +40,11 @@
                         <div class="cl-stat-label">Live Sessions + Office Hours</div>
                     </div>
                 </div>
-                <!--CountDown 倒计时-->
+                <!--CountDown 倒计时 (same as homepage) -->
+                {{ if .Site.Params.featured_event.countdown_deadline }}
                 <section
                     class="cl-countdown"
-                    data-deadline="2026-03-15T23:59:59-08:00"
+                    data-deadline="{{ .Site.Params.featured_event.countdown_deadline }}"
                     aria-live="polite"
                 >
                     <div class="cl-countdown-label">Enrollment Closes in:</div>
@@ -69,6 +70,7 @@
                         </div>
                     </div>
                 </section>
+                {{ end }}
                 <div class="cl-cta-buttons">
                     <a href="#" class="cl-btn-primary cl-bootcamp-open" onclick="return false;">APPLY FOR COHORT 1 <span>→</span></a>
                     <a href="#" class="cl-btn-secondary cl-syllabus-open" onclick="return false;">PREVIEW SYLLABUS</a>

@@ -30,3 +30,8 @@
   background-color: rgba(1, 122, 255, 0.8) !important;
 }
 </style>
+
+<script>
+  window.HEERISE_API_BASE =
+    window.location.port === "1313" ? "http://localhost:8000" : "/api";
+</script>

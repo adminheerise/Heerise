@@ -201,7 +201,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
    -------------------------------------------------------------------------- */
 
 .hero-home {
-    background: linear-gradient(98.78deg, #017AFF -5.07%, #5A0199 108.39%);
+    background: linear-gradient(98.78deg, #000306 -5.07%, #06020d 108.39%);
     width: 100%;
     height: 480px;
     display: flex;
@@ -210,6 +210,15 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     text-align: center;
     position: relative;
     overflow: hidden;
+}
+
+.hero-home::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    pointer-events: none;
 }
 
 /* ========== VANTA.JS WAVES - container (remove with hero_home.html block to disable) ========== */
@@ -235,7 +244,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     mix-blend-mode: screen;
     opacity: 0.6;
     pointer-events: none;
-    z-index: 0;
+    z-index: 2;
 }
 
 .hero-home-inner {
@@ -243,7 +252,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1;
+    z-index: 3;
     width: 100%;
     max-width: 1122px;
     text-align: center;
@@ -790,6 +799,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     color: #3C3C3C;
     width: 468px;
     margin: 0;
+    text-align: justify;
 }
 
 /* Image — Figma: 606×414, border-radius 8px */
@@ -844,29 +854,16 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     border-top: 1px solid rgba(255, 255, 255, 0.6);
 }
 
-/* VISION — Figma: Frame 259, 1280×360, bg #017AFF + looper-3.png background */
+/* VISION — Figma: Frame 259, 1280×360, pure #017AFF background */
 .about-vision {
-    background: #017AFF url(/img/looper-3.png) no-repeat center;
-    background-size: cover;
+    background: #017AFF;
     width: 100%;
     display: flex;
     justify-content: center;
     margin: 0;
-    position: relative;
-    overflow: hidden;
-}
-.about-vision::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: #017AFF;
-    opacity: 0.85;
-    z-index: 0;
 }
 
 .about-vision-inner {
-    position: relative;
-    z-index: 1;
     max-width: 1280px;
     width: 100%;
     display: flex;
@@ -1346,6 +1343,32 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     padding: 60px 50px 5px;
 }
 
+.cl-featured-event .cl-hero-shell {
+    max-width: 1180px;
+    width: 100%;
+}
+
+.cl-featured-event-header {
+    margin-bottom: 24px;
+}
+
+.cl-featured-event-title {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #111111;
+}
+
+.cl-featured-event-line {
+    width: 90px;
+    height: 3px;
+    margin-top: 10px;
+    border-radius: 999px;
+    background: #017AFF;
+}
+
 .cl-hero-inner {
     display: flex;
     gap: 65px;
@@ -1367,12 +1390,38 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 }
 
 .cl-hero-image {
+    position: relative;
     width: 455px;
     height: 304px;
     border-radius: 4px;
     overflow: hidden;
     flex-shrink: 0;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cl-featured-event-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: #ff7a45;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    box-shadow: 0 6px 14px rgba(255, 122, 69, 0.25);
+}
+
+.cl-featured-event-badge::before {
+    content: "♦";
+    font-size: 10px;
+    line-height: 1;
 }
 
 .cl-hero-image img {
@@ -2608,6 +2657,9 @@ body.cl-modal-open {
 
 /* ---- Career Lab Responsive ---- */
 @media (max-width: 1024px) {
+    .cl-featured-event .cl-hero-shell {
+        max-width: 658px;
+    }
     .cl-hero-inner {
         flex-direction: column;
         align-items: center;
@@ -2660,6 +2712,13 @@ body.cl-modal-open {
 
 @media (max-width: 768px) {
     .cl-hero { padding: 30px 20px; }
+    .cl-featured-event-header { margin-bottom: 20px; }
+    .cl-featured-event-title {
+        font-size: 16px;
+    }
+    .cl-featured-event-line {
+        width: 72px;
+    }
     .cl-section-inner { padding: 10px 20px; }
     .cl-tabs-inner { padding: 0 20px; }
     .cl-tabs {

@@ -16,13 +16,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router)
-app.include_router(onboarding.router)
-app.include_router(me.router)
-app.include_router(admin.router)
-app.include_router(contact.router)
-app.include_router(syllabus.router)
-app.include_router(career_lab.router)
+# Mount all API routes under /api so Firebase Hosting rewrite /api/** → backend works
+API_PREFIX = "/api"
+app.include_router(auth.router, prefix=API_PREFIX)
+app.include_router(onboarding.router, prefix=API_PREFIX)
+app.include_router(me.router, prefix=API_PREFIX)
+app.include_router(admin.router, prefix=API_PREFIX)
+app.include_router(contact.router, prefix=API_PREFIX)
+app.include_router(syllabus.router, prefix=API_PREFIX)
+app.include_router(career_lab.router, prefix=API_PREFIX)
 
 
 @app.on_event("startup")

@@ -4,9 +4,25 @@
 
 > **架构说明**：项目最终前端统一采用 **Hugo Universal Theme**。`frontend/pages/`（Next.js）为早期原型，将在 Hugo 侧页面重建后移除。所有新页面开发请在 Hugo 中进行。
 
+## 生产环境（已部署）
+
+| 项目 | 地址 |
+|------|------|
+| **主站** | https://www.heeriseacademy.com |
+| **备用** | https://heeriseacademy.web.app |
+| **API** | https://www.heeriseacademy.com/api/health |
+
+- **前端**：Firebase Hosting（Hugo 静态）
+- **后端**：Google Cloud Run（FastAPI，`/api` 前缀）
+- **域名**：www.heeriseacademy.com（从 Squarespace 迁移）
+
+---
+
+## 本地开发
+
 - **前端**：`frontend/hugo-landing/`（Hugo + hugo-universal-theme，默认 `http://localhost:1313`）
 - **前端（过渡）**：`frontend/pages/`（Next.js 14，默认 `http://localhost:3000`）— 逐步迁移到 Hugo 后删除
-- **Career Lab Bootcamp 原型**：`Bootcamp/`（React + Vite + Tailwind，独立单页应用，待集成至 Hugo）
+- **Career Lab**：已集成至 Hugo（`/career-lab/`），含 Outcomes / Projects / Instructors / Pricing / Apply
 - **后端**：`backend/`（FastAPI，默认 `http://localhost:8000`）
 - **默认数据库**：SQLite（`backend/app.db`）
 
@@ -230,11 +246,15 @@ npm run dev
 
 ## 5. API 概览（MVP）
 
+> 生产环境所有 API 前缀为 `/api`，如 `POST /api/auth/login`。
+
 ### Auth
 - `POST /auth/register`
 - `POST /auth/login`
 - `POST /auth/refresh`
 - `POST /auth/logout`
+- `GET /auth/verify-email`
+- `POST /auth/resend-verification`
 
 ### Me / Profile / Settings
 - `GET /me`
@@ -246,14 +266,26 @@ npm run dev
 
 ### Onboarding
 - `POST /onboarding/dev/seed`（开发用）
+- `POST /onboarding/pre-cache`
 - `GET /onboarding/flows/current`
 - `GET /onboarding/flows/{flow_id}/questions`
 - `POST /onboarding/responses`
 - `POST /onboarding/complete`
 
+### Contact / Syllabus / Career Lab（落地页表单）
+- `POST /contact` — Contact 表单提交
+- `POST /syllabus/lead` — Career Lab Syllabus 留资
+- `POST /career-lab/apply` — Career Lab Bootcamp 申请
+
 ### Admin（需要 admin）
 - `GET /admin/stats`
 - `GET /admin/users`
+- `GET /admin/contact-submissions`
+- `GET /admin/syllabus-leads`
+- `GET /admin/career-lab-applications`
+
+### Health
+- `GET /health` — 健康检查（生产：`/api/health`）
 
 ---
 
@@ -336,10 +368,18 @@ pip install -r requirements.txt
 | **表单字段** | First Name + Last Name（并排 300px），Email + Phone Number（并排），How did you hear about us?（dropdown），Service interest（3 个 checkbox：Job Assessment / Bootcamp / Consultation），Your Message（textarea 116px），SEND 按钮（全宽 `#017AFF`） |
 | **后端集成** | `POST /contact` → FastAPI，发送回执邮件（`noreply@heeriseacademy.com`）+ 团队通知邮件 |
 
-#### Career Lab（`/career-lab/`）、AI Career Co-pilot（`/acc/`）
+#### Career Lab（`/career-lab/`）
 
-- 目前为 placeholder 页面（"Coming Soon"），待后续集成 Bootcamp 独立应用内容
-- `Bootcamp/` 文件夹包含 Larry 开发的 React + Vite + Tailwind 原型（tab 切换式单页应用：Outcomes / Projects / Instructors / Pricing / Apply），待适配至 Hugo 站点
+- **已实现**：Tab 切换式单页（Outcomes / Projects / Instructors / Pricing / Apply）
+- Outcomes：6 张卡片（Apply ID Models、Create Interactive eLearning、Produce Professional Deliverables、Build Portfolio Website、Execute Job Search Strategy、Leverage AI & Emerging Tech）
+- Projects：6 个实战项目（Job Aid、Training Proposal、Professional Deliverables、Design Document、Interactive Scenario、Portfolio Website）
+- Pricing：Basic / Standard / Premium 三档
+- 倒计时：基于 `hugo.toml` 中 `featured_event.countdown_deadline`
+- 后端：Syllabus 表单 `POST /syllabus/lead`，Bootcamp 申请 `POST /career-lab/apply`
+
+#### AI Career Co-pilot（`/acc/`）
+
+- 已实现 ACC Onboarding 流程，含 pre-cache、问卷、结果映射
 
 ### 8.4 Contact Form 后端
 
@@ -404,6 +444,9 @@ frontend/hugo-landing/
 | `looper-1.png` | 装饰图案（Mission 区域 + Contact hero 右侧） | Figma 设计稿 |
 | `looper-3.png` | 装饰图案（Vision 区域，opacity 0.5） | Figma 设计稿 |
 
+**社交链接**（`hugo.toml` → `[params.social]`）：
+- LinkedIn：https://www.linkedin.com/company/heerise-academy/
+
 ### 9.2 常见操作
 
 | 操作 | 方法 |
@@ -414,6 +457,7 @@ frontend/hugo-landing/
 | 换颜色主题 | 修改 `hugo.toml` 中 `params.style` |
 | 关闭某区域 | 在 `hugo.toml` 中设置对应 `enable = false` |
 | 新增应用页面 | 创建 `content/xxx.md` + `layouts/page/xxx.html` + `static/js/xxx.js` |
+| 修改 Featured Event 日期 | `hugo.toml` → `[params.featured_event]` 的 `subtitle` 和 `countdown_deadline` |
 
 ### 9.3 动态页面开发模式
 
@@ -555,32 +599,155 @@ Firebase Hosting 通过 `rewrites` 将 `/api/**` 代理到 Cloud Run，其余全
 - 无需 Next.js 服务器，无 Node.js 运行时成本
 - 所有页面共享同一套 Hugo Universal Theme CSS，风格 100% 统一
 
-### 10.5 构建与部署脚本
+### 10.5 如何更新并部署到云端
 
-```bash
-#!/bin/bash
-# build-and-deploy.sh
+修改代码后，按以下步骤部署到生产环境。
 
-# 1. Hugo 前端构建
-cd frontend/hugo-landing
-hugo --minify        # 输出到 public/
-cd ../..
+| 更新内容 | 部署命令 |
+|----------|----------|
+| **仅前端** | `hugo --minify` → `firebase deploy --only hosting` |
+| **仅后端** | `gcloud run deploy heerise-backend --source . --region us-central1` |
+| **前后端** | 先部署前端，再部署后端 |
 
-# 2. 部署静态文件到 Firebase Hosting
+#### 前置条件
+
+- 已安装：`gcloud` CLI、`firebase` CLI、Hugo
+- 已登录：`firebase login`、`gcloud auth login`
+- 当前项目：`heeriseacademy`（`firebase use heeriseacademy`）
+
+---
+
+#### 一、仅更新前端（Hugo 静态）
+
+修改了 `frontend/hugo-landing/` 下任意内容（页面、样式、文案、图片等）时：
+
+**Windows (PowerShell)：**
+
+```powershell
+# 1. 进入 Hugo 目录
+cd e:\Heerise\frontend\hugo-landing
+
+# 2. 构建（输出到 public/）
+..\..\tools\hugo\hugo.exe --minify
+
+# 3. 部署到 Firebase Hosting
+cd e:\Heerise
 firebase deploy --only hosting
-
-# 3. 后端部署到 Cloud Run（Docker）
-gcloud run deploy heerise-backend \
-  --source backend/ \
-  --region us-central1
 ```
 
-### 10.6 部署时的路由调整
+**macOS / Linux：**
+
+```bash
+cd frontend/hugo-landing
+hugo --minify
+cd ../..
+firebase deploy --only hosting
+```
+
+**验证**：访问 https://www.heeriseacademy.com 查看更新。
+
+---
+
+#### 二、仅更新后端（FastAPI）
+
+修改了 `backend/` 下任意内容（API、路由、逻辑、依赖等）时：
+
+**Windows (PowerShell)：**
+
+```powershell
+# 1. 进入后端目录（必须在 backend 目录下执行）
+cd e:\Heerise\backend
+
+# 2. 部署到 Cloud Run（会自动构建镜像）
+gcloud run deploy heerise-backend --source . --region us-central1 --allow-unauthenticated --set-env-vars "JWT_SECRET=你的密钥,FRONTEND_BASE=https://www.heeriseacademy.com"
+```
+
+**macOS / Linux：**
+
+```bash
+cd backend
+gcloud run deploy heerise-backend --source . --region us-central1 --allow-unauthenticated --set-env-vars "JWT_SECRET=xxx,FRONTEND_BASE=https://www.heeriseacademy.com"
+```
+
+> 首次部署需设置 `JWT_SECRET`；后续仅更新代码时可省略 `--set-env-vars`，沿用已有环境变量。
+
+**验证**：访问 https://www.heeriseacademy.com/api/health 应返回 `{"ok": true}`。
+
+---
+
+#### 三、同时更新前端和后端
+
+```powershell
+# 1. 部署前端
+cd e:\Heerise\frontend\hugo-landing
+..\..\tools\hugo\hugo.exe --minify
+cd e:\Heerise
+firebase deploy --only hosting
+
+# 2. 部署后端
+cd e:\Heerise\backend
+gcloud run deploy heerise-backend --source . --region us-central1 --allow-unauthenticated
+```
+
+---
+
+#### 四、常见问题
+
+| 问题 | 处理 |
+|------|------|
+| `firebase deploy` 报 Authentication Error | 执行 `firebase login --reauth` |
+| `gcloud` 找不到 | 重启终端或 Cursor；或使用 Google Cloud SDK Shell |
+| 部署目录错误 | 后端必须在 `backend/` 下执行，否则会找不到 Dockerfile |
+| Hugo 找不到 | Windows 使用 `..\..\tools\hugo\hugo.exe`，或安装全局 Hugo |
+
+---
+
+### 10.6 部署架构（当前）
 
 | 调整项 | 说明 |
 |---|---|
-| FastAPI `root_path` | 设置为 `/api`（`uvicorn app.main:app --root-path /api`） |
-| Hugo 中 JS 的 API 地址 | 使用相对路径 `/api/...`（同域，无跨域问题） |
-| Hugo 页面中的链接 | "Get Started" → `/login`，"Dashboard" → `/dashboard`（都在同一 Hugo 站点内） |
+| FastAPI 路由 | 所有路由加 `prefix="/api"`（`/api/health`、`/api/auth/...` 等） |
+| Hugo 中 JS 的 API 地址 | 生产用 `/api`，本地开发用 `http://localhost:8000`（`custom_headers.html` 注入 `HEERISE_API_BASE`） |
+| Firebase rewrites | `/api/**` → Cloud Run `heerise-backend` |
+| 自定义域名 | www.heeriseacademy.com（Firebase Hosting，DNS 在 Squarespace） |
 
-这些调整在准备部署时一次性完成，不影响当前本地开发（本地 JS 仍可用 `http://localhost:8000` 作为 API 地址）。
+详细部署步骤见：`docs/DEPLOYMENT_FULL_GUIDE.md`
+
+## 11. Docker 部署（推荐本地/服务器一键启动）
+
+新增了 Docker 配置，默认启动 2 个容器：
+- `frontend`（Nginx，端口 `8080`）
+- `backend`（FastAPI，内部端口 `8000`，由前端反向代理 `/api`）
+
+### 11.1 启动
+```bash
+cd Heerise
+docker compose up -d --build
+```
+
+访问：
+- 前端：`http://localhost:8080`
+- 后端健康检查：`http://localhost:8080/api/health`
+
+### 11.2 停止
+```bash
+docker compose down
+```
+
+如需同时删除数据库卷（会清空数据）：
+```bash
+docker compose down -v
+```
+
+### 11.3 环境变量（生产建议）
+可在项目根目录放 `.env`（供 `docker compose` 读取）：
+
+```env
+JWT_SECRET=replace_with_a_strong_secret
+FRONTEND_BASE=https://your-domain.com
+```
+
+说明：
+- SQLite 数据库持久化在 Docker volume：`backend_data`
+- 前端静态资源由 Hugo 构建后交给 Nginx 提供
+- 前端请求 `/api/*` 会自动转发到 FastAPI（同域，无跨域问题）

@@ -1,3 +1,8 @@
+<!-- Favicon: Heerise logo (cache-busted to force refresh after deploy) -->
+<link rel="icon" href="/img/logo-transparent.png?v=2" type="image/png" sizes="any">
+<link rel="shortcut icon" href="/img/logo-transparent.png?v=2" type="image/png">
+<link rel="apple-touch-icon" href="/img/logo-transparent.png?v=2">
+
 <!-- Inter font (replaces theme's Roboto) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,3 +35,8 @@
   background-color: rgba(1, 122, 255, 0.8) !important;
 }
 </style>
+
+<script>
+  window.HEERISE_API_BASE =
+    window.location.port === "1313" ? "http://localhost:8000" : "/api";
+</script>

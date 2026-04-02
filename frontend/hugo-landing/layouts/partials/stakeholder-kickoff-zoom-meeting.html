@@ -77,7 +77,58 @@
     return "[Maya - Manager]: '" + sentence + "'";
   }
 
+  /** Split long paragraphs so speechSynthesis fires onend reliably (Chrome often stalls on long utterances). */
+  function splitLongParagraph(text, maxLen) {
+    text = (text || "").trim();
+    if (!text) return [];
+    if (text.length <= maxLen) return [text];
+    var parts = [];
+    var rest = text;
+    while (rest.length > maxLen) {
+      var slice = rest.slice(0, maxLen + 1);
+      var cut = Math.max(slice.lastIndexOf(". "), slice.lastIndexOf("? "), slice.lastIndexOf("! "));
+      if (cut < maxLen / 3) {
+        cut = slice.lastIndexOf(", ");
+        if (cut > maxLen / 2) cut += 2;
+        else cut = maxLen;
+      } else {
+        cut += 2;
+      }
+      parts.push(rest.slice(0, cut).trim());
+      rest = rest.slice(cut).trim();
+    }
+    if (rest) parts.push(rest);
+    return parts;
+  }
+
+  function buildSpeechChunksFromScript(scriptLines) {
+    var chunks = [];
+    var paraIdx = [];
+    var maxLen = 220;
+    var p, j, subs;
+    for (p = 0; p < scriptLines.length; p++) {
+      subs = splitLongParagraph(scriptLines[p], maxLen);
+      for (j = 0; j < subs.length; j++) {
+        chunks.push(subs[j]);
+        paraIdx.push(p);
+      }
+    }
+    return { chunks: chunks, paraIdx: paraIdx };
+  }
+
+  function estimatedDurationFromScript(scriptLines) {
+    var tw = 0;
+    var i;
+    for (i = 0; i < scriptLines.length; i++) {
+      tw += ((scriptLines[i] || "").trim().split(/\s+/).filter(Boolean).length || 0);
+    }
+    return Math.max(25, tw / 2.5);
+  }
+
   var SCRIPT = [];
+  var speechChunks = [];
+  var speechParaIdx = [];
+  var speechChunkCount = 0;
   var synth = window.speechSynthesis;
   var idx = 0;
   var displayIdx = 0;
@@ -137,7 +188,7 @@
       setTranscriptText(SCRIPT[displayIdx]);
       return;
     }
-    if (!usingFileFallback && idx >= SCRIPT.length) {
+    if (!usingFileFallback && speechChunkCount > 0 && idx >= speechChunkCount) {
       setTranscriptText("");
       return;
     }
@@ -270,16 +321,21 @@
     displayIdx = 0;
     speechStarted = false;
 
+    var bundle = buildSpeechChunksFromScript(SCRIPT);
+    speechChunks = bundle.chunks;
+    speechParaIdx = bundle.paraIdx;
+    speechChunkCount = speechChunks.length;
+
     function speakOne() {
-      if (idx >= SCRIPT.length) {
+      if (idx >= speechChunkCount) {
         setTranscriptIfVisible("");
         utteranceRefs.length = 0;
         goToNextAfterNarration();
         return;
       }
-      var line = SCRIPT[idx];
-      displayIdx = idx;
-      setTranscriptIfVisible(line);
+      var line = speechChunks[idx];
+      displayIdx = speechParaIdx[idx];
+      setTranscriptIfVisible(SCRIPT[displayIdx]);
       var u = new SpeechSynthesisUtterance(line);
       utteranceRefs.push(u);
       u.rate = 0.95;
@@ -330,7 +386,9 @@
   function buildCueStarts(durationSec, lineCount) {
     var custom = typeof window.SKS_ZM_SENTENCE_CUES_SEC !== "undefined" && window.SKS_ZM_SENTENCE_CUES_SEC;
     if (custom && custom.length === lineCount) return custom.slice();
-    var d = durationSec > 0 && !isNaN(durationSec) ? durationSec : 60;
+    /* Infinity/NaN duration (some MP3/blob) made step Infinity → transcript stuck on line 1 */
+    var d =
+      isFinite(durationSec) && durationSec > 0 ? durationSec : estimatedDurationFromScript(SCRIPT);
     var step = d / lineCount;
     var out = [];
     var i;
@@ -377,9 +435,13 @@
       setTranscriptIfVisible("");
       goToNextAfterNarration();
     });
-    fallbackAudio.addEventListener("loadedmetadata", function () {
-      cueStartsSec = buildCueStarts(fallbackAudio.duration, SCRIPT.length);
-    });
+    function applyFileAudioCues() {
+      if (!fallbackAudio || !SCRIPT.length) return;
+      var dur = fallbackAudio.duration;
+      cueStartsSec = buildCueStarts(dur, SCRIPT.length);
+    }
+    fallbackAudio.addEventListener("loadedmetadata", applyFileAudioCues);
+    fallbackAudio.addEventListener("durationchange", applyFileAudioCues);
     fallbackAudio.addEventListener(
       "error",
       function () {
@@ -523,6 +585,10 @@
 
   resolveDisplayNameFromApi().then(function (name) {
     SCRIPT = buildScriptLines(name);
+    var sb = buildSpeechChunksFromScript(SCRIPT);
+    speechChunks = sb.chunks;
+    speechParaIdx = sb.paraIdx;
+    speechChunkCount = speechChunks.length;
     if (transcriptPanel) transcriptPanel.hidden = !transcriptVisible;
     updateToggleLabel();
 

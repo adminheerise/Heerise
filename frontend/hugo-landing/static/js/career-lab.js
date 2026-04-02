@@ -62,12 +62,19 @@
     err && (err.textContent = "");
     const API_BASE = window.HEERISE_API_BASE || "http://localhost:8000";
     try {
-      const r = await fetch(`${API_BASE}/syllabus/lead`, {
+      const r = await fetch(`${API_BASE}/api/syllabus/lead`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ first_name: first, last_name: last, email }),
       });
-      if (!r.ok) throw new Error((await r.json())?.detail || "Failed to submit.");
+      if (!r.ok) {
+        const ct = r.headers.get("Content-Type") || "";
+        let msg = "Failed to submit.";
+        if (ct.includes("application/json")) {
+          try { msg = (await r.json())?.detail || msg; } catch (_) {}
+        }
+        throw new Error(msg);
+      }
     } catch (ex) {
       return err && (err.textContent = ex.message || "Failed to submit.");
     }
@@ -353,7 +360,7 @@
     }
 
     try {
-      const res = await fetch(`${API_BASE}/career-lab/apply`, {
+      const res = await fetch(`${API_BASE}/api/career-lab/apply`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -366,7 +373,14 @@
           message: `Career Lab Bootcamp Application\n\nTopics: ${selectedTopics.join(", ")}\nHighest Education Level: ${selectedEducation}\nAcademic Major: ${major}\nYears of Work Experience: ${selectedWorkExp}\nHours Per Week: ${selectedHours}\nPreferred Learning Style: ${selectedLearningStyle}\nWhy Interested: ${why}\n\nSoftware Proficiency:\n${proficiencySummary}`,
         }),
       });
-      if (!res.ok) throw new Error((await res.json())?.detail || "Something went wrong.");
+      if (!res.ok) {
+        const ct = res.headers.get("Content-Type") || "";
+        let msg = "Something went wrong.";
+        if (ct.includes("application/json")) {
+          try { msg = (await res.json())?.detail || msg; } catch (_) {}
+        }
+        throw new Error(msg);
+      }
       closeBootcamp();
       alert("Thanks! Your application has been received.");
     } catch (error) {

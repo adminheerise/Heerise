@@ -2930,6 +2930,12 @@ body.cl-modal-open {
     align-items: center;
     gap: 16px;
 }
+.acc-hero-buttons-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
 .acc-btn-primary {
     display: flex;
     flex-direction: row;
@@ -2981,6 +2987,34 @@ body.cl-modal-open {
     background: rgba(1, 122, 255, 0.05);
     color: #017AFF;
     text-decoration: none;
+}
+.acc-btn-kickoff {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    background: #1a1a1a;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.acc-btn-kickoff:hover {
+    background: #333333;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+.acc-btn-kickoff svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
 }
 .acc-hero-image {
     position: relative;
@@ -3422,6 +3456,9 @@ body.acc-page-deprecated {
     .acc-hero-buttons {
         justify-content: center;
     }
+    .acc-hero-buttons-col {
+        align-items: center;
+    }
     .acc-hero-image {
         width: 100%;
         max-width: 490px;
@@ -3483,8 +3520,13 @@ body.acc-page-deprecated {
         flex-direction: column;
         width: 100%;
     }
+    .acc-hero-buttons-col {
+        width: 100%;
+        align-items: stretch;
+    }
     .acc-btn-primary,
-    .acc-btn-secondary {
+    .acc-btn-secondary,
+    .acc-btn-kickoff {
         width: 100%;
         justify-content: center;
     }

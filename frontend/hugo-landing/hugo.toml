@@ -190,7 +190,7 @@ pluralizelisttitles = false
   label = "Upcoming Event"
   badge = "Featured"
   title = "ID/LXD Career Lab"
-  subtitle = "Founding Cohort · Starts Feb 28 · 8-Week Intensive"
+  subtitle = "Founding Cohort · Starts Mar 28 · 8-Week Intensive"
   description1 = "An elite 8-week bootcamp for professionals who want to break into Learning Experience Design (LXD)/ Instructional Design (ID)."
   description2 = "Build a portfolio with five hands-on projects, get 1:1 mentorship, and receive job-ready application coaching."
   stat1_number = "8 Weeks"
@@ -209,7 +209,7 @@ pluralizelisttitles = false
 # NEW: Social links for footer
 # ============================================================
 [params.social]
-  linkedin = "https://www.linkedin.com/in/heerise-academy-a778553a9"
+  linkedin = "https://www.linkedin.com/company/heerise-academy/"
   rednote = "https://www.xiaohongshu.com/user/profile/56a2ba9c4775a729d5355df6"
 
 [taxonomies]

@@ -8,6 +8,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+{{ if eq .Params.id "stakeholder-kickoff" }}
+<link href="{{ "css/stakeholder-kickoff.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+{{ end }}
+
+{{ if or (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") }}
+<link href="{{ "css/stakeholder-kickoff-sim.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+{{ end }}
+
 <!-- Navbar: #017AFF override (loads last - overrides theme purple/teal) -->
 <style>
 :root {

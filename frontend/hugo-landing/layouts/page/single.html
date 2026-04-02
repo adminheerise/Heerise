@@ -9,9 +9,11 @@
   <body>
 
     <div id="all">
+        {{ if not .Params.no_navbar }}
         {{ partial "top.html" . }}
 
         {{ partial "nav.html" . }}
+        {{ end }}
 
         <div id="content">
             {{ if isset .Params "id" }}
@@ -44,7 +46,9 @@
         </div>
         <!-- /#content -->
 
+        {{ if not .Params.no_footer }}
         {{ partial "footer.html" . }}
+        {{ end }}
 
     </div>
     <!-- /#all -->

@@ -1,0 +1,320 @@
+<!-- *** LUMINA • SIM — Slack workspace: start #general + notification, then Maya DM after Got it *** -->
+<section class="sks-page sks-page--workspace" aria-label="Lumina workspace simulation">
+    <div class="sks-shell">
+        <header class="sks-top">
+            <div class="sks-brand">LUMINA &bull; SIM</div>
+            <nav class="sks-nav" aria-label="Simulation steps">
+                <span class="sks-step sks-step-active">Assignment Brief</span>
+                <span class="sks-step">Research</span>
+                <span class="sks-step">Outreach Email</span>
+                <span class="sks-step">Meeting Agenda</span>
+                <span class="sks-step">Kick-off Call</span>
+                <span class="sks-step">Manager Brief</span>
+                <span class="sks-step">Results</span>
+            </nav>
+        </header>
+
+        <div class="sks-workspace">
+            <div class="sks-ws-window" role="application" aria-label="Simulated chat workspace">
+                <div class="sks-ws-titlebar">
+                    <span class="sks-ws-titlebar-nav" aria-hidden="true">
+                        <span class="sks-ws-ico">&lsaquo;</span><span class="sks-ws-ico">&rsaquo;</span><span class="sks-ws-ico">&#8635;</span>
+                    </span>
+                    <div class="sks-ws-search-wrap">
+                        <input type="search" class="sks-ws-search" placeholder="Search Workspace" readonly tabindex="-1" />
+                    </div>
+                    <span class="sks-ws-titlebar-actions" aria-hidden="true">
+                        <span class="sks-ws-ico">?</span><span class="sks-ws-win">&#8212;</span><span class="sks-ws-win">&#9633;</span><span class="sks-ws-win">&times;</span>
+                    </span>
+                </div>
+                <div class="sks-ws-body">
+                    <aside class="sks-ws-rail" aria-hidden="true">
+                        <div class="sks-ws-rail-logo">C</div>
+                        <div class="sks-ws-rail-icons">
+                            <span class="sks-ws-rail-ic" title="Home">&#8962;</span>
+                            <span class="sks-ws-rail-ic" title="DMs">&#9993;</span>
+                            <span class="sks-ws-rail-ic" title="Activity">&#9889;</span>
+                            <span class="sks-ws-rail-ic" title="Later">&#9200;</span>
+                            <span class="sks-ws-rail-ic" title="More">&#8942;</span>
+                        </div>
+                        <button type="button" class="sks-ws-rail-plus" aria-hidden="true">+</button>
+                        <div class="sks-ws-rail-avatar">
+                            <img src="/img/lumina-manager.png" alt="" />
+                            <span class="sks-ws-rail-status"></span>
+                        </div>
+                    </aside>
+                    <aside class="sks-ws-sidebar">
+                        <div class="sks-ws-sb-head">
+                            <span class="sks-ws-sb-wsname">CIL LLP</span>
+                            <span class="sks-ws-sb-chev">&#9662;</span>
+                            <span class="sks-ws-sb-compose">&#9998;</span>
+                        </div>
+                        <div class="sks-ws-sb-section">
+                            <div class="sks-ws-sb-item">Unread</div>
+                            <div class="sks-ws-sb-item">Threads</div>
+                            <div class="sks-ws-sb-item">Drafts &amp; sent</div>
+                        </div>
+                        <div class="sks-ws-sb-label">Channels</div>
+                        <div class="sks-ws-sb-item sks-ws-sb-ch"># Ping_room</div>
+                        <div class="sks-ws-sb-item sks-ws-sb-ch sks-ws-sb-ch-active" id="sks-ws-ch-general"># general</div>
+                        <div class="sks-ws-sb-item sks-ws-sb-ch"># product</div>
+                        <div class="sks-ws-sb-item sks-ws-sb-ch"># design</div>
+                        <div class="sks-ws-sb-item sks-ws-sb-ch"># productivity</div>
+                        <div class="sks-ws-sb-label">Direct messages</div>
+                        <div class="sks-ws-sb-item sks-ws-sb-dm" id="sks-ws-dm-maya">
+                            <span class="sks-ws-sb-ava"><img src="/img/lumina-manager.png" alt="" /></span>
+                            <span class="sks-ws-sb-dm-name">Maya Chen</span>
+                            <span class="sks-ws-badge" id="sks-ws-dm-badge" aria-label="1 unread">1</span>
+                        </div>
+                        <div class="sks-ws-sb-item sks-ws-sb-dm">Sharma</div>
+                        <div class="sks-ws-sb-item sks-ws-sb-dm">Catherine</div>
+                        <div class="sks-ws-sb-label">Apps</div>
+                        <div class="sks-ws-sb-item">Slackbot</div>
+                        <div class="sks-ws-sb-item">Todoist</div>
+                    </aside>
+                    <main class="sks-ws-chat">
+                        <!-- Phase 1: #general channel (visible until Got it) -->
+                        <div class="sks-ws-panel" id="sks-ws-panel-general">
+                            <div class="sks-ws-chat-head sks-ws-chat-head-channel">
+                                <span class="sks-ws-chat-channel-title"># general</span>
+                                <span class="sks-ws-chat-channel-sub">Lorem ipsum dolor sit amet &mdash; channel topic placeholder</span>
+                            </div>
+                            <div class="sks-ws-feed sks-ws-feed-general">
+                                <p class="sks-ws-feed-placeholder">Welcome to #general. Company-wide announcements and work-based matters.</p>
+                            </div>
+                        </div>
+                        <!-- Phase 2: Maya DM + full message (hidden until Got it) -->
+                        <div class="sks-ws-panel" id="sks-ws-panel-maya" hidden>
+                            <div class="sks-ws-chat-head">
+                                <span class="sks-ws-chat-ava"><img src="/img/lumina-manager.png" alt="" /></span>
+                                <span class="sks-ws-chat-name-wrap">
+                                    <span class="sks-ws-chat-name">Maya Chen</span>
+                                    <span class="sks-ws-chat-status" title="Active"></span>
+                                </span>
+                                <span class="sks-ws-chat-tools">
+                                    <span class="sks-ws-ico-sm">&#9634;</span>
+                                    <span class="sks-ws-ico-sm">&#127911;</span>
+                                </span>
+                            </div>
+                            <div class="sks-ws-feed">
+                                <div class="sks-ws-day-pill">Today</div>
+                                <div class="sks-ws-msg sks-ws-msg-in">
+                                    <div class="sks-ws-msg-in-row">
+                                        <div class="sks-ws-msg-in-ava">
+                                            <img src="/img/lumina-manager.png" alt="" />
+                                            <span class="sks-ws-msg-in-ava-status" title="Active"></span>
+                                        </div>
+                                        <div class="sks-ws-msg-in-main">
+                                            <div class="sks-ws-msg-meta">
+                                                <span class="sks-ws-msg-who">Maya Chen</span>
+                                                <span class="sks-ws-msg-time">2:43 PM</span>
+                                            </div>
+                                            <div class="sks-ws-msg-body">
+                                                <p>Hey [name]! Exciting news: you&rsquo;ve been assigned to lead the learning design for our new product launch this year: <strong>Aria</strong>, our new AI agent. Let&rsquo;s hop on Zoom now to chat about it. &hellip;</p>
+                                            </div>
+                                            <div class="sks-ws-msg-react" aria-hidden="true">&#128578;</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sks-ws-compose" id="sks-ws-compose">
+                            <div class="sks-ws-compose-bar">
+                                <span>B</span><span><i>I</i></span><span>S</span><span>&#128279;</span>
+                                <span class="sks-ws-compose-sep" aria-hidden="true"></span>
+                                <span title="Bulleted list">&#8226;&#8226;</span>
+                                <span title="Numbered list">1.</span>
+                                <span title="Quote">&ldquo;&rdquo;</span>
+                                <span title="Code">&lt;/&gt;</span>
+                            </div>
+                            <div class="sks-ws-compose-input-wrap" id="sks-ws-compose-input-wrap">
+                                <div class="sks-ws-compose-placeholder" id="sks-ws-compose-placeholder">Message</div>
+                                <textarea
+                                    id="sks-ws-reply-text"
+                                    class="sks-ws-compose-textarea"
+                                    hidden
+                                    rows="5"
+                                    spellcheck="false"
+                                ></textarea>
+                            </div>
+                            <div class="sks-ws-compose-foot">
+                                <span>+</span><span>Aa</span><span>&#128512;</span><span>@</span><span>&#128247;</span><span>&#127908;</span><span>&#128206;</span>
+                                <button type="button" class="sks-ws-compose-send" id="sks-ws-send-btn" aria-label="Send message" disabled>&#10148;</button>
+                            </div>
+                        </div>
+
+                        <!-- After 3s on Maya DM: tooltip above compose (must be inside chat for stacking) -->
+                        <div class="sks-ws-reply-layer" id="sks-ws-reply-layer" hidden>
+                            <div class="sks-ws-reply-tooltip" id="sks-ws-reply-tooltip" role="status">
+                                Now, continue by replying to her message
+                            </div>
+                        </div>
+                    </main>
+                </div>
+
+                <div class="sks-ws-meeting-countdown" id="sks-ws-meeting-countdown" hidden aria-hidden="true">
+                    <div class="sks-ws-meeting-countdown-inner">
+                        <p class="sks-ws-meeting-countdown-label">Video Meeting Starting in</p>
+                        <p class="sks-ws-meeting-countdown-num" id="sks-ws-meeting-countdown-num" aria-live="assertive">3</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sks-ws-hint" id="sks-ws-hint" role="dialog" aria-modal="true" aria-labelledby="sks-ws-hint-title">
+                <div class="sks-ws-hint-card">
+                    <p id="sks-ws-hint-title" class="sks-ws-hint-text">
+                        It looks like your manager <span class="sks-ws-hint-name">Maya Chen</span> just sent you a message. Let&rsquo;s check it out!
+                    </p>
+                    <button type="button" class="sks-ws-hint-btn" id="sks-ws-hint-ok">Got it</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+  var REPLY_DELAY_MS = 3000;
+  var DEFAULT_REPLY =
+    "That's amazing, Maya! I'm thrilled to lead the design for Aria. I'll jump on the Zoom link right now! See you there!";
+  var replyTimer = null;
+  var meetingCountdownTimer = null;
+
+  function dismissHint() {
+    var hint = document.getElementById("sks-ws-hint");
+    if (hint) {
+      hint.hidden = true;
+      hint.setAttribute("aria-hidden", "true");
+    }
+    var gen = document.getElementById("sks-ws-panel-general");
+    var maya = document.getElementById("sks-ws-panel-maya");
+    if (gen) gen.hidden = true;
+    if (maya) maya.hidden = false;
+    var ch = document.getElementById("sks-ws-ch-general");
+    var dm = document.getElementById("sks-ws-dm-maya");
+    if (ch) ch.classList.remove("sks-ws-sb-ch-active");
+    if (dm) {
+      dm.classList.add("sks-ws-sb-dm-active");
+    }
+    var badge = document.getElementById("sks-ws-dm-badge");
+    if (badge) badge.hidden = true;
+
+    if (replyTimer) clearTimeout(replyTimer);
+    replyTimer = setTimeout(showReplyPrompt, REPLY_DELAY_MS);
+  }
+
+  function showReplyPrompt() {
+    replyTimer = null;
+    var ph = document.getElementById("sks-ws-compose-placeholder");
+    var ta = document.getElementById("sks-ws-reply-text");
+    var compose = document.getElementById("sks-ws-compose");
+    var layer = document.getElementById("sks-ws-reply-layer");
+    if (ph) ph.hidden = true;
+    if (ta) {
+      ta.hidden = false;
+      ta.value = DEFAULT_REPLY;
+    }
+    if (compose) compose.classList.add("sks-ws-compose--reply-mode");
+    var sendBtn = document.getElementById("sks-ws-send-btn");
+    if (sendBtn) sendBtn.disabled = false;
+    if (layer) {
+      layer.hidden = false;
+      layer.setAttribute("aria-hidden", "false");
+    }
+  }
+
+  function hideReplyPrompt() {
+    var layer = document.getElementById("sks-ws-reply-layer");
+    if (layer) {
+      layer.hidden = true;
+      layer.setAttribute("aria-hidden", "true");
+    }
+    var compose = document.getElementById("sks-ws-compose");
+    if (compose) compose.classList.remove("sks-ws-compose--reply-mode");
+  }
+
+  function startMeetingCountdown() {
+    if (meetingCountdownTimer) {
+      clearInterval(meetingCountdownTimer);
+      meetingCountdownTimer = null;
+    }
+    var overlay = document.getElementById("sks-ws-meeting-countdown");
+    var numEl = document.getElementById("sks-ws-meeting-countdown-num");
+    if (!overlay || !numEl) return;
+    overlay.hidden = false;
+    overlay.setAttribute("aria-hidden", "false");
+    var n = 3;
+    numEl.textContent = "3";
+    meetingCountdownTimer = setInterval(function () {
+      n -= 1;
+      if (n <= 0) {
+        clearInterval(meetingCountdownTimer);
+        meetingCountdownTimer = null;
+        overlay.hidden = true;
+        overlay.setAttribute("aria-hidden", "true");
+        return;
+      }
+      numEl.textContent = String(n);
+    }, 1000);
+  }
+
+  function onSend() {
+    var ta = document.getElementById("sks-ws-reply-text");
+    if (!ta || ta.hidden) return;
+    var feed = document.querySelector("#sks-ws-panel-maya .sks-ws-feed");
+    var text = ta.value.trim();
+    if (feed && text) {
+      var wrap = document.createElement("div");
+      wrap.className = "sks-ws-msg sks-ws-msg-out";
+      wrap.innerHTML =
+        '<div class="sks-ws-msg-out-row">' +
+        '<div class="sks-ws-msg-out-main">' +
+        '<div class="sks-ws-msg-meta"><span class="sks-ws-msg-who">You</span><span class="sks-ws-msg-time">2:43 PM</span></div>' +
+        '<div class="sks-ws-msg-body"><p></p></div>' +
+        "</div>" +
+        '<div class="sks-ws-msg-out-ava" aria-hidden="true"><span class="sks-ws-msg-out-ava-inner">U</span></div>' +
+        "</div>";
+      wrap.querySelector("p").textContent = text;
+      feed.appendChild(wrap);
+      feed.scrollTop = feed.scrollHeight;
+      startMeetingCountdown();
+    }
+    hideReplyPrompt();
+    ta.value = "";
+    ta.readOnly = false;
+    ta.hidden = true;
+    var ph = document.getElementById("sks-ws-compose-placeholder");
+    if (ph) ph.hidden = false;
+    var sendBtn = document.getElementById("sks-ws-send-btn");
+    if (sendBtn) sendBtn.disabled = true;
+  }
+
+  var h = document.getElementById("sks-ws-hint");
+  var ok = document.getElementById("sks-ws-hint-ok");
+  if (ok) {
+    ok.addEventListener(
+      "click",
+      function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dismissHint();
+      },
+      true
+    );
+  }
+  if (h) {
+    h.addEventListener("click", function (e) {
+      if (e.target === h) dismissHint();
+    });
+  }
+
+  var sendBtn = document.getElementById("sks-ws-send-btn");
+  if (sendBtn) {
+    sendBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      onSend();
+    }, true);
+  }
+})();
+</script>

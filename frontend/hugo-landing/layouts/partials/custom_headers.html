@@ -12,7 +12,7 @@
 <link href="{{ "css/stakeholder-kickoff.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 {{ end }}
 
-{{ if or (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") }}
+{{ if or (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") }}
 <link href="{{ "css/stakeholder-kickoff-sim.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 {{ end }}
 

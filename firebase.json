@@ -6,33 +6,6 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "redirects": [
-      {
-        "source": "/acc/stakeholder-kickoff/zoom-meeting",
-        "destination": "/acc/stakeholder-kickoff/zoom-meeting/",
-        "type": 301
-      },
-      {
-        "source": "/acc/stakeholder-kickoff/outreach-email",
-        "destination": "/acc/stakeholder-kickoff/outreach-email/",
-        "type": 301
-      },
-      {
-        "source": "/acc/stakeholder-kickoff/brief-organize",
-        "destination": "/acc/stakeholder-kickoff/brief-organize/",
-        "type": 301
-      },
-      {
-        "source": "/acc/stakeholder-kickoff/workspace",
-        "destination": "/acc/stakeholder-kickoff/workspace/",
-        "type": 301
-      },
-      {
-        "source": "/acc/stakeholder-kickoff/gap-analysis",
-        "destination": "/acc/stakeholder-kickoff/gap-analysis/",
-        "type": 301
-      }
-    ],
     "rewrites": [
       {
         "source": "/api/**",

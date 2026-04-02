@@ -1,0 +1,276 @@
+{{ $fallbackBriefOrganize := "/acc/stakeholder-kickoff/brief-organize/" | relURL }}
+<!-- WF8: full inbox → click row → WF9: full detail (same card area, no split/stack) -->
+<section class="sks-page sks-page--outreach-email sks-page--ab-gmail" aria-label="Assignment Brief Gmail simulation">
+    <div class="sks-shell sks-oemail-page-shell">
+        <header class="sks-top">
+            <div class="sks-brand sks-oemail-brand">LUMINA &bull; SIM</div>
+            <nav class="sks-nav" aria-label="Simulation steps">
+                <span class="sks-step sks-step-active">Assignment Brief</span>
+                <span class="sks-step">Research</span>
+                <span class="sks-step">Outreach Email</span>
+                <span class="sks-step">Meeting Agenda</span>
+                <span class="sks-step">Kick-off Call</span>
+                <span class="sks-step">Manager Brief</span>
+                <span class="sks-step">Results</span>
+            </nav>
+        </header>
+
+        <div class="sks-oemail-stage">
+            <div class="sks-oemail-frame">
+                <div class="sks-oemail-browser">
+                    <div class="sks-oemail-browser-inner">
+                        <span class="sks-oemail-dot sks-oemail-dot--r" aria-hidden="true"></span>
+                        <span class="sks-oemail-dot sks-oemail-dot--y" aria-hidden="true"></span>
+                        <span class="sks-oemail-dot sks-oemail-dot--g" aria-hidden="true"></span>
+                        <span class="sks-oemail-browser-nav" aria-hidden="true">
+                            <span class="sks-oemail-ico sks-oemail-ico--on">&lsaquo;</span>
+                            <span class="sks-oemail-ico sks-oemail-ico--dim">&rsaquo;</span>
+                            <span class="sks-oemail-ico sks-oemail-ico--on">&#8635;</span>
+                        </span>
+                        <div class="sks-oemail-urlbar">
+                            <span class="sks-oemail-lock" aria-hidden="true"></span>
+                            <span class="sks-oemail-url">gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sks-oemail-app">
+                    <header class="sks-oemail-app-header">
+                        <div class="sks-oemail-app-header-left">
+                            <span class="sks-oemail-menu-ico" aria-hidden="true"></span>
+                            <span class="sks-oemail-wordmark" aria-hidden="true"><span class="sks-oemail-g-red">G</span>mail</span>
+                        </div>
+                        <div class="sks-oemail-search-wrap">
+                            <span class="sks-oemail-search-ico" aria-hidden="true"></span>
+                            <span class="sks-oemail-search-ph">Search mail</span>
+                        </div>
+                        <div class="sks-oemail-app-header-right" aria-hidden="true">
+                            <span class="sks-oemail-hd-ico sks-oemail-hd-ico--help" title="Help"></span>
+                            <span class="sks-oemail-hd-ico sks-oemail-hd-ico--gear" title="Settings"></span>
+                            <span class="sks-oemail-hd-ico sks-oemail-hd-ico--apps" title="Google apps"></span>
+                            <span class="sks-oemail-hd-avatar" title="Account"></span>
+                        </div>
+                    </header>
+
+                    <div class="sks-oemail-app-body">
+                        <aside class="sks-oemail-rail">
+                            <div class="sks-oemail-compose-wrap">
+                                <button type="button" class="sks-oemail-compose" tabindex="-1">
+                                    <span class="sks-oemail-compose-plus" aria-hidden="true">+</span>
+                                    <span class="sks-oemail-compose-txt">Compose</span>
+                                </button>
+                            </div>
+                            <ul class="sks-oemail-sidenav">
+                                <li class="sks-oemail-navrow sks-oemail-navrow--inbox">
+                                    <span class="sks-oemail-navlabel sks-oemail-navlabel--accent">Inbox</span>
+                                    <span class="sks-oemail-navcount">1</span>
+                                </li>
+                                <li class="sks-oemail-navrow"><span class="sks-oemail-navlabel">Starred</span></li>
+                                <li class="sks-oemail-navrow"><span class="sks-oemail-navlabel">Snoozed</span></li>
+                                <li class="sks-oemail-navrow"><span class="sks-oemail-navlabel">Sent</span></li>
+                                <li class="sks-oemail-navrow"><span class="sks-oemail-navlabel">Drafts</span><span class="sks-oemail-navcount sks-oemail-navcount--muted">1</span></li>
+                                <li class="sks-oemail-navrow"><span class="sks-oemail-navlabel">Spam</span><span class="sks-oemail-navcount sks-oemail-navcount--muted">3</span></li>
+                                <li class="sks-oemail-navrow"><span class="sks-oemail-navlabel">Trash</span></li>
+                                <li class="sks-oemail-navrow sks-oemail-navrow--more"><span class="sks-oemail-navlabel">More</span></li>
+                            </ul>
+                            <div class="sks-oemail-meet" aria-hidden="true">
+                                <div class="sks-oemail-meet-h">Meet</div>
+                                <div class="sks-oemail-navrow"><span class="sks-oemail-navlabel">New meeting</span></div>
+                                <div class="sks-oemail-navrow"><span class="sks-oemail-navlabel">Join a meeting</span></div>
+                            </div>
+                            <div class="sks-oemail-hangouts" aria-hidden="true">
+                                <div class="sks-oemail-meet-h">Hangouts</div>
+                                <button type="button" class="sks-oemail-signin" tabindex="-1">Sign in</button>
+                            </div>
+                        </aside>
+
+                        <!-- Center column: two full-screen layers (inbox | detail), not stacked vertically -->
+                        <div class="sks-oemail-main sks-oemail-main-swap" id="sks-oemail-main-swap">
+                            <div class="sks-oemail-view sks-oemail-view--inbox" id="sks-oemail-view-inbox">
+                                <div class="sks-oemail-categories-bar">
+                                    <div class="sks-oemail-action-menu">
+                                        <span class="sks-oemail-tb-check" aria-hidden="true"></span>
+                                        <span class="sks-oemail-tb-ico" aria-hidden="true">&#8635;</span>
+                                        <span class="sks-oemail-tb-dots" aria-hidden="true"></span>
+                                    </div>
+                                    <span class="sks-oemail-tb-meta">1&ndash;50 of 2,619</span>
+                                </div>
+
+                                <div class="sks-oemail-cats">
+                                    <button type="button" class="sks-oemail-tab sks-oemail-tab--on" tabindex="-1">
+                                        <span class="sks-oemail-tab-t">Primary</span>
+                                        <span class="sks-oemail-tab-bar"></span>
+                                    </button>
+                                    <button type="button" class="sks-oemail-tab" tabindex="-1">
+                                        <span class="sks-oemail-tab-t">Social</span>
+                                        <span class="sks-oemail-badge sks-oemail-badge--social">1 new</span>
+                                    </button>
+                                    <button type="button" class="sks-oemail-tab" tabindex="-1">
+                                        <span class="sks-oemail-tab-t">Promotions</span>
+                                        <span class="sks-oemail-badge sks-oemail-badge--promo">6 new</span>
+                                    </button>
+                                    <button type="button" class="sks-oemail-tab" tabindex="-1">
+                                        <span class="sks-oemail-tab-t">Updates</span>
+                                    </button>
+                                </div>
+
+                                <div class="sks-oemail-rows sks-oemail-rows--fill">
+                                    <button type="button" class="sks-oemail-row sks-oemail-row--clickable" id="sks-oemail-open-maya" aria-label="Open email from Maya Chen, Project Brief">
+                                        <span class="sks-oemail-row-check" aria-hidden="true"></span>
+                                        <span class="sks-oemail-row-star" aria-hidden="true"></span>
+                                        <span class="sks-oemail-row-flag" aria-hidden="true"></span>
+                                        <span class="sks-oemail-from">Maya Chen</span>
+                                        <span class="sks-oemail-subj-wrap">
+                                            <span class="sks-oemail-subj">Project Brief</span>
+                                            <span class="sks-oemail-dash">&mdash;</span>
+                                            <span class="sks-oemail-prev">Hey, here are the details of the project</span>
+                                        </span>
+                                        <time class="sks-oemail-time" datetime="22:41">10:41 PM</time>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="sks-oemail-view sks-oemail-view--detail" id="sks-oemail-view-detail" hidden>
+                                <div class="sks-oemail-detail-toolbar">
+                                    <button type="button" class="sks-oemail-detail-back" id="sks-oemail-detail-back" aria-label="Back to inbox">&larr;</button>
+                                    <div class="sks-oemail-detail-tb-icons" aria-hidden="true">
+                                        <span class="sks-oemail-dtb-ic"></span><span class="sks-oemail-dtb-ic"></span><span class="sks-oemail-dtb-ic"></span>
+                                        <span class="sks-oemail-dtb-sep"></span>
+                                        <span class="sks-oemail-dtb-ic"></span><span class="sks-oemail-dtb-ic"></span><span class="sks-oemail-dtb-ic"></span>
+                                    </div>
+                                    <span class="sks-oemail-tb-meta">1&ndash;50 of 2,619</span>
+                                </div>
+
+                                <div class="sks-oemail-detail-scroll" id="sks-oemail-detail-scroll">
+                                    <div class="sks-oemail-detail-subject-row">
+                                        <span class="sks-oemail-detail-subject">Project Brief</span>
+                                        <span class="sks-oemail-detail-important" aria-hidden="true"></span>
+                                        <span class="sks-oemail-detail-badge-inbox">Inbox</span>
+                                    </div>
+
+                                    <div class="sks-oemail-detail-from-row">
+                                        <span class="sks-oemail-detail-avatar" aria-hidden="true"></span>
+                                        <div class="sks-oemail-detail-from-text">
+                                            <div class="sks-oemail-detail-line1">
+                                                <strong>Maya Chen</strong>
+                                                <span class="sks-oemail-detail-email">&lt;maya.chen@example.com&gt;</span>
+                                            </div>
+                                            <div class="sks-oemail-detail-line2">
+                                                <span class="sks-oemail-detail-to-label">to me</span>
+                                            </div>
+                                        </div>
+                                        <div class="sks-oemail-detail-ts">
+                                            <time datetime="09:14">9:14 AM</time>
+                                            <span class="sks-oemail-detail-ts-sub">(8 hours ago)</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="sks-oemail-detail-body">
+                                        <p><strong>Background:</strong> Lumina&rsquo;s go-to-market strategy for the new fiscal year.</p>
+                                        <p><strong>Problem:</strong> Longer ramp times for new reps and inconsistent messaging in discovery calls.</p>
+                                        <p><strong>Solution:</strong> Training so reps can position and sell Aria effectively.</p>
+                                        <p><strong>Client:</strong> Jordan Kiml, Sales Manager.</p>
+                                        <p><strong>SME:</strong> Dr. Priya Nair, Product Lead.</p>
+                                        <p><strong>Product:</strong> Aria &mdash; AI agent for enterprise workflow automation.</p>
+                                        <p><strong>Audience:</strong> 1,000 new Sales Representatives (global).</p>
+                                        <p><strong>Timeline:</strong> Training live in 5 weeks.</p>
+                                        <p><strong>Budget:</strong> Not specified.</p>
+                                        <p><strong>Initial request from Jordan:</strong></p>
+                                        <ul class="sks-oemail-detail-ul">
+                                            <li>What Agentforce is and why it matters</li>
+                                            <li>Discovery conversations that qualify opportunities</li>
+                                            <li>Handling objections on security and ROI</li>
+                                        </ul>
+                                        <p><strong>Your deliverable:</strong></p>
+                                        <ul class="sks-oemail-detail-ul">
+                                            <li>Learning objectives</li>
+                                            <li>Confirmed scope</li>
+                                            <li>Success definitions</li>
+                                            <li>Constraints</li>
+                                        </ul>
+                                        <p>&mdash; Maya</p>
+                                    </div>
+
+                                    <div class="sks-oemail-detail-compose-zone">
+                                        <button type="button" class="sks-oemail-smart-reply" id="sks-oemail-quick-reply">
+                                            Thanks for the debrief!
+                                        </button>
+
+                                        <div class="sks-oemail-detail-actions">
+                                            <span class="sks-oemail-detail-act">
+                                                <span class="sks-oemail-detail-act-ic" aria-hidden="true"></span>
+                                                Reply
+                                            </span>
+                                            <span class="sks-oemail-detail-act">
+                                                <span class="sks-oemail-detail-act-ic sks-oemail-detail-act-ic--fwd" aria-hidden="true"></span>
+                                                Forward
+                                            </span>
+                                        </div>
+
+                                        <div class="sks-oemail-detail-prompt" id="sks-oemail-quick-prompt" aria-live="polite">
+                                            <span class="sks-oemail-detail-cursor" aria-hidden="true"></span>
+                                            <p class="sks-oemail-detail-prompt-txt">Now, continue by clicking the quick reply</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="sks-oemail-rightbar" aria-hidden="true">
+                            <span class="sks-oemail-rb-ic"></span>
+                            <span class="sks-oemail-rb-ic"></span>
+                            <span class="sks-oemail-rb-ic"></span>
+                            <span class="sks-oemail-rb-ic"></span>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+  var inboxView = document.getElementById("sks-oemail-view-inbox");
+  var detailView = document.getElementById("sks-oemail-view-detail");
+  var openBtn = document.getElementById("sks-oemail-open-maya");
+  var backBtn = document.getElementById("sks-oemail-detail-back");
+  var quickReply = document.getElementById("sks-oemail-quick-reply");
+  var promptEl = document.getElementById("sks-oemail-quick-prompt");
+  var FALLBACK_BRIEF = {{ $fallbackBriefOrganize | jsonify }};
+
+  function nextAfterGmailUrl() {
+    var u = typeof window.SKS_GMAIL_NEXT_URL === "string" ? window.SKS_GMAIL_NEXT_URL.trim() : "";
+    if (u) return u;
+    try {
+      return new URL("../brief-organize/", window.location.href).href;
+    } catch (e) {}
+    return FALLBACK_BRIEF;
+  }
+
+  function showInbox() {
+    if (inboxView) inboxView.hidden = false;
+    if (detailView) detailView.hidden = true;
+  }
+
+  function showDetail() {
+    if (inboxView) inboxView.hidden = true;
+    if (detailView) detailView.hidden = false;
+    if (promptEl) promptEl.hidden = false;
+    var sc = document.getElementById("sks-oemail-detail-scroll");
+    try {
+      if (sc) sc.scrollTop = 0;
+    } catch (e) {}
+  }
+
+  if (openBtn) openBtn.addEventListener("click", showDetail);
+  if (backBtn) backBtn.addEventListener("click", showInbox);
+
+  if (quickReply) {
+    quickReply.addEventListener("click", function () {
+      if (promptEl) promptEl.hidden = true;
+      window.location.assign(nextAfterGmailUrl());
+    });
+  }
+})();
+</script>

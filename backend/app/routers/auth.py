@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import os
 
 from ..schemas import RegisterIn, RegisterOut, LoginIn, TokenOut, RefreshIn, EmailIn
-from ..models import User, AuthSession, EmailVerification, UserProfile, OnboardingPreCache
+from ..models import User, AuthSession, EmailVerification
 from ..security import (
     hash_password,
     verify_password,
@@ -104,30 +104,6 @@ def register(
     db.add(u)
     db.flush()
 
-    # Bind onboarding pre-cache if provided
-    if body.onboarding_session_id:
-        cache = (
-            db.query(OnboardingPreCache)
-            .filter(
-                OnboardingPreCache.session_id == body.onboarding_session_id,
-                OnboardingPreCache.user_id.is_(None),
-            )
-            .first()
-        )
-        if cache:
-            import json
-            try:
-                answers = json.loads(cache.answers_json)
-                prof = db.get(UserProfile, u.id)
-                if not prof:
-                    prof = UserProfile(user_id=u.id)
-                    db.add(prof)
-                from ..routers.onboarding import apply_pre_cache_to_profile
-                apply_pre_cache_to_profile(prof, answers)
-            except Exception:
-                pass
-            cache.user_id = u.id
-
     # email verification record
     exp = datetime.utcnow() + timedelta(hours=24)
     db.add(
@@ -138,6 +114,7 @@ def register(
         )
     )
 
+    # Bind ACC pre-cached onboarding answers to the new user (single code path: services.onboarding)
     if body.onboarding_session_id:
         apply_pre_cache_to_profile(db, u.id, body.onboarding_session_id)
 

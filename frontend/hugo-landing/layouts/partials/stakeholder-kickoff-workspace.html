@@ -252,7 +252,11 @@
         meetingCountdownTimer = null;
         overlay.hidden = true;
         overlay.setAttribute("aria-hidden", "true");
-        window.location.href = "/acc/stakeholder-kickoff/brief-organize/";
+        try {
+          window.location.href = new URL("../zoom-meeting/", window.location.href).href;
+        } catch (e) {
+          window.location.href = "/acc/stakeholder-kickoff/zoom-meeting/";
+        }
         return;
       }
       numEl.textContent = String(n);

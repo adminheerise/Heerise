@@ -1,0 +1,557 @@
+{{ $fallbackOutreach := "/acc/stakeholder-kickoff/outreach-email/" | relURL }}
+<!-- Maya briefing: 1) GET /api/sim/maya-zoom-narration (edge-tts, 含 username) 2) 否则浏览器 speechSynthesis 3) 可选静态音频 -->
+<section class="sks-page sks-page--zoom-meeting" aria-label="Zoom meeting simulation">
+    <div class="sks-zm-canvas">
+        <div class="sks-zm-shell">
+            <header class="sks-zm-header">
+                <div class="sks-zm-brand">LUMINA &bull; SIM</div>
+                <nav class="sks-zm-nav" aria-label="Simulation steps">
+                    <span class="sks-zm-step sks-zm-step--active">Assignment Brief</span>
+                    <span class="sks-zm-step sks-zm-step--dim">Research</span>
+                    <span class="sks-zm-step sks-zm-step--dim">Outreach Email</span>
+                    <span class="sks-zm-step sks-zm-step--dim">Meeting Agenda</span>
+                    <span class="sks-zm-step sks-zm-step--dim">Kick-off Call</span>
+                    <span class="sks-zm-step sks-zm-step--dim">Manager Brief</span>
+                    <span class="sks-zm-step sks-zm-step--dim">Results</span>
+                </nav>
+            </header>
+
+            <div class="sks-zm-stage" id="sks-zm-stage">
+                <div class="sks-zm-card">
+                    <div class="sks-zm-window">
+                        <img src="/img/lumina-zoom-ui.png" alt="Simulated Zoom meeting with Maya" class="sks-zm-window-img" width="960" height="540" loading="eager" decoding="async" />
+                    </div>
+
+                    <div class="sks-zm-transcript-panel" id="sks-zm-transcript-panel">
+                        <p class="sks-zm-transcript-line" id="sks-zm-transcript-line" aria-live="polite"></p>
+                    </div>
+
+                    <div class="sks-zm-controls">
+                        <button type="button" class="sks-zm-toggle-btn" id="sks-zm-transcript-toggle" aria-pressed="true" aria-controls="sks-zm-transcript-panel">
+                            Turn off transcription
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+  function meUrl() {
+    var b = window.HEERISE_API_BASE || "/api";
+    return b === "/api" ? "/api/me" : String(b).replace(/\/?$/, "") + "/api/me";
+  }
+
+  function narrationUrl() {
+    var b = window.HEERISE_API_BASE || "/api";
+    return b === "/api" ? "/api/sim/maya-zoom-narration" : String(b).replace(/\/?$/, "") + "/api/sim/maya-zoom-narration";
+  }
+
+  function fallbackDisplayName() {
+    try {
+      var n =
+        window.localStorage.getItem("heerise_sim_display_name") ||
+        window.sessionStorage.getItem("heerise_sim_display_name") ||
+        "";
+      return (n || "").trim() || "there";
+    } catch (e) {
+      return "there";
+    }
+  }
+
+  /** 三段全文 — 须与 backend sim._maya_script 一致 */
+  function buildScriptLines(displayName) {
+    var who = (displayName || "").trim() || "there";
+    return [
+      "Hey " +
+        who +
+        ". We've been asked to build sales enablement training for Aria Agent. The product just launched and the sales team is struggling to ramp. I'm assigning this to you as lead designer.",
+      "You'll start to run the full analysis phase and schedule a kickoff call with Jordan Kiml (Sales Manager) and Dr. Priya Nair, the product lead. They're your key stakeholders.",
+      "I'm sending you the project brief. Read it, then come back and let me know what you think you know, what you don't know (things to ask in the kickoff), and what questions you need answered before that call.",
+    ];
+  }
+
+  function formatTranscriptLine(sentence) {
+    return "[Maya - Manager]: '" + sentence + "'";
+  }
+
+  var SCRIPT = [];
+  var synth = window.speechSynthesis;
+  var idx = 0;
+  var displayIdx = 0;
+  var autoTimer = null;
+  var speechWatchTimer = null;
+  var utteranceRefs = [];
+  var speechStarted = false;
+  var usingFileFallback = false;
+  var fallbackAudio = null;
+  var serverBlobUrl = null;
+  var cueStartsSec = [];
+  var unlockAttached = false;
+
+  var transcriptPanel = document.getElementById("sks-zm-transcript-panel");
+  var transcriptLine = document.getElementById("sks-zm-transcript-line");
+  var toggleBtn = document.getElementById("sks-zm-transcript-toggle");
+  var transcriptVisible = true;
+  var navigatedAfterNarration = false;
+
+  var FALLBACK_OUTREACH = {{ $fallbackOutreach | jsonify }};
+
+  function nextAfterZoomUrl() {
+    var u = typeof window.SKS_ZM_NEXT_URL === "string" ? window.SKS_ZM_NEXT_URL.trim() : "";
+    if (u) return u;
+    try {
+      return new URL("../outreach-email/", window.location.href).href;
+    } catch (e) {}
+    return FALLBACK_OUTREACH;
+  }
+
+  function goToNextAfterNarration() {
+    if (navigatedAfterNarration) return;
+    navigatedAfterNarration = true;
+    revokeServerBlob();
+    window.location.assign(nextAfterZoomUrl());
+  }
+
+  function setTranscriptText(sentence) {
+    if (!transcriptLine) return;
+    transcriptLine.textContent = sentence ? formatTranscriptLine(sentence) : "";
+  }
+
+  function setTranscriptIfVisible(sentence) {
+    if (!transcriptVisible) return;
+    setTranscriptText(sentence || "");
+  }
+
+  function updateToggleLabel() {
+    if (!toggleBtn) return;
+    toggleBtn.setAttribute("aria-pressed", transcriptVisible ? "true" : "false");
+    toggleBtn.textContent = transcriptVisible ? "Turn off transcription" : "Turn on transcription";
+  }
+
+  function syncTranscriptToPlayback() {
+    if (!transcriptLine || !SCRIPT.length) return;
+    if (usingFileFallback && fallbackAudio && !fallbackAudio.ended) {
+      setTranscriptText(SCRIPT[displayIdx]);
+      return;
+    }
+    if (!usingFileFallback && idx >= SCRIPT.length) {
+      setTranscriptText("");
+      return;
+    }
+    if (!usingFileFallback) setTranscriptText(SCRIPT[displayIdx]);
+  }
+
+  if (toggleBtn && transcriptPanel) {
+    toggleBtn.addEventListener("click", function () {
+      transcriptVisible = !transcriptVisible;
+      transcriptPanel.hidden = !transcriptVisible;
+      updateToggleLabel();
+      if (transcriptVisible) syncTranscriptToPlayback();
+    });
+  }
+
+  function pickFemaleVoice() {
+    if (!synth) return null;
+    var voices = synth.getVoices() || [];
+    var en = voices.filter(function (v) {
+      return (v.lang || "").toLowerCase().indexOf("en") === 0;
+    });
+    var preferSub = [
+      "female",
+      "google uk english female",
+      "samantha",
+      "karen",
+      "moira",
+      "tessa",
+      "fiona",
+      "victoria",
+      "zira",
+      "jenny",
+      "microsoft aria",
+      "aria online",
+      "sonya",
+      "susan",
+      "hazel",
+      "linda",
+      "michelle",
+      "google us english",
+    ];
+    var i,
+      j,
+      lower;
+    for (j = 0; j < preferSub.length; j++) {
+      for (i = 0; i < en.length; i++) {
+        lower = en[i].name.toLowerCase();
+        if (lower.indexOf(preferSub[j]) !== -1) {
+          if (preferSub[j] === "google us english" && lower.indexOf("female") === -1 && lower.indexOf("male") !== -1)
+            continue;
+          return en[i];
+        }
+      }
+    }
+    for (i = 0; i < en.length; i++) {
+      var n = en[i].name.toLowerCase();
+      if (n.indexOf("male") !== -1 || n.indexOf("david") !== -1 || n.indexOf("daniel") !== -1) continue;
+      return en[i];
+    }
+    return en[0] || voices[0] || null;
+  }
+
+  function resumeSynth() {
+    if (!synth) return;
+    try {
+      if (synth.paused) synth.resume();
+    } catch (e) {}
+  }
+
+  function attachSpeechUnlock() {
+    if (unlockAttached) return;
+    unlockAttached = true;
+    function once() {
+      unlockAttached = false;
+      document.removeEventListener("pointerdown", once, true);
+      document.removeEventListener("keydown", once, true);
+      resumeSynth();
+      speechStarted = false;
+      idx = 0;
+      displayIdx = 0;
+      if (synth) synth.cancel();
+      utteranceRefs.length = 0;
+      speakAll(false);
+    }
+    document.addEventListener("pointerdown", once, true);
+    document.addEventListener("keydown", once, true);
+  }
+
+  function attachAudioUnlock() {
+    if (unlockAttached) return;
+    unlockAttached = true;
+    function once() {
+      unlockAttached = false;
+      document.removeEventListener("pointerdown", once, true);
+      document.removeEventListener("keydown", once, true);
+      if (fallbackAudio) fallbackAudio.play().catch(function () {});
+    }
+    document.addEventListener("pointerdown", once, true);
+    document.addEventListener("keydown", once, true);
+  }
+
+  /** Chrome 队列：两句之间微延迟，减少卡在第二句 */
+  function speakNextUtterance() {
+    setTimeout(function () {
+      speakOne();
+    }, 80);
+  }
+
+  function speakAll(fromAuto) {
+    if (!SCRIPT.length) return;
+    if (usingFileFallback) return;
+    if (autoTimer) {
+      clearTimeout(autoTimer);
+      autoTimer = null;
+    }
+    if (speechWatchTimer) {
+      clearTimeout(speechWatchTimer);
+      speechWatchTimer = null;
+    }
+
+    if (!synth) {
+      tryFileFallbackOrFake();
+      return;
+    }
+
+    resumeSynth();
+    synth.cancel();
+    utteranceRefs.length = 0;
+    idx = 0;
+    displayIdx = 0;
+    speechStarted = false;
+
+    function speakOne() {
+      if (idx >= SCRIPT.length) {
+        setTranscriptIfVisible("");
+        utteranceRefs.length = 0;
+        goToNextAfterNarration();
+        return;
+      }
+      var line = SCRIPT[idx];
+      displayIdx = idx;
+      setTranscriptIfVisible(line);
+      var u = new SpeechSynthesisUtterance(line);
+      utteranceRefs.push(u);
+      u.rate = 0.95;
+      u.pitch = 1.05;
+      u.lang = "en-US";
+      var voice = pickFemaleVoice();
+      if (voice) {
+        u.voice = voice;
+        if (voice.lang) u.lang = voice.lang;
+      }
+      u.onstart = function () {
+        speechStarted = true;
+      };
+      u.onend = function () {
+        var k = utteranceRefs.indexOf(u);
+        if (k !== -1) utteranceRefs.splice(k, 1);
+        idx += 1;
+        speakNextUtterance();
+      };
+      u.onerror = function () {
+        var k = utteranceRefs.indexOf(u);
+        if (k !== -1) utteranceRefs.splice(k, 1);
+        idx += 1;
+        speakNextUtterance();
+      };
+      resumeSynth();
+      try {
+        synth.speak(u);
+      } catch (err) {
+        var k = utteranceRefs.indexOf(u);
+        if (k !== -1) utteranceRefs.splice(k, 1);
+        idx += 1;
+        speakNextUtterance();
+      }
+    }
+    speakOne();
+
+    if (fromAuto) {
+      speechWatchTimer = setTimeout(function () {
+        speechWatchTimer = null;
+        if (!speechStarted && idx === 0) {
+          attachSpeechUnlock();
+        }
+      }, 2400);
+    }
+  }
+
+  function buildCueStarts(durationSec, lineCount) {
+    var custom = typeof window.SKS_ZM_SENTENCE_CUES_SEC !== "undefined" && window.SKS_ZM_SENTENCE_CUES_SEC;
+    if (custom && custom.length === lineCount) return custom.slice();
+    var d = durationSec > 0 && !isNaN(durationSec) ? durationSec : 60;
+    var step = d / lineCount;
+    var out = [];
+    var i;
+    for (i = 0; i < lineCount; i++) out.push(i * step);
+    return out;
+  }
+
+  function sentenceIndexAtTime(t) {
+    var i;
+    for (i = cueStartsSec.length - 1; i >= 0; i--) {
+      if (t >= cueStartsSec[i]) return i;
+    }
+    return 0;
+  }
+
+  function onFileTimeUpdate() {
+    if (!fallbackAudio || !SCRIPT.length) return;
+    if (fallbackAudio.ended) return;
+    var next = sentenceIndexAtTime(fallbackAudio.currentTime);
+    if (next !== displayIdx) displayIdx = next;
+    setTranscriptIfVisible(SCRIPT[displayIdx]);
+  }
+
+  function revokeServerBlob() {
+    if (serverBlobUrl) {
+      try {
+        URL.revokeObjectURL(serverBlobUrl);
+      } catch (e) {}
+      serverBlobUrl = null;
+    }
+  }
+
+  function wireFileAudioFromUrl(url, isBlob) {
+    if (isBlob) revokeServerBlob();
+    usingFileFallback = true;
+    if (synth) synth.cancel();
+    fallbackAudio = new Audio();
+    fallbackAudio.preload = "auto";
+    fallbackAudio.playsInline = true;
+    fallbackAudio.src = url;
+    if (isBlob) serverBlobUrl = url;
+    fallbackAudio.addEventListener("timeupdate", onFileTimeUpdate);
+    fallbackAudio.addEventListener("ended", function () {
+      setTranscriptIfVisible("");
+      goToNextAfterNarration();
+    });
+    fallbackAudio.addEventListener("loadedmetadata", function () {
+      cueStartsSec = buildCueStarts(fallbackAudio.duration, SCRIPT.length);
+    });
+    fallbackAudio.addEventListener(
+      "error",
+      function () {
+        revokeServerBlob();
+        usingFileFallback = false;
+        fallbackAudio = null;
+        onVoicesReady(function () {
+          scheduleAutoPlay();
+        });
+      },
+      { once: true }
+    );
+    fallbackAudio.load();
+    autoTimer = setTimeout(function () {
+      autoTimer = null;
+      var p = fallbackAudio.play();
+      if (p && p.catch) {
+        p.catch(function () {
+          attachAudioUnlock();
+        });
+      }
+    }, 1600);
+  }
+
+  function tryFetchServerNarration() {
+    var token = null;
+    try {
+      token = window.localStorage.getItem("access");
+    } catch (e) {}
+    var headers = {};
+    if (token) headers["Authorization"] = "Bearer " + token;
+    return fetch(narrationUrl(), {
+      method: "GET",
+      headers: headers,
+      credentials: "omit",
+    }).then(function (r) {
+      if (!r.ok) throw new Error("narration");
+      return r.blob();
+    });
+  }
+
+  function tryFileFallbackOrFake() {
+    var url = typeof window.SKS_ZM_FALLBACK_AUDIO_URL === "string" ? window.SKS_ZM_FALLBACK_AUDIO_URL.trim() : "";
+    if (!url) {
+      runFakeTranscriptOnly();
+      return;
+    }
+    wireFileAudioFromUrl(url, false);
+  }
+
+  function runFakeTranscriptOnly() {
+    idx = 0;
+    displayIdx = 0;
+    function step() {
+      if (idx >= SCRIPT.length) {
+        setTranscriptIfVisible("");
+        goToNextAfterNarration();
+        return;
+      }
+      displayIdx = idx;
+      setTranscriptIfVisible(SCRIPT[idx]);
+      idx += 1;
+      setTimeout(step, 8000);
+    }
+    step();
+  }
+
+  function scheduleAutoPlay() {
+    autoTimer = setTimeout(function () {
+      autoTimer = null;
+      speakAll(true);
+    }, 1600);
+  }
+
+  function onVoicesReady(cb) {
+    if (!synth) {
+      cb();
+      return;
+    }
+    var done = false;
+    function finish() {
+      if (done) return;
+      done = true;
+      cb();
+    }
+    function hasVoices() {
+      return !!(synth.getVoices && synth.getVoices().length);
+    }
+    if (hasVoices()) return finish();
+    synth.addEventListener("voiceschanged", function onV() {
+      if (hasVoices()) {
+        synth.removeEventListener("voiceschanged", onV);
+        finish();
+      }
+    });
+    var n = 0;
+    var poll = setInterval(function () {
+      n += 1;
+      if (hasVoices() || n >= 40) {
+        clearInterval(poll);
+        finish();
+      }
+    }, 100);
+    setTimeout(function () {
+      clearInterval(poll);
+      finish();
+    }, 2500);
+  }
+
+  function resolveDisplayNameFromApi() {
+    return new Promise(function (resolve) {
+      var token = null;
+      try {
+        token = window.localStorage.getItem("access");
+      } catch (e) {}
+      if (!token) {
+        resolve(fallbackDisplayName());
+        return;
+      }
+      fetch(meUrl(), {
+        method: "GET",
+        headers: { Authorization: "Bearer " + token },
+        credentials: "omit",
+      })
+        .then(function (r) {
+          if (!r.ok) throw new Error("me");
+          return r.json();
+        })
+        .then(function (data) {
+          var u = data && data.username != null ? String(data.username).trim() : "";
+          var nm = data && data.name != null ? String(data.name).trim() : "";
+          if (u) resolve(u);
+          else if (nm) resolve(nm);
+          else resolve(fallbackDisplayName());
+        })
+        .catch(function () {
+          resolve(fallbackDisplayName());
+        });
+    });
+  }
+
+  resolveDisplayNameFromApi().then(function (name) {
+    SCRIPT = buildScriptLines(name);
+    if (transcriptPanel) transcriptPanel.hidden = !transcriptVisible;
+    updateToggleLabel();
+
+    if (
+      window.SKS_ZM_USE_PRERECORDED_AUDIO === true &&
+      typeof window.SKS_ZM_FALLBACK_AUDIO_URL === "string" &&
+      window.SKS_ZM_FALLBACK_AUDIO_URL.trim()
+    ) {
+      tryFileFallbackOrFake();
+      return;
+    }
+
+    if (window.SKS_ZM_DISABLE_SERVER_TTS === true) {
+      onVoicesReady(function () {
+        scheduleAutoPlay();
+      });
+      return;
+    }
+
+    tryFetchServerNarration()
+      .then(function (blob) {
+        var url = URL.createObjectURL(blob);
+        wireFileAudioFromUrl(url, true);
+      })
+      .catch(function () {
+        onVoicesReady(function () {
+          scheduleAutoPlay();
+        });
+      });
+  });
+})();
+</script>

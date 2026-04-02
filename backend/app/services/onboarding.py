@@ -25,6 +25,9 @@ def apply_pre_cache_to_profile(db: Session, user_id: str, session_id: str) -> bo
     ).first()
     if not cache or not cache.answers_json:
         return False
+    # Pre-cache row already bound to another user — do not re-apply or steal
+    if cache.user_id is not None:
+        return False
 
     try:
         answers = json.loads(cache.answers_json)

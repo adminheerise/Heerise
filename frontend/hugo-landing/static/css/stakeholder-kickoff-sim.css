@@ -2013,17 +2013,207 @@ body:has(.sks-page--zoom-meeting) #content {
     margin: 0 auto;
     border-radius: 8px;
     overflow: hidden;
-    line-height: 0;
-    background: #ffffff;
+    background: #000000;
+    line-height: normal;
 }
 
-/* Crop baked-in outer dark frame / letterboxing in lumina-zoom-ui.png (tune inset % if art changes) */
-.sks-zm-window-img {
+/* Zoom mock: HTML/CSS chrome + lumina-manager.png fills 16:9 (object-fit: cover — no pillarboxing) */
+.sks-zm-zoom-shell {
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000000;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.sks-zm-zoom-titlebar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+    padding: 10px 14px 12px;
+    background: #000000;
+    color: rgba(255, 255, 255, 0.92);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.sks-zm-zoom-titlebar-left {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.sks-zm-window-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.sks-zm-window-dots span {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #3d3d3d;
+}
+
+.sks-zm-window-dots span:nth-child(1) {
+    background: #ff5f57;
+}
+
+.sks-zm-window-dots span:nth-child(2) {
+    background: #febc2e;
+}
+
+.sks-zm-window-dots span:nth-child(3) {
+    background: #28c840;
+}
+
+.sks-zm-zoom-shield {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: #1a7f37;
+    flex-shrink: 0;
+}
+
+.sks-zm-zoom-titlebar-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.sks-zm-zoom-thumb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.sks-zm-zoom-thumb img {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+    display: block;
+}
+
+.sks-zm-zoom-thumb--you .sks-zm-zoom-you-avatar {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background: linear-gradient(145deg, #4a90d9 0%, #2d6bb5 100%);
+    position: relative;
+}
+
+.sks-zm-zoom-thumb--you .sks-zm-zoom-you-avatar::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.sks-zm-zoom-view {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sks-zm-video-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000000;
+    overflow: hidden;
+}
+
+.sks-zm-video-feed {
     display: block;
     width: 100%;
-    height: auto;
-    vertical-align: middle;
-    clip-path: inset(6% 5.5% 11% 5.5%);
+    height: 100%;
+    object-fit: cover;
+    object-position: center 18%;
+}
+
+.sks-zm-video-name {
+    position: absolute;
+    left: 12px;
+    bottom: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+    pointer-events: none;
+}
+
+.sks-zm-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 8px;
+    padding: 12px 10px 16px;
+    background: #1a1a1a;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sks-zm-toolbar-item {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 10px;
+    line-height: 1.2;
+    color: rgba(255, 255, 255, 0.88);
+    padding: 6px 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    white-space: nowrap;
+}
+
+.sks-zm-toolbar-item--off {
+    opacity: 0.65;
+    text-decoration: line-through;
+    text-decoration-color: rgba(255, 80, 80, 0.9);
+}
+
+.sks-zm-toolbar-item--share {
+    background: #217a4a;
+    color: #ffffff;
+}
+
+.sks-zm-toolbar-item--end {
+    background: #e02828;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+@media (max-width: 520px) {
+    .sks-zm-toolbar {
+        justify-content: flex-start;
+    }
+
+    .sks-zm-toolbar-item {
+        font-size: 9px;
+        padding: 5px 6px;
+    }
 }
 
 .sks-zm-transcript-panel {

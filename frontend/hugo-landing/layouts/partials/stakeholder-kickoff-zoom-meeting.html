@@ -1,4 +1,5 @@
 {{ $fallbackOutreach := "/acc/stakeholder-kickoff/outreach-email/" | relURL }}
+{{ $mayaPortrait := "img/lumina-manager.png" | relURL }}
 <!-- Maya briefing: 1) GET /api/sim/maya-zoom-narration (edge-tts, 含 username) 2) 否则浏览器 speechSynthesis 3) 可选静态音频 -->
 <section class="sks-page sks-page--zoom-meeting" aria-label="Zoom meeting simulation">
     <div class="sks-zm-canvas">
@@ -18,8 +19,46 @@
 
             <div class="sks-zm-stage" id="sks-zm-stage">
                 <div class="sks-zm-card">
-                    <div class="sks-zm-window">
-                        <img src="/img/lumina-zoom-ui.png" alt="Simulated Zoom meeting with Maya" class="sks-zm-window-img" width="960" height="540" loading="eager" decoding="async" />
+                    <div class="sks-zm-window" aria-label="Simulated Zoom meeting">
+                        <div class="sks-zm-zoom-shell">
+                            <div class="sks-zm-zoom-titlebar">
+                                <div class="sks-zm-zoom-titlebar-left">
+                                    <div class="sks-zm-window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+                                    <span class="sks-zm-zoom-shield" aria-hidden="true"></span>
+                                    <span class="sks-zm-zoom-sound">Original Sound: Off</span>
+                                </div>
+                                <div class="sks-zm-zoom-titlebar-center">
+                                    <div class="sks-zm-zoom-thumb sks-zm-zoom-thumb--maya">
+                                        <img src="{{ $mayaPortrait }}" alt="" width="40" height="40" loading="eager" decoding="async" />
+                                        <span>Maya</span>
+                                    </div>
+                                    <div class="sks-zm-zoom-thumb sks-zm-zoom-thumb--you">
+                                        <span class="sks-zm-zoom-you-avatar" aria-hidden="true"></span>
+                                        <span>You</span>
+                                    </div>
+                                </div>
+                                <div class="sks-zm-zoom-titlebar-right">
+                                    <span class="sks-zm-zoom-view">View</span>
+                                </div>
+                            </div>
+                            <div class="sks-zm-video-stage">
+                                <img src="{{ $mayaPortrait }}" alt="Maya Chen" class="sks-zm-video-feed" width="880" height="495" loading="eager" decoding="async" />
+                                <span class="sks-zm-video-name">Maya</span>
+                            </div>
+                            <div class="sks-zm-toolbar" aria-hidden="true">
+                                <span class="sks-zm-toolbar-item sks-zm-toolbar-item--off">Unmute</span>
+                                <span class="sks-zm-toolbar-item sks-zm-toolbar-item--off">Start Video</span>
+                                <span class="sks-zm-toolbar-item">Security</span>
+                                <span class="sks-zm-toolbar-item">Participants</span>
+                                <span class="sks-zm-toolbar-item">Chat</span>
+                                <span class="sks-zm-toolbar-item sks-zm-toolbar-item--share">Share Screen</span>
+                                <span class="sks-zm-toolbar-item">Polling</span>
+                                <span class="sks-zm-toolbar-item">Record</span>
+                                <span class="sks-zm-toolbar-item">Breakout Rooms</span>
+                                <span class="sks-zm-toolbar-item">Reactions</span>
+                                <span class="sks-zm-toolbar-item sks-zm-toolbar-item--end">End</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="sks-zm-transcript-panel" id="sks-zm-transcript-panel">

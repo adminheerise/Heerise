@@ -29,7 +29,7 @@
 
                     <div class="sks-zm-controls">
                         <button type="button" class="sks-zm-toggle-btn" id="sks-zm-transcript-toggle" aria-pressed="true" aria-controls="sks-zm-transcript-panel">
-                            Turn off transcription
+                            Turn off caption
                         </button>
                     </div>
                 </div>
@@ -247,7 +247,7 @@
   function updateToggleLabel() {
     if (!toggleBtn) return;
     toggleBtn.setAttribute("aria-pressed", transcriptVisible ? "true" : "false");
-    toggleBtn.textContent = transcriptVisible ? "Turn off transcription" : "Turn on transcription";
+    toggleBtn.textContent = transcriptVisible ? "Turn off caption" : "Turn on caption";
   }
 
   function syncTranscriptToPlayback() {

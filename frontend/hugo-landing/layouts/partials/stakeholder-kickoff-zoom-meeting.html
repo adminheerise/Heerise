@@ -1,6 +1,6 @@
 {{ $fallbackOutreach := "/acc/stakeholder-kickoff/outreach-email/" | relURL }}
-{{ $mayaPortrait := "img/lumina-manager.png" | relURL }}
-<!-- Maya briefing: 1) GET /api/sim/maya-zoom-narration (edge-tts, 含 username) 2) 否则浏览器 speechSynthesis 3) 可选静态音频 -->
+{{ $zoomUi := "img/lumina-zoom-ui.png" | relURL }}
+<!-- Maya briefing: 1) GET /api/sim/maya-zoom-narration (edge-tts, 含 username) 2) 否则浏览器 speechSynthesis 3) 可选静态音频 — Zoom 界面图为 static/img/lumina-zoom-ui.png -->
 <section class="sks-page sks-page--zoom-meeting" aria-label="Zoom meeting simulation">
     <div class="sks-zm-canvas">
         <div class="sks-zm-shell">
@@ -20,45 +20,7 @@
             <div class="sks-zm-stage" id="sks-zm-stage">
                 <div class="sks-zm-card">
                     <div class="sks-zm-window" aria-label="Simulated Zoom meeting">
-                        <div class="sks-zm-zoom-shell">
-                            <div class="sks-zm-zoom-titlebar">
-                                <div class="sks-zm-zoom-titlebar-left">
-                                    <div class="sks-zm-window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-                                    <span class="sks-zm-zoom-shield" aria-hidden="true"></span>
-                                    <span class="sks-zm-zoom-sound">Original Sound: Off</span>
-                                </div>
-                                <div class="sks-zm-zoom-titlebar-center">
-                                    <div class="sks-zm-zoom-thumb sks-zm-zoom-thumb--maya">
-                                        <img src="{{ $mayaPortrait }}" alt="" width="40" height="40" loading="eager" decoding="async" />
-                                        <span>Maya</span>
-                                    </div>
-                                    <div class="sks-zm-zoom-thumb sks-zm-zoom-thumb--you">
-                                        <span class="sks-zm-zoom-you-avatar" aria-hidden="true"></span>
-                                        <span>You</span>
-                                    </div>
-                                </div>
-                                <div class="sks-zm-zoom-titlebar-right">
-                                    <span class="sks-zm-zoom-view">View</span>
-                                </div>
-                            </div>
-                            <div class="sks-zm-video-stage">
-                                <img src="{{ $mayaPortrait }}" alt="Maya Chen" class="sks-zm-video-feed" width="880" height="495" loading="eager" decoding="async" />
-                                <span class="sks-zm-video-name">Maya</span>
-                            </div>
-                            <div class="sks-zm-toolbar" aria-hidden="true">
-                                <span class="sks-zm-toolbar-item sks-zm-toolbar-item--off">Unmute</span>
-                                <span class="sks-zm-toolbar-item sks-zm-toolbar-item--off">Start Video</span>
-                                <span class="sks-zm-toolbar-item">Security</span>
-                                <span class="sks-zm-toolbar-item">Participants</span>
-                                <span class="sks-zm-toolbar-item">Chat</span>
-                                <span class="sks-zm-toolbar-item sks-zm-toolbar-item--share">Share Screen</span>
-                                <span class="sks-zm-toolbar-item">Polling</span>
-                                <span class="sks-zm-toolbar-item">Record</span>
-                                <span class="sks-zm-toolbar-item">Breakout Rooms</span>
-                                <span class="sks-zm-toolbar-item">Reactions</span>
-                                <span class="sks-zm-toolbar-item sks-zm-toolbar-item--end">End</span>
-                            </div>
-                        </div>
+                        <img src="{{ $zoomUi }}" alt="Simulated Zoom meeting with Maya" class="sks-zm-window-img" width="960" height="540" loading="eager" decoding="async" />
                     </div>
 
                     <div class="sks-zm-transcript-panel" id="sks-zm-transcript-panel">
@@ -178,7 +140,10 @@
   var usingFileFallback = false;
   var fallbackAudio = null;
   var serverBlobUrl = null;
-  var cueStartsSec = [];
+  var audioWallStartMs = 0;
+  var audioSyncInterval = null;
+  var navigationSafetyTimer = null;
+  var speechUtteranceWatchdog = null;
   var unlockAttached = false;
 
   var transcriptPanel = document.getElementById("sks-zm-transcript-panel");
@@ -198,9 +163,33 @@
     return FALLBACK_OUTREACH;
   }
 
+  function stopAudioWallSync() {
+    if (audioSyncInterval) {
+      clearInterval(audioSyncInterval);
+      audioSyncInterval = null;
+    }
+  }
+
+  function clearNavigationSafety() {
+    if (navigationSafetyTimer) {
+      clearTimeout(navigationSafetyTimer);
+      navigationSafetyTimer = null;
+    }
+  }
+
+  function clearSpeechUtteranceWatchdog() {
+    if (speechUtteranceWatchdog) {
+      clearTimeout(speechUtteranceWatchdog);
+      speechUtteranceWatchdog = null;
+    }
+  }
+
   function goToNextAfterNarration() {
     if (navigatedAfterNarration) return;
     navigatedAfterNarration = true;
+    stopAudioWallSync();
+    clearNavigationSafety();
+    clearSpeechUtteranceWatchdog();
     revokeServerBlob();
     window.location.assign(nextAfterZoomUrl());
   }
@@ -339,6 +328,7 @@
   function speakAll(fromAuto) {
     if (!SCRIPT.length) return;
     if (usingFileFallback) return;
+    clearSpeechUtteranceWatchdog();
     if (autoTimer) {
       clearTimeout(autoTimer);
       autoTimer = null;
@@ -385,16 +375,27 @@
         u.voice = voice;
         if (voice.lang) u.lang = voice.lang;
       }
+      clearSpeechUtteranceWatchdog();
+      var maxMs = Math.min(120000, Math.max(14000, line.length * 52));
+      speechUtteranceWatchdog = setTimeout(function () {
+        speechUtteranceWatchdog = null;
+        var k = utteranceRefs.indexOf(u);
+        if (k !== -1) utteranceRefs.splice(k, 1);
+        idx += 1;
+        speakNextUtterance();
+      }, maxMs);
       u.onstart = function () {
         speechStarted = true;
       };
       u.onend = function () {
+        clearSpeechUtteranceWatchdog();
         var k = utteranceRefs.indexOf(u);
         if (k !== -1) utteranceRefs.splice(k, 1);
         idx += 1;
         speakNextUtterance();
       };
       u.onerror = function () {
+        clearSpeechUtteranceWatchdog();
         var k = utteranceRefs.indexOf(u);
         if (k !== -1) utteranceRefs.splice(k, 1);
         idx += 1;
@@ -422,36 +423,47 @@
     }
   }
 
-  function buildCueStarts(durationSec, lineCount) {
-    var custom = typeof window.SKS_ZM_SENTENCE_CUES_SEC !== "undefined" && window.SKS_ZM_SENTENCE_CUES_SEC;
-    if (custom && custom.length === lineCount) return custom.slice();
-    /* Infinity/NaN duration (some MP3/blob) made step Infinity → transcript stuck on line 1 */
-    var d =
-      isFinite(durationSec) && durationSec > 0 ? durationSec : estimatedDurationFromScript(SCRIPT);
-    var step = d / lineCount;
-    var out = [];
-    var i;
-    for (i = 0; i < lineCount; i++) out.push(i * step);
-    return out;
-  }
-
-  function sentenceIndexAtTime(t) {
-    var i;
-    for (i = cueStartsSec.length - 1; i >= 0; i--) {
-      if (t >= cueStartsSec[i]) return i;
-    }
-    return 0;
+  /** Progress 0..1 from MediaElement time + wall clock (fixes stuck currentTime / bad duration). */
+  function transcriptIndexFromPlayback() {
+    if (!fallbackAudio || !SCRIPT.length) return 0;
+    var totalSec = isFinite(fallbackAudio.duration) && fallbackAudio.duration > 0
+      ? fallbackAudio.duration
+      : estimatedDurationFromScript(SCRIPT);
+    var t = fallbackAudio.currentTime;
+    if (!isFinite(t) || t < 0) t = 0;
+    var fromTime = Math.min(SCRIPT.length - 1, Math.floor((t / totalSec) * SCRIPT.length));
+    var wallElapsed = audioWallStartMs > 0 ? (performance.now() - audioWallStartMs) / 1000 : 0;
+    var fromWall = Math.min(
+      SCRIPT.length - 1,
+      Math.floor(Math.min(1, wallElapsed / totalSec) * SCRIPT.length)
+    );
+    return Math.max(fromTime, fromWall);
   }
 
   function onFileTimeUpdate() {
     if (!fallbackAudio || !SCRIPT.length) return;
     if (fallbackAudio.ended) return;
-    var next = sentenceIndexAtTime(fallbackAudio.currentTime);
+    if (audioWallStartMs <= 0 && fallbackAudio.currentTime > 0.05) {
+      audioWallStartMs = performance.now() - fallbackAudio.currentTime * 1000;
+    }
+    var next = transcriptIndexFromPlayback();
     if (next !== displayIdx) displayIdx = next;
     setTranscriptIfVisible(SCRIPT[displayIdx]);
   }
 
+  function startAudioWallSync() {
+    stopAudioWallSync();
+    audioSyncInterval = setInterval(onFileTimeUpdate, 220);
+  }
+
   function revokeServerBlob() {
+    stopAudioWallSync();
+    clearNavigationSafety();
+    if (fallbackAudio) {
+      try {
+        fallbackAudio.pause();
+      } catch (e) {}
+    }
     if (serverBlobUrl) {
       try {
         URL.revokeObjectURL(serverBlobUrl);
@@ -463,6 +475,7 @@
   function wireFileAudioFromUrl(url, isBlob) {
     if (isBlob) revokeServerBlob();
     usingFileFallback = true;
+    audioWallStartMs = 0;
     if (synth) synth.cancel();
     fallbackAudio = new Audio();
     fallbackAudio.preload = "auto";
@@ -470,17 +483,23 @@
     fallbackAudio.src = url;
     if (isBlob) serverBlobUrl = url;
     fallbackAudio.addEventListener("timeupdate", onFileTimeUpdate);
+    fallbackAudio.addEventListener("playing", function () {
+      if (audioWallStartMs <= 0) audioWallStartMs = performance.now();
+      startAudioWallSync();
+    });
     fallbackAudio.addEventListener("ended", function () {
+      stopAudioWallSync();
+      clearNavigationSafety();
       setTranscriptIfVisible("");
       goToNextAfterNarration();
     });
-    function applyFileAudioCues() {
-      if (!fallbackAudio || !SCRIPT.length) return;
-      var dur = fallbackAudio.duration;
-      cueStartsSec = buildCueStarts(dur, SCRIPT.length);
-    }
-    fallbackAudio.addEventListener("loadedmetadata", applyFileAudioCues);
-    fallbackAudio.addEventListener("durationchange", applyFileAudioCues);
+    clearNavigationSafety();
+    navigationSafetyTimer = setTimeout(function () {
+      navigationSafetyTimer = null;
+      if (!navigatedAfterNarration && usingFileFallback) {
+        goToNextAfterNarration();
+      }
+    }, Math.max(estimatedDurationFromScript(SCRIPT) * 1000 + 15000, 90000));
     fallbackAudio.addEventListener(
       "error",
       function () {

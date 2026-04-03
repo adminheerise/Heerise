@@ -385,13 +385,6 @@
     document.addEventListener("keydown", once, true);
   }
 
-  /** Chrome 队列：两句之间微延迟，减少卡在第二句 */
-  function speakNextUtterance() {
-    setTimeout(function () {
-      speakOne();
-    }, 80);
-  }
-
   function speakAll(fromAuto) {
     if (!SCRIPT.length) return;
     if (usingFileFallback) return;
@@ -421,6 +414,13 @@
     speechChunks = bundle.chunks;
     speechParaIdx = bundle.paraIdx;
     speechChunkCount = speechChunks.length;
+
+    /* Must live inside speakAll — outer speakNextUtterance could not see speakOne (ReferenceError). */
+    function speakNextUtterance() {
+      setTimeout(function () {
+        speakOne();
+      }, 80);
+    }
 
     function speakOne() {
       if (idx >= speechChunkCount) {
@@ -751,8 +751,15 @@
       headers: headers,
       credentials: "omit",
     }).then(function (r) {
-      if (!r.ok) throw new Error("narration");
-      return r.blob();
+      if (r.ok) return r.blob();
+      /* Stale/invalid Bearer can yield 403 at edge; anonymous narration is allowed on server */
+      if ((r.status === 403 || r.status === 401) && headers["Authorization"]) {
+        return fetch(narrationUrl(), { method: "GET", credentials: "omit" }).then(function (r2) {
+          if (!r2.ok) throw new Error("narration");
+          return r2.blob();
+        });
+      }
+      throw new Error("narration");
     });
   }
 

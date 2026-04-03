@@ -167,6 +167,12 @@
   var usingFileFallback = false;
   var fallbackAudio = null;
   var serverBlobUrl = null;
+  var waCtx = null;
+  var waSource = null;
+  var waDecodedBuffer = null;
+  var waSourceStartTime = 0;
+  var waPlaybackEnded = false;
+  var waPlaybackStarted = false;
   var audioWallStartMs = 0;
   var audioSyncInterval = null;
   var navigationSafetyTimer = null;
@@ -239,7 +245,7 @@
 
   function syncTranscriptToPlayback() {
     if (!transcriptLine || !SCRIPT.length) return;
-    if (usingFileFallback && fallbackAudio && !fallbackAudio.ended) {
+    if (usingFileFallback && !playbackEndedForFile()) {
       setTranscriptText(SCRIPT[displayIdx]);
       return;
     }
@@ -339,6 +345,27 @@
       unlockAttached = false;
       document.removeEventListener("pointerdown", once, true);
       document.removeEventListener("keydown", once, true);
+      if (waCtx && waDecodedBuffer && !waPlaybackStarted) {
+        try {
+          if (waSource) {
+            try {
+              waSource.disconnect();
+            } catch (e) {}
+          }
+          waSource = waCtx.createBufferSource();
+          waSource.buffer = waDecodedBuffer;
+          waSource.connect(waCtx.destination);
+          waSource.onended = wireWaEndedHandler;
+          waCtx.resume().then(function () {
+            try {
+              waSourceStartTime = waCtx.currentTime;
+              markAudioPlayStart();
+              waSource.start(0);
+              waPlaybackStarted = true;
+            } catch (e) {}
+          });
+        } catch (e) {}
+      }
       if (fallbackAudio) fallbackAudio.play().catch(function () {});
     }
     document.addEventListener("pointerdown", once, true);
@@ -450,14 +477,12 @@
     }
   }
 
-  /** Progress from MediaElement + wall clock; line index uses word-weighted segments (not equal thirds). */
+  /** Progress from Web Audio / HTMLAudioElement + wall clock; word-weighted lines. */
   function transcriptIndexFromPlayback() {
-    if (!fallbackAudio || !SCRIPT.length) return 0;
+    if (!SCRIPT.length) return 0;
     var weights = scriptWordWeights.length === SCRIPT.length ? scriptWordWeights : wordWeights(SCRIPT);
-    var totalSec = isFinite(fallbackAudio.duration) && fallbackAudio.duration > 0
-      ? fallbackAudio.duration
-      : estimatedDurationFromScript(SCRIPT);
-    var t = fallbackAudio.currentTime;
+    var totalSec = getNarrationDurationForTranscript();
+    var t = getNarrationPlaybackSeconds();
     if (!isFinite(t) || t < 0) t = 0;
     var progressT = Math.min(1, totalSec > 0 ? t / totalSec : 0);
     var fromTime = indexFromWeightedProgress(progressT, weights);
@@ -468,10 +493,11 @@
   }
 
   function onFileTimeUpdate() {
-    if (!fallbackAudio || !SCRIPT.length) return;
-    if (fallbackAudio.ended) return;
-    if (audioWallStartMs <= 0 && fallbackAudio.currentTime > 0.05) {
-      audioWallStartMs = performance.now() - fallbackAudio.currentTime * 1000;
+    if (!SCRIPT.length || !usingFileFallback) return;
+    if (waPlaybackEnded) return;
+    if (fallbackAudio && fallbackAudio.ended) return;
+    if (audioWallStartMs <= 0 && getNarrationPlaybackSeconds() > 0.05) {
+      audioWallStartMs = performance.now() - getNarrationPlaybackSeconds() * 1000;
     }
     var next = transcriptIndexFromPlayback();
     if (next !== displayIdx) displayIdx = next;
@@ -488,13 +514,74 @@
     startAudioWallSync();
   }
 
+  function playbackEndedForFile() {
+    if (waPlaybackEnded) return true;
+    if (fallbackAudio && fallbackAudio.ended) return true;
+    return false;
+  }
+
+  function stopWebAudio() {
+    try {
+      if (waSource) {
+        try {
+          waSource.stop(0);
+        } catch (e) {}
+        try {
+          waSource.disconnect();
+        } catch (e) {}
+      }
+    } catch (e) {}
+    waSource = null;
+    try {
+      if (waCtx && waCtx.state !== "closed") {
+        waCtx.close();
+      }
+    } catch (e) {}
+    waCtx = null;
+    waDecodedBuffer = null;
+    waPlaybackEnded = false;
+    waPlaybackStarted = false;
+    waSourceStartTime = 0;
+  }
+
+  function getNarrationDurationForTranscript() {
+    if (waDecodedBuffer && isFinite(waDecodedBuffer.duration) && waDecodedBuffer.duration > 0) {
+      return waDecodedBuffer.duration;
+    }
+    if (fallbackAudio && isFinite(fallbackAudio.duration) && fallbackAudio.duration > 0) {
+      return fallbackAudio.duration;
+    }
+    return estimatedDurationFromScript(SCRIPT);
+  }
+
+  function getNarrationPlaybackSeconds() {
+    if (waPlaybackStarted && waCtx && waDecodedBuffer && !waPlaybackEnded) {
+      var t = waCtx.currentTime - waSourceStartTime;
+      return Math.min(waDecodedBuffer.duration, Math.max(0, t));
+    }
+    if (fallbackAudio && !fallbackAudio.ended) {
+      return fallbackAudio.currentTime;
+    }
+    return 0;
+  }
+
+  function wireWaEndedHandler() {
+    waPlaybackEnded = true;
+    stopAudioWallSync();
+    clearNavigationSafety();
+    setTranscriptIfVisible("");
+    goToNextAfterNarration();
+  }
+
   function revokeServerBlob() {
     stopAudioWallSync();
     clearNavigationSafety();
+    stopWebAudio();
     if (fallbackAudio) {
       try {
         fallbackAudio.pause();
       } catch (e) {}
+      fallbackAudio = null;
     }
     if (serverBlobUrl) {
       try {
@@ -504,8 +591,9 @@
     }
   }
 
-  function wireFileAudioFromUrl(url, isBlob) {
-    if (isBlob) revokeServerBlob();
+  /** Fallback: HTMLAudioElement — registers Chrome Global Media Controls (toolbar player / caption entry). */
+  function wireHtmlAudioFromUrl(url, isBlob) {
+    revokeServerBlob();
     usingFileFallback = true;
     audioWallStartMs = 0;
     if (synth) synth.cancel();
@@ -557,6 +645,65 @@
         });
       }
     }, 1600);
+  }
+
+  /** Prefer Web Audio API — avoids HTMLAudioElement so Chrome usually omits toolbar media session / caption chip. */
+  function wireFileAudioFromUrl(url, isBlob) {
+    revokeServerBlob();
+    usingFileFallback = true;
+    audioWallStartMs = 0;
+    if (synth) synth.cancel();
+    if (isBlob) serverBlobUrl = url;
+
+    fetch(url)
+      .then(function (r) {
+        if (!r.ok) throw new Error("narration fetch");
+        return r.arrayBuffer();
+      })
+      .then(function (buf) {
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) throw new Error("no AudioContext");
+        waCtx = new AC();
+        return waCtx.decodeAudioData(buf.slice(0));
+      })
+      .then(function (decoded) {
+        waDecodedBuffer = decoded;
+        waSource = waCtx.createBufferSource();
+        waSource.buffer = waDecodedBuffer;
+        waSource.connect(waCtx.destination);
+        waSource.onended = wireWaEndedHandler;
+        clearNavigationSafety();
+        navigationSafetyTimer = setTimeout(function () {
+          navigationSafetyTimer = null;
+          if (!navigatedAfterNarration && usingFileFallback) {
+            goToNextAfterNarration();
+          }
+        }, Math.max(estimatedDurationFromScript(SCRIPT) * 1000 + 15000, 90000));
+
+        autoTimer = setTimeout(function () {
+          autoTimer = null;
+          function doStart() {
+            try {
+              waSourceStartTime = waCtx.currentTime;
+              markAudioPlayStart();
+              waSource.start(0);
+              waPlaybackStarted = true;
+            } catch (e) {
+              attachAudioUnlock();
+            }
+          }
+          if (waCtx.state === "suspended") {
+            waCtx.resume().then(doStart).catch(function () {
+              attachAudioUnlock();
+            });
+          } else {
+            doStart();
+          }
+        }, 1600);
+      })
+      .catch(function () {
+        wireHtmlAudioFromUrl(url, isBlob);
+      });
   }
 
   function tryFetchServerNarration() {

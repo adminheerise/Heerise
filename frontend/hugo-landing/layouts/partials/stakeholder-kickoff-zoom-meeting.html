@@ -187,6 +187,13 @@
 
   var FALLBACK_OUTREACH = {{ $fallbackOutreach | jsonify }};
 
+  function zmLog(msg, data) {
+    if (typeof window !== "undefined" && window.SKS_ZM_DEBUG === true) {
+      if (data !== undefined) console.info("[sks-zm]", msg, data);
+      else console.info("[sks-zm]", msg);
+    }
+  }
+
   function nextAfterZoomUrl() {
     var u = typeof window.SKS_ZM_NEXT_URL === "string" ? window.SKS_ZM_NEXT_URL.trim() : "";
     if (u) return u;
@@ -348,6 +355,12 @@
       if (waCtx && waDecodedBuffer && !waPlaybackStarted) {
         try {
           if (waSource) {
+            try {
+              waSource.onended = null;
+            } catch (e) {}
+            try {
+              waSource.stop(0);
+            } catch (e) {}
             try {
               waSource.disconnect();
             } catch (e) {}
@@ -523,6 +536,10 @@
   function stopWebAudio() {
     try {
       if (waSource) {
+        /* stop() also fires onended — must clear handler or wireWaEndedHandler navigates during teardown */
+        try {
+          waSource.onended = null;
+        } catch (e) {}
         try {
           waSource.stop(0);
         } catch (e) {}
@@ -566,11 +583,30 @@
   }
 
   function wireWaEndedHandler() {
+    if (navigatedAfterNarration) return;
+    zmLog("Web Audio buffer ended (natural stop)");
     waPlaybackEnded = true;
     stopAudioWallSync();
     clearNavigationSafety();
     setTranscriptIfVisible("");
     goToNextAfterNarration();
+  }
+
+  function scheduleNavigationSafetyMs(durationSecFallback) {
+    clearNavigationSafety();
+    var sec = typeof durationSecFallback === "number" && isFinite(durationSecFallback) && durationSecFallback > 0
+      ? durationSecFallback
+      : estimatedDurationFromScript(SCRIPT);
+    /* Must exceed real MP3 length or timer cuts playback and navigates early */
+    var safetyMs = Math.max(sec * 1000 + 90000, 180000);
+    zmLog("navigation safety timer (ms)", safetyMs);
+    navigationSafetyTimer = setTimeout(function () {
+      navigationSafetyTimer = null;
+      if (!navigatedAfterNarration && usingFileFallback) {
+        zmLog("safety timeout — forcing next page");
+        goToNextAfterNarration();
+      }
+    }, safetyMs);
   }
 
   function revokeServerBlob() {
@@ -611,13 +647,16 @@
       setTranscriptIfVisible("");
       goToNextAfterNarration();
     });
-    clearNavigationSafety();
-    navigationSafetyTimer = setTimeout(function () {
-      navigationSafetyTimer = null;
-      if (!navigatedAfterNarration && usingFileFallback) {
-        goToNextAfterNarration();
-      }
-    }, Math.max(estimatedDurationFromScript(SCRIPT) * 1000 + 15000, 90000));
+    scheduleNavigationSafetyMs(estimatedDurationFromScript(SCRIPT));
+    fallbackAudio.addEventListener(
+      "loadedmetadata",
+      function () {
+        if (fallbackAudio && isFinite(fallbackAudio.duration) && fallbackAudio.duration > 0) {
+          scheduleNavigationSafetyMs(fallbackAudio.duration);
+        }
+      },
+      { once: true }
+    );
     fallbackAudio.addEventListener(
       "error",
       function () {
@@ -672,13 +711,7 @@
         waSource.buffer = waDecodedBuffer;
         waSource.connect(waCtx.destination);
         waSource.onended = wireWaEndedHandler;
-        clearNavigationSafety();
-        navigationSafetyTimer = setTimeout(function () {
-          navigationSafetyTimer = null;
-          if (!navigatedAfterNarration && usingFileFallback) {
-            goToNextAfterNarration();
-          }
-        }, Math.max(estimatedDurationFromScript(SCRIPT) * 1000 + 15000, 90000));
+        scheduleNavigationSafetyMs(waDecodedBuffer.duration);
 
         autoTimer = setTimeout(function () {
           autoTimer = null;

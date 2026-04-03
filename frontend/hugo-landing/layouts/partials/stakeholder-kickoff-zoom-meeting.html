@@ -126,7 +126,34 @@
     return Math.max(25, tw / 2.5);
   }
 
+  function wordWeights(lines) {
+    var out = [];
+    var i;
+    for (i = 0; i < lines.length; i++) {
+      var n = ((lines[i] || "").trim().split(/\s+/).filter(Boolean).length) || 0;
+      out.push(Math.max(1, n));
+    }
+    return out;
+  }
+
+  function indexFromWeightedProgress(progress01, weights) {
+    if (!weights || !weights.length) return 0;
+    if (progress01 >= 1) return weights.length - 1;
+    var total = 0;
+    var i;
+    for (i = 0; i < weights.length; i++) total += weights[i];
+    if (total <= 0) return 0;
+    var target = progress01 * total;
+    var acc = 0;
+    for (i = 0; i < weights.length; i++) {
+      acc += weights[i];
+      if (target < acc) return i;
+    }
+    return weights.length - 1;
+  }
+
   var SCRIPT = [];
+  var scriptWordWeights = [];
   var speechChunks = [];
   var speechParaIdx = [];
   var speechChunkCount = 0;
@@ -423,20 +450,20 @@
     }
   }
 
-  /** Progress 0..1 from MediaElement time + wall clock (fixes stuck currentTime / bad duration). */
+  /** Progress from MediaElement + wall clock; line index uses word-weighted segments (not equal thirds). */
   function transcriptIndexFromPlayback() {
     if (!fallbackAudio || !SCRIPT.length) return 0;
+    var weights = scriptWordWeights.length === SCRIPT.length ? scriptWordWeights : wordWeights(SCRIPT);
     var totalSec = isFinite(fallbackAudio.duration) && fallbackAudio.duration > 0
       ? fallbackAudio.duration
       : estimatedDurationFromScript(SCRIPT);
     var t = fallbackAudio.currentTime;
     if (!isFinite(t) || t < 0) t = 0;
-    var fromTime = Math.min(SCRIPT.length - 1, Math.floor((t / totalSec) * SCRIPT.length));
+    var progressT = Math.min(1, totalSec > 0 ? t / totalSec : 0);
+    var fromTime = indexFromWeightedProgress(progressT, weights);
     var wallElapsed = audioWallStartMs > 0 ? (performance.now() - audioWallStartMs) / 1000 : 0;
-    var fromWall = Math.min(
-      SCRIPT.length - 1,
-      Math.floor(Math.min(1, wallElapsed / totalSec) * SCRIPT.length)
-    );
+    var progressW = Math.min(1, totalSec > 0 ? wallElapsed / totalSec : 0);
+    var fromWall = indexFromWeightedProgress(progressW, weights);
     return Math.max(fromTime, fromWall);
   }
 
@@ -454,6 +481,11 @@
   function startAudioWallSync() {
     stopAudioWallSync();
     audioSyncInterval = setInterval(onFileTimeUpdate, 220);
+  }
+
+  function markAudioPlayStart() {
+    if (audioWallStartMs <= 0) audioWallStartMs = performance.now();
+    startAudioWallSync();
   }
 
   function revokeServerBlob() {
@@ -483,10 +515,8 @@
     fallbackAudio.src = url;
     if (isBlob) serverBlobUrl = url;
     fallbackAudio.addEventListener("timeupdate", onFileTimeUpdate);
-    fallbackAudio.addEventListener("playing", function () {
-      if (audioWallStartMs <= 0) audioWallStartMs = performance.now();
-      startAudioWallSync();
-    });
+    fallbackAudio.addEventListener("play", markAudioPlayStart);
+    fallbackAudio.addEventListener("playing", markAudioPlayStart);
     fallbackAudio.addEventListener("ended", function () {
       stopAudioWallSync();
       clearNavigationSafety();
@@ -516,6 +546,11 @@
     autoTimer = setTimeout(function () {
       autoTimer = null;
       var p = fallbackAudio.play();
+      if (p && p.then) {
+        p.then(function () {
+          markAudioPlayStart();
+        });
+      }
       if (p && p.catch) {
         p.catch(function () {
           attachAudioUnlock();
@@ -643,6 +678,7 @@
 
   resolveDisplayNameFromApi().then(function (name) {
     SCRIPT = buildScriptLines(name);
+    scriptWordWeights = wordWeights(SCRIPT);
     var sb = buildSpeechChunksFromScript(SCRIPT);
     speechChunks = sb.chunks;
     speechParaIdx = sb.paraIdx;

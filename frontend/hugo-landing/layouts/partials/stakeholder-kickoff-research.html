@@ -1,0 +1,48 @@
+<!-- *** Research step: post–gap-analysis dialogue (The Stakeholder Kickoff Call track) *** -->
+<section class="sks-page sks-page--lumina-dialog sks-page--research" aria-label="Research — stakeholder kickoff">
+    <div class="sks-shell sks-shell--research">
+        <header class="sks-top">
+            <div class="sks-brand">LUMINA<span class="sks-brand-sep" aria-hidden="true">&bull;</span>SIM</div>
+            <nav class="sks-nav" aria-label="Simulation steps">
+                <span class="sks-step">Assignment Brief</span>
+                <span class="sks-step sks-step-active">Research</span>
+                <span class="sks-step">Outreach Email</span>
+                <span class="sks-step">Meeting Agenda</span>
+                <span class="sks-step">Kick-off Call</span>
+                <span class="sks-step">Manager Brief</span>
+                <span class="sks-step">Results</span>
+            </nav>
+        </header>
+
+        <div class="sks-main">
+            <div class="sks-scene">
+                <div class="sks-person">
+                    <img src="{{ "img/lumina-manager.png" | relURL }}" width="360" height="360" alt="Maya, your manager" />
+                </div>
+                <div class="sks-dialog-col">
+                    <div class="sks-bubble sks-bubble--organize sks-bubble--research">
+                        <div class="sks-bubble-copy sks-research-copy" id="sks-research-copy" aria-live="polite">
+                            <p class="sks-line-body sks-research-lead sks-research-line" data-research-line="0">Hey <span class="sks-kickoff-name"></span>! So you&rsquo;ve read the project brief and got your gap analysis done. You know what you know, and more importantly, you know what you don&rsquo;t.</p>
+                            <p class="sks-line-body sks-research-lead sks-research-line" data-research-line="1" hidden>Now it&rsquo;s time to do some prep work. I want you to spend time researching the project before you reach out to stakeholders.</p>
+                            <p class="sks-line-body sks-research-lead sks-research-line" data-research-line="2" hidden>You have access to a research workspace. Inside, you&rsquo;ll find four areas to explore: the product and business context, the audience, the stakeholders, and the constraints.</p>
+                            <p class="sks-line-body sks-research-lead sks-research-line" data-research-line="3" hidden>For each area, you can ask questions from a list of suggested ones. The knowledge base will respond. Your job is to ask questions, read responses, think, and save the findings that matter.</p>
+                            <p class="sks-line-body sks-research-lead sks-research-line" data-research-line="4" hidden>You don&rsquo;t have to explore everything. But you need to get the information you need to form hypotheses of the project and ask questions in the kickoff call.</p>
+                        </div>
+                        <div class="sks-research-bottom">
+                            <div class="sks-research-fabs" id="sks-research-next-wrap">
+                                <button type="button" class="sks-fab sks-fab--next" id="sks-research-next" aria-label="Next line">
+                                    <span aria-hidden="true">&#8595;</span>
+                                </button>
+                            </div>
+                            <div class="sks-research-start-wrap" id="sks-research-start-wrap" hidden>
+                                <a href="/acc/stakeholder-kickoff/research/workspace/" class="sks-btn sks-btn--caps sks-research-start-btn">Start Researching</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="{{ "js/stakeholder-research.js" | relURL }}?{{ now.Unix }}"></script>

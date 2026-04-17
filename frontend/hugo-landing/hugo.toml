@@ -14,7 +14,7 @@ pluralizelisttitles = false
   [services.disqus]
   shortname = ""
   [services.googleAnalytics]
-  id = ""
+  id = "G-5EMD9R7JS2"
 
 [pagination]
   pagerSize = 10

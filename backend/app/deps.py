@@ -1,6 +1,7 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
+from typing import Optional
 from .db import SessionLocal
 import os
 from .models import User, UserRole
@@ -42,3 +43,20 @@ def require_admin(user: User = Depends(get_current_user)) -> User:
     if user.role != UserRole.admin:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin only")
     return user
+
+
+def get_current_user_optional(
+    cred: HTTPAuthorizationCredentials = Depends(bearer_scheme),
+    db: Session = Depends(db_sess),
+) -> Optional[User]:
+    """Same verification as get_current_user, but returns None if missing/invalid token."""
+    if cred is None:
+        return None
+    try:
+        use_firebase = os.getenv("USE_FIREBASE_AUTH", "").strip().lower() in ("1", "true", "yes")
+        provider = FirebaseAuthProvider() if use_firebase else LocalJwtAuthProvider()
+        ident = provider.verify_bearer_token(cred.credentials)
+        user = db.get(User, ident.user_id)
+        return user
+    except Exception:
+        return None

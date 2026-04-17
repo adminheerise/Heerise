@@ -114,6 +114,7 @@ def register(
         )
     )
 
+    # Bind ACC pre-cached onboarding answers to the new user (single code path: services.onboarding)
     if body.onboarding_session_id:
         apply_pre_cache_to_profile(db, u.id, body.onboarding_session_id)
 
@@ -157,6 +158,10 @@ def login(
 
 @router.get("/verify-email")
 def verify_email(token: str, request: Request, db: Session = Depends(db_sess)):
+    """
+    Verify email via token. On success, auto-login: create session and return tokens.
+    Frontend stores tokens and redirects to next (no password re-entry needed).
+    """
     try:
         data = decode_token(token)
     except Exception:

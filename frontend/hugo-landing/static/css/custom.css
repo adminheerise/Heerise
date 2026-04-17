@@ -4426,7 +4426,8 @@ body {
     height: 301px;
     border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    background: transparent;
+    box-shadow: none;
 }
 .clp-hero-image img {
     width: 100%;

@@ -1,0 +1,82 @@
+{{/* Floating notes (Zoom, Email, …). Wireframe examples like "1. Identifying…" are style refs only — do not use as real copy. */}}
+<div
+  id="lumina-sim-notes-root"
+  data-lumina-page-id="{{ .Params.id }}"
+  aria-hidden="false"
+>
+  <div
+    class="lumina-sim-notes-tooltip"
+    role="tooltip"
+    hidden
+  >
+    <p class="lumina-sim-notes-tooltip-copy">
+      This is your <strong class="lumina-sim-notes-tooltip-key">Notes</strong>, as you meet Maya, jot down key insights, these will be incredibly helpful throughout the rest of your project.
+    </p>
+    <button type="button" class="lumina-sim-notes-tooltip-gotit">Got it</button>
+  </div>
+
+  <button type="button" class="lumina-sim-notes-fab" aria-expanded="false" aria-controls="lumina-sim-notes-panel" id="lumina-sim-notes-fab">
+    <span class="lumina-sim-notes-fab-icon" aria-hidden="true"></span>
+    <span class="lumina-sim-notes-badge" hidden>0</span>
+  </button>
+
+  <aside
+    class="lumina-sim-notes-panel"
+    id="lumina-sim-notes-panel"
+    role="dialog"
+    aria-labelledby="lumina-sim-notes-title"
+    aria-modal="true"
+    aria-hidden="true"
+  >
+    <header class="lumina-sim-notes-header">
+      <h2 id="lumina-sim-notes-title" class="lumina-sim-notes-title">My Notes</h2>
+      <button type="button" class="lumina-sim-notes-close" aria-label="Close notes">&times;</button>
+    </header>
+    <div class="lumina-sim-notes-body">
+      <nav class="lumina-sim-notes-sidebar" aria-label="Note tabs">
+        <div class="lumina-sim-notes-tabstrip" role="tablist"></div>
+        <p class="lumina-sim-notes-empty-hint">Start typing to create your first note.</p>
+      </nav>
+      <div class="lumina-sim-notes-editor-wrap">
+        <label class="visually-hidden" for="lumina-sim-notes-editor">Notes for this stage</label>
+        <textarea
+          id="lumina-sim-notes-editor"
+          class="lumina-sim-notes-editor"
+          placeholder="Please enter here"
+          spellcheck="true"
+        ></textarea>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .lumina-sim-notes-tooltip-copy {
+    margin: 0 0 12px;
+    font: 400 14px/1.45 Inter, system-ui, sans-serif;
+  }
+  .lumina-sim-notes-tooltip-gotit {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font: 600 13px Inter, system-ui, sans-serif;
+    cursor: pointer;
+  }
+  .lumina-sim-notes-tooltip-gotit:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+</style>

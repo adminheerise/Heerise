@@ -1,55 +1,60 @@
 <!-- *** FEATURED EVENT — same structure as Career Lab hero *** -->
 {{ if .Site.Params.featured_event.enable }}
-<section class="cl-hero cl-featured-event">
+{{ $fe := .Site.Params.featured_event }}
+{{ $compact := $fe.coming_soon }}
+<section class="cl-hero cl-featured-event{{ if $compact }} cl-featured-event--compact{{ end }}">
     <div class="cl-hero-shell">
-        {{ if .Site.Params.featured_event.label }}
+        {{ if $fe.label }}
         <div class="cl-featured-event-header">
-            <h2 class="cl-featured-event-title">{{ .Site.Params.featured_event.label }}</h2>
+            <h2 class="cl-featured-event-title">{{ $fe.label }}</h2>
             <div class="cl-featured-event-line" aria-hidden="true"></div>
         </div>
         {{ end }}
         <div class="cl-hero-inner">
             <div class="cl-hero-image">
-                {{ if .Site.Params.featured_event.badge }}
-                <div class="cl-featured-event-badge">{{ .Site.Params.featured_event.badge }}</div>
+                {{ if $fe.badge }}
+                <div class="cl-featured-event-badge">{{ $fe.badge }}</div>
                 {{ end }}
                 <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2070&q=80" alt="Career Lab" />
             </div>
             <div class="cl-hero-content">
                 <div class="cl-hero-top">
                     <h1 class="cl-title">
-                        <span class="cl-title-underline">{{ .Site.Params.featured_event.title | replaceRE " .*" "" }}</span>
-                        <span> {{ .Site.Params.featured_event.title | replaceRE "^[^ ]+ " "" }}</span>
+                        <span class="cl-title-underline">{{ $fe.title | replaceRE " .*" "" }}</span>
+                        <span> {{ $fe.title | replaceRE "^[^ ]+ " "" }}</span>
+                        {{ if and $compact $fe.subtitle }}<span class="cl-tag cl-tag--inline">{{ $fe.subtitle }}</span>{{ end }}
                     </h1>
-                    <div class="cl-tag">{{ .Site.Params.featured_event.subtitle }}</div>
+                    {{ if and (not $compact) $fe.subtitle }}<div class="cl-tag">{{ $fe.subtitle }}</div>{{ end }}
                     <div class="cl-desc">
-                        <p>{{ .Site.Params.featured_event.description1 }}</p>
-                        <p>{{ .Site.Params.featured_event.description2 }}</p>
+                        {{ if $fe.description1 }}<p>{{ $fe.description1 }}</p>{{ end }}
+                        {{ if $fe.description2 }}<p>{{ $fe.description2 }}</p>{{ end }}
                     </div>
                 </div>
                 <div class="cl-hero-bottom">
+                    {{ if not $compact }}
                     <div class="cl-stats">
                         <div class="cl-stat">
-                            <div class="cl-stat-number">{{ .Site.Params.featured_event.stat1_number }}</div>
-                            <div class="cl-stat-label">{{ .Site.Params.featured_event.stat1_label }}</div>
+                            <div class="cl-stat-number">{{ $fe.stat1_number }}</div>
+                            <div class="cl-stat-label">{{ $fe.stat1_label }}</div>
                         </div>
                         <div class="cl-stat">
-                            <div class="cl-stat-number">{{ .Site.Params.featured_event.stat2_number }}</div>
-                            <div class="cl-stat-label">{{ .Site.Params.featured_event.stat2_label }}</div>
+                            <div class="cl-stat-number">{{ $fe.stat2_number }}</div>
+                            <div class="cl-stat-label">{{ $fe.stat2_label }}</div>
                         </div>
                         <div class="cl-stat">
-                            <div class="cl-stat-number">{{ .Site.Params.featured_event.stat3_number }}</div>
-                            <div class="cl-stat-label">{{ .Site.Params.featured_event.stat3_label }}</div>
+                            <div class="cl-stat-number">{{ $fe.stat3_number }}</div>
+                            <div class="cl-stat-label">{{ $fe.stat3_label }}</div>
                         </div>
                         <div class="cl-stat">
-                            <div class="cl-stat-number">{{ .Site.Params.featured_event.stat4_number }}</div>
-                            <div class="cl-stat-label">{{ .Site.Params.featured_event.stat4_label }}</div>
+                            <div class="cl-stat-number">{{ $fe.stat4_number }}</div>
+                            <div class="cl-stat-label">{{ $fe.stat4_label }}</div>
                         </div>
                     </div>
-                    {{ if .Site.Params.featured_event.countdown_deadline }}
+                    {{ end }}
+                    {{ if and (not $compact) $fe.countdown_deadline }}
                     <section
                         class="cl-countdown"
-                        data-deadline="{{ .Site.Params.featured_event.countdown_deadline }}"
+                        data-deadline="{{ $fe.countdown_deadline }}"
                         aria-live="polite"
                     >
                         <div class="cl-countdown-label">Enrollment Closes in:</div>
@@ -77,14 +82,14 @@
                     </section>
                     {{ end }}
                     <div class="cl-cta-buttons">
-                        <a href="{{ .Site.Params.featured_event.cta_url }}" class="cl-btn-primary">View More <span>→</span></a>
+                        <a href="{{ $fe.cta_url }}" class="cl-btn-primary">{{ default "View More" $fe.cta_text }} <span>→</span></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-{{ if .Site.Params.featured_event.countdown_deadline }}
+{{ if and (not $compact) $fe.countdown_deadline }}
 <script src="/js/countdown.js"></script>
 <script>document.addEventListener("DOMContentLoaded", function() { if (window.HeeriseCountdown) HeeriseCountdown.initAll(".cl-countdown"); });</script>
 {{ end }}

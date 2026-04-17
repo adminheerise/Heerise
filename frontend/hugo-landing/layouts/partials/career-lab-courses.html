@@ -1,0 +1,34 @@
+<!-- *** CAREER LAB — COURSES PAGE *** -->
+<section class="clp-hero">
+    <div class="clp-hero-inner">
+        <div class="clp-hero-image">
+            <img src="/img/career-lab-courses.png" alt="Career Lab Courses" />
+        </div>
+
+        <div class="clp-hero-content">
+            <div class="clp-title-row">
+                <div class="clp-title-block">
+                    <h1 class="clp-title">Career Lab Courses</h1>
+                    <div class="clp-title-underline" aria-hidden="true"></div>
+                </div>
+                <div class="clp-tag">Coming Soon</div>
+            </div>
+
+            <div class="clp-desc">
+                <p>An elite 8-week bootcamp for professionals who want to break into Learning Experience Design (LXD)/ Instructional Design (ID). Build a portfolio with five hands-on projects, get 1:1 mentorship, and receive job-ready application coaching.</p>
+            </div>
+
+            <a href="#" class="clp-btn-secondary cl-syllabus-open" onclick="return false;">
+                <span>PREVIEW SYLLABUS</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" stroke="#017AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+{{ partial "career-lab-syllabus-modal.html" . }}
+
+<script src='{{ "js/career-lab.js" | relURL }}'></script>
+<!-- *** CAREER LAB — COURSES PAGE END *** -->

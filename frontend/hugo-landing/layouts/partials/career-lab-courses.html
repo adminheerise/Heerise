@@ -1,86 +1,36 @@
-<!-- *** CAREER LAB PAGE *** -->
+<!-- *** CAREER LAB - COURSES PAGE *** -->
 
-<!-- Top Section: Hero ??two-column layout (Frame 27, 1280×400) -->
-<section class="cl-hero">
-    <div class="cl-hero-inner">
-        <!-- Left: Image (455×304, shadow, 4px radius) -->
-        <div class="cl-hero-image">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2070&q=80" alt="Team collaboration" />
+<!-- Simplified hero (Figma spec): image left, title + Coming Soon + description + Preview Syllabus on right -->
+<section class="clp-hero">
+    <div class="clp-hero-inner">
+        <div class="clp-hero-image">
+            <img src="/img/career-lab-courses.png" alt="Career Lab Courses" />
         </div>
 
-        <!-- Right: Content (658×312, left: 573) -->
-        <div class="cl-hero-content">
-            <div class="cl-hero-top">
-                <h1 class="cl-title">
-                    <span class="cl-title-underline">ID/LXD</span>
-                    <span> Career Lab</span>
-                </h1>
-                <div class="cl-tag">Founding Cohort · Starts Mar 28 · 8-Week Intensive</div>
-                <div class="cl-desc">
-                    <p>An elite 8-week bootcamp for professionals who want to break into Learning Experience Design (LXD)/ Instructional Design (ID).</p>
-                    <p>Build a portfolio with five hands-on projects, get 1:1 mentorship, and receive job-ready application coaching.</p>
+        <div class="clp-hero-content">
+            <div class="clp-title-row">
+                <div class="clp-title-block">
+                    <h1 class="clp-title">Career Lab Courses</h1>
+                    <div class="clp-title-underline" aria-hidden="true"></div>
                 </div>
+                <div class="clp-tag">Coming Soon</div>
             </div>
-            <div class="cl-hero-bottom">
-                <div class="cl-stats">
-                    <div class="cl-stat">
-                        <div class="cl-stat-number">8 Weeks</div>
-                        <div class="cl-stat-label">Intensive Training</div>
-                    </div>
-                    <div class="cl-stat">
-                        <div class="cl-stat-number">5 Projects</div>
-                        <div class="cl-stat-label">Portfolio Pieces</div>
-                    </div>
-                    <div class="cl-stat">
-                        <div class="cl-stat-number">1:1</div>
-                        <div class="cl-stat-label">Mentorship</div>
-                    </div>
-                    <div class="cl-stat">
-                        <div class="cl-stat-number">Weekly</div>
-                        <div class="cl-stat-label">Live Sessions + Office Hours</div>
-                    </div>
-                </div>
-                <!--CountDown ????(same as homepage) -->
-                {{ if .Site.Params.featured_event.countdown_deadline }}
-                <section
-                    class="cl-countdown"
-                    data-deadline="{{ .Site.Params.featured_event.countdown_deadline }}"
-                    aria-live="polite"
-                >
-                    <div class="cl-countdown-label">Enrollment Closes in:</div>
-                    <div class="cl-countdown-track">
-                        <div class="cl-countdown-unit">
-                            <div class="cl-countdown-value" data-countdown-days>0</div>
-                            <div class="cl-countdown-unit-label">DAYS</div>
-                        </div>
-                        <div class="cl-countdown-sep">:</div>
-                        <div class="cl-countdown-unit">
-                            <div class="cl-countdown-value" data-countdown-hours>0</div>
-                            <div class="cl-countdown-unit-label">HRS</div>
-                        </div>
-                        <div class="cl-countdown-sep">:</div>
-                        <div class="cl-countdown-unit">
-                            <div class="cl-countdown-value" data-countdown-minutes>0</div>
-                            <div class="cl-countdown-unit-label">MINS</div>
-                        </div>
-                        <div class="cl-countdown-sep">:</div>
-                        <div class="cl-countdown-unit">
-                            <div class="cl-countdown-value" data-countdown-seconds>0</div>
-                            <div class="cl-countdown-unit-label">SECS</div>
-                        </div>
-                    </div>
-                </section>
-                {{ end }}
-                <div class="cl-cta-buttons">
-                    <a href="#" class="cl-btn-primary cl-bootcamp-open" onclick="return false;">APPLY FOR COHORT 1 <span>??/span></a>
-                    <a href="#" class="cl-btn-secondary cl-syllabus-open" onclick="return false;">PREVIEW SYLLABUS</a>
-                </div>
+
+            <div class="clp-desc">
+                <p>An elite 8-week bootcamp for professionals who want to break into Learning Experience Design (LXD)/ Instructional Design (ID). Build a portfolio with five hands-on projects, get 1:1 mentorship, and receive job-ready application coaching.</p>
             </div>
+
+            <a href="#" class="clp-btn-secondary cl-syllabus-open" onclick="return false;">
+                <span>PREVIEW SYLLABUS</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" stroke="#017AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
         </div>
     </div>
 </section>
 
-<!-- Tab Navigation (48px height, gap: 25px, left: 50px) -->
+<!-- Tab Navigation -->
 <nav class="cl-tabs-nav">
     <div class="cl-tabs-inner">
         <ul class="cl-tabs">
@@ -92,7 +42,7 @@
     </div>
 </nav>
 
-<!-- ========== TAB: Outcomes (Frame 91, 1280×630) ========== -->
+<!-- ========== TAB: Outcomes ========== -->
 <div class="cl-tab-content active" id="outcomes">
     <div class="cl-section-inner">
         <div class="cl-section-header">
@@ -100,7 +50,6 @@
             <h2 class="cl-section-title">What You'll Be Able to Do</h2>
         </div>
         <div class="cl-cards-grid">
-            <!-- Row 1 -->
             <div class="cl-card cl-card-yellow">
                 <div class="cl-card-icon cl-icon-yellow">
                     <svg fill="none" stroke="#E17100" stroke-width="2.67" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
@@ -122,7 +71,6 @@
                 <h3 class="cl-card-title">Produce Professional Deliverables</h3>
                 <p class="cl-card-desc">Produce professional instructional design deliverables that reflect best practices in learning design and document the design process.</p>
             </div>
-            <!-- Row 2 -->
             <div class="cl-card cl-card-purple">
                 <div class="cl-card-icon cl-icon-purple">
                     <svg fill="none" stroke="#9810FA" stroke-width="2.67" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
@@ -148,7 +96,7 @@
     </div>
 </div>
 
-<!-- ========== TAB: Projects (Frame 90, 1280×598) ========== -->
+<!-- ========== TAB: Projects ========== -->
 <div class="cl-tab-content" id="projects">
     <div class="cl-section-inner">
         <div class="cl-section-header">
@@ -156,7 +104,6 @@
             <h2 class="cl-section-title">5 Hands-On Projects to Build a Professional Portfolio</h2>
         </div>
         <div class="cl-cards-grid cl-projects-grid">
-            <!-- Row 1 -->
             <div class="cl-card cl-project-card">
                 <div class="cl-card-icon cl-icon-project">
                     <svg fill="none" stroke="#FFFFFF" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -178,7 +125,6 @@
                 <h3 class="cl-card-title cl-project-title">Project 3: Professional Deliverables</h3>
                 <p class="cl-card-desc">Create a detailed learning solution blueprint, including learning objectives, assessment strategies, and accessibility considerations.</p>
             </div>
-            <!-- Row 2 -->
             <div class="cl-card cl-project-card">
                 <div class="cl-card-icon cl-icon-project">
                     <svg fill="none" stroke="#FFFFFF" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
@@ -204,7 +150,7 @@
     </div>
 </div>
 
-<!-- ========== TAB: Instructors (bg: rgba(164,241,255,0.1)) ========== -->
+<!-- ========== TAB: Instructors ========== -->
 <div class="cl-tab-content" id="instructors">
     <section class="cl-instructors-section">
         <div class="cl-instructors-wrapper">
@@ -234,7 +180,7 @@
     </section>
 </div>
 
-<!-- ========== TAB: Pricing (Frame 87, 1280×1020) ========== -->
+<!-- ========== TAB: Pricing ========== -->
 <div class="cl-tab-content" id="pricing">
     <div class="cl-section-inner cl-pricing-section">
         <div class="cl-pricing-container">
@@ -266,18 +212,18 @@
                         <div class="cl-price-note">Post-Scholarship Price</div>
                     </div>
                     <ul class="cl-pricing-features">
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>8 Weeks Asynchronous Access</li>
-                        <li class="cl-pf-item cl-pf-no"><span class="cl-pf-cross">??/span>1:1 Mentor Coaching</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Group Office Hours Only</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Peer Feedback Only</li>
-                        <li class="cl-pf-item cl-pf-no"><span class="cl-pf-cross">??/span>Career Prep</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Student Procures Own Software</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Certificate of Completion</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>8 Weeks Asynchronous Access</li>
+                        <li class="cl-pf-item cl-pf-no"><span class="cl-pf-cross">&#10007;</span>1:1 Mentor Coaching</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Group Office Hours Only</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Peer Feedback Only</li>
+                        <li class="cl-pf-item cl-pf-no"><span class="cl-pf-cross">&#10007;</span>Career Prep</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Student Procures Own Software</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Certificate of Completion</li>
                     </ul>
                     <button class="cl-pricing-btn cl-pricing-btn-secondary cl-bootcamp-open">APPLY NOW</button>
                 </div>
 
-                <!-- Premium Tier ??RECOMMENDED -->
+                <!-- Premium Tier - RECOMMENDED -->
                 <div class="cl-pricing-card cl-pricing-recommended">
                     <div class="cl-recommended-badge">RECOMMENDED</div>
                     <h3 class="cl-pricing-tier">Premium Tier</h3>
@@ -288,13 +234,13 @@
                         <div class="cl-price-note cl-price-note-blue">After $500 Scholarship</div>
                     </div>
                     <ul class="cl-pricing-features">
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>8 Weeks Full Instruction (Live &amp; Recorded)</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Weekly 1:1 Mentor Coaching (8 total)</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Weekly Mentor Office Hours</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span><strong>Unlimited Portfolio Review Cycles</strong> (5 core projects)</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span><strong>Unlimited Mock Interviews</strong> + Resume / LinkedIn</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>1 Year Free Articulate 360 AI (Value $1,449/yr)</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Certificate + Alumni + 6 Months Post-Grad Career Services</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>8 Weeks Full Instruction (Live &amp; Recorded)</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Weekly 1:1 Mentor Coaching (8 total)</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Weekly Mentor Office Hours</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span><strong>Unlimited Portfolio Review Cycles</strong> (5 core projects)</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span><strong>Unlimited Mock Interviews</strong> + Resume / LinkedIn</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>1 Year Free Articulate 360 AI (Value $1,449/yr)</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Certificate + Alumni + 6 Months Post-Grad Career Services</li>
                     </ul>
                     <button class="cl-pricing-btn cl-pricing-btn-primary cl-bootcamp-open">APPLY NOW</button>
                 </div>
@@ -309,13 +255,13 @@
                         <div class="cl-price-note cl-price-note-blue">After $500 Scholarship</div>
                     </div>
                     <ul class="cl-pricing-features">
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>8 Weeks Full Instruction (Live &amp; Recorded)</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Bi-Weekly 1:1 Check-ins (4 total)</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Group Office Hours Only</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Instructor Review and Feedback</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Resume / LinkedIn Optimization</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Student Procures Own Software</li>
-                        <li class="cl-pf-item"><span class="cl-pf-check">??/span>Certificate + Alumni Network Access</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>8 Weeks Full Instruction (Live &amp; Recorded)</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Bi-Weekly 1:1 Check-ins (4 total)</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Group Office Hours Only</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Instructor Review and Feedback</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Resume / LinkedIn Optimization</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Student Procures Own Software</li>
+                        <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Certificate + Alumni Network Access</li>
                     </ul>
                     <button class="cl-pricing-btn cl-pricing-btn-secondary cl-bootcamp-open">APPLY NOW</button>
                 </div>
@@ -324,7 +270,7 @@
     </div>
 </div>
 
-<!-- Back to Top (Frame 114, 1280×72) -->
+<!-- Back to Top -->
 <div class="cl-back-to-top">
     <div class="cl-back-to-top-inner">
         <a href="#" class="cl-back-to-top-link" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
@@ -334,12 +280,9 @@
     </div>
 </div>
 
-<!-- bootcamp application survey (9 questions) - shared partial -->
+<!-- Shared modals: syllabus (PREVIEW SYLLABUS) + bootcamp (APPLY NOW in pricing) -->
+{{ partial "career-lab-syllabus-modal.html" . }}
 {{ partial "career-lab-bootcamp-modal.html" . }}
 
-<!-- bootcamp syllabus form and view (shared partial) -->
-{{ partial "career-lab-syllabus-modal.html" . }}
-
-<script src='{{ "js/countdown.js" | relURL }}'></script>
 <script src='{{ "js/career-lab.js" | relURL }}'></script>
-<!-- *** CAREER LAB PAGE END *** -->
+<!-- *** CAREER LAB - COURSES PAGE END *** -->

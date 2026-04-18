@@ -45,8 +45,22 @@ pluralizelisttitles = false
 [[menu.main]]
   name       = "CAREER LAB"
   identifier = "menu.careerlab"
-  url        = "/career-lab/"
+  url        = ""
   weight     = 4
+
+  [[menu.main]]
+    name       = "COURSES"
+    identifier = "menu.careerlab.courses"
+    parent     = "menu.careerlab"
+    url        = "/career-lab/courses/"
+    weight     = 1
+
+  [[menu.main]]
+    name       = "WORKSHOP"
+    identifier = "menu.careerlab.workshop"
+    parent     = "menu.careerlab"
+    url        = "/career-lab/workshop/"
+    weight     = 2
 
 [[menu.main]]
   name       = "CONTACT"
@@ -93,6 +107,17 @@ pluralizelisttitles = false
   date_format = "January 2, 2006"
 
   dropdown_mouse_over = false
+
+  # LUMINA SIM — floating notes module (match content front matter `id`).
+  # Enabled on every stage from the Zoom meeting onward. Add ids here as new post-Zoom stages ship.
+  lumina_notes_page_ids = [
+    "stakeholder-kickoff-zoom-meeting",
+    "stakeholder-kickoff-brief-organize",
+    "stakeholder-kickoff-gap-analysis",
+    "stakeholder-kickoff-research",
+    "stakeholder-kickoff-research-workspace",
+    "stakeholder-kickoff-outreach-email",
+  ]
 
   disabled_logo = false
   logo_text = "Heerise"
@@ -189,21 +214,17 @@ pluralizelisttitles = false
   enable = true
   label = "Upcoming Event"
   badge = "Featured"
-  title = "ID/LXD Career Lab"
-  subtitle = "Founding Cohort · Starts Mar 28 · 8-Week Intensive"
-  description1 = "An elite 8-week bootcamp for professionals who want to break into Learning Experience Design (LXD)/ Instructional Design (ID)."
-  description2 = "Build a portfolio with five hands-on projects, get 1:1 mentorship, and receive job-ready application coaching."
-  stat1_number = "8 Weeks"
-  stat1_label = "Intensive Training"
-  stat2_number = "5 Projects"
-  stat2_label = "Portfolio Pieces"
-  stat3_number = "1:1"
-  stat3_label = "Mentorship"
-  stat4_number = "Weekly"
-  stat4_label = "Live Sessions + Office Hours"
-  countdown_deadline = "2026-03-28T23:59:59-07:00"
-  cta_text = "APPLY NOW"
-  cta_url = "/career-lab/"
+  title = "ID/LXD Workshop"
+  subtitle = "Coming Soon"
+  description1 = "This hands-on workshop focuses on identifying and solving small but critical friction points in the job search journey. Using LXD and ID principles, participants will collaborate to uncover micro-problems such as interview prep, skill articulation, and moments of uncertainty, and rapidly generate practical, testable solutions."
+  description2 = "Perfect for designers, educators, and product thinkers looking to create focused, high-impact learning experiences."
+  # Compact "Coming Soon" mode: hides the hero image, stats, and countdown.
+  # Set coming_soon = false (or remove) and re-enable the fields below when the
+  # event is ready to launch.
+  coming_soon = true
+  countdown_deadline = ""
+  cta_text = "View More"
+  cta_url = "/career-lab/workshop/"
 
 # ============================================================
 # NEW: Social links for footer

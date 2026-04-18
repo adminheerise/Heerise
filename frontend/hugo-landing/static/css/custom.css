@@ -134,26 +134,32 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    border-top: 8px solid transparent;
+    transition: color 0.2s ease;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
 }
 
-/* Hover: #017AFF at 100% */
+/* Hover: text color only — no blue bar / background */
 #navbar.navbar.navbar-default .navbar-nav > li:not(.active) > a:hover,
-#navbar.navbar.navbar-default .navbar-nav > li:not(.active) > a:focus {
+#navbar.navbar.navbar-default .navbar-nav > li:not(.active) > a:focus,
+.navbar.navbar-default .navbar-nav > li:not(.active) > a:hover,
+.navbar.navbar-default .navbar-nav > li:not(.active) > a:focus {
     color: #017AFF !important;
     background-color: transparent !important;
+    border: none !important;
     text-decoration: none;
+    box-shadow: none;
 }
 
-/* Active/selected state: #017AFF at 80% */
+/* Active/selected state: solid blue bar with SQUARE corners */
 .navbar.navbar-default .navbar-nav > li.active > a,
 .navbar.navbar-default .navbar-nav > li.active > a:hover,
 .navbar.navbar-default .navbar-nav > li.active > a:focus {
     color: #FFFFFF;
     background-color: rgba(1, 122, 255, 0.8);
-    border-top: none;
-    border-radius: 6px;
+    border: none;
+    border-radius: 0;
     text-decoration: none;
 }
 
@@ -722,7 +728,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     align-self: stretch;
     height: 0;
     border: none;
-    border-top: 0.5px solid #FFFFFF;
+    border-top: 0.5px solid rgba(255, 255, 255, 0.5);
 }
 .footer-copyright {
     font-family: 'Inter', sans-serif;
@@ -749,6 +755,63 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     .newsletter-form {
         width: 100%;
         max-width: none;
+    }
+
+    /* ==== MOBILE FOOTER v2 (grid: brand on top, Company + Follow us side-by-side) ==== */
+    /* !important used to defeat any stale cached CSS / theme override on any page  */
+    #footer {
+        min-height: 0 !important;
+    }
+    .footer-inner-wrap {
+        padding: 32px 20px 20px !important;
+        gap: 32px !important;
+    }
+    .footer-content-row {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-areas:
+            "brand brand"
+            "links social" !important;
+        row-gap: 28px !important;
+        column-gap: 24px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        gap: 0 !important;
+        flex-direction: unset !important;
+        justify-content: unset !important;
+    }
+    .footer-left {
+        grid-area: brand !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 20px !important;
+        flex-wrap: wrap !important;
+    }
+    .footer-col-links {
+        grid-area: links !important;
+        min-width: 0 !important;
+    }
+    .footer-col-social {
+        grid-area: social !important;
+        min-width: 0 !important;
+    }
+    .footer-col-links h4,
+    .footer-col-social h4 {
+        margin-bottom: 12px !important;
+    }
+    .footer-col-links ul,
+    .footer-col-social ul {
+        gap: 10px !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .footer-content-row {
+        grid-template-columns: 1fr !important;
+        grid-template-areas:
+            "brand"
+            "links"
+            "social" !important;
     }
 }
 
@@ -1481,6 +1544,91 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     font-weight: 600;
     line-height: 12px;
     margin-bottom: 12px;
+}
+
+/* Inline "Coming Soon" style — sits next to the title on the compact
+   featured-event card (no separate image column, no stats, no countdown). */
+.cl-tag--inline {
+    margin: 0 0 0 12px;
+    vertical-align: middle;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 4px 12px;
+    border-radius: 999px;
+}
+
+/* ---------- Featured Event — compact (Coming Soon) variant ---------- */
+/* Keeps the original two-column layout with the hero image, but drops the
+   stats/countdown and inlines the "Coming Soon" pill next to the title. */
+.cl-featured-event--compact .cl-hero-content {
+    gap: 22px;
+}
+
+.cl-featured-event--compact .cl-title {
+    display: block;
+    font-size: 22px;
+    line-height: 28px;
+    margin-bottom: 14px;
+}
+
+.cl-featured-event--compact .cl-desc {
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 400;
+    color: #4b5563;
+}
+
+.cl-featured-event--compact .cl-desc p {
+    margin: 0 0 12px 0;
+}
+
+.cl-featured-event--compact .cl-desc p:last-child {
+    margin-bottom: 0;
+}
+
+.cl-featured-event--compact .cl-hero-bottom {
+    margin-top: 8px;
+}
+
+.cl-featured-event--compact .cl-cta-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.cl-featured-event--compact .cl-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #4f46e5;
+    color: #ffffff;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.cl-featured-event--compact .cl-btn-primary:hover,
+.cl-featured-event--compact .cl-btn-primary:focus {
+    background: #4338ca;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.cl-featured-event--compact .cl-btn-primary:active {
+    transform: translateY(1px);
+}
+
+@media (max-width: 640px) {
+    .cl-featured-event--compact .cl-title {
+        font-size: 20px;
+        line-height: 26px;
+    }
+    .cl-tag--inline {
+        margin-left: 8px;
+    }
 }
 
 .cl-desc {
@@ -2727,10 +2875,30 @@ body.cl-modal-open {
         width: 72px;
     }
     .cl-section-inner { padding: 10px 20px; }
-    .cl-tabs-inner { padding: 0 20px; }
+    /* Tab bar: switch to a horizontally scrollable single row so every tab
+       stays visible + tappable without wrapping below the bar. */
+    .cl-tabs-nav {
+        height: 48px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .cl-tabs-nav::-webkit-scrollbar { display: none; }
+    .cl-tabs-inner {
+        padding: 0 16px;
+        width: max-content;
+        min-width: 100%;
+    }
     .cl-tabs {
-        gap: 16px;
-        flex-wrap: wrap;
+        gap: 8px;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+    }
+    .cl-tab {
+        padding: 12px 10px;
+        font-size: 13px;
+        flex-shrink: 0;
     }
     .cl-section-title {
         font-size: 20px;
@@ -3080,8 +3248,23 @@ body.cl-modal-open {
 }
 .acc-steps-wrapper {
     width: 100%;
+    position: relative;
+}
+/* Single continuous dashed connector behind the four icons */
+.acc-steps-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 24px;
+    left: 12.5%;
+    right: 12.5%;
+    height: 0;
+    border-top: 2px dashed rgba(0, 0, 0, 0.25);
+    z-index: 0;
+    pointer-events: none;
 }
 .acc-steps {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -3095,8 +3278,8 @@ body.cl-modal-open {
     flex-direction: column;
     align-items: center;
     gap: 16px;
-    width: 295px;
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
 }
 .acc-step-icon {
     width: 48px;
@@ -3104,6 +3287,8 @@ body.cl-modal-open {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 1;
 }
 .acc-step-number {
     font-family: 'Inter', sans-serif;
@@ -3120,6 +3305,10 @@ body.cl-modal-open {
     line-height: 19px;
     text-align: center;
     color: rgba(0, 0, 0, 0.8);
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .acc-step-desc {
     font-family: 'Inter', sans-serif;
@@ -3129,15 +3318,12 @@ body.cl-modal-open {
     text-align: center;
     color: rgba(0, 0, 0, 0.6);
     margin: 0;
-    max-width: 299px;
+    width: 100%;
+    padding: 0 8px;
+    box-sizing: border-box;
 }
 .acc-step-line {
-    width: 214px;
-    height: 0;
-    border-top: 4px dashed rgba(0, 0, 0, 0.4);
-    align-self: center;
-    margin-top: 40px;
-    flex-shrink: 0;
+    display: none;
 }
 
 /* ---- ACC Stories (Frame 181, bg white, padding 56px) ---- */
@@ -3473,17 +3659,25 @@ body.acc-page-deprecated {
         width: 97%;
         height: 94%;
     }
+    .acc-steps-wrapper::before {
+        display: none;
+    }
     .acc-steps {
         flex-direction: column;
         align-items: center;
         gap: 32px;
     }
+    .acc-step {
+        max-width: 100%;
+    }
     .acc-step-line {
+        display: block;
         width: 0;
         height: 40px;
         border-top: none;
         border-left: 4px dashed rgba(0, 0, 0, 0.4);
         margin-top: 0;
+        align-self: center;
     }
     .acc-journey-inner {
         padding: 40px 20px;
@@ -3525,8 +3719,7 @@ body.acc-page-deprecated {
         align-items: stretch;
     }
     .acc-btn-primary,
-    .acc-btn-secondary,
-    .acc-btn-kickoff {
+    .acc-btn-secondary {
         width: 100%;
         justify-content: center;
     }
@@ -4263,4 +4456,254 @@ body.ob-page #copyright {
     .ob-result-stats { flex-direction: column; gap: 16px; }
     .ob-nav { flex-direction: column-reverse; gap: 10px; }
     .ob-btn-back, .ob-btn-next, .ob-btn-complete { width: 100%; text-align: center; }
+}
+
+/* ==========================================================================
+   Career Lab — Courses / Workshop landing pages
+   Simplified hero layout per Figma spec: image (left) + content (right)
+   ========================================================================== */
+/* Sticky footer — ensures #footer always sits at the viewport bottom on short pages
+   (e.g. Career Lab Courses / Workshop) while content grows to fill remaining space. */
+html, body {
+    height: auto;
+}
+body {
+    min-height: 100vh;
+    margin: 0;
+}
+#all {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+#content {
+    flex: 1 0 auto;
+}
+#footer {
+    flex: 0 0 auto;
+}
+
+.clp-hero {
+    width: 100%;
+    background: #FFFFFF;
+    padding: 60px 0;
+}
+.clp-hero-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 53px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 69px;
+}
+.clp-hero-image {
+    flex: 0 0 auto;
+    width: 451px;
+    height: 301px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: transparent;
+    box-shadow: none;
+}
+.clp-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.clp-hero-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    max-width: 658px;
+}
+.clp-title-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+.clp-title-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+.clp-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+    margin: 0;
+    white-space: nowrap;
+}
+.clp-title-underline {
+    width: 60px;
+    height: 1px;
+    background: #017AFF;
+}
+.clp-tag {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 8px;
+    background: #D5F3F8;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 12px;
+    color: #017AFF;
+    text-align: center;
+    white-space: nowrap;
+}
+.clp-desc {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 200;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0.25px;
+    color: #000000;
+}
+.clp-desc p {
+    margin: 0 0 12px 0;
+}
+.clp-desc p:last-child {
+    margin-bottom: 0;
+}
+.clp-btn-secondary {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 20px;
+    gap: 8px;
+    min-width: 215px;
+    height: 42px;
+    background: #FFFFFF;
+    border: 1px solid #017AFF;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #017AFF;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.clp-btn-secondary:hover,
+.clp-btn-secondary:focus {
+    background: rgba(1, 122, 255, 0.05);
+    color: #017AFF;
+    text-decoration: none;
+}
+.clp-btn-secondary svg {
+    flex-shrink: 0;
+}
+
+/* Tablet + Mobile */
+@media (max-width: 992px) {
+    .clp-hero-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        padding: 0 24px;
+    }
+    .clp-hero-image {
+        width: 100%;
+        max-width: 560px;
+        height: auto;
+        aspect-ratio: 451 / 301;
+    }
+    .clp-hero-content {
+        max-width: 100%;
+        align-items: flex-start;
+    }
+    .clp-title {
+        white-space: normal;
+    }
+}
+@media (max-width: 480px) {
+    .clp-hero {
+        padding: 32px 0;
+    }
+    .clp-title-row {
+        flex-wrap: wrap;
+    }
+    .clp-btn-secondary {
+        width: 100%;
+    }
+}
+
+/* ==========================================================================
+   Menu bar — Career Lab dropdown styling (matches Figma spec for Frame 329)
+   ========================================================================== */
+/* Make the parent nav item always a dropdown toggle (no navigation) */
+.navbar-default .navbar-nav > li.dropdown > .dropdown-toggle[href="#"] {
+    cursor: pointer;
+}
+/* Dropdown panel — 127px wide, square, with 1px border */
+.navbar .navbar-nav > li.dropdown > ul.dropdown-menu,
+.navbar-default .navbar-nav > li.dropdown > .dropdown-menu {
+    min-width: 127px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 0;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    background: #FFFFFF;
+}
+/* Reset the theme default li padding & border so items sit flush */
+.navbar .navbar-nav > li.dropdown > ul.dropdown-menu > li,
+.navbar-default .navbar-nav > li.dropdown > .dropdown-menu > li {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-bottom: 0;
+    list-style-type: none;
+}
+/* Use a single hairline between adjacent items only */
+.navbar .navbar-nav > li.dropdown > ul.dropdown-menu > li + li,
+.navbar-default .navbar-nav > li.dropdown > .dropdown-menu > li + li {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+.navbar .navbar-nav > li.dropdown > ul.dropdown-menu > li > a,
+.navbar-default .navbar-nav > li.dropdown > .dropdown-menu > li > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 10px;
+    margin: 0;
+    height: 48px;
+    line-height: 1;
+    background: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+    color: #3E3E3E;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.navbar .navbar-nav > li.dropdown > ul.dropdown-menu > li > a:hover,
+.navbar .navbar-nav > li.dropdown > ul.dropdown-menu > li > a:focus,
+.navbar .navbar-nav > li.dropdown > ul.dropdown-menu > li.active > a,
+.navbar-default .navbar-nav > li.dropdown > .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav > li.dropdown > .dropdown-menu > li > a:focus,
+.navbar-default .navbar-nav > li.dropdown > .dropdown-menu > li.active > a {
+    background: rgba(52, 149, 255, 0.1);
+    color: #3E3E3E;
+    text-decoration: none;
+    left: 0;
 }

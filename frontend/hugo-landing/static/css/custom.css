@@ -756,6 +756,63 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
         width: 100%;
         max-width: none;
     }
+
+    /* ==== MOBILE FOOTER v2 (grid: brand on top, Company + Follow us side-by-side) ==== */
+    /* !important used to defeat any stale cached CSS / theme override on any page  */
+    #footer {
+        min-height: 0 !important;
+    }
+    .footer-inner-wrap {
+        padding: 32px 20px 20px !important;
+        gap: 32px !important;
+    }
+    .footer-content-row {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-areas:
+            "brand brand"
+            "links social" !important;
+        row-gap: 28px !important;
+        column-gap: 24px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        gap: 0 !important;
+        flex-direction: unset !important;
+        justify-content: unset !important;
+    }
+    .footer-left {
+        grid-area: brand !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 20px !important;
+        flex-wrap: wrap !important;
+    }
+    .footer-col-links {
+        grid-area: links !important;
+        min-width: 0 !important;
+    }
+    .footer-col-social {
+        grid-area: social !important;
+        min-width: 0 !important;
+    }
+    .footer-col-links h4,
+    .footer-col-social h4 {
+        margin-bottom: 12px !important;
+    }
+    .footer-col-links ul,
+    .footer-col-social ul {
+        gap: 10px !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .footer-content-row {
+        grid-template-columns: 1fr !important;
+        grid-template-areas:
+            "brand"
+            "links"
+            "social" !important;
+    }
 }
 
 /* --------------------------------------------------------------------------
@@ -2818,10 +2875,30 @@ body.cl-modal-open {
         width: 72px;
     }
     .cl-section-inner { padding: 10px 20px; }
-    .cl-tabs-inner { padding: 0 20px; }
+    /* Tab bar: switch to a horizontally scrollable single row so every tab
+       stays visible + tappable without wrapping below the bar. */
+    .cl-tabs-nav {
+        height: 48px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .cl-tabs-nav::-webkit-scrollbar { display: none; }
+    .cl-tabs-inner {
+        padding: 0 16px;
+        width: max-content;
+        min-width: 100%;
+    }
     .cl-tabs {
-        gap: 16px;
-        flex-wrap: wrap;
+        gap: 8px;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+    }
+    .cl-tab {
+        padding: 12px 10px;
+        font-size: 13px;
+        flex-shrink: 0;
     }
     .cl-section-title {
         font-size: 20px;
@@ -4409,7 +4486,7 @@ body {
 .clp-hero {
     width: 100%;
     background: #FFFFFF;
-    padding: 60px 0 96px;
+    padding: 60px 0;
 }
 .clp-hero-inner {
     max-width: 1280px;
@@ -4557,7 +4634,7 @@ body {
 }
 @media (max-width: 480px) {
     .clp-hero {
-        padding: 32px 0 64px;
+        padding: 32px 0;
     }
     .clp-title-row {
         flex-wrap: wrap;

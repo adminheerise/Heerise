@@ -1,10 +1,6 @@
 <!-- *** CAREER LAB — WORKSHOP PAGE *** -->
-<section class="clp-hero">
+<section class="clp-hero clp-hero--text-first">
     <div class="clp-hero-inner">
-        <div class="clp-hero-image">
-            <img src="/img/career-lab-workshop.png" alt="Career Lab Workshop" />
-        </div>
-
         <div class="clp-hero-content">
             <div class="clp-title-row">
                 <div class="clp-title-block">
@@ -19,6 +15,17 @@
                 <p>Perfect for designers, educators, and product thinkers looking to create focused, high-impact learning experiences.</p>
             </div>
 
+            <div class="clp-speaker" aria-label="Workshop host">
+                <div class="clp-speaker-avatar">
+                    <img src="/img/career-lab-workshop-speaker.png" alt="Christa Hunter" />
+                </div>
+                <div class="clp-speaker-info">
+                    <p class="clp-speaker-label">Hosted by</p>
+                    <p class="clp-speaker-name">Christa Hunter</p>
+                    <p class="clp-speaker-title">Director of Career Services,<br/>University of Pennsylvania Graduate School of Education</p>
+                </div>
+            </div>
+
             <a href="#" class="clp-btn-secondary cl-bootcamp-open" onclick="return false;">
                 <span>SIGN UP</span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -26,10 +33,14 @@
                 </svg>
             </a>
         </div>
+
+        <div class="clp-hero-image">
+            <img src="/img/career-lab-workshop.png" alt="Career Lab Workshop collaborative session" />
+        </div>
     </div>
 </section>
 
 {{ partial "career-lab-bootcamp-modal.html" . }}
 
-<script src='{{ "js/career-lab.js" | relURL }}'></script>
+<script src='{{ "js/career-lab.js" | relURL }}?{{ now.Unix }}'></script>
 <!-- *** CAREER LAB — WORKSHOP PAGE END *** -->

@@ -215,16 +215,37 @@ pluralizelisttitles = false
   label = "Upcoming Event"
   badge = "Featured"
   title = "ID/LXD Workshop"
-  subtitle = "Coming Soon"
-  description1 = "This hands-on workshop focuses on identifying and solving small but critical friction points in the job search journey. Using LXD and ID principles, participants will collaborate to uncover micro-problems such as interview prep, skill articulation, and moments of uncertainty, and rapidly generate practical, testable solutions."
-  description2 = "Perfect for designers, educators, and product thinkers looking to create focused, high-impact learning experiences."
-  # Compact "Coming Soon" mode: hides the hero image, stats, and countdown.
-  # Set coming_soon = false (or remove) and re-enable the fields below when the
-  # event is ready to launch.
+  # Event date/time pill shown inline next to the title (replaces the
+  # old "Coming Soon" pill and the countdown block).
+  subtitle = "8-9PM, April 28, 2026"
+  # Compact mode keeps the two-column layout but hides the stats + countdown
+  # that are part of the non-compact variant.
   coming_soon = true
   countdown_deadline = ""
-  cta_text = "View More"
+  cta_text = "REGISTER NOW"
   cta_url = "/career-lab/workshop/"
+  # Featured event hero image — webinar poster (the flyer the team designed).
+  image = "/img/career-lab-workshop-poster.png"
+  image_alt = "International Student Career Development Webinar — April 28, 2026"
+  # Description — new "Ready to Start Your Career..." webinar content.
+  # When description_heading / description_points are set they render in
+  # place of the older description1 / description2 paragraphs.
+  description_heading = "Ready to Start Your Career in the U.S.?"
+  description_intro = "Learn how international students navigate the U.S. job market:"
+  description_points = [
+    "Current market trends",
+    "Job-search strategies",
+    "Where to find opportunities",
+    "How to design strong resumes and cover letters that secure interviews",
+  ]
+  # Legacy fallback paragraphs (ignored when description_heading is set).
+  description1 = ""
+  description2 = ""
+  # Speaker block — renders inside a bordered card on the homepage featured
+  # event. Leave speaker_name empty to hide the whole block.
+  speaker_name = "Christa Hunter"
+  speaker_title = "Director of Career Services<br/>Graduate School of Education, University of Pennsylvania"
+  speaker_avatar = "/img/career-lab-workshop-speaker.png"
 
 # ============================================================
 # NEW: Social links for footer

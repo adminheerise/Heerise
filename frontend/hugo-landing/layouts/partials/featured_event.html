@@ -2,7 +2,7 @@
 {{ if .Site.Params.featured_event.enable }}
 {{ $fe := .Site.Params.featured_event }}
 {{ $compact := $fe.coming_soon }}
-<section class="cl-hero cl-featured-event{{ if $compact }} cl-featured-event--compact{{ end }}">
+<section class="cl-hero cl-featured-event cl-featured-event--text-left{{ if $compact }} cl-featured-event--compact{{ end }}">
     <div class="cl-hero-shell">
         {{ if $fe.label }}
         <div class="cl-featured-event-header">
@@ -15,7 +15,7 @@
                 {{ if $fe.badge }}
                 <div class="cl-featured-event-badge">{{ $fe.badge }}</div>
                 {{ end }}
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2070&q=80" alt="Career Lab" />
+                <img src="{{ default "/img/career-lab-workshop.png" $fe.image }}" alt="{{ default $fe.title $fe.image_alt }}" />
             </div>
             <div class="cl-hero-content">
                 <div class="cl-hero-top">
@@ -26,9 +26,30 @@
                     </h1>
                     {{ if and (not $compact) $fe.subtitle }}<div class="cl-tag">{{ $fe.subtitle }}</div>{{ end }}
                     <div class="cl-desc">
+                        {{ if $fe.description_heading }}
+                        <p class="cl-desc-heading">{{ $fe.description_heading }}</p>
+                        {{ if $fe.description_intro }}<p class="cl-desc-intro">{{ $fe.description_intro }}</p>{{ end }}
+                        {{ if $fe.description_points }}
+                        <ul class="cl-desc-list">
+                            {{ range $fe.description_points }}<li>{{ . }}</li>{{ end }}
+                        </ul>
+                        {{ end }}
+                        {{ else }}
                         {{ if $fe.description1 }}<p>{{ $fe.description1 }}</p>{{ end }}
                         {{ if $fe.description2 }}<p>{{ $fe.description2 }}</p>{{ end }}
+                        {{ end }}
                     </div>
+                    {{ if $fe.speaker_name }}
+                    <div class="cl-featured-event-speaker-card" aria-label="Workshop host">
+                        <div class="cl-featured-event-speaker-avatar">
+                            <img src="{{ default "/img/career-lab-workshop-speaker.png" $fe.speaker_avatar }}" alt="{{ $fe.speaker_name }}" />
+                        </div>
+                        <div class="cl-featured-event-speaker-info">
+                            <p class="cl-featured-event-speaker-name">{{ $fe.speaker_name }}</p>
+                            {{ if $fe.speaker_title }}<p class="cl-featured-event-speaker-title">{{ $fe.speaker_title | safeHTML }}</p>{{ end }}
+                        </div>
+                    </div>
+                    {{ end }}
                 </div>
                 <div class="cl-hero-bottom">
                     {{ if not $compact }}

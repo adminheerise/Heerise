@@ -4,10 +4,6 @@
         <header class="sks-top sks-rw-topbar">
             <div class="sks-rw-topbar-row">
                 <div class="sks-brand">LUMINA<span class="sks-brand-sep" aria-hidden="true">&bull;</span>SIM</div>
-                <div class="sks-rw-kb-icon" role="img" aria-label="Knowledge base, 1 update">
-                    <span class="sks-rw-kb-book" aria-hidden="true"></span>
-                    <span class="sks-rw-kb-badge">1</span>
-                </div>
             </div>
             <nav class="sks-nav sks-nav--rw" aria-label="Simulation steps">
                 <span class="sks-step">Assignment Brief</span>
@@ -53,14 +49,7 @@
                 <div class="sks-rw-panel" data-panel="product" id="sks-rw-panel-product">
                     <h3 class="sks-rw-panel-sr-only">Product &amp; Business Context — suggested questions</h3>
                     <details class="sks-rw-q" data-qid="product-0">
-                        <summary class="sks-rw-q-sum sks-rw-q-sum--stack">
-                            <span class="sks-rw-q-sum-main">
-                                <span class="sks-rw-q-check" aria-hidden="true"></span>
-                                <span class="sks-rw-q-text">What is Aria and what does it do?</span>
-                                <span class="sks-rw-q-chev" aria-hidden="true"></span>
-                            </span>
-                            <a href="#" class="sks-rw-q-add">+ Add a Question for the Kick-off Call</a>
-                        </summary>
+                        <summary class="sks-rw-q-sum"><span class="sks-rw-q-check" aria-hidden="true"></span><span class="sks-rw-q-text">What is Aria and what does it do?</span><span class="sks-rw-q-chev" aria-hidden="true"></span></summary>
                         <div class="sks-rw-q-answer sks-rw-q-answer--kb">
                             <p class="sks-rw-kb-lead"><strong>What is Aria?</strong></p>
                             <p>Aria is an <strong>AI agent platform built natively into Lumina</strong>, used for enterprise workflow automation.</p>
@@ -265,6 +254,64 @@
             <div class="sks-rw-footer">
                 <a href="/acc/stakeholder-kickoff/" class="sks-btn sks-btn--caps sks-rw-continue" id="sks-rw-continue" aria-disabled="true">Continue</a>
             </div>
+        </div>
+    </div>
+
+    {{/* Stakeholder Question modal — opens from any "+ Add a Question for the Kick-off Call" link */}}
+    <div class="sks-rw-qmodal" id="sks-rw-qmodal" hidden aria-hidden="true">
+        <div class="sks-rw-qmodal-backdrop" data-sks-rw-qmodal-close aria-hidden="true"></div>
+        <div class="sks-rw-qmodal-card" role="dialog" aria-modal="true" aria-labelledby="sks-rw-qmodal-title">
+            <h3 id="sks-rw-qmodal-title" class="visually-hidden">Add a question for the Kick-off Call</h3>
+            <form class="sks-rw-qmodal-form" id="sks-rw-qmodal-form" novalidate>
+                <div class="sks-rw-qmodal-field">
+                    <label class="sks-rw-qmodal-label" for="sks-rw-qmodal-who-btn">I would like to ask</label>
+                    <div class="sks-rw-qmodal-dd" data-value="jordan">
+                        <button type="button" id="sks-rw-qmodal-who-btn" class="sks-rw-qmodal-dd-btn" aria-haspopup="listbox" aria-expanded="false">
+                            <span class="sks-rw-qmodal-dd-avatar sks-rw-qmodal-dd-avatar--jordan" aria-hidden="true"></span>
+                            <span class="sks-rw-qmodal-dd-info">
+                                <span class="sks-rw-qmodal-dd-name">Jordan Kim</span>
+                                <span class="sks-rw-qmodal-dd-role">Sales Manager (Client)</span>
+                            </span>
+                            <span class="sks-rw-qmodal-dd-chev" aria-hidden="true"></span>
+                        </button>
+                        <ul class="sks-rw-qmodal-dd-list" role="listbox" aria-label="Stakeholder" hidden>
+                            <li role="option" data-value="jordan" class="sks-rw-qmodal-dd-opt" aria-selected="true">
+                                <span class="sks-rw-qmodal-dd-avatar sks-rw-qmodal-dd-avatar--jordan" aria-hidden="true"></span>
+                                <span class="sks-rw-qmodal-dd-info">
+                                    <span class="sks-rw-qmodal-dd-name">Jordan Kim</span>
+                                    <span class="sks-rw-qmodal-dd-role">Sales Manager (Client)</span>
+                                </span>
+                            </li>
+                            <li role="option" data-value="priya" class="sks-rw-qmodal-dd-opt">
+                                <span class="sks-rw-qmodal-dd-avatar sks-rw-qmodal-dd-avatar--priya" aria-hidden="true"></span>
+                                <span class="sks-rw-qmodal-dd-info">
+                                    <span class="sks-rw-qmodal-dd-name">Dr. Priya Nair</span>
+                                    <span class="sks-rw-qmodal-dd-role">SME / Product Lead</span>
+                                </span>
+                            </li>
+                            <li role="option" data-value="team" class="sks-rw-qmodal-dd-opt">
+                                <span class="sks-rw-qmodal-dd-avatar sks-rw-qmodal-dd-avatar--team" aria-hidden="true"></span>
+                                <span class="sks-rw-qmodal-dd-info">
+                                    <span class="sks-rw-qmodal-dd-name">The Whole Team</span>
+                                    <span class="sks-rw-qmodal-dd-role">Jordan &amp; Priya</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sks-rw-qmodal-field">
+                    <label class="sks-rw-qmodal-label" for="sks-rw-qmodal-what">What would you like to ask?</label>
+                    <textarea id="sks-rw-qmodal-what" class="sks-rw-qmodal-textarea" rows="3" placeholder="Enter here ..." required></textarea>
+                </div>
+
+                <div class="sks-rw-qmodal-field">
+                    <label class="sks-rw-qmodal-label" for="sks-rw-qmodal-why">Why do you want to ask this question?</label>
+                    <textarea id="sks-rw-qmodal-why" class="sks-rw-qmodal-textarea" rows="3" placeholder="e.g. A business metric, a stakeholder's background, a pattern in what's been tried before?"></textarea>
+                </div>
+
+                <button type="submit" class="sks-rw-qmodal-submit" id="sks-rw-qmodal-submit">Add Question to Stakeholder Interview</button>
+            </form>
         </div>
     </div>
 </section>

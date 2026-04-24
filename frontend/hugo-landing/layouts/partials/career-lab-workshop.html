@@ -1,0 +1,61 @@
+<!-- *** CAREER LAB — WORKSHOP PAGE *** -->
+{{ $fe := .Site.Params.featured_event }}
+<section class="clp-hero clp-hero--text-first">
+    <div class="clp-hero-inner">
+        <div class="clp-hero-content">
+            <div class="clp-title-row">
+                <div class="clp-title-block">
+                    <h1 class="clp-title">Career Lab Workshop</h1>
+                    <div class="clp-title-underline" aria-hidden="true"></div>
+                </div>
+                <div class="clp-tag">{{ default "Coming Soon" $fe.subtitle }}</div>
+            </div>
+
+            {{/* Description mirrors the homepage featured-event block. When
+                 description_heading is set in hugo.toml we render the
+                 heading + intro + bullet list; otherwise we fall back to the
+                 legacy two-paragraph copy. */}}
+            <div class="clp-desc">
+                {{ if $fe.description_heading }}
+                <p class="cl-desc-heading">{{ $fe.description_heading }}</p>
+                {{ if $fe.description_intro }}<p class="cl-desc-intro">{{ $fe.description_intro }}</p>{{ end }}
+                {{ if $fe.description_points }}
+                <ul class="cl-desc-list">
+                    {{ range $fe.description_points }}<li>{{ . }}</li>{{ end }}
+                </ul>
+                {{ end }}
+                {{ else }}
+                <p>This hands-on workshop focuses on identifying and solving small but critical friction points in the job search journey. Using LXD and ID principles, participants will collaborate to uncover micro-problems such as interview prep, skill articulation, and moments of uncertainty, and rapidly generate practical, testable solutions.</p>
+                <p>Perfect for designers, educators, and product thinkers looking to create focused, high-impact learning experiences.</p>
+                {{ end }}
+            </div>
+
+            <div class="clp-speaker" aria-label="Workshop host">
+                <div class="clp-speaker-avatar">
+                    <img src="/img/career-lab-workshop-speaker.png" alt="Christa Hunter" />
+                </div>
+                <div class="clp-speaker-info">
+                    <p class="clp-speaker-label">Hosted by</p>
+                    <p class="clp-speaker-name">Christa Hunter</p>
+                    <p class="clp-speaker-title">Director of Career Services,<br/>University of Pennsylvania Graduate School of Education</p>
+                </div>
+            </div>
+
+            <a href="#" class="clp-btn-secondary cl-bootcamp-open" onclick="return false;">
+                <span>SIGN UP</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 12h14m0 0l-5-5m5 5l-5 5" stroke="#017AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+
+        <div class="clp-hero-image">
+            <img src="/img/career-lab-hero.png" alt="Career Lab Workshop collaborative session" />
+        </div>
+    </div>
+</section>
+
+{{ partial "career-lab-bootcamp-modal.html" . }}
+
+<script src='{{ "js/career-lab.js" | relURL }}?{{ now.Unix }}'></script>
+<!-- *** CAREER LAB — WORKSHOP PAGE END *** -->

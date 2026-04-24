@@ -19,9 +19,17 @@
             </div>
             <div class="cl-hero-content">
                 <div class="cl-hero-top">
+                    {{/* Split title on the LAST space so multi-word brand names
+                         (e.g. "Career Lab Workshop") underline the brand portion
+                         ("Career Lab") and leave only the trailing word
+                         ("Workshop") un-underlined. Falls back gracefully when
+                         the title contains no space. */}}
+                    {{ $hasSpace := in $fe.title " " }}
+                    {{ $underlinePart := cond $hasSpace (replaceRE " [^ ]+$" "" $fe.title) $fe.title }}
+                    {{ $trailingPart := cond $hasSpace (replaceRE "^.* " "" $fe.title) "" }}
                     <h1 class="cl-title">
-                        <span class="cl-title-underline">{{ $fe.title | replaceRE " .*" "" }}</span>
-                        <span> {{ $fe.title | replaceRE "^[^ ]+ " "" }}</span>
+                        <span class="cl-title-underline">{{ $underlinePart }}</span>
+                        {{ if $trailingPart }}<span> {{ $trailingPart }}</span>{{ end }}
                         {{ if and $compact $fe.subtitle }}<span class="cl-tag cl-tag--inline">{{ $fe.subtitle }}</span>{{ end }}
                     </h1>
                     {{ if and (not $compact) $fe.subtitle }}<div class="cl-tag">{{ $fe.subtitle }}</div>{{ end }}

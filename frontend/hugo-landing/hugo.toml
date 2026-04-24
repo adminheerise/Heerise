@@ -21,7 +21,7 @@ pluralizelisttitles = false
 
 # ============================================================
 # Main Menu (matches Figma design)
-# HOME | ABOUT | AI CAREER CO-PILOT | CAREER LAB | CONTACT
+# HOME | ABOUT | AI CAREER CO-PILOT | SERVICE | CONTACT
 # ============================================================
 [menu]
 [[menu.main]]
@@ -43,22 +43,22 @@ pluralizelisttitles = false
   weight     = 3
 
 [[menu.main]]
-  name       = "CAREER LAB"
-  identifier = "menu.careerlab"
+  name       = "SERVICE"
+  identifier = "menu.service"
   url        = ""
   weight     = 4
 
   [[menu.main]]
-    name       = "COURSES"
-    identifier = "menu.careerlab.courses"
-    parent     = "menu.careerlab"
+    name       = "CAREER LAB"
+    identifier = "menu.service.careerlab"
+    parent     = "menu.service"
     url        = "/career-lab/courses/"
     weight     = 1
 
   [[menu.main]]
     name       = "WORKSHOP"
-    identifier = "menu.careerlab.workshop"
-    parent     = "menu.careerlab"
+    identifier = "menu.service.workshop"
+    parent     = "menu.service"
     url        = "/career-lab/workshop/"
     weight     = 2
 
@@ -214,7 +214,7 @@ pluralizelisttitles = false
   enable = true
   label = "Upcoming Event"
   badge = "Featured"
-  title = "ID/LXD Workshop"
+  title = "Career Lab Workshop"
   # Event date/time pill shown inline next to the title (replaces the
   # old "Coming Soon" pill and the countdown block).
   subtitle = "8-9PM, April 28, 2026"
@@ -224,9 +224,9 @@ pluralizelisttitles = false
   countdown_deadline = ""
   cta_text = "REGISTER NOW"
   cta_url = "/career-lab/workshop/"
-  # Featured event hero image — webinar poster (the flyer the team designed).
-  image = "/img/career-lab-workshop-poster.png"
-  image_alt = "International Student Career Development Webinar — April 28, 2026"
+  # Featured event hero image — Career Lab session photo.
+  image = "/img/career-lab-hero.png"
+  image_alt = "Career Lab session in progress"
   # Description — new "Ready to Start Your Career..." webinar content.
   # When description_heading / description_points are set they render in
   # place of the older description1 / description2 paragraphs.

@@ -4728,21 +4728,22 @@ body {
 }
 
 /* Text-left / image-right variant (Figma Frame 335): the text column comes
-   first in the HTML, the image sits on the right at its natural 4:3 poster
-   aspect with a soft shadow. */
+   first in the HTML, the image sits on the right with the Career Lab photo
+   filling the frame. */
 .cl-featured-event--text-left .cl-hero-inner {
     flex-direction: row-reverse;
 }
 .cl-featured-event--text-left .cl-hero-image {
     width: 455px;
-    height: 341px; /* 4:3 so the webinar flyer isn't cropped */
-    background: #FFFFFF;
+    height: 398px; /* matches Figma Frame 335 image column height */
+    background: #000000;
 }
 .cl-featured-event--text-left .cl-hero-image img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    background: #FFFFFF;
+    object-fit: cover;
+    object-position: center 35%; /* keep the table + "career LAB" pillar in frame */
+    display: block;
 }
 @media (max-width: 992px) {
     .cl-featured-event--text-left .cl-hero-inner {

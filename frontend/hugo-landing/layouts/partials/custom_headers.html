@@ -12,42 +12,78 @@
 <link href="{{ "css/stakeholder-kickoff.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 {{ end }}
 
-{{ if or (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") }}
+{{ if or (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") (eq .Params.id "stakeholder-kickoff-zoom-meeting") (eq .Params.id "stakeholder-kickoff-outreach-email") }}
 <link href="{{ "css/stakeholder-kickoff-sim.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 {{ end }}
 {{ if or (eq .Params.id "stakeholder-kickoff-zoom-meeting") (eq .Params.id "stakeholder-kickoff-outreach-email") }}
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&family=Lato:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 {{ end }}
 
+{{ $ids := site.Params.lumina_notes_page_ids }}
+{{ if and $ids (isset .Params "id") (in $ids .Params.id) }}
+<link href="{{ "css/lumina-sim-notes.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+{{ end }}
+
 <!-- Navbar: #017AFF override (loads last - overrides theme purple/teal) -->
 <style>
 :root {
   --primary-accent: #017AFF !important;
-  --navbar-focus: #017AFF !important;
+  /* Hover no longer fills the button — keep the focus var transparent so the
+     Bootstrap default "navbar-nav > li > a:hover { background-color: var(--navbar-focus) }"
+     rule has no visible effect. */
+  --navbar-focus: transparent !important;
 }
 .navbar-default .navbar-nav > li > a {
   color: #2C2C2C !important;
+  border-radius: 0 !important;
+  border: none !important;
 }
+/* Hover: only color changes — no blue bar / background */
 .navbar-default .navbar-nav > li:not(.active) > a:hover,
 .navbar-default .navbar-nav > li:not(.active) > a:focus {
   color: #017AFF !important;
   background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
+/* Active/selected: solid blue bar with square corners */
 .navbar-default .navbar-nav > li.active > a,
 .navbar-default .navbar-nav > li.active > a:hover,
 .navbar-default .navbar-nav > li.active > a:focus {
   color: #FFFFFF !important;
   background-color: rgba(1, 122, 255, 0.8) !important;
+  border-radius: 0 !important;
+  border: none !important;
 }
+/* Open dropdown: match active (solid square blue bar) */
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
   color: #FFFFFF !important;
   background-color: rgba(1, 122, 255, 0.8) !important;
+  border-radius: 0 !important;
+  border: none !important;
 }
 </style>
 
 <script>
   window.HEERISE_API_BASE =
     window.location.port === "1313" ? "http://localhost:8000" : "/api";
+
+  // Mark dropdown parent (e.g. CAREER LAB) active when current page matches one of its children.
+  document.addEventListener("DOMContentLoaded", function () {
+    var path = window.location.pathname.replace(/\/+$/, "/");
+    if (path === "") path = "/";
+    document.querySelectorAll("#navbar .navbar-nav > li.dropdown").forEach(function (parentLi) {
+      var childLinks = parentLi.querySelectorAll(".dropdown-menu > li > a");
+      if (!childLinks.length) return;
+      childLinks.forEach(function (a) {
+        var href = (a.getAttribute("href") || "").replace(/\/+$/, "/");
+        if (href && href === path) {
+          parentLi.classList.add("active");
+          a.parentElement && a.parentElement.classList.add("active");
+        }
+      });
+    });
+  });
 </script>

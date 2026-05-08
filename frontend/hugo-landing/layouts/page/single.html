@@ -53,6 +53,11 @@
     </div>
     <!-- /#all -->
 
+    {{ $ids := site.Params.lumina_notes_page_ids }}
+    {{ if and $ids (isset .Params "id") (in $ids .Params.id) }}
+    {{ partial "lumina-sim-notes.html" . }}
+    {{ end }}
+
     {{ partial "scripts.html" . }}
 
   </body>

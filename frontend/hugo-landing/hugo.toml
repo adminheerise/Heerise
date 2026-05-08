@@ -21,7 +21,7 @@ pluralizelisttitles = false
 
 # ============================================================
 # Main Menu (matches Figma design)
-# HOME | ABOUT | AI CAREER CO-PILOT | CAREER LAB | CONTACT
+# HOME | ABOUT | AI CAREER CO-PILOT | SERVICE | CONTACT
 # ============================================================
 [menu]
 [[menu.main]]
@@ -43,10 +43,24 @@ pluralizelisttitles = false
   weight     = 3
 
 [[menu.main]]
-  name       = "CAREER LAB"
-  identifier = "menu.careerlab"
-  url        = "/career-lab/"
+  name       = "SERVICE"
+  identifier = "menu.service"
+  url        = ""
   weight     = 4
+
+  [[menu.main]]
+    name       = "CAREER LAB"
+    identifier = "menu.service.careerlab"
+    parent     = "menu.service"
+    url        = "/career-lab/courses/"
+    weight     = 1
+
+  [[menu.main]]
+    name       = "WORKSHOP"
+    identifier = "menu.service.workshop"
+    parent     = "menu.service"
+    url        = "/career-lab/workshop/"
+    weight     = 2
 
 [[menu.main]]
   name       = "CONTACT"
@@ -93,6 +107,17 @@ pluralizelisttitles = false
   date_format = "January 2, 2006"
 
   dropdown_mouse_over = false
+
+  # LUMINA SIM — floating notes module (match content front matter `id`).
+  # Enabled on every stage from the Zoom meeting onward. Add ids here as new post-Zoom stages ship.
+  lumina_notes_page_ids = [
+    "stakeholder-kickoff-zoom-meeting",
+    "stakeholder-kickoff-brief-organize",
+    "stakeholder-kickoff-gap-analysis",
+    "stakeholder-kickoff-research",
+    "stakeholder-kickoff-research-workspace",
+    "stakeholder-kickoff-outreach-email",
+  ]
 
   disabled_logo = false
   logo_text = "Heerise"
@@ -189,21 +214,38 @@ pluralizelisttitles = false
   enable = true
   label = "Upcoming Event"
   badge = "Featured"
-  title = "ID/LXD Career Lab"
-  subtitle = "Founding Cohort · Starts Mar 28 · 8-Week Intensive"
-  description1 = "An elite 8-week bootcamp for professionals who want to break into Learning Experience Design (LXD)/ Instructional Design (ID)."
-  description2 = "Build a portfolio with five hands-on projects, get 1:1 mentorship, and receive job-ready application coaching."
-  stat1_number = "8 Weeks"
-  stat1_label = "Intensive Training"
-  stat2_number = "5 Projects"
-  stat2_label = "Portfolio Pieces"
-  stat3_number = "1:1"
-  stat3_label = "Mentorship"
-  stat4_number = "Weekly"
-  stat4_label = "Live Sessions + Office Hours"
-  countdown_deadline = "2026-03-28T23:59:59-07:00"
-  cta_text = "APPLY NOW"
-  cta_url = "/career-lab/"
+  title = "Career Lab Workshop"
+  # Event date/time pill shown inline next to the title (replaces the
+  # old "Coming Soon" pill and the countdown block).
+  subtitle = "8-9PM, April 28, 2026"
+  # Compact mode keeps the two-column layout but hides the stats + countdown
+  # that are part of the non-compact variant.
+  coming_soon = true
+  countdown_deadline = ""
+  cta_text = "REGISTER NOW"
+  cta_url = "/career-lab/workshop/"
+  # Featured event hero image — Career Lab session photo.
+  image = "/img/career-lab-hero.png"
+  image_alt = "Career Lab session in progress"
+  # Description — new "Ready to Start Your Career..." webinar content.
+  # When description_heading / description_points are set they render in
+  # place of the older description1 / description2 paragraphs.
+  description_heading = "Ready to Start Your Career in the U.S.?"
+  description_intro = "Learn how international students navigate the U.S. job market:"
+  description_points = [
+    "Current market trends",
+    "Job-search strategies",
+    "Where to find opportunities",
+    "How to design strong resumes and cover letters that secure interviews",
+  ]
+  # Legacy fallback paragraphs (ignored when description_heading is set).
+  description1 = ""
+  description2 = ""
+  # Speaker block — renders inside a bordered card on the homepage featured
+  # event. Leave speaker_name empty to hide the whole block.
+  speaker_name = "Christa Hunter"
+  speaker_title = "Director of Career Services<br/>Graduate School of Education, University of Pennsylvania"
+  speaker_avatar = "/img/career-lab-workshop-speaker.png"
 
 # ============================================================
 # NEW: Social links for footer

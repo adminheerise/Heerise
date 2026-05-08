@@ -1,0 +1,342 @@
+/**
+ * LUMINA · SIM — floating notes (overlay panel only; never shifts #all layout)
+ */
+:root {
+  --lumina-notes-width: min(56vw, 560px);
+  --lumina-notes-sidebar-w: 180px;
+  --lumina-notes-fab-size: 56px;
+  --lumina-notes-z: 2147483000;
+  --lumina-notes-bg: #1a1a1a;
+  --lumina-notes-accent: #c8e65c;
+  --lumina-notes-tab-muted: #9a9a9a;
+  --lumina-notes-border: #f4d03f;
+}
+
+/* Zero footprint in document flow — children use position:fixed */
+#lumina-sim-notes-root {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  z-index: var(--lumina-notes-z);
+  pointer-events: none;
+}
+
+#lumina-sim-notes-root * {
+  pointer-events: auto;
+}
+
+.lumina-sim-notes-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: var(--lumina-notes-fab-size);
+  height: var(--lumina-notes-fab-size);
+  padding: 0;
+  border: 2px solid var(--lumina-notes-border);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28);
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: right 0.28s ease, bottom 0.28s ease, transform 0.15s ease, opacity 0.2s ease, box-shadow 0.15s ease;
+  z-index: calc(var(--lumina-notes-z) + 2);
+  touch-action: none; /* let the drag handler own the pointer on touch devices */
+  user-select: none;
+}
+
+.lumina-sim-notes-fab:hover {
+  transform: scale(1.04);
+}
+
+.lumina-sim-notes-fab--dragging {
+  cursor: grabbing;
+  transition: none;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.42);
+  transform: none;
+}
+
+.lumina-sim-notes-fab:focus-visible {
+  outline: 2px solid #017aff;
+  outline-offset: 3px;
+}
+
+.lumina-sim-notes-fab-icon {
+  display: block;
+  width: 36px;
+  height: 36px;
+  background: center / contain no-repeat url("/img/lumina-notes-fab.png");
+}
+
+.lumina-sim-notes-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #e53935;
+  color: #fff;
+  font: 700 11px/20px Inter, system-ui, sans-serif;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.lumina-sim-notes-badge[hidden] {
+  display: none !important;
+}
+
+/* Docked panel open: nudge FAB left so it stays beside the overlay (no body padding) */
+body.lumina-notes-open:not(.lumina-notes-panel-floating) .lumina-sim-notes-fab {
+  right: calc(var(--lumina-notes-width) + 20px);
+}
+
+/* Legacy small tooltip (optional; Zoom page no longer uses first-run tip) */
+.lumina-sim-notes-tooltip {
+  position: fixed;
+  bottom: calc(var(--lumina-notes-fab-size) + 36px);
+  right: 24px;
+  max-width: min(360px, calc(100vw - 48px));
+  padding: 14px 16px;
+  background: #000;
+  color: #fff;
+  font: 400 14px/1.45 Inter, system-ui, sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  z-index: calc(var(--lumina-notes-z) + 3);
+}
+
+.lumina-sim-notes-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  right: 28px;
+  border: 8px solid transparent;
+  border-top-color: #000;
+}
+
+.lumina-sim-notes-tooltip strong.lumina-sim-notes-tooltip-key {
+  color: #5ac8fa;
+  font-weight: 600;
+}
+
+/* Panel: overlays the right edge only — does NOT resize page content */
+.lumina-sim-notes-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--lumina-notes-width);
+  max-width: 100vw;
+  background: var(--lumina-notes-bg);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.35);
+  z-index: calc(var(--lumina-notes-z) + 1);
+  transform: translateX(100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.28s ease, opacity 0.2s ease, visibility 0.2s;
+}
+
+.lumina-sim-notes-panel.lumina-sim-notes-panel--floating {
+  transform: none;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+body.lumina-notes-open .lumina-sim-notes-panel.lumina-sim-notes-panel--visible:not(.lumina-sim-notes-panel--floating) {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.lumina-sim-notes-panel.lumina-sim-notes-panel--floating.lumina-sim-notes-panel--visible {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  height: min(92vh, 720px);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.lumina-sim-notes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lumina-sim-notes-header:active {
+  cursor: grabbing;
+}
+
+.lumina-sim-notes-title {
+  margin: 0;
+  font: 700 18px/1.2 Inter, system-ui, sans-serif;
+}
+
+.lumina-sim-notes-close {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: transparent;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lumina-sim-notes-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Body: horizontal split — vertical sidebar (tabs) on the left, editor on the right */
+.lumina-sim-notes-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  padding: 0;
+}
+
+.lumina-sim-notes-sidebar {
+  width: var(--lumina-notes-sidebar-w);
+  flex: 0 0 auto;
+  padding: 14px 10px 16px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lumina-sim-notes-tabstrip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lumina-sim-notes-tab {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 10px 12px 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--lumina-notes-tab-muted);
+  font: 500 13px/1.3 Inter, system-ui, sans-serif;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lumina-sim-notes-tab:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e0e0e0;
+}
+
+.lumina-sim-notes-tab--active,
+.lumina-sim-notes-tab[aria-selected="true"] {
+  background: rgba(200, 230, 92, 0.12);
+  border-color: rgba(200, 230, 92, 0.35);
+  color: var(--lumina-notes-accent);
+}
+
+.lumina-sim-notes-tab-name {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.lumina-sim-notes-empty-hint {
+  margin: 6px 4px 0;
+  color: rgba(255, 255, 255, 0.45);
+  font: 400 12px/1.4 Inter, system-ui, sans-serif;
+}
+
+.lumina-sim-notes-empty-hint[hidden] {
+  display: none;
+}
+
+.lumina-sim-notes-editor-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: 14px;
+  display: flex;
+}
+
+.lumina-sim-notes-editor {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  color: #1a1a1a;
+  font: 400 15px/1.5 Inter, system-ui, sans-serif;
+  resize: none;
+}
+
+.lumina-sim-notes-editor::placeholder {
+  color: #888;
+}
+
+.lumina-sim-notes-editor:focus {
+  outline: 2px solid rgba(1, 122, 255, 0.45);
+  outline-offset: 0;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --lumina-notes-width: 100vw;
+    --lumina-notes-sidebar-w: 140px;
+  }
+
+  body.lumina-notes-open:not(.lumina-notes-panel-floating) .lumina-sim-notes-fab {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .lumina-sim-notes-body {
+    flex-direction: column;
+  }
+  .lumina-sim-notes-sidebar {
+    width: 100%;
+    max-height: 30%;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .lumina-sim-notes-tabstrip {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

@@ -152,12 +152,6 @@
                     </main>
                 </div>
 
-                <div class="sks-ws-meeting-countdown" id="sks-ws-meeting-countdown" hidden aria-hidden="true">
-                    <div class="sks-ws-meeting-countdown-inner">
-                        <p class="sks-ws-meeting-countdown-label">Video Meeting Starting in</p>
-                        <p class="sks-ws-meeting-countdown-num" id="sks-ws-meeting-countdown-num" aria-live="assertive">3</p>
-                    </div>
-                </div>
             </div>
 
             <div class="sks-ws-hint" id="sks-ws-hint" role="dialog" aria-modal="true" aria-labelledby="sks-ws-hint-title">
@@ -178,7 +172,14 @@
   var DEFAULT_REPLY =
     "That's amazing, Maya! I'm thrilled to lead the design for Aria. I'll jump on the Zoom link right now! See you there!";
   var replyTimer = null;
-  var meetingCountdownTimer = null;
+
+  function goToZoomMeeting() {
+    try {
+      window.location.href = new URL("../zoom-meeting/", window.location.href).href;
+    } catch (e) {
+      window.location.href = "/acc/stakeholder-kickoff/zoom-meeting/";
+    }
+  }
 
   function dismissHint() {
     var hint = document.getElementById("sks-ws-hint");
@@ -233,36 +234,6 @@
     if (compose) compose.classList.remove("sks-ws-compose--reply-mode");
   }
 
-  function startMeetingCountdown() {
-    if (meetingCountdownTimer) {
-      clearInterval(meetingCountdownTimer);
-      meetingCountdownTimer = null;
-    }
-    var overlay = document.getElementById("sks-ws-meeting-countdown");
-    var numEl = document.getElementById("sks-ws-meeting-countdown-num");
-    if (!overlay || !numEl) return;
-    overlay.hidden = false;
-    overlay.setAttribute("aria-hidden", "false");
-    var n = 3;
-    numEl.textContent = "3";
-    meetingCountdownTimer = setInterval(function () {
-      n -= 1;
-      if (n <= 0) {
-        clearInterval(meetingCountdownTimer);
-        meetingCountdownTimer = null;
-        overlay.hidden = true;
-        overlay.setAttribute("aria-hidden", "true");
-        try {
-          window.location.href = new URL("../zoom-meeting/", window.location.href).href;
-        } catch (e) {
-          window.location.href = "/acc/stakeholder-kickoff/zoom-meeting/";
-        }
-        return;
-      }
-      numEl.textContent = String(n);
-    }, 1000);
-  }
-
   function onSend() {
     var ta = document.getElementById("sks-ws-reply-text");
     if (!ta || ta.hidden) return;
@@ -282,7 +253,7 @@
       wrap.querySelector("p").textContent = text;
       feed.appendChild(wrap);
       feed.scrollTop = feed.scrollHeight;
-      startMeetingCountdown();
+      setTimeout(goToZoomMeeting, 450);
     }
     hideReplyPrompt();
     ta.value = "";

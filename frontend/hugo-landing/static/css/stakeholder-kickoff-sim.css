@@ -1239,45 +1239,108 @@ button.sks-btn {
     background: #e8e8e8;
 }
 
-/* After send: 3 — 2 — 1 over dimmed Slack window only (not full page / not LUMINA header) */
-.sks-ws-meeting-countdown {
+/* After send: dim workspace + tooltip + FAB bottom-right; Continue → Zoom (countdown is on Zoom page only) */
+.sks-ws-notes-prompt {
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background: rgba(0, 0, 0, 0.72);
-    padding: 24px;
+    z-index: 55;
     pointer-events: auto;
 }
 
-.sks-ws-meeting-countdown[hidden] {
+.sks-ws-notes-prompt[hidden] {
     display: none !important;
 }
 
-.sks-ws-meeting-countdown-inner {
-    text-align: center;
+.sks-ws-notes-prompt-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+}
+
+.sks-ws-notes-prompt-stack {
+    position: absolute;
+    right: clamp(12px, 3vw, 24px);
+    bottom: clamp(12px, 3vw, 24px);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 14px;
+    max-width: min(360px, calc(100% - 32px));
+}
+
+.sks-ws-notes-prompt-bubble {
+    position: relative;
+    background: #000;
     color: #fff;
+    padding: 14px 16px;
+    border-radius: 8px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
 }
 
-.sks-ws-meeting-countdown-label {
-    margin: 0 0 12px;
-    font-size: clamp(18px, 2.5vw, 24px);
-    font-weight: 600;
-    letter-spacing: 0.02em;
+.sks-ws-notes-prompt-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    right: 28px;
+    border: 8px solid transparent;
+    border-top-color: #000;
 }
 
-.sks-ws-meeting-countdown-num {
+.sks-ws-notes-prompt-bubble-text {
     margin: 0;
-    font-size: clamp(72px, 18vw, 140px);
-    font-weight: 700;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
+    font: 400 14px/1.45 Inter, system-ui, sans-serif;
+}
+
+.sks-ws-notes-prompt-fab-row {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sks-ws-notes-prompt-fab {
+    display: block;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid #f4d03f;
+    background: #fff center / 36px 36px no-repeat url("/img/lumina-notes-fab.png");
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.sks-ws-notes-prompt-badge {
+    position: absolute;
+    top: -4px;
+    right: -8px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #e53935;
+    color: #fff;
+    font: 700 11px/20px Inter, system-ui, sans-serif;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.sks-ws-notes-prompt-continue {
+    display: inline-block;
+    padding: 10px 28px;
+    border: none;
+    border-radius: 8px;
+    background: #017aff;
+    color: #fff;
+    font: 600 15px Inter, system-ui, sans-serif;
+    cursor: pointer;
+}
+
+.sks-ws-notes-prompt-continue:hover {
+    background: #0066d4;
 }
 
 /* ---------- Gap Analysis (drag / drop / submit) — P1 UI ---------- */
@@ -2123,6 +2186,7 @@ body:has(.sks-page--zoom-meeting) #content {
 }
 
 .sks-zm-window {
+    position: relative;
     width: 100%;
     max-width: min(880px, 92vw);
     margin: 0 auto;
@@ -2130,6 +2194,372 @@ body:has(.sks-page--zoom-meeting) #content {
     overflow: hidden;
     line-height: 0;
     background: #ffffff;
+}
+
+/* Countdown inside the Zoom window (before narration) */
+.sks-zm-start-countdown {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.78);
+    pointer-events: none;
+}
+
+.sks-zm-start-countdown[hidden] {
+    display: none !important;
+}
+
+.sks-zm-start-countdown-inner {
+    text-align: center;
+    color: #fff;
+}
+
+.sks-zm-start-countdown-label {
+    margin: 0 0 12px;
+    font-size: clamp(18px, 2.2vw, 22px);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    font-family: 'Inter', sans-serif;
+}
+
+.sks-zm-start-countdown-num {
+    margin: 0;
+    font-size: clamp(56px, 14vw, 120px);
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ---------- Zoom page: Notes onboarding overlay (Frame 117) ---------- */
+/* Full-viewport dim backdrop + dashed ring around the FAB + dark tooltip + cursor arrow.
+   The FAB itself is rendered by the Notes partial and sits on top of this overlay. */
+.sks-zm-notes-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 2147482999; /* just below the notes root (2147483000) so the real FAB stays clickable */
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.22s ease;
+}
+
+.sks-zm-notes-intro[hidden] {
+    display: none !important;
+}
+
+.sks-zm-notes-intro.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sks-zm-notes-intro-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(33, 33, 33, 0.8);
+}
+
+/* Dashed ring around the real FAB (bottom: 24px; right: 24px; size 56px) */
+.sks-zm-notes-intro-ring {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    right: -3px;           /* center on FAB: 24 - (110-56)/2 */
+    bottom: -3px;
+    border-radius: 50%;
+    border: 2.5px dashed #ED655A;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.sks-zm-notes-intro-bubble {
+    position: absolute;
+    width: min(320px, calc(100vw - 40px));
+    right: 120px;
+    bottom: 140px;
+    padding: 22px 24px;
+    background: rgba(0, 0, 0, 0.95);
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 24px rgba(255, 255, 255, 0.15);
+    font: 400 17px/1.45 'Lato', Inter, system-ui, sans-serif;
+    pointer-events: auto;
+}
+
+.sks-zm-notes-intro-bubble-text {
+    margin: 0;
+    color: #fff;
+}
+
+.sks-zm-notes-intro-bubble-text strong {
+    color: #fff;
+    font-weight: 700;
+}
+
+/* White cursor arrow pointing down-right toward the FAB */
+.sks-zm-notes-intro-cursor {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    right: 100px;
+    bottom: 115px;
+    background: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff' stroke='%233d3d3d' stroke-width='0.6'%3E%3Cpath d='M5 3 L5 18 L9.2 14.2 L12 20.5 L14.2 19.5 L11.4 13.2 L17 13 Z'/%3E%3C/svg%3E") center / contain no-repeat;
+    transform: rotate(8deg);
+    pointer-events: none;
+}
+
+@media (max-width: 640px) {
+    .sks-zm-notes-intro-bubble {
+        right: 16px;
+        bottom: 110px;
+    }
+    .sks-zm-notes-intro-cursor {
+        right: 80px;
+        bottom: 95px;
+    }
+}
+
+/* Kill legacy workspace notes prompt (component removed) */
+.sks-ws-notes-prompt { display: none !important; }
+
+/* ---------------------------------------------------------------------------
+ * Research Workspace — "+ Add a Question for the Kick-off Call" modal
+ * ------------------------------------------------------------------------- */
+
+.sks-rw-qmodal {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483100; /* above notes FAB/panel */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+.sks-rw-qmodal[hidden] { display: none !important; }
+
+.sks-rw-qmodal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(24, 24, 24, 0.55);
+}
+
+.sks-rw-qmodal-card {
+    position: relative;
+    width: min(560px, 100%);
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    padding: 32px 36px 36px;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+    color: #1a1a1a;
+    max-height: calc(100vh - 48px);
+    overflow: auto;
+}
+
+.sks-rw-qmodal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.sks-rw-qmodal-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sks-rw-qmodal-label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #222;
+}
+
+/* Custom dropdown */
+.sks-rw-qmodal-dd {
+    position: relative;
+}
+
+.sks-rw-qmodal-dd-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    cursor: pointer;
+    font: inherit;
+    color: #1a1a1a;
+    text-align: left;
+    transition: border-color 0.15s ease;
+}
+
+.sks-rw-qmodal-dd-btn:hover,
+.sks-rw-qmodal-dd-btn[aria-expanded="true"] {
+    border-color: #017aff;
+}
+
+.sks-rw-qmodal-dd-avatar {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: inline-block;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.sks-rw-qmodal-dd-avatar--jordan {
+    background-image: url("/img/stakeholder-jordan-kim.png");
+}
+
+.sks-rw-qmodal-dd-avatar--priya {
+    background-image: url("/img/stakeholder-priya-nair.png");
+}
+
+.sks-rw-qmodal-dd-avatar--team {
+    background-image: url("/img/stakeholder-whole-team.png");
+    background-color: #ffffff;
+}
+
+.sks-rw-qmodal-dd-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    line-height: 1.25;
+}
+
+.sks-rw-qmodal-dd-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.sks-rw-qmodal-dd-role {
+    font-size: 12px;
+    font-weight: 400;
+    color: #6b7280;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.sks-rw-qmodal-dd-chev {
+    flex: 0 0 auto;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #666;
+    border-bottom: 2px solid #666;
+    transform: rotate(45deg);
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+}
+.sks-rw-qmodal-dd-btn[aria-expanded="true"] .sks-rw-qmodal-dd-chev {
+    transform: rotate(225deg);
+}
+
+.sks-rw-qmodal-dd-list {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 4px;
+    list-style: none;
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    border-radius: 8px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+    z-index: 2;
+}
+.sks-rw-qmodal-dd-list[hidden] { display: none; }
+
+.sks-rw-qmodal-dd-opt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #1a1a1a;
+}
+.sks-rw-qmodal-dd-opt:hover,
+.sks-rw-qmodal-dd-opt[aria-selected="true"] {
+    background: rgba(1, 122, 255, 0.08);
+}
+
+/* Textareas */
+.sks-rw-qmodal-textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    font: 400 14px/1.5 Inter, system-ui, sans-serif;
+    color: #1a1a1a;
+    background: #fff;
+    resize: vertical;
+    min-height: 72px;
+}
+.sks-rw-qmodal-textarea::placeholder {
+    color: #9a9a9a;
+}
+.sks-rw-qmodal-textarea:focus {
+    outline: none;
+    border-color: #017aff;
+    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.15);
+}
+.sks-rw-qmodal-textarea--err {
+    border-color: #e53935;
+    box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.15);
+}
+
+/* Submit */
+.sks-rw-qmodal-submit {
+    margin-top: 8px;
+    padding: 14px 24px;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    font: 600 15px/1 Inter, system-ui, sans-serif;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.05s ease;
+}
+.sks-rw-qmodal-submit:hover {
+    background: #000;
+}
+.sks-rw-qmodal-submit:active {
+    transform: translateY(1px);
+}
+
+body.sks-rw-qmodal-open {
+    overflow: hidden;
+}
+
+@media (max-width: 520px) {
+    .sks-rw-qmodal-card {
+        padding: 24px 20px;
+    }
 }
 
 /* Design mock: full PNG from static/img/lumina-zoom-ui.png (replace file to update art) */
@@ -3288,60 +3718,6 @@ body:has(.sks-page--zoom-meeting) #content {
     gap: 16px;
 }
 
-/* Knowledge base control: book + bookmark (no emoji) */
-.sks-rw-kb-icon {
-    position: relative;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #fff9c4;
-    border: 1px solid #e8e0a0;
-    box-shadow: 0 0 0 3px rgba(255, 224, 130, 0.35);
-    flex-shrink: 0;
-}
-
-.sks-rw-kb-book {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 24px;
-    background: #1a1a1a;
-    border-radius: 2px 5px 5px 2px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-}
-
-.sks-rw-kb-book::after {
-    content: "";
-    position: absolute;
-    top: 5px;
-    right: -4px;
-    width: 5px;
-    height: 12px;
-    background: linear-gradient(180deg, #f0d060, #c9a227);
-    border-radius: 1px;
-}
-
-.sks-rw-kb-badge {
-    position: absolute;
-    top: -3px;
-    right: -3px;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 4px;
-    border-radius: 9px;
-    background: #ea4335;
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    font-family: inherit;
-}
-
 .sks-nav--rw .sks-step-active {
     text-decoration: underline;
     text-underline-offset: 5px;
@@ -3581,6 +3957,53 @@ body:has(.sks-page--zoom-meeting) #content {
 .sks-rw-q-add:focus {
     text-decoration: underline;
     color: #0060cc;
+}
+
+/* Per-question inline follow-up link — sits in the summary row next to the
+   question title, between .sks-rw-q-text and the chevron. Every question
+   opened gets its own; once a follow-up is submitted for that question the
+   link flips to the green "Follow Up Question Added!" confirmation. */
+.sks-rw-q-follow {
+    flex: 0 0 auto;
+    margin-left: auto;
+    padding: 2px 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #017aff;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.sks-rw-q-follow strong {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.sks-rw-q-follow:hover,
+.sks-rw-q-follow:focus {
+    color: #0060cc;
+    text-decoration: none;
+}
+
+.sks-rw-q-follow--added {
+    color: #0b8a3e;
+    font-weight: 600;
+    cursor: default;
+    pointer-events: none;
+}
+
+.sks-rw-q-follow--added:hover,
+.sks-rw-q-follow--added:focus {
+    color: #0b8a3e;
+}
+
+@media (max-width: 640px) {
+    .sks-rw-q-follow {
+        font-size: 13px;
+        white-space: normal;
+    }
 }
 
 .sks-rw-footer {

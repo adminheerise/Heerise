@@ -52,6 +52,15 @@
   closeBtns.forEach(b => b.addEventListener("click", close));
   document.addEventListener("keydown", (e) => e.key === "Escape" && modal?.classList.contains("is-open") && close());
 
+  const showSyllabusPdf = () => {
+    stepForm && (stepForm.hidden = true);
+    stepPdf && (stepPdf.hidden = false);
+    const pdfFrame = $("#cl-syllabus-pdf-frame");
+    if (pdfFrame?.dataset.src) {
+      pdfFrame.src = pdfFrame.dataset.src;
+    }
+  };
+
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const first = $("#cl-syllabus-first-name")?.value.trim();
@@ -66,22 +75,15 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ first_name: first, last_name: last, email }),
+        keepalive: true,
       });
       if (!r.ok) {
-        const ct = r.headers.get("Content-Type") || "";
-        let msg = "Failed to submit.";
-        if (ct.includes("application/json")) {
-          try { msg = (await r.json())?.detail || msg; } catch (_) {}
-        }
-        throw new Error(msg);
+        console.warn("[syllabus] lead capture returned", r.status, r.statusText);
       }
     } catch (ex) {
-      return err && (err.textContent = ex.message || "Failed to submit.");
+      console.warn("[syllabus] lead capture failed:", ex);
     }
-    stepForm && (stepForm.hidden = true);
-    stepPdf && (stepPdf.hidden = false);
-    const pdfFrame = $("#cl-syllabus-pdf-frame");
-    if (pdfFrame?.dataset.src && !pdfFrame.src) pdfFrame.src = pdfFrame.dataset.src;
+    showSyllabusPdf();
   });
 
   // Bootcamp apply modal

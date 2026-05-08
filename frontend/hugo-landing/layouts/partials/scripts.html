@@ -22,3 +22,8 @@
 {{ if or (eq .Params.id "stakeholder-kickoff") (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") }}
 <script src="{{ "js/stakeholder-sim-username.js" | relURL }}?{{ now.Unix }}"></script>
 {{ end }}
+
+{{ $ids := site.Params.lumina_notes_page_ids }}
+{{ if and $ids (isset .Params "id") (in $ids .Params.id) }}
+<script src="{{ "js/lumina-sim-notes.js" | relURL }}?{{ now.Unix }}" defer></script>
+{{ end }}

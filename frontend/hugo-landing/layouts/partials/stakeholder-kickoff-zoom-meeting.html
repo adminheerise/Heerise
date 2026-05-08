@@ -21,6 +21,24 @@
                 <div class="sks-zm-card">
                     <div class="sks-zm-window" aria-label="Simulated Zoom meeting">
                         <img src="{{ $zoomUi }}" alt="Simulated Zoom meeting with Maya" class="sks-zm-window-img" width="960" height="540" loading="eager" decoding="async" />
+                        <div class="sks-zm-start-countdown" id="sks-zm-start-countdown" hidden aria-hidden="true">
+                            <div class="sks-zm-start-countdown-inner">
+                                <p class="sks-zm-start-countdown-label">Video Meeting Starting in</p>
+                                <p class="sks-zm-start-countdown-num" id="sks-zm-start-countdown-num" aria-live="assertive">3</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{/* Full-page Notes onboarding overlay: dim bg + dashed ring + tooltip + cursor. The FAB itself is rendered by the Notes partial. */}}
+                    <div class="sks-zm-notes-intro" id="sks-zm-notes-intro" hidden>
+                        <div class="sks-zm-notes-intro-backdrop" aria-hidden="true"></div>
+                        <div class="sks-zm-notes-intro-ring" aria-hidden="true"></div>
+                        <div class="sks-zm-notes-intro-bubble" role="dialog" aria-labelledby="sks-zm-notes-intro-text">
+                            <p id="sks-zm-notes-intro-text" class="sks-zm-notes-intro-bubble-text">
+                                This is your <strong>Notes</strong>, as you meet Maya, jot down key insights, these will be incredibly helpful throughout the rest of your project.
+                            </p>
+                        </div>
+                        <div class="sks-zm-notes-intro-cursor" aria-hidden="true"></div>
                     </div>
 
                     <div class="sks-zm-transcript-panel" id="sks-zm-transcript-panel">
@@ -863,16 +881,7 @@
     });
   }
 
-  resolveDisplayNameFromApi().then(function (name) {
-    SCRIPT = buildScriptLines(name);
-    scriptWordWeights = wordWeights(SCRIPT);
-    var sb = buildSpeechChunksFromScript(SCRIPT);
-    speechChunks = sb.chunks;
-    speechParaIdx = sb.paraIdx;
-    speechChunkCount = speechChunks.length;
-    if (transcriptPanel) transcriptPanel.hidden = !transcriptVisible;
-    updateToggleLabel();
-
+  function beginNarrationAfterCountdown() {
     if (
       window.SKS_ZM_USE_PRERECORDED_AUDIO === true &&
       typeof window.SKS_ZM_FALLBACK_AUDIO_URL === "string" &&
@@ -899,6 +908,86 @@
           scheduleAutoPlay();
         });
       });
+  }
+
+  /** 3 — 2 — 1 inside the Zoom window image area, then narration (not on workspace). */
+  function runZoomWindowStartCountdown() {
+    if (window.SKS_ZM_SKIP_START_COUNTDOWN === true) {
+      beginNarrationAfterCountdown();
+      return;
+    }
+    var overlay = document.getElementById("sks-zm-start-countdown");
+    var numEl = document.getElementById("sks-zm-start-countdown-num");
+    if (!overlay || !numEl) {
+      beginNarrationAfterCountdown();
+      return;
+    }
+    overlay.hidden = false;
+    overlay.setAttribute("aria-hidden", "false");
+    var n = 3;
+    numEl.textContent = "3";
+    var timer = setInterval(function () {
+      n -= 1;
+      if (n <= 0) {
+        clearInterval(timer);
+        overlay.hidden = true;
+        overlay.setAttribute("aria-hidden", "true");
+        beginNarrationAfterCountdown();
+        return;
+      }
+      numEl.textContent = String(n);
+    }, 1000);
+  }
+
+  /** Full-page onboarding: dim bg + dashed ring + tooltip. Dismissed when user opens the Notes panel. */
+  var NOTES_INTRO_SEEN_KEY = "heerise_lumina_notes_zoom_intro_seen_v1";
+  function introAlreadySeen() {
+    try { return window.localStorage.getItem(NOTES_INTRO_SEEN_KEY) === "1"; }
+    catch (e) { return false; }
+  }
+  function markIntroSeen() {
+    try { window.localStorage.setItem(NOTES_INTRO_SEEN_KEY, "1"); } catch (e) {}
+  }
+  function showNotesIntro() {
+    var el = document.getElementById("sks-zm-notes-intro");
+    if (!el) return;
+    el.hidden = false;
+    el.classList.add("is-visible");
+  }
+  function hideNotesIntro() {
+    var el = document.getElementById("sks-zm-notes-intro");
+    if (!el) return;
+    el.classList.remove("is-visible");
+    setTimeout(function () { el.hidden = true; }, 180);
+  }
+
+  var meetingStarted = false;
+  function beginMeetingSequence() {
+    if (meetingStarted) return;
+    meetingStarted = true;
+    markIntroSeen();
+    hideNotesIntro();
+    runZoomWindowStartCountdown();
+  }
+
+  /** Listen for "user opened Notes" — emitted by lumina-sim-notes.js when panel first opens on this page. */
+  document.addEventListener("lumina-notes:opened", beginMeetingSequence);
+
+  resolveDisplayNameFromApi().then(function (name) {
+    SCRIPT = buildScriptLines(name);
+    scriptWordWeights = wordWeights(SCRIPT);
+    var sb = buildSpeechChunksFromScript(SCRIPT);
+    speechChunks = sb.chunks;
+    speechParaIdx = sb.paraIdx;
+    speechChunkCount = speechChunks.length;
+    if (transcriptPanel) transcriptPanel.hidden = !transcriptVisible;
+    updateToggleLabel();
+
+    if (introAlreadySeen()) {
+      beginMeetingSequence();
+    } else {
+      showNotesIntro();
+    }
   });
 })();
 </script>

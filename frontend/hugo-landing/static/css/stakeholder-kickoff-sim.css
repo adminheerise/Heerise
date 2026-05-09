@@ -4233,3 +4233,1342 @@ body.sks-rw-qmodal-open {
         min-width: 0;
     }
 }
+
+/* =============================================================
+ * PHASE 3 — S3.01 INTRO ("Why this email matters")
+ * Faithful to Figma frame "Phase 3 - 1" (1440 × 1024):
+ *   • Maya image LEFT, 456×684 nominal, mirrored horizontally
+ *   • Gray bubble RIGHT, 766×387, asymmetric radius 0 / 50 / 50 / 186.5
+ *   • Lexend 36px / 45px body text, color #1F1F1F
+ *   • 146×48 black "Next" pill, bottom-right
+ *   • Yellow notes FAB (top-right) handled by lumina-sim-notes module —
+ *     this page id must be in `lumina_notes_page_ids` in hugo.toml.
+ * ============================================================= */
+
+.sks-page--email-intro {
+    /* Roomier vertical padding so the tall portrait can breathe at 1024 */
+    padding: 28px 40px 56px;
+}
+
+.sks-shell--email-intro {
+    /* Match Figma horizontal extent: image at 137 → CTA at 1141+146=1287
+       (≈ 1150 wide content area). Cap a bit tighter than 1440 so the
+       layout still reads as “centered” at 1440px viewport. */
+    max-width: 1240px;
+    position: relative;
+}
+
+.sks-page--email-intro .sks-main {
+    /* Pin scene to the top half (Figma image starts at y=231) instead of
+       vertically centering — preserves the gravity of the original frame. */
+    align-items: flex-start;
+    padding: clamp(40px, 8vh, 110px) 0 clamp(28px, 5vh, 56px);
+}
+
+.sks-scene--email-intro {
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: clamp(0px, 0.5vw, 8px);   /* Figma has the bubble overlap by ~17px */
+    max-width: 1150px;
+    width: 100%;
+    isolation: isolate;
+}
+
+/* ---------- Maya image (LEFT) ---------- */
+.sks-person--email-intro {
+    flex: 0 0 auto;
+    width: clamp(280px, 32vw, 456px);
+    aspect-ratio: 456 / 684;
+    align-self: flex-start;
+    z-index: 1;
+}
+
+.sks-person--email-intro img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    /* Figma's matrix(-1,0,0,1,0,0) was authored against a left-facing source
+       asset. Our lumina-manager.png already faces toward the bubble, so no
+       flip is needed — keep the natural orientation. */
+}
+
+/* ---------- Dialog column (RIGHT) ---------- */
+.sks-dialog-col--email-intro {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 766px;
+    align-self: flex-start;
+    margin-top: clamp(60px, 11vh, 119px);   /* Figma y-offset 350 - 231 */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    z-index: 0;
+}
+
+/* ---------- Asymmetric speech bubble ---------- */
+.sks-bubble--email-intro {
+    background: #F6F6F6;
+    /* top-left = 0 (sharp corner toward Maya), top-right = 50,
+       bottom-right = 50, bottom-left = 186.5 (the long teardrop curve). */
+    border-radius: 0 50px 50px 186.5px;
+    padding: clamp(24px, 3.5vh, 37px) clamp(28px, 4vw, 55px)
+             clamp(36px, 6vh, 66px)  clamp(40px, 7vw, 99px);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.sks-bubble--email-intro .sks-email-intro-line {
+    margin: 0;
+    font-family: 'Lexend', 'Inter', -apple-system, BlinkMacSystemFont,
+                 'Segoe UI', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: clamp(20px, 2.5vw, 36px);
+    line-height: 1.25;     /* Figma 45/36 ≈ 1.25 */
+    color: #1F1F1F;
+    letter-spacing: 0;
+}
+
+/* ---------- Next button (146 × 48, bottom-right under bubble) ---------- */
+.sks-actions--email-intro {
+    margin-top: clamp(16px, 3vh, 32px);
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.sks-btn--email-intro {
+    /* Override the standard sks-btn (38px) with the Figma 146×48 pill. */
+    width: 146px;
+    height: 48px;
+    padding: 0;
+    border-radius: 8px;
+    background: #000000;
+    color: #FFFFFF;
+    font-family: 'Lato', 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sks-btn--email-intro:hover,
+.sks-btn--email-intro:focus,
+a.sks-btn--email-intro:hover,
+a.sks-btn--email-intro:focus {
+    background: #1A1A1A;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+/* ---------- Active step underline (matches sister phase intros) ---------- */
+.sks-page--email-intro .sks-step-active {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-thickness: 1px;
+}
+
+/* ---------- Mobile / narrow viewports ---------- */
+@media (max-width: 860px) {
+    .sks-scene--email-intro {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .sks-person--email-intro {
+        width: min(70vw, 320px);
+    }
+
+    .sks-dialog-col--email-intro {
+        margin-top: 0;
+        align-self: stretch;
+        max-width: 100%;
+    }
+
+    .sks-bubble--email-intro {
+        border-radius: 24px;     /* normal pill on mobile — teardrop reads
+                                    awkwardly when stacked */
+    }
+
+    .sks-actions--email-intro {
+        justify-content: center;
+    }
+}
+
+
+/* ============================================================================
+   PHASE 3 — S3.02 COMPOSE: Gmail UI mock + compose modal + coaching tooltip
+   ============================================================================
+   Two visual stages, controlled via [data-stage] on .sks-emc-coach:
+     [data-stage="subject"] → tooltip points at subject field, Next hidden until ≥3 chars
+     [data-stage="body"]    → tooltip points at body field, Send unlocks at ≥8 words
+   Layout uses CSS variables so Figma px values stay traceable.
+*/
+
+.sks-page--email-compose {
+ --emc-page-pad-x: clamp(24px, 5.9vw, 85px);
+ --emc-page-pad-top: clamp(24px, 4.4vh, 40px);
+ --emc-frame-w: 1134px;
+ --emc-frame-h: 765.45px;
+ --emc-rail-w: 195.3px;
+ --emc-rightbar-w: 44.1px;
+ --emc-header-h: 50.4px;
+ --emc-browser-h: 56.7px;
+
+ background: #FFFFFF;
+ min-height: 100vh;
+ padding: var(--emc-page-pad-top) var(--emc-page-pad-x) 60px;
+ box-sizing: border-box;
+}
+
+.sks-shell--email-compose {
+ max-width: 1270px;
+ margin: 0 auto;
+ display: flex;
+ flex-direction: column;
+ gap: 28px;
+}
+
+.sks-emc-stage {
+ width: 100%;
+ display: flex;
+ justify-content: center;
+}
+
+/* Outer browser frame holding the entire Gmail mock */
+.sks-emc-frame {
+ position: relative;
+ width: 100%;
+ max-width: var(--emc-frame-w);
+ aspect-ratio: 1134 / 765.45;
+ background: #FFFFFF;
+ border: 0.4px solid #000000;
+ border-radius: 6.3px;
+ box-shadow: 0px 31.5px 78.75px rgba(24, 60, 119, 0.7),
+ inset 0px 0px 0px 0.984px rgba(255, 255, 255, 0.25);
+ overflow: hidden;
+}
+
+/* ----- Browser chrome (3 dots + URL bar) ------------------------------ */
+.sks-emc-browser {
+ position: absolute;
+ inset: 0 0 auto 0;
+ height: var(--emc-browser-h);
+ background: #202124;
+ display: flex;
+ align-items: center;
+ gap: 14px;
+ padding: 0 14px;
+ border-radius: 6.3px 6.3px 0 0;
+}
+
+.sks-emc-browser::before {
+ content: \\;
+ position: absolute;
+ inset: 18.9px 0 0 0;
+ background: #35363A;
+ z-index: 0;
+}
+
+.sks-emc-dot {
+ position: relative;
+ z-index: 1;
+ width: 7.87px; height: 7.87px;
+ border-radius: 50%;
+ flex: 0 0 auto;
+ margin-top: -33px;
+}
+.sks-emc-dot--r { background: #ED655A; margin-left: 0; }
+.sks-emc-dot--y { background: #E1C14C; }
+.sks-emc-dot--g { background: #72BE47; }
+
+.sks-emc-browser-nav {
+ position: relative; z-index: 1;
+ display: flex; align-items: center; gap: 18px;
+ margin-left: 8px;
+ color: #F1F3F4;
+ font-size: 18px; line-height: 1;
+}
+.sks-emc-browser-nav .sks-emc-ico--dim { color: #86888A; }
+
+.sks-emc-urlbar {
+ position: relative; z-index: 1;
+ flex: 1 1 auto;
+ height: 25.6px;
+ background: #202124;
+ border-radius: 24px;
+ display: flex; align-items: center; gap: 10px;
+ padding: 0 12px;
+ color: #FFFFFF;
+ font-family: 'Roboto', system-ui, sans-serif;
+ font-size: 11px;
+}
+.sks-emc-lock {
+ width: 8px; height: 10px;
+ background: #F1F3F4;
+ border-radius: 1px;
+ position: relative;
+}
+.sks-emc-lock::before {
+ content: \\;
+ position: absolute;
+ width: 5px; height: 5px;
+ border: 1px solid #F1F3F4;
+ border-radius: 50%;
+ left: 1px; top: -3px;
+ background: transparent;
+}
+
+/* ----- Gmail app shell (everything below browser chrome) -------------- */
+.sks-emc-app {
+ position: absolute;
+ inset: var(--emc-browser-h) 0 0 0;
+ background: #FFFFFF;
+ display: flex;
+ flex-direction: column;
+ overflow: hidden;
+}
+
+/* App-level header (hamburger + Gmail logo + search + icons) */
+.sks-emc-app-header {
+ flex: 0 0 var(--emc-header-h);
+ display: flex; align-items: center;
+ box-shadow: inset 0 -0.79px 0 #EDEFF1;
+ padding: 0 14px;
+ gap: 14px;
+ background: #FFFFFF;
+}
+.sks-emc-app-header-left {
+ display: flex; align-items: center; gap: 16px;
+ width: var(--emc-rail-w);
+ padding-left: 6px;
+ box-sizing: border-box;
+}
+.sks-emc-menu-ico {
+ width: 18px; height: 12px;
+ background:
+ linear-gradient(to bottom, rgba(0,0,0,0.54) 2px, transparent 2px) 0 0/100% 4px no-repeat,
+ linear-gradient(to bottom, rgba(0,0,0,0.54) 2px, transparent 2px) 0 5px/100% 4px no-repeat,
+ linear-gradient(to bottom, rgba(0,0,0,0.54) 2px, transparent 2px) 0 10px/100% 4px no-repeat;
+}
+.sks-emc-wordmark {
+ font-family: 'Roboto', system-ui, sans-serif;
+ font-size: 22px;
+ color: #5F6368;
+ letter-spacing: -0.5px;
+}
+.sks-emc-g-red { color: #D95140; font-weight: 500; }
+
+.sks-emc-search-wrap {
+ flex: 1 1 auto;
+ max-width: 567px;
+ height: 36px;
+ background: #F1F3F4;
+ border-radius: 6px;
+ display: flex; align-items: center;
+ padding: 0 14px;
+ gap: 14px;
+ color: rgba(0,0,0,0.54);
+ font-family: 'Roboto', system-ui, sans-serif;
+ font-size: 13px;
+}
+.sks-emc-search-ico {
+ width: 16px; height: 16px;
+ border: 2px solid rgba(0,0,0,0.54);
+ border-radius: 50%;
+ position: relative;
+ flex: 0 0 auto;
+}
+.sks-emc-search-ico::after {
+ content: \\; position: absolute;
+ width: 2px; height: 6px;
+ background: rgba(0,0,0,0.54);
+ right: -3px; bottom: -2px;
+ transform: rotate(-45deg);
+}
+
+.sks-emc-app-header-right {
+ display: flex; align-items: center; gap: 14px;
+}
+.sks-emc-hd-ico {
+ width: 20px; height: 20px;
+ border-radius: 50%;
+ background: #DADCE0;
+ flex: 0 0 auto;
+}
+.sks-emc-hd-avatar {
+ width: 28px; height: 28px;
+ border-radius: 50%;
+ background:
+ radial-gradient(circle at 30% 30%, #5186EC 0 4px, transparent 5px),
+ radial-gradient(circle at 70% 30%, #D95140 0 4px, transparent 5px),
+ radial-gradient(circle at 30% 70%, #F2BE42 0 4px, transparent 5px),
+ radial-gradient(circle at 70% 70%, #58A55C 0 4px, transparent 5px),
+ #FFFFFF;
+}
+
+/* App body: rail + main + thin rightbar */
+.sks-emc-app-body {
+ flex: 1 1 auto;
+ display: grid;
+ grid-template-columns: var(--emc-rail-w) 1fr var(--emc-rightbar-w);
+ overflow: hidden;
+ position: relative;
+}
+
+/* ----- Left rail (Compose + side nav + Meet/Hangouts) ----------------- */
+.sks-emc-rail {
+ background: #FFFFFF;
+ padding: 12px 0 18px;
+ box-sizing: border-box;
+ overflow: hidden;
+}
+.sks-emc-compose-wrap { padding: 0 6px 12px; }
+.sks-emc-compose-btn {
+ display: inline-flex; align-items: center; gap: 12px;
+ padding: 9px 16px 9px 9px;
+ background: #FFFFFF;
+ border: none;
+ border-radius: 32px;
+ box-shadow: 0px 0.79px 2.36px 0.79px rgba(0,0,0,0.15),
+ 0px 0.79px 1.58px rgba(0,0,0,0.15);
+ font-family: 'Lato', 'Roboto', system-ui, sans-serif;
+ font-size: 11px;
+ color: #3D4043;
+ cursor: default;
+}
+.sks-emc-compose-plus {
+ display: inline-flex; align-items: center; justify-content: center;
+ width: 18px; height: 18px;
+ background:
+ conic-gradient(from 0deg,
+ #F2BE42 0 25%,
+ #58A55C 25% 50%,
+ #5186EC 50% 75%,
+ #D95140 75% 100%);
+ border-radius: 50%;
+ color: transparent;
+}
+.sks-emc-compose-plus::before {
+ content: \+\;
+ color: #3D4043;
+ font-size: 14px; font-weight: 700;
+ background: #FFFFFF;
+ width: 14px; height: 14px;
+ border-radius: 50%;
+ display: inline-flex; align-items: center; justify-content: center;
+}
+
+.sks-emc-sidenav {
+ list-style: none;
+ margin: 0; padding: 0;
+}
+.sks-emc-navrow {
+ display: flex; align-items: center; justify-content: space-between;
+ padding: 4px 12px 4px 26px;
+ height: 25px;
+ border-radius: 0 25px 25px 0;
+ font-family: 'Roboto', system-ui, sans-serif;
+ font-size: 11px;
+ color: #202124;
+ margin-right: 12px;
+}
+.sks-emc-navrow--inbox {
+ background: #F9E9E7;
+}
+.sks-emc-navlabel--accent {
+ color: #C84031;
+ font-weight: 700;
+}
+.sks-emc-navlabel--bold { font-weight: 500; }
+.sks-emc-navcount {
+ font-size: 9.5px; font-weight: 700;
+ color: #C84031;
+}
+.sks-emc-navcount--muted { color: #767676; font-weight: 400; }
+
+.sks-emc-meet, .sks-emc-hangouts {
+ margin-top: 10px;
+ border-top: 1px solid #EDEFF1;
+ padding: 8px 0 0 18px;
+}
+.sks-emc-meet-h {
+ font-family: 'Roboto', system-ui, sans-serif;
+ font-size: 11px; font-weight: 500;
+ color: #202124;
+ margin-bottom: 6px;
+}
+.sks-emc-hangouts { padding-right: 18px; }
+.sks-emc-signin {
+ width: calc(100% - 6px);
+ height: 25px;
+ background: #4F81E5;
+ border: none;
+ border-radius: 1.5px;
+ color: #FFFFFF;
+ font-family: 'Roboto', system-ui, sans-serif;
+ font-size: 11px;
+ font-weight: 500;
+ cursor: default;
+}
+
+/* ----- Main inbox view (toolbar + tabs + rows) ------------------------ */
+.sks-emc-main {
+ background: #FFFFFF;
+ position: relative;
+ overflow: hidden;
+ border-left: 1px solid #EDEFF1;
+}
+.sks-emc-toolbar {
+ display: flex; align-items: center; gap: 10px;
+ padding: 6px 12px;
+ height: 38px;
+ box-sizing: border-box;
+ border-bottom: 1px solid #EDEFF1;
+}
+.sks-emc-tb-check, .sks-emc-tb-dots {
+ width: 14px; height: 14px;
+ background: rgba(0,0,0,0.54);
+ border-radius: 2px;
+ flex: 0 0 auto;
+ opacity: 0.4;
+}
+.sks-emc-tb-ico { font-size: 14px; color: rgba(0,0,0,0.54); }
+.sks-emc-tb-meta {
+ margin-left: auto;
+ font-family: 'Roboto', system-ui, sans-serif;
+ font-size: 11px;
+ color: rgba(0,0,0,0.54);
+}
+
+.sks-emc-cats {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ border-bottom: 1px solid #EDEFF1;
+}
+.sks-emc-tab {
+ position: relative;
+ background: #FFFFFF;
+ border: none;
+ height: 42px;
+ display: flex; align-items: center;
+ gap: 12px;
+ padding: 0 12px;
+ cursor: default;
+ font-family: 'Roboto', system-ui, sans-serif;
+ font-size: 11px;
+ color: rgba(0,0,0,0.54);
+ overflow: hidden;
+}
+.sks-emc-tab::before {
+ content: \\;
+ width: 17px; height: 17px;
+ background: rgba(0,0,0,0.54);
+ border-radius: 3px;
+ flex: 0 0 auto;
+ opacity: 0.6;
+}
+.sks-emc-tab--on {
+ color: #C84031;
+ font-weight: 500;
+}
+.sks-emc-tab--on::before { background: #C84031; opacity: 1; }
+.sks-emc-tab-bar {
+ position: absolute;
+ left: 8px; right: 8px; bottom: 0;
+ height: 2.4px;
+ background: #C84031;
+ border-radius: 4px 4px 0 0;
+}
+.sks-emc-badge {
+ padding: 1px 4px;
+ border-radius: 2px;
+ font-size: 9.5px; font-weight: 700;
+ color: #FFFFFF;
+ flex: 0 0 auto;
+}
+.sks-emc-badge--social { background: #3474E0; color: #E9F0FD; }
+.sks-emc-badge--promo { background: #3C7D40; color: #E9F4EB; }
+.sks-emc-tab-prev {
+ color: rgba(0,0,0,0.37);
+ font-size: 9.5px;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+}
+
+.sks-emc-rows { padding-top: 0; }
+.sks-emc-row {
+ width: 100%;
+ background: #FFFFFF;
+ border: none;
+ border-bottom: 1px solid #EDEFF1;
+ height: 30px;
+ display: flex; align-items: center; gap: 10px;
+ padding: 0 12px 0 16px;
+ text-align: left;
+ cursor: default;
+ font-family: 'Roboto', system-ui, sans-serif;
+ font-size: 11px;
+ color: #202124;
+}
+.sks-emc-row-check, .sks-emc-row-star, .sks-emc-row-flag {
+ width: 14px; height: 14px;
+ border: 1.2px solid rgba(0,0,0,0.16);
+ border-radius: 2px;
+ flex: 0 0 auto;
+ background: transparent;
+}
+.sks-emc-row-star { transform: rotate(45deg); border-radius: 1px; }
+.sks-emc-row-flag { transform: skewX(-12deg); }
+.sks-emc-from { width: 90px; flex: 0 0 auto; font-weight: 500; }
+.sks-emc-subj-wrap {
+ flex: 1 1 auto;
+ overflow: hidden; white-space: nowrap;
+}
+.sks-emc-subj { font-weight: 500; }
+.sks-emc-dash { color: rgba(0,0,0,0.54); margin: 0 4px; }
+.sks-emc-prev { color: rgba(0,0,0,0.54); }
+.sks-emc-time {
+ margin-left: auto;
+ color: #202124;
+ font-size: 11px;
+ flex: 0 0 auto;
+}
+
+/* ----- Right thin sidebar (just decorative icons) --------------------- */
+.sks-emc-rightbar {
+ background: #FFFFFF;
+ box-shadow: inset 0.79px 0 0 #EDEFF1;
+ padding: 18px 12px;
+ display: flex; flex-direction: column;
+ gap: 22px;
+ align-items: center;
+}
+.sks-emc-rb-ico {
+ width: 16px; height: 16px;
+ background: #DADCE0;
+ border-radius: 4px;
+}
+
+/* ----- Compose modal pinned to bottom-right of the gmail app ---------- */
+.sks-emc-compose {
+ position: absolute;
+ right: 6px;
+ bottom: 0;
+ width: clamp(280px, 33%, 360px);
+ height: 360px;
+ background: #FFFFFF;
+ box-shadow: 0px 2.9px 10.9px rgba(0,0,0,0.2);
+ border-radius: 4px 4px 0 0;
+ display: flex;
+ flex-direction: column;
+ overflow: hidden;
+ z-index: 5;
+ font-family: 'Roboto', system-ui, sans-serif;
+}
+.sks-emc-compose-head {
+ height: 24px;
+ background: #F2F6FC;
+ display: flex; align-items: center;
+ justify-content: space-between;
+ padding: 0 8px;
+ flex: 0 0 auto;
+}
+.sks-emc-compose-title {
+ font-size: 9px; font-weight: 500;
+ color: #4A4A4A;
+ letter-spacing: -0.03px;
+}
+.sks-emc-compose-controls {
+ display: inline-flex; align-items: center; gap: 8px;
+ color: #4A4A4A; font-size: 11px;
+}
+
+.sks-emc-compose-body {
+ flex: 1 1 auto;
+ display: flex; flex-direction: column;
+ padding: 4px 12px 0;
+ gap: 0;
+ position: relative;
+ overflow: hidden;
+}
+.sks-emc-row-from, .sks-emc-row-to, .sks-emc-row-cc {
+ display: flex; align-items: center;
+ flex-wrap: wrap;
+ gap: 6px;
+ padding: 4px 0;
+ border-bottom: 1px solid #F3F5F6;
+ font-size: 9px;
+ color: #4A4A4A;
+}
+.sks-emc-fld-label {
+ font-weight: 500;
+ color: #747789;
+ width: 18px;
+ flex: 0 0 auto;
+ margin-right: 4px;
+}
+.sks-emc-fld-val { color: #4A4A4A; }
+.sks-emc-bcc {
+ margin-left: auto;
+ color: #747789;
+}
+
+.sks-emc-chip {
+ display: inline-flex; align-items: center;
+ gap: 6px;
+ padding: 1px 6px 1px 1px;
+ border: 0.7px solid #DDDFE3;
+ border-radius: 72px;
+ font-weight: 500;
+ color: #4A4A4A;
+ font-size: 9px;
+ line-height: 1;
+}
+.sks-emc-chip-dot {
+ width: 14px; height: 14px;
+ border-radius: 50%;
+ color: #FFFFFF;
+ font-size: 9px;
+ display: inline-flex; align-items: center; justify-content: center;
+}
+.sks-emc-chip-dot--j { background: #EB417A; }
+.sks-emc-chip-dot--p { background: #0B897B; }
+.sks-emc-chip-dot--m { background: #01579B; }
+.sks-emc-chip-x { color: #4A4A4A; opacity: 0.7; margin-left: 2px; font-size: 9px; }
+
+.sks-emc-row-subject {
+ padding: 6px 0;
+ border-bottom: 1px solid #F3F5F6;
+}
+.sks-emc-subject {
+ width: 100%;
+ border: none;
+ outline: none;
+ font-family: inherit;
+ font-size: 10px;
+ color: #202124;
+ background: transparent;
+ padding: 2px 0;
+}
+.sks-emc-subject::placeholder {
+ color: rgba(0,0,0,0.45);
+}
+
+.sks-emc-row-body {
+ flex: 1 1 auto;
+ padding: 8px 0;
+ min-height: 100px;
+}
+.sks-emc-body {
+ width: 100%;
+ height: 100%;
+ border: none;
+ outline: none;
+ font-family: inherit;
+ font-size: 10px;
+ color: #202124;
+ background: transparent;
+ resize: none;
+ line-height: 1.4;
+}
+
+.sks-emc-counter {
+ position: absolute;
+ right: 12px; bottom: 8px;
+ background: #EDEDED;
+ border-radius: 2px;
+ padding: 3px 6px;
+ font-family: 'Inter', 'Roboto', system-ui, sans-serif;
+ font-size: 8px;
+ font-weight: 600;
+ color: #A5A5A5;
+ pointer-events: none;
+}
+.sks-emc-counter.is-warn { color: #B8860B; }
+.sks-emc-counter.is-error { color: #C84031; }
+
+.sks-emc-compose-foot {
+ flex: 0 0 auto;
+ height: 36px;
+ display: flex; align-items: center;
+ gap: 14px;
+ padding: 0 12px;
+ border-top: 1px solid #F3F5F6;
+}
+.sks-emc-send {
+ display: inline-flex; align-items: center;
+ gap: 8px;
+ background: #0E57CB;
+ color: #FFFFFF;
+ border: none;
+ border-radius: 145px;
+ padding: 4px 10px 4px 14px;
+ font-family: inherit;
+ font-size: 10px;
+ font-weight: 500;
+ cursor: pointer;
+ opacity: 0.55;
+ transition: opacity 0.15s ease, transform 0.1s ease;
+}
+.sks-emc-send:not([disabled]).is-active,
+.sks-emc-send:not([disabled]):hover {
+ opacity: 1;
+}
+.sks-emc-send[disabled] {
+ cursor: not-allowed;
+}
+.sks-emc-send-sep {
+ width: 1px; height: 12px;
+ background: rgba(255,255,255,0.55);
+ display: inline-block;
+}
+.sks-emc-send-caret { font-size: 9px; }
+
+.sks-emc-foot-icons {
+ display: inline-flex; align-items: center; gap: 8px;
+ color: #4A4A4A;
+}
+.sks-emc-foot-ico {
+ width: 9px; height: 9px;
+ background: #4A4A4A;
+ opacity: 0.75;
+ border-radius: 1px;
+ flex: 0 0 auto;
+}
+.sks-emc-foot-trash {
+ margin-left: auto;
+ width: 10px; height: 12px;
+ background: #4A4A4A;
+ opacity: 0.75;
+ clip-path: polygon(15% 15%, 85% 15%, 75% 100%, 25% 100%);
+}
+
+/* ----- Coaching tooltip (black pill + arrow + Next button) ------------
+   Anchored to the .sks-emc-app frame; sits to the LEFT of the compose
+   modal and the arrow points at the active row (Subject in stage 1, Body
+   in stage 2). The compose modal is `right: 6px; width: clamp(280px,33%,360px)`,
+   so we right-anchor the bubble just past the modal's left edge. */
+.sks-emc-coach {
+  position: absolute;
+  z-index: 9;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: top 0.35s ease, bottom 0.35s ease, right 0.35s ease, opacity 0.2s ease;
+}
+.sks-emc-coach[data-stage="subject"] {
+  /* Vertically aligned with the Subject input row of the compose modal. */
+  right: calc(clamp(280px, 33%, 360px) + 24px);
+  bottom: 218px;
+}
+.sks-emc-coach[data-stage="body"] {
+  /* Slides down to point at the Body textarea. */
+  right: calc(clamp(280px, 33%, 360px) + 24px);
+  bottom: 130px;
+}
+.sks-emc-coach-bubble {
+  pointer-events: auto;
+  background: #1F1F1F;
+  border-radius: 6px;
+  padding: 12px 18px;
+  color: #FFFFFF;
+  font-family: 'Lato', 'Roboto', system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.35;
+  max-width: 260px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.28);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+.sks-emc-coach[data-stage="body"] .sks-emc-coach-bubble {
+  max-width: 240px;
+  padding: 14px 18px;
+}
+.sks-emc-coach-text {
+  margin: 0;
+  color: inherit;
+  text-align: left;
+  align-self: stretch;
+}
+.sks-emc-next {
+  align-self: flex-end;
+  background: #5C6CFA;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 18px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease, background 0.15s ease, transform 0.1s ease;
+}
+.sks-emc-next[hidden] { display: none; }
+.sks-emc-next[disabled] {
+  background: #B6BCFB;
+  color: #FFFFFF;
+  cursor: not-allowed;
+}
+.sks-emc-next:not([disabled]):hover { background: #4753E0; }
+.sks-emc-next:not([disabled]).is-active { background: #5C6CFA; }
+/* Right-pointing arrow sitting between the bubble and the modal. */
+.sks-emc-coach-cursor {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: #1F1F1F;
+}
+.sks-emc-coach-cursor svg { display: block; }
+
+/* ===== Responsive: stack/scale gracefully on smaller screens ========== */
+@media (max-width: 980px) {
+  .sks-page--email-compose { padding: 20px 16px 60px; }
+  .sks-emc-frame { aspect-ratio: 1134 / 900; }
+  .sks-emc-coach[data-stage="subject"],
+  .sks-emc-coach[data-stage="body"] {
+    right: 8px; bottom: auto; top: 12px;
+  }
+  .sks-emc-coach-bubble { font-size: 12px; padding: 10px 14px; }
+  .sks-emc-coach-cursor { display: none; }
+}
+
+@media (max-width: 720px) {
+ .sks-emc-app-body {
+ grid-template-columns: 0 1fr 0;
+ }
+ .sks-emc-rail, .sks-emc-rightbar { display: none; }
+ .sks-emc-app-header-left { width: auto; }
+ .sks-emc-compose {
+ width: calc(100% - 20px);
+ right: 10px;
+ }
+}
+
+/* ============================================================================
+   PHASE 3 — S3.05 / S3.06 HINT WIDGET
+   ============================================================================
+   Two-piece composition:
+     1) .sks-emc-hint-toggle  – small "💡 Hint" pill, always visible during
+                                the body drafting stage.
+     2) .sks-emc-hint-popup   – modal-style overlay card, hidden by default,
+                                opened only by clicking the trigger. Has its
+                                own close button. Never auto-opens.
+   .sks-emc-hint is just a visibility wrapper (gated by stage in JS).
+*/
+
+.sks-emc-hint {
+    /* visibility wrapper only — children carry their own positioning */
+    font-family: 'Lexend', system-ui, sans-serif;
+}
+
+/* ----- trigger pill ---------------------------------------------------- */
+.sks-emc-hint-toggle {
+    position: absolute;
+    z-index: 8;
+    /* Sits just above the top edge of the compose modal, right side. */
+    right: 16px;
+    bottom: calc(360px + 12px);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 14px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1;
+    color: #0A0A0A;
+    transition: box-shadow 0.15s ease, transform 0.1s ease;
+}
+.sks-emc-hint-toggle:hover  { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16); }
+.sks-emc-hint-toggle:active { transform: translateY(1px); }
+.sks-emc-hint-bulb {
+    width: 20px; height: 20px;
+    flex: 0 0 auto;
+    display: inline-flex; align-items: center; justify-content: center;
+}
+.sks-emc-hint-label { flex: 0 0 auto; }
+
+/* ----- popup overlay --------------------------------------------------- */
+.sks-emc-hint-popup {
+    position: absolute;
+    z-index: 12;
+    /* Anchor over the right side of the gmail app, lifting above the
+       compose modal (Figma: Frame 66, ~380×400). */
+    right: 16px;
+    bottom: calc(360px - 80px); /* overlap top of compose modal */
+    width: clamp(320px, 38%, 400px);
+    height: 400px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.22);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: inherit;
+}
+.sks-emc-hint-popup[hidden] { display: none; }
+
+.sks-emc-hint-popup-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    flex: 0 0 auto;
+}
+.sks-emc-hint-bulb--head { width: 22px; height: 22px; }
+.sks-emc-hint-popup-title {
+    flex: 1 1 auto;
+    margin: 0;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    color: #0A0A0A;
+}
+.sks-emc-hint-popup-close {
+    width: 26px;
+    height: 26px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #0A0A0A;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.sks-emc-hint-popup-close:hover { background: rgba(0, 0, 0, 0.06); }
+.sks-emc-hint-popup-close svg { display: block; }
+
+.sks-emc-hint-popup-body {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    padding: 14px 16px 16px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.sks-emc-hint-rail {
+    width: 90px;
+    flex: 0 0 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+}
+
+.sks-emc-hint-tab {
+    width: 90px;
+    min-height: 50px;
+    padding: 8px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 12px;
+    color: #2C2C2C;
+    text-align: center;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+.sks-emc-hint-tab:hover { border-color: rgba(0, 0, 0, 0.25); }
+.sks-emc-hint-tab.is-on {
+    background: #2B2B2B;
+    color: #FFFFFF;
+    border-color: #2B2B2B;
+}
+.sks-emc-hint-tab-num { display: block; }
+.sks-emc-hint-tab-name { display: block; }
+
+.sks-emc-hint-content {
+    flex: 1 1 auto;
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #717182;
+    overflow-y: auto;
+    padding-top: 4px;
+}
+
+/* ----- responsive ------------------------------------------------------ */
+@media (max-width: 720px) {
+    .sks-emc-hint-toggle {
+        right: 12px;
+        bottom: auto;
+        top: 12px;
+    }
+    .sks-emc-hint-popup {
+        right: 8px;
+        left: 8px;
+        bottom: 8px;
+        width: auto;
+        height: 70vh;
+        max-height: 480px;
+    }
+    .sks-emc-hint-rail { width: 78px; flex: 0 0 78px; }
+    .sks-emc-hint-tab  { width: 78px; }
+}
+
+/* ============================================================================
+   PHASE 3 — S3.12 RESULT: rubric scorecard
+   ============================================================================
+   Hero block (overall verdict) + stack of seven criterion cards. Each card
+   has a colour-coded tier banner (developing/proficient/exemplary). The
+   page reuses .sks-top / .sks-brand / .sks-nav / .sks-step from the rest of
+   the simulation. */
+
+.sks-page--email-result {
+    background: #FFFFFF;
+    min-height: 100vh;
+    padding: clamp(24px, 4.4vh, 40px) clamp(24px, 5.9vw, 85px) 80px;
+    box-sizing: border-box;
+    font-family: 'Lexend', system-ui, sans-serif;
+}
+
+.sks-shell--email-result {
+    max-width: 1270px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+}
+
+/* ----- Hero: "Your Email is" + tier + stars --------------------------- */
+.sks-emr-overall {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding-top: 50px;
+}
+.sks-emr-overall-label {
+    margin: 0;
+    font-family: 'Lexend', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 30px;
+    color: #000000;
+}
+.sks-emr-overall-rating {
+    margin: 0;
+    font-family: 'Lexend', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 45px;
+    text-transform: uppercase;
+    color: #000000;
+    text-align: center;
+}
+.sks-emr-overall .sks-emr-stars { gap: 18px; }
+
+/* ----- Detailed Rating header ---------------------------------------- */
+.sks-emr-detailed-head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 23px;
+    /* Pull the header tighter under the hero — Figma puts ~30px gap. */
+    margin-top: -30px;
+    margin-bottom: 5px;
+}
+.sks-emr-detailed-title {
+    margin: 0;
+    font-family: 'Lato', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 15px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.6);
+}
+.sks-emr-sample-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Lato', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 15px;
+    text-decoration: underline;
+    color: #017AFF;
+}
+.sks-emr-sample-link:hover { opacity: 0.8; }
+
+/* ----- Card stack ----------------------------------------------------- */
+.sks-emr-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+    margin-top: 18px;
+}
+
+.sks-emr-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.sks-emr-card-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+.sks-emr-card-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.sks-emr-card-title {
+    margin: 0;
+    font-family: 'Lexend', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+}
+.sks-emr-card-subtitle {
+    margin: 0;
+    font-family: 'Lexend', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/* ----- Star rating ---------------------------------------------------- */
+.sks-emr-stars {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
+    flex: 0 0 auto;
+}
+.sks-emr-star { display: block; }
+.sks-emr-star.is-dim { opacity: 0.3; }
+
+/* ----- Tier banner (DEVELOPING / PROFICIENT / EXEMPLARY) -------------- */
+.sks-emr-tier {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 19px 25px 28px;
+    border-radius: 4px;
+    border: 1px solid currentColor;
+}
+.sks-emr-tier--developing {
+    color: #ED655A;
+    background: rgba(237, 101, 90, 0.1);
+}
+.sks-emr-tier--proficient {
+    color: #43A6DD;
+    background: rgba(67, 166, 221, 0.1);
+}
+.sks-emr-tier--exemplary {
+    color: #63C454;
+    background: rgba(99, 196, 84, 0.1);
+}
+.sks-emr-tier-label {
+    font-family: 'Lexend', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: inherit;
+}
+.sks-emr-tier-body {
+    margin: 0;
+    font-family: 'Lexend', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: inherit;
+    max-width: 900px;
+}
+
+/* ----- Bottom CTA ----------------------------------------------------- */
+.sks-emr-cta-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+.sks-emr-next-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 329px;
+    height: 48px;
+    padding: 0 100px;
+    background: #000000;
+    color: #FFFFFF;
+    border-radius: 8px;
+    font-family: 'Lato', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 15px;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+.sks-emr-next-btn:hover  { background: #1F1F1F; }
+.sks-emr-next-btn:active { transform: translateY(1px); }
+
+/* ----- Responsive ----------------------------------------------------- */
+@media (max-width: 980px) {
+    .sks-page--email-result { padding: 24px 16px 60px; }
+    .sks-shell--email-result { gap: 50px; }
+    .sks-emr-overall { padding-top: 24px; }
+    .sks-emr-overall-rating { font-size: 30px; line-height: 38px; }
+    .sks-emr-card { padding: 14px; gap: 20px; }
+    .sks-emr-card-head { gap: 16px; }
+    .sks-emr-tier { padding: 16px 18px 22px; }
+    .sks-emr-next-btn { min-width: 240px; padding: 0 32px; }
+}
+@media (max-width: 720px) {
+    .sks-emr-detailed-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .sks-emr-card-head { flex-direction: column; align-items: flex-start; }
+    .sks-emr-stars { gap: 10px; }
+    .sks-emr-stars .sks-emr-star { width: 28px !important; height: 28px !important; }
+    .sks-emr-overall .sks-emr-star { width: 36px !important; height: 36px !important; }
+}

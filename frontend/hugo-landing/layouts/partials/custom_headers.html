@@ -12,16 +12,24 @@
 <link href="{{ "css/stakeholder-kickoff.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 {{ end }}
 
-{{ if or (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") (eq .Params.id "stakeholder-kickoff-zoom-meeting") (eq .Params.id "stakeholder-kickoff-outreach-email") }}
+{{ if or (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") (eq .Params.id "stakeholder-kickoff-zoom-meeting") (eq .Params.id "stakeholder-kickoff-outreach-email") (eq .Params.id "stakeholder-kickoff-email-intro") (eq .Params.id "stakeholder-kickoff-email-compose") (eq .Params.id "stakeholder-kickoff-email-result") }}
 <link href="{{ "css/stakeholder-kickoff-sim.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 {{ end }}
-{{ if or (eq .Params.id "stakeholder-kickoff-zoom-meeting") (eq .Params.id "stakeholder-kickoff-outreach-email") }}
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&family=Lato:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+{{ if or (eq .Params.id "stakeholder-kickoff-zoom-meeting") (eq .Params.id "stakeholder-kickoff-outreach-email") (eq .Params.id "stakeholder-kickoff-email-intro") (eq .Params.id "stakeholder-kickoff-email-compose") (eq .Params.id "stakeholder-kickoff-email-result") }}
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&family=Lato:wght@400;700&family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 {{ end }}
 
 {{ $ids := site.Params.lumina_notes_page_ids }}
 {{ if and $ids (isset .Params "id") (in $ids .Params.id) }}
 <link href="{{ "css/lumina-sim-notes.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+{{ end }}
+
+{{/* Phase 3 outreach-email scorer — loaded in <head> so the global
+     window.HeeriseOutreachScorer is defined before any inline body
+     script runs. The compose page calls .score() + .save() in its Send
+     handler; the result page calls .load() + the hydration helpers. */}}
+{{ if or (eq .Params.id "stakeholder-kickoff-email-compose") (eq .Params.id "stakeholder-kickoff-email-result") }}
+<script src="{{ "js/outreach-email-scoring.js" | relURL }}?{{ now.Unix }}"></script>
 {{ end }}
 
 <!-- Navbar: #017AFF override (loads last - overrides theme purple/teal) -->

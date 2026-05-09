@@ -117,6 +117,9 @@ pluralizelisttitles = false
     "stakeholder-kickoff-research",
     "stakeholder-kickoff-research-workspace",
     "stakeholder-kickoff-outreach-email",
+    "stakeholder-kickoff-email-intro",
+    "stakeholder-kickoff-email-compose",
+    "stakeholder-kickoff-email-result",
   ]
 
   disabled_logo = false

@@ -16,7 +16,11 @@
 (function () {
   var STORAGE_KEY = "heerise_lumina_sim_notes_v1";
 
-  /** Display labels per simulation page id — stage-based naming. */
+  /** Display labels per simulation page id — stage-based naming.
+   *  Adding a page id here is REQUIRED — the controller bails out for any
+   *  page id missing from this map, which means an absent entry silently
+   *  disables the FAB drag, click, and panel even though the markup still
+   *  renders. Keep this list in sync with `lumina_notes_page_ids` in hugo.toml. */
   var PAGE_LABELS = {
     "stakeholder-kickoff-sim": "brief-sim intro",
     "stakeholder-kickoff-workspace": "brief-workspace",
@@ -26,6 +30,9 @@
     "stakeholder-kickoff-outreach-email": "brief-email",
     "stakeholder-kickoff-research": "research",
     "stakeholder-kickoff-research-workspace": "research-workspace",
+    "stakeholder-kickoff-email-intro": "outreach intro",
+    "stakeholder-kickoff-email-compose": "outreach draft",
+    "stakeholder-kickoff-email-result": "outreach result",
   };
 
   var root = document.getElementById("lumina-sim-notes-root");

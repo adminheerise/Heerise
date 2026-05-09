@@ -27,3 +27,4 @@
 {{ if and $ids (isset .Params "id") (in $ids .Params.id) }}
 <script src="{{ "js/lumina-sim-notes.js" | relURL }}?{{ now.Unix }}" defer></script>
 {{ end }}
+

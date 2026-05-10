@@ -225,8 +225,10 @@ pluralizelisttitles = false
   # that are part of the non-compact variant.
   coming_soon = true
   countdown_deadline = ""
-  cta_text = "REGISTER NOW"
-  cta_url = "/career-lab/workshop/"
+  cta_text = "Sign up"
+  # Query flag survives redirects better than #hash; sessionStorage is also set
+  # on Featured CTA click in featured_event.html (see heerise_open_bootcamp).
+  cta_url = "/career-lab/workshop/?openBootcamp=1"
   # Featured event hero image — Career Lab session photo.
   image = "/img/career-lab-hero.png"
   image_alt = "Career Lab session in progress"

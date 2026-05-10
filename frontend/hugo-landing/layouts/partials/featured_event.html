@@ -122,5 +122,21 @@
 <script src="/js/countdown.js"></script>
 <script>document.addEventListener("DOMContentLoaded", function() { if (window.HeeriseCountdown) HeeriseCountdown.initAll(".cl-countdown"); });</script>
 {{ end }}
+{{/* Persist intent to open workshop sign-up modal: hash is often dropped on
+     redirect/CDN; sessionStorage survives the navigation. career-lab.js reads
+     `heerise_open_bootcamp` on the workshop page. */}}
+<script>
+(function () {
+  var root = document.querySelector(".cl-featured-event");
+  if (!root) return;
+  var a = root.querySelector(".cl-cta-buttons .cl-btn-primary");
+  if (!a) return;
+  var href = (a.getAttribute("href") || "").toLowerCase();
+  if (href.indexOf("/career-lab/workshop") === -1) return;
+  a.addEventListener("click", function () {
+    try { sessionStorage.setItem("heerise_open_bootcamp", "1"); } catch (e) {}
+  });
+})();
+</script>
 {{ end }}
 <!-- *** FEATURED EVENT END *** -->

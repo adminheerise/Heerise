@@ -120,6 +120,10 @@ pluralizelisttitles = false
     "stakeholder-kickoff-email-intro",
     "stakeholder-kickoff-email-compose",
     "stakeholder-kickoff-email-result",
+    "stakeholder-kickoff-agenda-intro",
+    "stakeholder-kickoff-agenda-ready",
+    "stakeholder-kickoff-agenda-build",
+    "stakeholder-kickoff-agenda-result",
   ]
 
   disabled_logo = false

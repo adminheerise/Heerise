@@ -28,3 +28,7 @@
 <script src="{{ "js/lumina-sim-notes.js" | relURL }}?{{ now.Unix }}" defer></script>
 {{ end }}
 
+{{ if eq .Params.id "stakeholder-kickoff-agenda-build" }}
+<script src="{{ "js/agenda-builder.js" | relURL }}?{{ now.Unix }}" defer></script>
+{{ end }}
+

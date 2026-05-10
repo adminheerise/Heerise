@@ -33,6 +33,10 @@
     "stakeholder-kickoff-email-intro": "outreach intro",
     "stakeholder-kickoff-email-compose": "outreach draft",
     "stakeholder-kickoff-email-result": "outreach result",
+    "stakeholder-kickoff-agenda-intro": "agenda intro",
+    "stakeholder-kickoff-agenda-ready": "agenda ready",
+    "stakeholder-kickoff-agenda-build": "agenda build",
+    "stakeholder-kickoff-agenda-result": "agenda result",
   };
 
   var root = document.getElementById("lumina-sim-notes-root");

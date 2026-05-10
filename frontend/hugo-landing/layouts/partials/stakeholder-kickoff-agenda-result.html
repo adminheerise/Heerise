@@ -1,0 +1,187 @@
+<!-- *** PHASE 4 — S4.03 Agenda result (STRONG / PARTIAL / WEAK) — Figma Phase 4-5-1 … -3 *** -->
+<section class="sks-page sks-page--agenda-result" aria-label="Meeting agenda — result">
+    <div class="sks-shell sks-arr-shell">
+        <header class="sks-top">
+            <div class="sks-brand">LUMINA<span class="sks-brand-sep" aria-hidden="true">&bull;</span>SIM</div>
+            <nav class="sks-nav" aria-label="Simulation steps">
+                <span class="sks-step">Assignment Brief</span>
+                <span class="sks-step">Research</span>
+                <span class="sks-step">Outreach Email</span>
+                <span class="sks-step sks-step-active">Meeting Agenda</span>
+                <span class="sks-step">Kick-off Call</span>
+                <span class="sks-step">Manager Brief</span>
+                <span class="sks-step">Results</span>
+            </nav>
+        </header>
+
+        <div class="sks-arr-overall" id="sks-arr-overall">
+            <p class="sks-arr-overall-label">Your Kick-off Call Agenda is</p>
+            <h1 class="sks-arr-tier" data-arr-tier>PARTIAL</h1>
+            <div id="sks-arr-stars-mount">
+                {{ partial "sks-emr-stars.html" (dict "count" 2 "size" 48) }}
+            </div>
+        </div>
+
+        <header class="sks-arr-detail-head">
+            <h2 class="sks-arr-detail-title">Detailed Rating</h2>
+            <button type="button" class="sks-arr-sample-link" id="sks-arr-sample-toggle" aria-expanded="false" aria-controls="sks-arr-sample-panel">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                    <rect x="3" y="1.5" width="11" height="15" rx="1.5" stroke="#017AFF" stroke-width="1.5" fill="none"/>
+                    <path d="M5.75 6.75 H10.25 M5.75 9.75 H12.25 M5.75 12.75 H12.25" stroke="#017AFF" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M11.5 1.5 V4.5 H14" stroke="#017AFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>View Sample Agenda</span>
+            </button>
+        </header>
+
+        <div class="sks-arr-sample-panel" id="sks-arr-sample-panel" hidden>
+            <p class="sks-arr-sample-lead">Reference — discovery-first 50-minute structure:</p>
+            <ol class="sks-arr-sample-list">
+                <li>Introductions &amp; role clarifications — 5 min</li>
+                <li>Review project brief assumptions — 5 min</li>
+                <li>Each stakeholder&rsquo;s definition of success — 10 min</li>
+                <li>Learner audience — constraints, gaps, access — 10 min</li>
+                <li>Scope confirmation and boundary-setting — 10 min</li>
+                <li>Confirm timeline and key milestones — 5 min</li>
+                <li>Next steps and decision owners — 5 min</li>
+                <li>Open Q&amp;A / anything else? — 5 min</li>
+            </ol>
+        </div>
+
+        <div class="sks-arr-feedback sks-arr-feedback--partial" data-arr-feedback>
+            <p class="sks-arr-feedback-text" data-arr-feedback-text>You&rsquo;re on the right track! Your agenda covers most of the essentials.</p>
+        </div>
+
+        <div class="sks-arr-body">
+            <div class="sks-arr-card">
+                <h2 class="sks-arr-card-title">
+                    Your Kick-off Call Agenda (<span data-arr-total-min>0</span> Minutes)
+                </h2>
+                <div class="sks-arr-list" data-arr-list></div>
+            </div>
+
+            <div class="sks-arr-cta-cluster" data-arr-ctas>
+                <div class="sks-arr-cta-row sks-arr-cta-row--strong" data-arr-cta-strong hidden>
+                    <a href="/acc/stakeholder-kickoff/zoom-meeting/" class="sks-arr-btn-primary">Continue to Next Module</a>
+                </div>
+                <div class="sks-arr-cta-row sks-arr-cta-row--partial" data-arr-cta-partial hidden>
+                    <a href="/acc/stakeholder-kickoff/agenda/build/" class="sks-arr-btn-primary">Revise My Agenda</a>
+                    <a href="/acc/stakeholder-kickoff/zoom-meeting/" class="sks-arr-btn-text">Continue without Revising</a>
+                </div>
+                <div class="sks-arr-cta-row sks-arr-cta-row--weak" data-arr-cta-weak hidden>
+                    <a href="/acc/stakeholder-kickoff/agenda/build/" class="sks-arr-btn-primary">Revise My Agenda</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+    function setStars(container, count) {
+        if (!container) return;
+        var stars = container.querySelectorAll(".sks-emr-star");
+        for (var i = 0; i < stars.length; i++) {
+            stars[i].classList.toggle("is-dim", i >= count);
+        }
+        var wrap = container.closest(".sks-emr-stars") || container.querySelector(".sks-emr-stars");
+        if (wrap) {
+            wrap.setAttribute("data-filled", String(count));
+            wrap.setAttribute("aria-label", count + " of 3 stars");
+        }
+    }
+
+    function tierUpper(t) {
+        return (t || "partial").toLowerCase();
+    }
+
+    function hydrate(payload) {
+        var tierEl = document.querySelector("[data-arr-tier]");
+        var fb = document.querySelector("[data-arr-feedback]");
+        var fbText = document.querySelector("[data-arr-feedback-text]");
+        var totalEl = document.querySelector("[data-arr-total-min]");
+        var listEl = document.querySelector("[data-arr-list]");
+        var starMount = document.getElementById("sks-arr-stars-mount");
+        var ctaS = document.querySelector("[data-arr-cta-strong]");
+        var ctaP = document.querySelector("[data-arr-cta-partial]");
+        var ctaW = document.querySelector("[data-arr-cta-weak]");
+
+        if (!payload) {
+            payload = {
+                items: [],
+                totalMinutes: 0,
+                tier: "partial",
+                stars: 2,
+                feedback:
+                    "You're on the right track! Your agenda covers most of the essentials. There are just a few gaps (like a missing key item or slightly off timing) that could weaken the flow of the conversation. With a small tweak or two, you can make this agenda more complete and effective. Take a moment to refine it before sending."
+            };
+        }
+
+        var tier = tierUpper(payload.tier);
+        var label = tier === "strong" ? "STRONG" : tier === "weak" ? "WEAK" : "PARTIAL";
+        if (tierEl) tierEl.textContent = label;
+
+        if (fb) {
+            fb.classList.remove("sks-arr-feedback--strong", "sks-arr-feedback--partial", "sks-arr-feedback--weak");
+            fb.classList.add("sks-arr-feedback--" + tier);
+        }
+        if (fbText) fbText.textContent = payload.feedback || "";
+
+        if (totalEl) totalEl.textContent = String(payload.totalMinutes != null ? payload.totalMinutes : 0);
+
+        setStars(starMount, payload.stars != null ? payload.stars : 2);
+
+        if (listEl) {
+            listEl.innerHTML = "";
+            var items = payload.items || [];
+            if (items.length === 0) {
+                var empty = document.createElement("p");
+                empty.className = "sks-arr-list-empty";
+                empty.textContent = "No agenda was found. Return to the builder and tap Submit to see your rating.";
+                listEl.appendChild(empty);
+            } else {
+                for (var i = 0; i < items.length; i++) {
+                    var row = document.createElement("div");
+                    row.className = "sks-arr-line";
+                    var num = document.createElement("span");
+                    num.className = "sks-arr-line-title";
+                    num.textContent =
+                        (i < 9 ? "0" : "") +
+                        (i + 1) +
+                        " " +
+                        (items[i].label || items[i].id || "");
+                    var rule = document.createElement("span");
+                    rule.className = "sks-arr-line-rule";
+                    rule.setAttribute("aria-hidden", "true");
+                    var mins = document.createElement("span");
+                    mins.className = "sks-arr-line-mins";
+                    mins.textContent = (items[i].minutes || 0) + " Minutes";
+                    row.appendChild(num);
+                    row.appendChild(rule);
+                    row.appendChild(mins);
+                    listEl.appendChild(row);
+                }
+            }
+        }
+
+        if (ctaS) ctaS.hidden = tier !== "strong";
+        if (ctaP) ctaP.hidden = tier !== "partial";
+        if (ctaW) ctaW.hidden = tier !== "weak";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var payload = window.HeeriseAgendaScorer ? window.HeeriseAgendaScorer.loadResult() : null;
+        hydrate(payload);
+
+        var btn = document.getElementById("sks-arr-sample-toggle");
+        var panel = document.getElementById("sks-arr-sample-panel");
+        if (btn && panel) {
+            btn.addEventListener("click", function () {
+                var open = panel.hidden;
+                panel.hidden = !open;
+                btn.setAttribute("aria-expanded", open ? "true" : "false");
+            });
+        }
+    });
+})();
+</script>

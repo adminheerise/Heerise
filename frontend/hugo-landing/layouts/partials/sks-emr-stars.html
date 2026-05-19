@@ -1,0 +1,21 @@
+{{/* Star rating helper for the Phase 3 result page.
+     Call:  {{ partial "sks-emr-stars.html" (dict "count" 2 "size" 36) }}
+       count: number of filled stars (0–3)
+       size : px size for width/height (default 36) */}}
+{{ $count := default 0 .count }}
+{{ $size  := default 36 .size }}
+<div class="sks-emr-stars" data-filled="{{ $count }}" aria-label="{{ $count }} of 3 stars">
+    {{ range $i, $_ := (seq 3) }}
+        <svg class="sks-emr-star{{ if ge $i $count }} is-dim{{ end }}"
+             width="{{ $size }}" height="{{ $size }}" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <defs>
+                <linearGradient id="sks-emr-star-grad-{{ $i }}-{{ $size }}-{{ $count }}" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%"   stop-color="#FFD36E"/>
+                    <stop offset="100%" stop-color="#F6B828"/>
+                </linearGradient>
+            </defs>
+            <path d="M18 2.5l4.7 9.5 10.5 1.5-7.6 7.4 1.8 10.4L18 26.4l-9.4 4.9 1.8-10.4-7.6-7.4 10.5-1.5L18 2.5z"
+                  fill="url(#sks-emr-star-grad-{{ $i }}-{{ $size }}-{{ $count }})"/>
+        </svg>
+    {{ end }}
+</div>

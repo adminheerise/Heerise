@@ -1,0 +1,57 @@
+<!-- *** PHASE 4 — P4.1 MEETING AGENDA INTRO (Figma Phase 4 - 1) *** -->
+<section class="sks-page sks-page--lumina-dialog sks-page--agenda-intro" aria-label="Meeting agenda — introduction">
+    <div class="sks-shell sks-shell--agenda-intro">
+        <header class="sks-top">
+            <div class="sks-brand">LUMINA<span class="sks-brand-sep" aria-hidden="true">&bull;</span>SIM</div>
+            <nav class="sks-nav" aria-label="Simulation steps">
+                <span class="sks-step">Assignment Brief</span>
+                <span class="sks-step">Research</span>
+                <span class="sks-step">Outreach Email</span>
+                <span class="sks-step sks-step-active">Meeting Agenda</span>
+                <span class="sks-step">Kick-off Call</span>
+                <span class="sks-step">Manager Brief</span>
+                <span class="sks-step">Results</span>
+            </nav>
+        </header>
+
+        <div class="sks-main">
+            <div class="sks-scene sks-scene--agenda-intro">
+                <div class="sks-person sks-person--agenda-intro">
+                    <img src="{{ "img/lumina-manager.png" | relURL }}" alt="Maya, your manager" />
+                </div>
+                <div class="sks-dialog-col sks-dialog-col--agenda-intro">
+                    <div class="sks-bubble sks-bubble--agenda-intro" id="sks-agenda-intro-bubble">
+                        <div class="sks-agenda-bubble-inner">
+                            <p class="sks-agenda-bubble-text">
+                                The kickoff call is booked. Before you join, you need to design the agenda: decide what gets covered, in what order, and for how long. A weak agenda wastes everyone&rsquo;s time. A strong one earns trust before you say a word.
+                            </p>
+                        </div>
+                        <div class="sks-agenda-scroll-hint">
+                            <button type="button" class="sks-agenda-scroll-btn" id="sks-agenda-intro-more" aria-expanded="false" aria-label="Show full message">
+                                <svg class="sks-agenda-scroll-ico" width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+                                    <path d="M22 8v24M14 28l8 8 8-8" stroke="#4F81E5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="sks-actions sks-actions--agenda-intro">
+                        <a href="/acc/stakeholder-kickoff/agenda/ready/" class="sks-btn sks-btn--agenda-intro">Next</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+    var bubble = document.getElementById("sks-agenda-intro-bubble");
+    var btn = document.getElementById("sks-agenda-intro-more");
+    if (!bubble || !btn) return;
+    btn.addEventListener("click", function () {
+        var open = !bubble.classList.contains("is-expanded");
+        bubble.classList.toggle("is-expanded", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+})();
+</script>

@@ -6,7 +6,8 @@
  *  - A tab for a stage is created LAZILY: it only appears in the sidebar after the user has typed
  *    at least one non-whitespace character on that stage.
  *  - Badge on the FAB = number of stages that currently have non-empty notes. 0 → hidden.
- *  - The FAB is persistent across eligible pages; the panel is draggable once the user drags it.
+ *  - The FAB is persistent across eligible pages and can be dragged freely; the panel is draggable
+ *    by its header once floated.
  *  - When the panel first opens on a page, a `lumina-notes:opened` custom event is fired so that
  *    other flows on that page (e.g. the Zoom meeting countdown) can react.
  *
@@ -16,7 +17,11 @@
 (function () {
   var STORAGE_KEY = "heerise_lumina_sim_notes_v1";
 
-  /** Display labels per simulation page id — stage-based naming. */
+  /** Display labels per simulation page id — stage-based naming.
+   *  Adding a page id here is REQUIRED — the controller bails out for any
+   *  page id missing from this map, which means an absent entry silently
+   *  disables the FAB drag, click, and panel even though the markup still
+   *  renders. Keep this list in sync with `lumina_notes_page_ids` in hugo.toml. */
   var PAGE_LABELS = {
     "stakeholder-kickoff-sim": "brief-sim intro",
     "stakeholder-kickoff-workspace": "brief-workspace",
@@ -26,6 +31,13 @@
     "stakeholder-kickoff-outreach-email": "brief-email",
     "stakeholder-kickoff-research": "research",
     "stakeholder-kickoff-research-workspace": "research-workspace",
+    "stakeholder-kickoff-email-intro": "outreach intro",
+    "stakeholder-kickoff-email-compose": "outreach draft",
+    "stakeholder-kickoff-email-result": "outreach result",
+    "stakeholder-kickoff-agenda-intro": "agenda intro",
+    "stakeholder-kickoff-agenda-ready": "agenda ready",
+    "stakeholder-kickoff-agenda-build": "agenda build",
+    "stakeholder-kickoff-agenda-result": "agenda result",
   };
 
   var root = document.getElementById("lumina-sim-notes-root");
@@ -324,6 +336,7 @@
   var FAB_DRAG_THRESHOLD = 6; // px
   var fabDragging = false;
   var fabDragStarted = false;
+  var suppressNextFabClick = false;
   var fabDragStartX = 0;
   var fabDragStartY = 0;
   var fabStartLeft = 0;
@@ -338,8 +351,23 @@
   }
   applyFabPosition();
 
+  function endFabDragGesture() {
+    if (!fabDragging) return;
+    var didDrag = fabDragStarted;
+    fabDragging = false;
+    fabDragStarted = false;
+    if (didDrag) {
+      fab.classList.remove("lumina-sim-notes-fab--dragging");
+      var r = fab.getBoundingClientRect();
+      state.fabPos = { left: r.left, top: r.top };
+      saveState();
+      suppressNextFabClick = true;
+    }
+  }
+
   fab.addEventListener("pointerdown", function (e) {
     if (e.button !== undefined && e.button !== 0) return; // left-click / primary only
+    suppressNextFabClick = false;
     fabDragging = true;
     fabDragStarted = false;
     fabDragStartX = e.clientX;
@@ -371,23 +399,14 @@
     fab.style.bottom = "auto";
   });
 
-  window.addEventListener("pointerup", function () {
-    if (!fabDragging) return;
-    fabDragging = false;
-    if (fabDragStarted) {
-      fab.classList.remove("lumina-sim-notes-fab--dragging");
-      var r = fab.getBoundingClientRect();
-      state.fabPos = { left: r.left, top: r.top };
-      saveState();
-    }
-  });
+  window.addEventListener("pointerup", endFabDragGesture);
+  window.addEventListener("pointercancel", endFabDragGesture);
 
   fab.addEventListener("click", function (e) {
-    // Suppress click when it was really a drag gesture.
-    if (fabDragStarted) {
+    if (suppressNextFabClick) {
       e.preventDefault();
       e.stopPropagation();
-      fabDragStarted = false;
+      suppressNextFabClick = false;
       return;
     }
     hideLegacyTooltip();

@@ -172,12 +172,54 @@
     setBootcampStep(1);
   };
 
+  // Homepage / deep-link: open bootcamp modal when arriving from Featured CTA
+  // (?openBootcamp=1), hash (#bootcamp-signup), or sessionStorage handoff.
+  const bootcampOpenFromStorage = () => {
+    try {
+      if (sessionStorage.getItem("heerise_open_bootcamp") !== "1") return false;
+      sessionStorage.removeItem("heerise_open_bootcamp");
+      return true;
+    } catch (_) {
+      return false;
+    }
+  };
+  const bootcampOpenFromUrl = () => {
+    const h = (window.location.hash || "").toLowerCase();
+    if (h === "#bootcamp-signup" || h === "#sign-up") return true;
+    try {
+      const q = new URLSearchParams(window.location.search || "");
+      return q.get("openBootcamp") === "1" || q.get("signup") === "1";
+    } catch (_) {
+      return false;
+    }
+  };
+  const stripBootcampDeepLinkFromUrl = () => {
+    try {
+      const u = new URL(window.location.href);
+      u.hash = "";
+      u.searchParams.delete("openBootcamp");
+      u.searchParams.delete("signup");
+      const qs = u.searchParams.toString();
+      history.replaceState(null, "", u.pathname + (qs ? "?" + qs : "") + u.hash);
+    } catch (_) {
+      try {
+        history.replaceState(null, "", window.location.pathname + (window.location.search || ""));
+      } catch (__) {}
+    }
+  };
+
   bootcampOpenBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
       openBootcamp();
     });
   });
+  if (bootcampModal && (bootcampOpenFromStorage() || bootcampOpenFromUrl())) {
+    requestAnimationFrame(() => {
+      openBootcamp();
+      stripBootcampDeepLinkFromUrl();
+    });
+  }
   bootcampCloseBtns.forEach((btn) => btn.addEventListener("click", closeBootcamp));
   bootcampPrevStepBtn?.addEventListener("click", () => setBootcampStep(1));
   bootcampPrevStep2Btn?.addEventListener("click", () => setBootcampStep(2));

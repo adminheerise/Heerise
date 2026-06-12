@@ -1,4 +1,4 @@
-<!-- *** PHASE 4 — S4.03 Agenda result (STRONG / PARTIAL / WEAK) — Figma Phase 4-5-1 … -3 *** -->
+<!-- *** PHASE 4 — S4.03 Agenda result (STRONG / PARTIAL / WEAK) *** -->
 <section class="sks-page sks-page--agenda-result" aria-label="Meeting agenda — result">
     <div class="sks-shell sks-arr-shell">
         <header class="sks-top">
@@ -19,6 +19,14 @@
             <h1 class="sks-arr-tier" data-arr-tier>PARTIAL</h1>
             <div id="sks-arr-stars-mount">
                 {{ partial "sks-emr-stars.html" (dict "count" 2 "size" 48) }}
+            </div>
+        </div>
+
+        <div class="sks-arr-maya" data-arr-maya hidden>
+            <img class="sks-arr-maya-avatar" src="{{ "img/lumina-manager.png" | relURL }}" alt="" width="40" height="40" />
+            <div class="sks-arr-maya-copy">
+                <p class="sks-arr-maya-label">Maya</p>
+                <p class="sks-arr-maya-text" data-arr-maya-text></p>
             </div>
         </div>
 
@@ -49,7 +57,12 @@
         </div>
 
         <div class="sks-arr-feedback sks-arr-feedback--partial" data-arr-feedback>
-            <p class="sks-arr-feedback-text" data-arr-feedback-text>You&rsquo;re on the right track! Your agenda covers most of the essentials.</p>
+            <p class="sks-arr-feedback-text" data-arr-feedback-text></p>
+        </div>
+
+        <div class="sks-arr-diagnostics-wrap" data-arr-diagnostics-wrap hidden>
+            <h3 class="sks-arr-diagnostics-title">Item-by-item feedback</h3>
+            <ul class="sks-arr-diagnostics" data-arr-diagnostics></ul>
         </div>
 
         <div class="sks-arr-body">
@@ -95,6 +108,46 @@
         return (t || "partial").toLowerCase();
     }
 
+    function statusIcon(status) {
+        if (status === "pass") return "✓";
+        if (status === "warn") return "!";
+        return "✕";
+    }
+
+    function renderDiagnostics(listEl, diagnostics) {
+        if (!listEl) return;
+        listEl.innerHTML = "";
+        if (!diagnostics || !diagnostics.length) return;
+
+        for (var i = 0; i < diagnostics.length; i++) {
+            var d = diagnostics[i];
+            var li = document.createElement("li");
+            li.className = "sks-arr-diag sks-arr-diag--" + (d.status || "warn");
+
+            var icon = document.createElement("span");
+            icon.className = "sks-arr-diag-icon";
+            icon.setAttribute("aria-hidden", "true");
+            icon.textContent = statusIcon(d.status);
+
+            var body = document.createElement("div");
+            body.className = "sks-arr-diag-body";
+
+            var title = document.createElement("p");
+            title.className = "sks-arr-diag-label";
+            title.textContent = d.label || d.id || "";
+
+            var msg = document.createElement("p");
+            msg.className = "sks-arr-diag-msg";
+            msg.textContent = d.message || "";
+
+            body.appendChild(title);
+            body.appendChild(msg);
+            li.appendChild(icon);
+            li.appendChild(body);
+            listEl.appendChild(li);
+        }
+    }
+
     function hydrate(payload) {
         var tierEl = document.querySelector("[data-arr-tier]");
         var fb = document.querySelector("[data-arr-feedback]");
@@ -105,6 +158,10 @@
         var ctaS = document.querySelector("[data-arr-cta-strong]");
         var ctaP = document.querySelector("[data-arr-cta-partial]");
         var ctaW = document.querySelector("[data-arr-cta-weak]");
+        var mayaWrap = document.querySelector("[data-arr-maya]");
+        var mayaText = document.querySelector("[data-arr-maya-text]");
+        var diagWrap = document.querySelector("[data-arr-diagnostics-wrap]");
+        var diagList = document.querySelector("[data-arr-diagnostics]");
 
         if (!payload) {
             payload = {
@@ -113,7 +170,9 @@
                 tier: "partial",
                 stars: 2,
                 feedback:
-                    "You're on the right track! Your agenda covers most of the essentials. There are just a few gaps (like a missing key item or slightly off timing) that could weaken the flow of the conversation. With a small tweak or two, you can make this agenda more complete and effective. Take a moment to refine it before sending."
+                    "You're on the right track! Your agenda covers most of the essentials. There are just a few gaps that could weaken the flow of the conversation.",
+                mayaLine: "You're close — review the item feedback below, then tighten the agenda before you share it.",
+                diagnostics: []
             };
         }
 
@@ -127,9 +186,28 @@
         }
         if (fbText) fbText.textContent = payload.feedback || "";
 
+        if (mayaWrap && mayaText) {
+            var line = payload.mayaLine || "";
+            if (line) {
+                mayaText.textContent = line;
+                mayaWrap.hidden = false;
+                mayaWrap.classList.toggle("sks-arr-maya--weak", tier === "weak");
+                mayaWrap.classList.toggle("sks-arr-maya--strong", tier === "strong");
+            } else {
+                mayaWrap.hidden = true;
+            }
+        }
+
         if (totalEl) totalEl.textContent = String(payload.totalMinutes != null ? payload.totalMinutes : 0);
 
         setStars(starMount, payload.stars != null ? payload.stars : 2);
+
+        if (diagWrap && diagList) {
+            var diags = payload.diagnostics || [];
+            var showDiag = diags.length > 0 && tier !== "strong";
+            diagWrap.hidden = !showDiag;
+            if (showDiag) renderDiagnostics(diagList, diags);
+        }
 
         if (listEl) {
             listEl.innerHTML = "";
@@ -146,10 +224,7 @@
                     var num = document.createElement("span");
                     num.className = "sks-arr-line-title";
                     num.textContent =
-                        (i < 9 ? "0" : "") +
-                        (i + 1) +
-                        " " +
-                        (items[i].label || items[i].id || "");
+                        (i < 9 ? "0" : "") + (i + 1) + " " + (items[i].label || items[i].id || "");
                     var rule = document.createElement("span");
                     rule.className = "sks-arr-line-rule";
                     rule.setAttribute("aria-hidden", "true");

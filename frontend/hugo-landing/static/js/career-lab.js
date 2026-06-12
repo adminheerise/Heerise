@@ -10,13 +10,56 @@
   const tabs = $$(".cl-tab");
   const contents = $$(".cl-tab-content");
 
+  // Pricing: project cards (default) ↔ bootcamp tiers
+  const pricingProjects = $("#pricing-projects");
+  const pricingBootcamp = $("#pricing-bootcamp");
+
+  const showPricingView = (view) => {
+    const showBootcamp = view === "bootcamp";
+    pricingProjects && (pricingProjects.hidden = showBootcamp);
+    pricingBootcamp && (pricingBootcamp.hidden = !showBootcamp);
+  };
+
   const switchTab = (id) => {
     tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === id));
     contents.forEach(c => c.classList.toggle("active", c.id === id));
+    if (id !== "pricing") {
+      showPricingView("projects");
+    }
     $(".cl-tabs-nav")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   tabs.forEach(t => t.addEventListener("click", () => switchTab(t.dataset.tab)));
   window.switchTab = switchTab;
+
+  $$("[data-pricing-show]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      showPricingView(btn.dataset.pricingShow);
+      $("#pricing")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  const openProjectPayment = (projectId, paymentUrl) => {
+    const url = (paymentUrl || "").trim();
+    if (url) {
+      window.location.assign(url);
+      return;
+    }
+    document.dispatchEvent(new CustomEvent("heerise:project-payment-pending", {
+      detail: { projectId, paymentUrl: url },
+    }));
+  };
+  window.HeeriseCareerLab = { ...(window.HeeriseCareerLab || {}), openProjectPayment };
+
+  $$(".cl-pricing-project-link").forEach(link => {
+    link.addEventListener("click", (e) => {
+      const paymentUrl = (link.dataset.paymentUrl || "").trim();
+      const projectId = link.dataset.projectId || "";
+      if (!paymentUrl) {
+        e.preventDefault();
+        openProjectPayment(projectId, paymentUrl);
+      }
+    });
+  });
 
   // Reusable countdown module
   window.HeeriseCountdown?.initAll(".cl-countdown");

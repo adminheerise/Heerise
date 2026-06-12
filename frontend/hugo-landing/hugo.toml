@@ -256,6 +256,15 @@ pluralizelisttitles = false
   speaker_title = "Director of Career Services<br/>Graduate School of Education, University of Pennsylvania"
   speaker_avatar = "/img/career-lab-workshop-speaker.png"
 
+# Career Lab — per-project checkout URLs (Stripe etc.). Fill when payment is live.
+[params.career_lab_project_payments]
+  job_aid = ""
+  training_proposal = ""
+  professional_deliverables = ""
+  design_document = ""
+  interactive_scenario = ""
+  portfolio_website = ""
+
 # ============================================================
 # NEW: Social links for footer
 # ============================================================

@@ -1,23 +1,38 @@
 /**
- * Phase 4 — agenda builder: drag or click label to add;
- * 💡 hint toggles coaching tooltip (Figma Phase 4-5).
+ * Phase 4 — agenda builder: pool shuffle, drag/click add, reorder, timer bar, 💡 hints.
  */
 (function () {
     var TIME_OPTIONS = [5, 10, 15, 20];
+    var POOL_ORDER_KEY = "heerise_agenda_pool_order";
+    var TIMER_MIN = 40;
+    var TIMER_MAX = 50;
+    var TIMER_SCALE_MAX = 60;
 
     var AGENDA_HINTS = {
-        "design-concept": "Presenting a design concept before you've completed discovery tells stakeholders you've already decided what to build. It shifts the conversation from \"what do you need?\" to \"do you like this?\" — and that's a trap. You don't have the information to design anything yet. This item does not belong on a kickoff call agenda.",
-        "learner-audience-constraints": "The brief tells you who the learners are on paper. This conversation tells you who they actually are — what they struggle with, how they access training, and what constraints will break your design assumptions. Skipping this means you're designing for a fictional audience. This item is critical and belongs in the first half of the call.",
-        "communication-cadence": "Useful, but not urgent. Agreeing on how often you'll check in is important for project health — but it's the kind of item that can be handled by email after the call. If you include it, put it near the end. If time runs short, cut it. Never let logistics crowd out discovery.",
-        "stakeholder-success": "This is the most important question on the entire agenda. If Jordan and Priya have different definitions of success — and they often do — every design decision you make will be contested. You cannot write valid learning objectives, define scope, or propose a format until you know what \"this worked\" looks like to each of them. This goes in the first half of the call, while attention is highest.",
-        "open-qa": "A useful pressure valve at the end of a call — it signals to stakeholders that their concerns matter and that you haven't run a rigid script. Keep it short and budget only 5 minutes. If it grows too large, something earlier in the agenda failed to surface what people actually wanted to say.",
-        "demo-walkthrough": "Running a product demo at the start of a kickoff call implies you've already decided the training is about the product features — before you've asked what the business problem actually is. It signals solution-first thinking and wastes 15–20 minutes you need for discovery. This item does not belong on a kickoff agenda.",
-        "introductions": "A brief round of introductions earns its place — but only if it's genuinely brief. The purpose is not social; it's functional. Knowing that Jordan is an ex-AE and Priya leads sales methodology tells you how to frame your questions. Keep this to 2–3 minutes and move on. Extended introductions are a common way to burn time that belongs to discovery.",
-        "signoff-objectives": "You cannot write valid learning objectives before you've completed discovery — and you certainly can't ask stakeholders to approve them in real time. This item creates the illusion of progress while bypassing the work that makes the objectives meaningful. Asking for live sign-off also puts stakeholders in an awkward position: they haven't had time to think. This item does not belong on a kickoff call agenda.",
-        "scope-boundary": "Scope conversations earn their place on a kickoff agenda — but only after discovery. Once you know what success looks like and who the audience really is, you can have an intelligent conversation about what the training should and should not include. Scope before discovery leads to arbitrary decisions. Scope after discovery leads to defensible ones.",
-        "brief-assumptions": "The brief is a starting point, not a contract. This item gives you permission to surface what might be wrong, incomplete, or assumed in the brief — before you spend days designing against it. It signals that you've read the brief carefully and that you're here to pressure-test it, not just execute it. A strong opener for the discovery phase.",
-        "next-steps": "A call without agreed next steps is just a conversation. This item transforms the kickoff into a decision — it names who does what by when, and ensures everyone leaves with the same understanding of what happens next. Without this, projects stall in the gap between the call ending and the first follow-up email. This item is critical and belongs at the close of every kickoff call.",
-        "timeline": "Timelines are not just logistics — they reveal pressure and priority. Confirming the 15-day deadline and asking what is driving it often surfaces a constraint (a product launch, an executive review) that should reshape your entire design approach. Include this item after scope confirmation, so that the timeline conversation is grounded in what you actually need to build."
+        "design-concept":
+            "Presenting a design concept before you've completed discovery tells stakeholders you've already decided what to build. It shifts the conversation from \"what do you need?\" to \"do you like this?\" — and that's a trap. You don't have the information to design anything yet. This item does not belong on a kickoff call agenda.",
+        "learner-audience-constraints":
+            "The brief tells you who the learners are on paper. This conversation tells you who they actually are — what they struggle with, how they access training, and what constraints will break your design assumptions. Skipping this means you're designing for a fictional audience. This item is critical and belongs in the first half of the call.",
+        "communication-cadence":
+            "Useful, but not urgent. Agreeing on how often you'll check in is important for project health — but it's the kind of item that can be handled by email after the call. If you include it, put it near the end. If time runs short, cut it. Never let logistics crowd out discovery.",
+        "stakeholder-success":
+            "This is the most important question on the entire agenda. If Jordan and Priya have different definitions of success — and they often do — every design decision you make will be contested. You cannot write valid learning objectives, define scope, or propose a format until you know what \"this worked\" looks like to each of them. This goes in the first half of the call, while attention is highest.",
+        "open-qa":
+            "A useful pressure valve at the end of a call — it signals to stakeholders that their concerns matter and that you haven't run a rigid script. Keep it short and budget only 5 minutes. If it grows too large, something earlier in the agenda failed to surface what people actually wanted to say.",
+        "demo-walkthrough":
+            "Running a product demo at the start of a kickoff call implies you've already decided the training is about the product features — before you've asked what the business problem actually is. It signals solution-first thinking and wastes 15–20 minutes you need for discovery. This item does not belong on a kickoff agenda.",
+        introductions:
+            "A brief round of introductions earns its place — but only if it's genuinely brief. The purpose is not social; it's functional. Knowing that Jordan is an ex-AE and Priya leads sales methodology tells you how to frame your questions. Keep this to 2–3 minutes and move on. Extended introductions are a common way to burn time that belongs to discovery.",
+        "signoff-objectives":
+            "You cannot write valid learning objectives before you've completed discovery — and you certainly can't ask stakeholders to approve them in real time. This item creates the illusion of progress while bypassing the work that makes the objectives meaningful. Asking for live sign-off also puts stakeholders in an awkward position: they haven't had time to think. This item does not belong on a kickoff call agenda.",
+        "scope-boundary":
+            "Scope conversations earn their place on a kickoff agenda — but only after discovery. Once you know what success looks like and who the audience really is, you can have an intelligent conversation about what the training should and should not include. Scope before discovery leads to arbitrary decisions. Scope after discovery leads to defensible ones.",
+        "brief-assumptions":
+            "The brief is a starting point, not a contract. This item gives you permission to surface what might be wrong, incomplete, or assumed in the brief — before you spend days designing against it. It signals that you've read the brief carefully and that you're here to pressure-test it, not just execute it. A strong opener for the discovery phase.",
+        "next-steps":
+            "A call without agreed next steps is just a conversation. This item transforms the kickoff into a decision — it names who does what by when, and ensures everyone leaves with the same understanding of what happens next. Without this, projects stall in the gap between the call ending and the first follow-up email. This item is critical and belongs at the close of every kickoff call.",
+        timeline:
+            "Timelines are not just logistics — they reveal pressure and priority. Confirming the 15-day deadline and asking what is driving it often surfaces a constraint (a product launch, an executive review) that should reshape your entire design approach. Include this item after scope confirmation, so that the timeline conversation is grounded in what you actually need to build."
     };
 
     var TOOLTIP_ID = "sks-ab-tooltip-panel";
@@ -51,6 +66,48 @@
         return TIME_OPTIONS[Math.max(0, i - 1)];
     }
 
+    function shufflePoolOrder(pool) {
+        var chips = Array.prototype.slice.call(pool.querySelectorAll(".sks-ab-pool-chip"));
+        if (!chips.length) return;
+
+        var stored = null;
+        try {
+            stored = sessionStorage.getItem(POOL_ORDER_KEY);
+        } catch (e) { /* ignore */ }
+
+        var order;
+        if (stored) {
+            try {
+                order = JSON.parse(stored);
+            } catch (e2) {
+                order = null;
+            }
+        }
+
+        if (!order || !order.length) {
+            order = chips.map(function (c) {
+                return c.getAttribute("data-ab-item-id");
+            });
+            for (var i = order.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var t = order[i];
+                order[i] = order[j];
+                order[j] = t;
+            }
+            try {
+                sessionStorage.setItem(POOL_ORDER_KEY, JSON.stringify(order));
+            } catch (e3) { /* ignore */ }
+        }
+
+        var byId = {};
+        chips.forEach(function (c) {
+            byId[c.getAttribute("data-ab-item-id")] = c;
+        });
+        order.forEach(function (id) {
+            if (byId[id]) pool.appendChild(byId[id]);
+        });
+    }
+
     function ensureTooltip() {
         var el = document.getElementById(TOOLTIP_ID);
         if (el) return el;
@@ -76,13 +133,16 @@
         var totalEl = root.querySelector("[data-ab-total-min]");
         var dropHint = root.querySelector(".sks-ab-drop-hint");
         var submit = root.querySelector("[data-ab-submit]");
+        var timerFill = root.querySelector("[data-ab-timer-fill]");
+        var timerWrap = root.querySelector("[data-ab-timer]");
 
         if (!pool || !drop || !body || !countEl || !totalEl || !submit) return;
+
+        shufflePoolOrder(pool);
 
         var tooltip = ensureTooltip();
         var tooltipBody = tooltip.querySelector(".sks-ab-tooltip-body");
         var openHintBtn = null;
-
         var agenda = [];
 
         function labelFor(id) {
@@ -178,6 +238,22 @@
             }
         }
 
+        function updateTimerBar(tot) {
+            if (!timerFill || !timerWrap) return;
+            var pct = Math.min(100, (tot / TIMER_SCALE_MAX) * 100);
+            timerFill.style.width = pct + "%";
+            timerWrap.classList.remove("is-under", "is-in-band", "is-over", "is-empty-timer");
+            if (tot === 0) {
+                timerWrap.classList.add("is-under", "is-empty-timer");
+            } else if (tot < TIMER_MIN) {
+                timerWrap.classList.add("is-under");
+            } else if (tot <= TIMER_MAX) {
+                timerWrap.classList.add("is-in-band");
+            } else {
+                timerWrap.classList.add("is-over");
+            }
+        }
+
         function updateChrome() {
             var n = agenda.length;
             var tot = totalMinutes();
@@ -187,21 +263,80 @@
             if (dropHint) dropHint.setAttribute("aria-hidden", n > 0 ? "true" : "false");
             submit.disabled = n === 0;
             submit.setAttribute("aria-disabled", n === 0 ? "true" : "false");
+            updateTimerBar(tot);
             syncPoolUsed();
             closeTooltip();
+        }
+
+        function moveRow(index, delta) {
+            var next = index + delta;
+            if (next < 0 || next >= agenda.length) return;
+            var tmp = agenda[index];
+            agenda[index] = agenda[next];
+            agenda[next] = tmp;
+            renderRows();
+            updateChrome();
+        }
+
+        function removeRow(index) {
+            agenda.splice(index, 1);
+            renderRows();
+            updateChrome();
         }
 
         function renderRows() {
             body.innerHTML = "";
             for (var i = 0; i < agenda.length; i++) {
-                (function (row) {
+                (function (row, index) {
                     var rowEl = document.createElement("div");
                     rowEl.className = "sks-ab-row";
+                    rowEl.setAttribute("data-ab-row-index", String(index));
+
+                    var orderCol = document.createElement("div");
+                    orderCol.className = "sks-ab-row-order";
+
+                    var up = document.createElement("button");
+                    up.type = "button";
+                    up.className = "sks-ab-order-btn";
+                    up.setAttribute("aria-label", "Move up");
+                    up.textContent = "↑";
+                    up.disabled = index === 0;
+                    up.addEventListener("click", function () {
+                        moveRow(index, -1);
+                    });
+
+                    var down = document.createElement("button");
+                    down.type = "button";
+                    down.className = "sks-ab-order-btn";
+                    down.setAttribute("aria-label", "Move down");
+                    down.textContent = "↓";
+                    down.disabled = index === agenda.length - 1;
+                    down.addEventListener("click", function () {
+                        moveRow(index, 1);
+                    });
+
+                    var remove = document.createElement("button");
+                    remove.type = "button";
+                    remove.className = "sks-ab-order-btn sks-ab-order-btn--remove";
+                    remove.setAttribute("aria-label", "Remove from agenda");
+                    remove.textContent = "×";
+                    remove.addEventListener("click", function () {
+                        removeRow(index);
+                    });
+
+                    orderCol.appendChild(up);
+                    orderCol.appendChild(down);
+                    orderCol.appendChild(remove);
 
                     var left = document.createElement("div");
                     left.className = "sks-ab-row-topic";
                     var pill = document.createElement("div");
                     pill.className = "sks-ab-topic-pill";
+                    var cat =
+                        window.HeeriseAgendaScorer && window.HeeriseAgendaScorer.categoryFor
+                            ? window.HeeriseAgendaScorer.categoryFor(row.id)
+                            : "";
+                    if (cat) pill.setAttribute("data-ab-category", cat);
                     pill.textContent = labelFor(row.id);
                     left.appendChild(pill);
 
@@ -241,18 +376,23 @@
                     right.appendChild(val);
                     right.appendChild(plus);
 
+                    rowEl.appendChild(orderCol);
                     rowEl.appendChild(left);
                     rowEl.appendChild(right);
                     body.appendChild(rowEl);
-                })(agenda[i]);
+                })(agenda[i], i);
             }
         }
 
         function addItem(id) {
             if (!id) return;
-            if (agenda.some(function (r) {
-                return r.id === id;
-            })) return;
+            if (
+                agenda.some(function (r) {
+                    return r.id === id;
+                })
+            ) {
+                return;
+            }
             agenda.push({ id: id, minutes: 5 });
             renderRows();
             updateChrome();
@@ -309,7 +449,7 @@
             ev.dataTransfer.effectAllowed = "copy";
         });
 
-        ;["dragenter", "dragover"].forEach(function (evt) {
+        ["dragenter", "dragover"].forEach(function (evt) {
             drop.addEventListener(evt, function (e) {
                 e.preventDefault();
                 e.dataTransfer.dropEffect = "copy";
@@ -363,11 +503,7 @@
                         "heerise_agenda_result",
                         JSON.stringify({
                             items: rows.map(function (r) {
-                                return {
-                                    id: r.id,
-                                    label: labelFor(r.id),
-                                    minutes: r.minutes
-                                };
+                                return { id: r.id, label: labelFor(r.id), minutes: r.minutes };
                             }),
                             totalMinutes: totalMinutes(),
                             savedAt: Date.now(),
@@ -378,8 +514,7 @@
                     );
                 } catch (err) { /* ignore */ }
             }
-            window.location.href =
-                "/acc/stakeholder-kickoff/agenda/result/";
+            window.location.href = "/acc/stakeholder-kickoff/agenda/result/";
         });
 
         updateChrome();

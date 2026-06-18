@@ -224,7 +224,7 @@ pluralizelisttitles = false
   title = "Co-Pilot, Not Autopilot"
   # Event date/time pill shown inline next to the title (replaces the
   # old "Coming Soon" pill and the countdown block).
-  subtitle = "8-9PM, April 28, 2026"
+  # subtitle = "8-9PM, April 28, 2026"
   # Compact mode keeps the two-column layout but hides the stats + countdown
   # that are part of the non-compact variant.
   coming_soon = true

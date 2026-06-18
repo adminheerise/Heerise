@@ -10,13 +10,56 @@
   const tabs = $$(".cl-tab");
   const contents = $$(".cl-tab-content");
 
+  // Pricing: project cards (default) ↔ bootcamp tiers
+  const pricingProjects = $("#pricing-projects");
+  const pricingBootcamp = $("#pricing-bootcamp");
+
+  const showPricingView = (view) => {
+    const showBootcamp = view === "bootcamp";
+    pricingProjects && (pricingProjects.hidden = showBootcamp);
+    pricingBootcamp && (pricingBootcamp.hidden = !showBootcamp);
+  };
+
   const switchTab = (id) => {
     tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === id));
     contents.forEach(c => c.classList.toggle("active", c.id === id));
+    if (id !== "pricing") {
+      showPricingView("projects");
+    }
     $(".cl-tabs-nav")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   tabs.forEach(t => t.addEventListener("click", () => switchTab(t.dataset.tab)));
   window.switchTab = switchTab;
+
+  $$("[data-pricing-show]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      showPricingView(btn.dataset.pricingShow);
+      $("#pricing")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  const openProjectPayment = (projectId, paymentUrl) => {
+    const url = (paymentUrl || "").trim();
+    if (url) {
+      window.location.assign(url);
+      return;
+    }
+    document.dispatchEvent(new CustomEvent("heerise:project-payment-pending", {
+      detail: { projectId, paymentUrl: url },
+    }));
+  };
+  window.HeeriseCareerLab = { ...(window.HeeriseCareerLab || {}), openProjectPayment };
+
+  $$(".cl-pricing-project-link").forEach(link => {
+    link.addEventListener("click", (e) => {
+      const paymentUrl = (link.dataset.paymentUrl || "").trim();
+      const projectId = link.dataset.projectId || "";
+      if (!paymentUrl) {
+        e.preventDefault();
+        openProjectPayment(projectId, paymentUrl);
+      }
+    });
+  });
 
   // Reusable countdown module
   window.HeeriseCountdown?.initAll(".cl-countdown");
@@ -172,12 +215,54 @@
     setBootcampStep(1);
   };
 
+  // Homepage / deep-link: open bootcamp modal when arriving from Featured CTA
+  // (?openBootcamp=1), hash (#bootcamp-signup), or sessionStorage handoff.
+  const bootcampOpenFromStorage = () => {
+    try {
+      if (sessionStorage.getItem("heerise_open_bootcamp") !== "1") return false;
+      sessionStorage.removeItem("heerise_open_bootcamp");
+      return true;
+    } catch (_) {
+      return false;
+    }
+  };
+  const bootcampOpenFromUrl = () => {
+    const h = (window.location.hash || "").toLowerCase();
+    if (h === "#bootcamp-signup" || h === "#sign-up") return true;
+    try {
+      const q = new URLSearchParams(window.location.search || "");
+      return q.get("openBootcamp") === "1" || q.get("signup") === "1";
+    } catch (_) {
+      return false;
+    }
+  };
+  const stripBootcampDeepLinkFromUrl = () => {
+    try {
+      const u = new URL(window.location.href);
+      u.hash = "";
+      u.searchParams.delete("openBootcamp");
+      u.searchParams.delete("signup");
+      const qs = u.searchParams.toString();
+      history.replaceState(null, "", u.pathname + (qs ? "?" + qs : "") + u.hash);
+    } catch (_) {
+      try {
+        history.replaceState(null, "", window.location.pathname + (window.location.search || ""));
+      } catch (__) {}
+    }
+  };
+
   bootcampOpenBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
       openBootcamp();
     });
   });
+  if (bootcampModal && (bootcampOpenFromStorage() || bootcampOpenFromUrl())) {
+    requestAnimationFrame(() => {
+      openBootcamp();
+      stripBootcampDeepLinkFromUrl();
+    });
+  }
   bootcampCloseBtns.forEach((btn) => btn.addEventListener("click", closeBootcamp));
   bootcampPrevStepBtn?.addEventListener("click", () => setBootcampStep(1));
   bootcampPrevStep2Btn?.addEventListener("click", () => setBootcampStep(2));

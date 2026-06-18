@@ -2553,6 +2553,223 @@ body.cl-modal-open {
     color: #017AFF;
 }
 
+/* ---- Learn with Projects pricing (Layer 1) ---- */
+.cl-projects-pricing-container {
+    max-width: 1180px;
+}
+
+.cl-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 24px;
+    margin-top: 8px;
+}
+
+#pricing-projects .cl-project-card {
+    position: relative;
+    background: #FFFFFF;
+    border: 1px solid rgba(1, 122, 255, 0.2);
+    border-radius: 12px;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+a.cl-pricing-project-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+}
+
+a.cl-pricing-project-link:hover {
+    box-shadow: 0 6px 20px rgba(1, 122, 255, 0.18);
+    transform: translateY(-2px);
+    border-color: rgba(1, 122, 255, 0.45);
+}
+
+a.cl-pricing-project-link:focus-visible {
+    outline: 2px solid #017AFF;
+    outline-offset: 3px;
+}
+
+#pricing-projects .cl-project-card-tab {
+    position: absolute;
+    top: -16px;
+    left: 24px;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 26px;
+    color: #017AFF;
+    background: #FFFFFF;
+    border: 1px solid rgba(1, 122, 255, 0.35);
+    white-space: nowrap;
+    max-width: calc(100% - 48px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#pricing-projects .cl-project-card-price {
+    padding: 28px 24px 20px;
+    text-align: center;
+    border-radius: 12px 12px 0 0;
+}
+
+#pricing-projects .cl-project-price-amount {
+    font-family: 'Inter', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+#pricing-projects .cl-project-card-body {
+    padding: 20px 24px 28px;
+    flex: 1;
+}
+
+#pricing-projects .cl-project-card-body p {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #364153;
+}
+
+/* Tier 1 — $49 */
+#pricing-projects .cl-project-tier-1 .cl-project-card-price {
+    background: rgba(1, 122, 255, 0.12);
+}
+#pricing-projects .cl-project-tier-1 .cl-project-price-amount {
+    color: #017AFF;
+}
+
+/* Tier 2 — $198 */
+#pricing-projects .cl-project-tier-2 .cl-project-card-price {
+    background: rgba(1, 122, 255, 0.28);
+}
+#pricing-projects .cl-project-tier-2 .cl-project-price-amount {
+    color: #017AFF;
+}
+
+/* Tier 3 — $398 */
+#pricing-projects .cl-project-tier-3 .cl-project-card-price {
+    background: #017AFF;
+}
+#pricing-projects .cl-project-tier-3 .cl-project-price-amount {
+    color: #FFFFFF;
+}
+#pricing-projects .cl-project-tier-3 .cl-project-card-tab {
+    background: #017AFF;
+    color: #FFFFFF;
+    border-color: #017AFF;
+}
+
+.cl-projects-footer {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.cl-projects-footer-lead {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 28px;
+    color: #017AFF;
+    margin: 0 0 12px;
+}
+
+.cl-projects-footer-bonus {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #017AFF;
+    margin: 0 0 8px;
+}
+
+.cl-projects-footer-bonus strong {
+    font-weight: 700;
+}
+
+.cl-projects-accent {
+    color: #E7000B;
+    font-weight: 700;
+}
+
+.cl-projects-footer-referral {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #017AFF;
+    margin: 0;
+}
+
+.cl-projects-footer-referral strong {
+    font-weight: 700;
+}
+
+.cl-projects-cta-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+}
+
+.cl-projects-bootcamp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: #017AFF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cl-projects-bootcamp-btn:hover {
+    background: #005bbf;
+}
+
+.cl-pricing-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    padding: 8px 0;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #017AFF;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.cl-pricing-back-btn:hover {
+    opacity: 0.75;
+}
+
+.cl-pricing-bootcamp-view[hidden] {
+    display: none !important;
+}
+
+#pricing-projects[hidden] {
+    display: none !important;
+}
+
 /* ---- Bootcamp application modal ---- */
 .cl-bootcamp-modal {
     position: fixed;
@@ -2862,6 +3079,17 @@ body.cl-modal-open {
     .cl-pricing-recommended {
         width: 100%;
         max-width: 400px;
+    }
+    .cl-projects-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+    #pricing-projects .cl-project-card-tab {
+        font-size: 18px;
+        line-height: 24px;
+    }
+    #pricing-projects .cl-project-price-amount {
+        font-size: 36px;
     }
 }
 

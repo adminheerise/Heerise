@@ -24,10 +24,10 @@
 <link href="{{ "css/lumina-sim-notes.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 {{ end }}
 
-<!-- Navbar: #017AFF override (loads last - overrides theme purple/teal) -->
+<!-- Navbar: #011F5B override (loads last - overrides theme purple/teal) -->
 <style>
 :root {
-  --primary-accent: #017AFF !important;
+  --primary-accent: #011F5B !important;
   /* Hover no longer fills the button — keep the focus var transparent so the
      Bootstrap default "navbar-nav > li > a:hover { background-color: var(--navbar-focus) }"
      rule has no visible effect. */
@@ -41,7 +41,7 @@
 /* Hover: only color changes — no blue bar / background */
 .navbar-default .navbar-nav > li:not(.active) > a:hover,
 .navbar-default .navbar-nav > li:not(.active) > a:focus {
-  color: #017AFF !important;
+  color: #011F5B !important;
   background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -51,7 +51,7 @@
 .navbar-default .navbar-nav > li.active > a:hover,
 .navbar-default .navbar-nav > li.active > a:focus {
   color: #FFFFFF !important;
-  background-color: rgba(1, 122, 255, 0.8) !important;
+  background-color: rgba(1, 31, 91, 0.8) !important;
   border-radius: 0 !important;
   border: none !important;
 }
@@ -60,7 +60,7 @@
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
   color: #FFFFFF !important;
-  background-color: rgba(1, 122, 255, 0.8) !important;
+  background-color: rgba(1, 31, 91, 0.8) !important;
   border-radius: 0 !important;
   border: none !important;
 }

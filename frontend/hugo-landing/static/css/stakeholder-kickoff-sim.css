@@ -2504,7 +2504,7 @@ body:has(.sks-page--zoom-meeting) #content {
 }
 .sks-rw-qmodal-dd-opt:hover,
 .sks-rw-qmodal-dd-opt[aria-selected="true"] {
-    background: rgba(1, 122, 255, 0.08);
+    background: rgba(1, 31, 91, 0.08);
 }
 
 /* Textareas */
@@ -2526,7 +2526,7 @@ body:has(.sks-page--zoom-meeting) #content {
 .sks-rw-qmodal-textarea:focus {
     outline: none;
     border-color: #017aff;
-    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(1, 31, 91, 0.15);
 }
 .sks-rw-qmodal-textarea--err {
     border-color: #e53935;

@@ -30,27 +30,26 @@
                 {{ end }}
             </div>
 
-            <div class="clp-speaker" aria-label="Workshop host">
-                <div class="clp-speaker-avatar">
-                    <img src="/img/career-lab-workshop-speaker.png" alt="Christa Hunter" />
+            <div class="cl-featured-event-speaker-card" aria-label="Workshop host">
+                <div class="cl-featured-event-speaker-avatar">
+                    <img src="/img/instructors/lindaA.jpg" alt="Linda A" />
                 </div>
-                <div class="clp-speaker-info">
-                    <p class="clp-speaker-label">Hosted by</p>
-                    <p class="clp-speaker-name">Christa Hunter</p>
-                    <p class="clp-speaker-title">Director of Career Services,<br/>University of Pennsylvania Graduate School of Education</p>
+                <div class="cl-featured-event-speaker-info">
+                    <p class="cl-featured-event-speaker-name">Linda A</p>
+                    <p class="cl-featured-event-speaker-title">Senior Instructional Designer,<br/>UPenn GSE</p>
                 </div>
             </div>
 
             <a href="#" class="clp-btn-secondary cl-bootcamp-open" onclick="return false;">
                 <span>SIGN UP</span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M5 12h14m0 0l-5-5m5 5l-5 5" stroke="#017AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 12h14m0 0l-5-5m5 5l-5 5" stroke="#011F5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </a>
         </div>
 
         <div class="clp-hero-image">
-            <img src="/img/career-lab-hero.png" alt="Career Lab Workshop collaborative session" />
+            <img src="{{ .Site.Params.featured_event.image }}" alt="{{ .Site.Params.featured_event.image_alt }}" />
         </div>
     </div>
 </section>

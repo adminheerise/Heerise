@@ -309,7 +309,7 @@ body.lumina-notes-open .lumina-sim-notes-panel.lumina-sim-notes-panel--visible:n
 }
 
 .lumina-sim-notes-editor:focus {
-  outline: 2px solid rgba(1, 122, 255, 0.45);
+  outline: 2px solid rgba(1, 31, 91, 0.45);
   outline-offset: 0;
 }
 

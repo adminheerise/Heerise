@@ -12,8 +12,17 @@
 <link href="{{ "css/stakeholder-kickoff.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 {{ end }}
 
-{{ if or (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") (eq .Params.id "stakeholder-kickoff-zoom-meeting") (eq .Params.id "stakeholder-kickoff-outreach-email") }}
+{{ if or (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") (eq .Params.id "stakeholder-kickoff-outreach-intro") (eq .Params.id "stakeholder-kickoff-zoom-meeting") }}
 <link href="{{ "css/stakeholder-kickoff-sim.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+{{ end }}
+{{ if eq .Params.id "stakeholder-kickoff-outreach-email" }}
+<link href="{{ "css/stakeholder-kickoff-sim.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+<link href="{{ "css/outreach-email-mock.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+<link href="{{ "css/outreach-feedback.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+{{ end }}
+{{ if eq .Params.id "stakeholder-kickoff-outreach-feedback" }}
+<link href="{{ "css/stakeholder-kickoff-sim.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+<link href="{{ "css/outreach-feedback.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 {{ end }}
 {{ if or (eq .Params.id "stakeholder-kickoff-zoom-meeting") (eq .Params.id "stakeholder-kickoff-outreach-email") }}
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&family=Lato:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -67,8 +76,11 @@
 </style>
 
 <script>
-  window.HEERISE_API_BASE =
-    window.location.port === "1313" ? "http://localhost:8000" : "/api";
+  (function () {
+    var host = window.location.hostname;
+    var isLocal = host === "localhost" || host === "127.0.0.1";
+    window.HEERISE_API_BASE = isLocal ? "http://localhost:8000" : "/api";
+  })();
 
   // Mark dropdown parent (e.g. CAREER LAB) active when current page matches one of its children.
   document.addEventListener("DOMContentLoaded", function () {

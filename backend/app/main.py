@@ -14,6 +14,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:1313",
+        "http://127.0.0.1:1313",
         "http://localhost:8080",
         "https://heeriseacademy.web.app",
         "https://heeriseacademy.firebaseapp.com",

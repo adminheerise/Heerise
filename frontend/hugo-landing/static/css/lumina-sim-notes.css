@@ -323,6 +323,20 @@ body.lumina-notes-open .lumina-sim-notes-panel.lumina-sim-notes-panel--visible:n
     right: 16px;
     bottom: 16px;
   }
+
+  body:has(.sks-page--outreach-email) .lumina-sim-notes-fab,
+  body:has(.sks-page--outreach-intro) .lumina-sim-notes-fab {
+    bottom: auto;
+    top: clamp(72px, 18vh, 108px);
+    right: 16px;
+  }
+
+  body:has(.sks-page--outreach-email).lumina-notes-open:not(.lumina-notes-panel-floating) .lumina-sim-notes-fab,
+  body:has(.sks-page--outreach-intro).lumina-notes-open:not(.lumina-notes-panel-floating) .lumina-sim-notes-fab {
+    bottom: auto;
+    top: clamp(72px, 18vh, 108px);
+    right: 16px;
+  }
 }
 
 @media (max-width: 520px) {
@@ -339,4 +353,30 @@ body.lumina-notes-open .lumina-sim-notes-panel.lumina-sim-notes-panel--visible:n
     flex-direction: row;
     flex-wrap: wrap;
   }
+}
+
+/* Outreach Email / Maya intro wireframes: FAB reads as top-right knowledge / Hint control */
+body:has(.sks-page--outreach-email) .lumina-sim-notes-fab,
+body:has(.sks-page--outreach-intro) .lumina-sim-notes-fab {
+  bottom: auto;
+  top: clamp(96px, 16vh, 128px);
+  right: clamp(20px, 4vw, 44px);
+  border-width: 3px;
+  box-shadow:
+    0 0 0 4px rgba(244, 208, 63, 0.28),
+    0 6px 28px rgba(0, 0, 0, 0.22);
+}
+
+body:has(.sks-page--outreach-email).lumina-notes-open:not(.lumina-notes-panel-floating) .lumina-sim-notes-fab,
+body:has(.sks-page--outreach-intro).lumina-notes-open:not(.lumina-notes-panel-floating) .lumina-sim-notes-fab {
+  right: calc(var(--lumina-notes-width) + 20px);
+  top: clamp(96px, 16vh, 128px);
+  bottom: auto;
+}
+
+body:has(.sks-page--outreach-email) .lumina-sim-notes-tooltip,
+body:has(.sks-page--outreach-intro) .lumina-sim-notes-tooltip {
+  bottom: auto;
+  top: calc(clamp(96px, 16vh, 128px) + var(--lumina-notes-fab-size) + 12px);
+  right: clamp(20px, 4vw, 44px);
 }

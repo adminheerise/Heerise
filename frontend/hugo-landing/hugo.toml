@@ -116,7 +116,9 @@ pluralizelisttitles = false
     "stakeholder-kickoff-gap-analysis",
     "stakeholder-kickoff-research",
     "stakeholder-kickoff-research-workspace",
+    "stakeholder-kickoff-outreach-intro",
     "stakeholder-kickoff-outreach-email",
+    "stakeholder-kickoff-outreach-feedback",
   ]
 
   disabled_logo = false

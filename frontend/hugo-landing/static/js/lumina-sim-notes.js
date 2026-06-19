@@ -23,7 +23,9 @@
     "stakeholder-kickoff-brief-organize": "brief-organize",
     "stakeholder-kickoff-gap-analysis": "brief-gap-analysis",
     "stakeholder-kickoff-zoom-meeting": "brief-zoom meeting",
+    "stakeholder-kickoff-outreach-intro": "outreach-intro",
     "stakeholder-kickoff-outreach-email": "brief-email",
+    "stakeholder-kickoff-outreach-feedback": "outreach-feedback",
     "stakeholder-kickoff-research": "research",
     "stakeholder-kickoff-research-workspace": "research-workspace",
   };

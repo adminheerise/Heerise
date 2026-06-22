@@ -19,7 +19,7 @@
 <!-- owl carousel -->
 <script src="{{ "js/owl.carousel.min.js" | relURL }}"></script>
 
-{{ if or (eq .Params.id "stakeholder-kickoff") (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") (eq .Params.id "stakeholder-kickoff-outreach-intro") (eq .Params.id "stakeholder-kickoff-outreach-email") (eq .Params.id "stakeholder-kickoff-outreach-feedback") }}
+{{ if or (eq .Params.id "stakeholder-kickoff") (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") (eq .Params.id "stakeholder-kickoff-outreach-intro") (eq .Params.id "stakeholder-kickoff-brief-email") (eq .Params.id "stakeholder-kickoff-outreach-compose") (eq .Params.id "stakeholder-kickoff-outreach-feedback") }}
 <script src="{{ "js/stakeholder-sim-username.js" | relURL }}?{{ now.Unix }}"></script>
 {{ end }}
 {{ if eq .Params.id "stakeholder-kickoff-outreach-feedback" }}

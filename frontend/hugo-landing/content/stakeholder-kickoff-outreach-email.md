@@ -1,6 +1,6 @@
 +++
 title = "Assignment Brief — Inbox (sim)"
-id = "stakeholder-kickoff-outreach-email"
+id = "stakeholder-kickoff-brief-email"
 url = "/acc/stakeholder-kickoff/outreach-email/"
 type = "page"
 draft = false

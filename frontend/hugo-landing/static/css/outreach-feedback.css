@@ -1,0 +1,434 @@
+/* Outreach email feedback results */
+
+.oe-fb-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0 48px;
+    min-height: 0;
+}
+
+.oe-fb-summary {
+    text-align: center;
+    margin: 12px 0 28px;
+}
+
+.oe-fb-kicker {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: #5f6368;
+}
+
+.oe-fb-level {
+    margin: 6px 0 14px;
+    font-size: clamp(42px, 6vw, 56px);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.oe-fb-stars-lg {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.oe-fb-star {
+    font-size: 36px;
+    line-height: 1;
+    color: #dadce0;
+}
+
+.oe-fb-star.on {
+    color: #f4b400;
+}
+
+.oe-fb-detail-head {
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+    padding: 0 4px;
+}
+
+.oe-fb-detail-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #9aa0a6;
+    text-transform: uppercase;
+}
+
+.oe-fb-sample-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    background: transparent;
+    color: #1a73e8;
+    font: 600 13px Inter, sans-serif;
+    cursor: pointer;
+    padding: 4px 0;
+}
+
+.oe-fb-sample-link:hover {
+    text-decoration: underline;
+}
+
+.oe-fb-sample-ico {
+    font-size: 14px;
+}
+
+.oe-fb-cards {
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.oe-fb-card {
+    border: 1px solid #e8eaed;
+    border-radius: 12px;
+    background: #fff;
+    padding: 16px 18px 14px;
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.08);
+}
+
+.oe-fb-card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.oe-fb-card-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #202124;
+}
+
+.oe-fb-card-sub {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: #9aa0a6;
+}
+
+.oe-fb-stars-sm {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.oe-fb-stars-sm .oe-fb-star {
+    font-size: 16px;
+}
+
+.oe-fb-badge {
+    margin-top: 2px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #202124;
+}
+
+.oe-fb-badge strong {
+    font-weight: 700;
+}
+
+.oe-fb-badge--developing {
+    background: #fce8e6;
+    border: 1px solid #f5c6c2;
+}
+
+.oe-fb-badge--proficient {
+    background: #e8f0fe;
+    border: 1px solid #c6dafc;
+}
+
+.oe-fb-badge--exemplary {
+    background: #e6f4ea;
+    border: 1px solid #ceead6;
+}
+
+.oe-fb-actions {
+    margin-top: 32px;
+    text-align: center;
+}
+
+.oe-fb-next {
+    display: inline-block;
+    min-width: 220px;
+    padding: 14px 32px;
+    border-radius: 8px;
+    background: #000;
+    color: #fff;
+    font: 700 14px Inter, sans-serif;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+}
+
+.oe-fb-next:hover,
+.oe-fb-next:focus {
+    background: #222;
+    color: #fff;
+    text-decoration: none;
+}
+
+.oe-fb-loading,
+.oe-fb-error {
+    margin: 48px auto;
+    text-align: center;
+    color: #5f6368;
+    font-size: 15px;
+}
+
+.oe-fb-back {
+    display: inline-block;
+    margin-top: 12px;
+    color: #1a73e8;
+    font-weight: 600;
+}
+
+.oe-fb-modal {
+    border: none;
+    border-radius: 14px;
+    padding: 0;
+    max-width: min(720px, 94vw);
+    width: 100%;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
+}
+
+.oe-fb-modal::backdrop {
+    background: rgba(55, 55, 55, 0.72);
+}
+
+.oe-fb-modal-inner {
+    padding: 0;
+    overflow: hidden;
+    border-radius: 14px;
+}
+
+.oe-fb-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px 14px;
+    border-bottom: none;
+}
+
+.oe-fb-modal-head h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #202124;
+}
+
+.oe-fb-modal-close {
+    border: none;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: #5f6368;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.oe-fb-modal-body {
+    padding: 0 22px 22px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #3c4043;
+}
+
+.oe-fb-sample-subject {
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #f1f3f4;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #3c4043;
+}
+
+.oe-fb-sample-subject strong {
+    font-weight: 700;
+    color: #202124;
+}
+
+.oe-fb-sample-email {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.oe-fb-sample-sec {
+    border-radius: 10px;
+    padding: 12px 14px 14px;
+}
+
+.oe-fb-sample-sec h3 {
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.oe-fb-sample-sec p {
+    margin: 0 0 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #3c4043;
+}
+
+.oe-fb-sample-sec p:last-child {
+    margin-bottom: 0;
+}
+
+.oe-fb-sample-sec ul {
+    margin: 4px 0 0;
+    padding-left: 18px;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.oe-fb-sample-sec li {
+    margin-bottom: 2px;
+}
+
+.oe-fb-sample-sec--context {
+    background: #e8f4fd;
+}
+
+.oe-fb-sample-sec--context h3 {
+    color: #1a73e8;
+}
+
+.oe-fb-sample-sec--purpose {
+    background: #fce8f3;
+}
+
+.oe-fb-sample-sec--purpose h3 {
+    color: #d93025;
+}
+
+.oe-fb-sample-sec--question {
+    background: #fef7e0;
+}
+
+.oe-fb-sample-sec--question h3 {
+    color: #e37400;
+}
+
+.oe-fb-sample-sec--scheduling {
+    background: #f1f3f4;
+}
+
+.oe-fb-sample-sec--scheduling h3 {
+    color: #5f6368;
+}
+
+.oe-fb-sample-sec--close {
+    background: #e6f4ea;
+}
+
+.oe-fb-sample-sec--close h3 {
+    color: #137333;
+}
+
+/* Send scoring overlay (outreach email page) */
+.oe-scoring {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(2px);
+}
+
+.oe-scoring[hidden] {
+    display: none !important;
+}
+
+.oe-scoring-inner {
+    text-align: center;
+    padding: 28px 36px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.oe-scoring-inner p {
+    margin: 0;
+    font: 600 15px Inter, sans-serif;
+    color: #202124;
+}
+
+.oe-scoring-msg {
+    margin-bottom: 6px;
+}
+
+.oe-scoring-sub {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    color: #5f6368 !important;
+}
+
+.oe-scoring-msg--ok {
+    color: #137333;
+}
+
+.oe-scoring-msg--err {
+    color: #c5221f;
+}
+
+.oe-scoring-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.oe-scoring-actions[hidden] {
+    display: none !important;
+}
+
+.oe-scoring-btn {
+    border: 1px solid #dadce0;
+    border-radius: 6px;
+    background: #fff;
+    color: #3c4043;
+    font: 600 13px Inter, sans-serif;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.oe-scoring-btn--primary {
+    background: #1a73e8;
+    border-color: #1a73e8;
+    color: #fff;
+}
+
+.oe-scoring-btn:hover {
+    filter: brightness(0.96);
+}
+
+.oe-send.is-loading {
+    opacity: 0.7;
+    pointer-events: none;
+}

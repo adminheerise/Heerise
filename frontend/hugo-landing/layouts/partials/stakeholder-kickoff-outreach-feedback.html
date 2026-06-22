@@ -1,0 +1,90 @@
+{{ $nextModule := "/acc/stakeholder-kickoff/brief-organize/" | relURL }}
+<section id="oe-fb-root" class="sks-page sks-page--outreach-feedback oe-fb" aria-label="Outreach Email feedback">
+    <div class="sks-shell sks-shell--outreach-feedback">
+        <header class="sks-top oe-fb-top">
+            <div class="sks-brand">LUMINA<span class="sks-brand-sep" aria-hidden="true">&bull;</span>SIM</div>
+            <nav class="sks-nav" aria-label="Simulation steps">
+                <span class="sks-step">Assignment Brief</span>
+                <span class="sks-step">Research</span>
+                <span class="sks-step sks-step-active">Outreach Email</span>
+                <span class="sks-step">Meeting Agenda</span>
+                <span class="sks-step">Kick-off Call</span>
+                <span class="sks-step">Manager Brief</span>
+                <span class="sks-step">Results</span>
+            </nav>
+        </header>
+
+        <main class="oe-fb-main">
+            <div class="oe-fb-summary" id="oe-fb-summary" hidden>
+                <p class="oe-fb-kicker">Your Email is</p>
+                <h1 class="oe-fb-level" id="oe-fb-level"></h1>
+                <div class="oe-fb-stars-lg" id="oe-fb-stars-lg" aria-hidden="true"></div>
+            </div>
+
+            <div class="oe-fb-detail-head" id="oe-fb-detail-head" hidden>
+                <span class="oe-fb-detail-label">DETAILED RATING</span>
+                <button type="button" class="oe-fb-sample-link" id="oe-fb-sample-btn">
+                    <span class="oe-fb-sample-ico" aria-hidden="true">&#128196;</span>
+                    View Sample Kick-off Email
+                </button>
+            </div>
+
+            <div class="oe-fb-cards" id="oe-fb-cards" aria-live="polite"></div>
+
+            <div class="oe-fb-actions" id="oe-fb-actions" hidden>
+                <a href="{{ $nextModule }}" class="oe-fb-next" id="oe-fb-next">Go to Next Module</a>
+            </div>
+
+            <div class="oe-fb-loading" id="oe-fb-loading">
+                <p>Loading your feedback…</p>
+            </div>
+            <div class="oe-fb-error" id="oe-fb-error" hidden>
+                <p id="oe-fb-error-txt">We couldn&rsquo;t load your feedback.</p>
+                <a href="{{ "/acc/stakeholder-kickoff/outreach-email/" | relURL }}" class="oe-fb-back">Back to email</a>
+            </div>
+        </main>
+    </div>
+
+    <dialog class="oe-fb-modal" id="oe-fb-sample-modal" aria-labelledby="oe-fb-sample-title">
+        <div class="oe-fb-modal-inner">
+            <header class="oe-fb-modal-head">
+                <h2 id="oe-fb-sample-title">SAMPLE EMAIL</h2>
+                <button type="button" class="oe-fb-modal-close" id="oe-fb-sample-close" aria-label="Close">&times;</button>
+            </header>
+            <div class="oe-fb-modal-body">
+                <div class="oe-fb-sample-subject">
+                    <strong>SUBJECT:</strong> Aria Rep Readiness &mdash; Kickoff Discovery Call
+                </div>
+                <div class="oe-fb-sample-email">
+                    <section class="oe-fb-sample-sec oe-fb-sample-sec--context">
+                        <h3>CONTEXT &amp; CREDIBILITY</h3>
+                        <p>Hi Jordan and Priya,</p>
+                        <p>I&rsquo;m the learning designer leading the Aria sales enablement build, working with Maya Chen. I&rsquo;ve spent time reviewing the project brief and researching Aria&rsquo;s capabilities, our current ramp-time benchmarks, and the approaches we&rsquo;ve tried before, including the product wiki and manager-led sessions. I have a much clearer picture of where we are, and I want to make sure what we build next actually changes how reps perform in the field.</p>
+                    </section>
+                    <section class="oe-fb-sample-sec oe-fb-sample-sec--purpose">
+                        <h3>MEETING PURPOSE</h3>
+                        <p>I&rsquo;d like to schedule a 45-minute discovery call with both of you. The goal is to walk away with three things: agreed learning objectives grounded in what reps actually need, confirmed scope boundaries so we&rsquo;re building the right thing at the right size, and your respective definitions of success so I can design to them from day one.</p>
+                    </section>
+                    <section class="oe-fb-sample-sec oe-fb-sample-sec--question">
+                        <h3>PRE-CALL QUESTION</h3>
+                        <p>To help me prepare, one question I&rsquo;d love your thinking on ahead of time: When a new rep loses an Aria deal in the first 60 days, what&rsquo;s usually the moment it goes wrong &mdash; the discovery conversation, the demo, the objection handling, or somewhere else?</p>
+                    </section>
+                    <section class="oe-fb-sample-sec oe-fb-sample-sec--scheduling">
+                        <h3>PRE-CALL QUESTION</h3>
+                        <p>I know your calendars are full, so here are a few windows &mdash; happy to adjust:</p>
+                        <ul>
+                            <li>Tuesday 14 Jan, 10:00&ndash;10:45 AM PT</li>
+                            <li>Wednesday 15 Jan, 2:00&ndash;2:45 PM PT</li>
+                            <li>Friday 17 Jan, 11:00&ndash;11:45 AM PT</li>
+                        </ul>
+                    </section>
+                    <section class="oe-fb-sample-sec oe-fb-sample-sec--close">
+                        <h3>PRE-CALL QUESTION</h3>
+                        <p>I&rsquo;m committed to building something that makes a real difference for the team&rsquo;s ramp and confidence with Aria. Looking forward to learning from both of you.</p>
+                        <p>Best,<br>[Learner Name]<br>Learning Experience Designer, Lumina</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </dialog>
+</section>

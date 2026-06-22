@@ -7,13 +7,34 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
+from pydantic import BaseModel, Field
 
 from ..deps import get_current_user_optional
 from ..models import User
+from ..services.outreach_email import score_outreach_email
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/sim", tags=["sim"])
+
+
+class OutreachEmailScoreIn(BaseModel):
+    subject: str = Field(default="", max_length=500)
+    body: str = Field(min_length=1, max_length=5000)
+
+
+class CriterionScoreOut(BaseModel):
+    id: str
+    score: int
+    feedback: str
+
+
+class OutreachEmailScoreOut(BaseModel):
+    criteria: list[CriterionScoreOut]
+    total_score: int
+    overall_level: str
+    stakeholder_response: str
+    word_count: int
 
 # Microsoft Edge neural voice (English US, female). See: edge-tts --list-voices
 MAYA_VOICE = "en-US-JennyNeural"
@@ -33,6 +54,23 @@ def _maya_script(who: str) -> str:
         "Read it, then come back and let me know what you think you know, what you don't know "
         "(things to ask in the kickoff), and what questions you need answered before that call."
     )
+
+
+@router.post("/outreach-email-score", response_model=OutreachEmailScoreOut)
+async def outreach_email_score(body: OutreachEmailScoreIn):
+    """Score outreach email against the 7-criterion rubric via Gemini."""
+    try:
+        result = await score_outreach_email(body.subject, body.body)
+        return result
+    except RuntimeError as e:
+        msg = str(e)
+        if "GEMINI_API_KEY" in msg:
+            raise HTTPException(status_code=503, detail="Email scoring is not configured") from e
+        logger.exception("outreach email score failed")
+        raise HTTPException(status_code=502, detail=msg) from e
+    except Exception as e:
+        logger.exception("outreach email score failed")
+        raise HTTPException(status_code=502, detail="Failed to score email") from e
 
 
 @router.get("/maya-zoom-narration")

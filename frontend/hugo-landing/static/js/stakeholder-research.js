@@ -10,7 +10,15 @@
 
   function showLine(idx) {
     lines.forEach(function (el, j) {
-      el.hidden = j !== idx;
+      el.classList.remove("sks-research-line--peek");
+      if (j === idx) {
+        el.hidden = false;
+      } else if (j === idx + 1 && idx < last) {
+        el.hidden = false;
+        el.classList.add("sks-research-line--peek");
+      } else {
+        el.hidden = true;
+      }
     });
     var onLast = idx >= last;
     if (onLast) {
@@ -31,6 +39,11 @@
     i += 1;
     showLine(i);
   });
+
+  btn.setAttribute(
+    "aria-label",
+    "Next: show following paragraph",
+  );
 
   showLine(0);
 })();

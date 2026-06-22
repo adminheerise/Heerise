@@ -1,6 +1,6 @@
 /* ==========================================================================
    Heerise Custom CSS
-   Design System: Inter font, #017AFF primary blue
+   Design System: Inter font, #011F5B primary blue
    Overrides hugo-universal-theme defaults
    ========================================================================== */
 
@@ -24,7 +24,7 @@ body {
 }
 
 a {
-    color: #017AFF;
+    color: #011F5B;
 }
 
 a:hover,
@@ -48,8 +48,8 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
    -------------------------------------------------------------------------- */
 
 .btn-template-main {
-    background-color: #017AFF;
-    border-color: #017AFF;
+    background-color: #011F5B;
+    border-color: #011F5B;
     color: #FFFFFF;
     border-radius: 6px;
     font-weight: 600;
@@ -68,8 +68,8 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 }
 
 .btn-cta-primary {
-    background-color: #017AFF;
-    border: 2px solid #017AFF;
+    background-color: #011F5B;
+    border: 2px solid #011F5B;
     color: #FFFFFF;
     border-radius: 6px;
     font-weight: 600;
@@ -90,12 +90,12 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 }
 
 .btn-template-transparent-black {
-    border-color: #017AFF;
-    color: #017AFF;
+    border-color: #011F5B;
+    color: #011F5B;
 }
 
 .btn-template-transparent-black:hover {
-    background-color: #017AFF;
+    background-color: #011F5B;
     color: #FFFFFF;
 }
 
@@ -145,7 +145,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 #navbar.navbar.navbar-default .navbar-nav > li:not(.active) > a:focus,
 .navbar.navbar-default .navbar-nav > li:not(.active) > a:hover,
 .navbar.navbar-default .navbar-nav > li:not(.active) > a:focus {
-    color: #017AFF !important;
+    color: #011F5B !important;
     background-color: transparent !important;
     border: none !important;
     text-decoration: none;
@@ -157,7 +157,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 .navbar.navbar-default .navbar-nav > li.active > a:hover,
 .navbar.navbar-default .navbar-nav > li.active > a:focus {
     color: #FFFFFF;
-    background-color: rgba(1, 122, 255, 0.8);
+    background-color: rgba(1, 31, 91, 0.8);
     border: none;
     border-radius: 0;
     text-decoration: none;
@@ -454,21 +454,21 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 .fe-title-bar {
     width: 60px;
     height: 1px;
-    background: #017AFF;
+    background: #011F5B;
 }
 
-/* Cohort badge — Figma: rgba(1,122,255,0.1) bg, #017AFF text, 10px */
+/* Cohort badge — Figma: rgba(1,31,91,0.1) bg, #011F5B text, 10px */
 .fe-cohort-badge {
     display: inline-flex;
     align-items: center;
     padding: 2px 8px;
-    background: rgba(1, 122, 255, 0.1);
+    background: rgba(1, 31, 91, 0.1);
     border-radius: 4px;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 10px;
     line-height: 12px;
-    color: #017AFF;
+    color: #011F5B;
     white-space: nowrap;
 }
 
@@ -477,7 +477,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     font-family: 'Inter', monospace;
     font-weight: 600;
     font-size: 18px;
-    color: #017AFF;
+    color: #011F5B;
 }
 .fe-countdown [data-countdown-days],
 .fe-countdown [data-countdown-hours],
@@ -520,7 +520,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     font-size: 20px;
     line-height: 24px;
     text-align: center;
-    color: #017AFF;
+    color: #011F5B;
 }
 
 .fe-stat-label {
@@ -538,13 +538,13 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     margin-bottom: 0;
 }
 
-/* CTA button — Figma: #017AFF, border-radius 8px, padding 12px 20px */
+/* CTA button — Figma: #011F5B, border-radius 8px, padding 12px 20px */
 .fe-cta-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 12px 20px;
-    background: #017AFF;
+    background: #011F5B;
     border-radius: 8px;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
@@ -849,14 +849,14 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     gap: 24px;
 }
 
-/* "Who Are We?" — Figma: 64px, weight 900, letter-spacing 2px, #017AFF */
+/* "Who Are We?" — Figma: 64px, weight 900, letter-spacing 2px, #011F5B */
 .about-title {
     font-family: 'Inter', sans-serif;
     font-weight: 900;
     font-size: 64px;
     line-height: 77px;
     letter-spacing: 2px;
-    color: #017AFF;
+    color: #011F5B;
     margin: 0;
 }
 
@@ -884,9 +884,9 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     border-radius: 8px;
 }
 
-/* MISSION — Figma: Frame 258, 1280×237.54, bg #017AFF, padding 48px 80px, gap 48px */
+/* MISSION — Figma: Frame 258, 1280×237.54, bg #011F5B, padding 48px 80px, gap 48px */
 .about-mission {
-    background: #017AFF;
+    background: #011F5B;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -907,7 +907,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 /* Divider between Mission and Vision — flush inside blue area */
 .about-divider {
     width: 100%;
-    background: #017AFF;
+    background: #011F5B;
     padding: 0;
     margin: 0;
     height: 0;
@@ -924,9 +924,9 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     border-top: 1px solid rgba(255, 255, 255, 0.6);
 }
 
-/* VISION — Figma: Frame 259, 1280×360, pure #017AFF background */
+/* VISION — Figma: Frame 259, 1280×360, pure #011F5B background */
 .about-vision {
-    background: #017AFF;
+    background: #011F5B;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -1095,7 +1095,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 .contact-hero {
     width: 100%;
     height: 190px;
-    background: linear-gradient(91.16deg, #017AFF 0.99%, #1F0199 130.31%);
+    background: linear-gradient(91.16deg, #011F5B 0.99%, #1F0199 130.31%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1234,8 +1234,8 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 
 .cf-input:focus,
 .cf-select:focus {
-    border-color: #017AFF;
-    box-shadow: 0 0 0 2px rgba(1, 122, 255, 0.1);
+    border-color: #011F5B;
+    box-shadow: 0 0 0 2px rgba(1, 31, 91, 0.1);
 }
 
 .cf-select {
@@ -1272,8 +1272,8 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 }
 
 .cf-textarea:focus {
-    border-color: #017AFF;
-    box-shadow: 0 0 0 2px rgba(1, 122, 255, 0.1);
+    border-color: #011F5B;
+    box-shadow: 0 0 0 2px rgba(1, 31, 91, 0.1);
 }
 
 /* Checkbox row — Figma: gap 16px */
@@ -1310,8 +1310,8 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 }
 
 .cf-checkbox-label input[type="checkbox"]:checked + .cf-checkbox-box {
-    background: #017AFF;
-    border-color: #017AFF;
+    background: #011F5B;
+    border-color: #011F5B;
 }
 
 .cf-checkbox-label input[type="checkbox"]:checked + .cf-checkbox-box::after {
@@ -1332,11 +1332,11 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     color: #364153;
 }
 
-/* Submit button — Figma: full width 621px, 40px height, #017AFF, border-radius 4px */
+/* Submit button — Figma: full width 621px, 40px height, #011F5B, border-radius 4px */
 .cf-submit {
     width: 100%;
     height: 40px;
-    background: #017AFF;
+    background: #011F5B;
     border: none;
     border-radius: 4px;
     font-family: 'Inter', sans-serif;
@@ -1420,6 +1420,8 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 
 .cl-featured-event-header {
     margin-bottom: 24px;
+    margin-left: -35px;
+    
 }
 
 .cl-featured-event-title {
@@ -1436,7 +1438,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     height: 3px;
     margin-top: 10px;
     border-radius: 999px;
-    background: #017AFF;
+    background: #011F5B;
 }
 
 .cl-hero-inner {
@@ -1466,7 +1468,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     border-radius: 4px;
     overflow: hidden;
     flex-shrink: 0;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: none;
 }
 
 .cl-featured-event-badge {
@@ -1530,13 +1532,13 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     left: 0;
     width: 60px;
     height: 1px;
-    background-color: #017AFF;
+    background-color: #011F5B;
 }
 
 .cl-tag {
     display: inline-block;
     background-color: #D5F3F8;
-    color: #017AFF;
+    color: #011F5B;
     padding: 2px 8px;
     border-radius: 4px;
     font-family: 'Inter', sans-serif;
@@ -1666,7 +1668,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     font-family: 'Inter', sans-serif;
     font-size: 20px;
     font-weight: 600;
-    color: #017AFF;
+    color: #011F5B;
     line-height: 24px;
     text-align: center;
 }
@@ -1761,7 +1763,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: #017AFF;
+    background-color: #011F5B;
     color: #FFFFFF;
     border: none;
     padding: 12px 20px;
@@ -1786,8 +1788,8 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
     display: inline-flex;
     align-items: center;
     background-color: #FFFFFF;
-    color: #017AFF;
-    border: 1px solid #017AFF;
+    color: #011F5B;
+    border: 1px solid #011F5B;
     padding: 12px 20px;
     border-radius: 8px;
     font-family: 'Inter', sans-serif;
@@ -1802,7 +1804,7 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 
 .cl-btn-secondary:hover {
     background-color: #eff6ff;
-    color: #017AFF;
+    color: #011F5B;
     text-decoration: none;
 }
 
@@ -1923,8 +1925,8 @@ body.cl-modal-open {
 
 .cl-syllabus-field input:focus {
     outline: none;
-    border-color: #017AFF;
-    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.12);
+    border-color: #011F5B;
+    box-shadow: 0 0 0 3px rgba(1, 31, 91, 0.12);
 }
 
 .cl-syllabus-error {
@@ -1943,7 +1945,7 @@ body.cl-modal-open {
     padding: 10px 18px;
     border: 1px solid #0B6AE6;
     border-radius: 2px;
-    background: #017AFF;
+    background: #011F5B;
     color: #FFFFFF;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
@@ -1985,7 +1987,7 @@ body.cl-modal-open {
     border: none;
     background: transparent;
     padding: 0;
-    color: #017AFF;
+    color: #011F5B;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -1995,7 +1997,7 @@ body.cl-modal-open {
 
 /* ---- Tab Navigation (blue bar, white text, #017aff) ---- */
 .cl-tabs-nav {
-    background: #017AFF;
+    background: #011F5B;
     position: sticky;
     top: 72px;
     z-index: 90;
@@ -2076,8 +2078,8 @@ body.cl-modal-open {
 
 .cl-section-tag {
     display: inline-block;
-    background-color: rgba(1, 122, 255, 0.1);
-    color: #017AFF;
+    background-color: rgba(1, 31, 91, 0.1);
+    color: #011F5B;
     padding: 2px 12px;
     border-radius: 4px;
     font-family: 'Arial', sans-serif;
@@ -2155,7 +2157,7 @@ body.cl-modal-open {
     width: 48px;
     height: 48px;
     border-radius: 10px;
-    background-color: #017AFF;
+    background-color: #011F5B;
 }
 .cl-icon-project svg {
     width: 24px;
@@ -2185,7 +2187,7 @@ body.cl-modal-open {
 
 /* ---- Project cards — blue tinted ---- */
 .cl-project-card {
-    background-color: rgba(1, 122, 255, 0.1);
+    background-color: rgba(1, 31, 91, 0.1);
     border: 1px solid #DBEAFE;
 }
 
@@ -2285,7 +2287,7 @@ body.cl-modal-open {
     font-family: 'Arial', sans-serif;
     font-size: 14px;
     font-weight: 600;
-    color: #017AFF;
+    color: #011F5B;
     text-decoration: none;
 }
 
@@ -2380,9 +2382,9 @@ body.cl-modal-open {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Premium Recommended — 409×760, border 6px solid #017AFF */
+/* Premium Recommended — 409×760, border 6px solid #011F5B */
 .cl-pricing-recommended {
-    border: 6px solid #017AFF;
+    border: 6px solid #011F5B;
     border-radius: 8px;
     padding: 48px;
     width: 409px;
@@ -2394,7 +2396,7 @@ body.cl-modal-open {
     top: -10px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #017AFF;
+    background-color: #011F5B;
     color: #FFFFFF;
     padding: 2px 13px;
     border-radius: 4px;
@@ -2463,7 +2465,7 @@ body.cl-modal-open {
 }
 
 .cl-price-blue {
-    color: #017AFF;
+    color: #011F5B;
 }
 
 .cl-price-note {
@@ -2476,7 +2478,7 @@ body.cl-modal-open {
 }
 
 .cl-price-note-blue {
-    color: #017AFF;
+    color: #011F5B;
     font-weight: 700;
     opacity: 0.8;
 }
@@ -2533,7 +2535,7 @@ body.cl-modal-open {
 }
 
 .cl-pricing-btn-primary {
-    background-color: #017AFF;
+    background-color: #011F5B;
     color: #FFFFFF;
 }
 
@@ -2549,8 +2551,225 @@ body.cl-modal-open {
 
 .cl-pricing-btn-secondary:hover {
     background-color: #f9fafb;
-    border-color: #017AFF;
+    border-color: #011F5B;
+    color: #011F5B;
+}
+
+/* ---- Learn with Projects pricing (Layer 1) ---- */
+.cl-projects-pricing-container {
+    max-width: 1180px;
+}
+
+.cl-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 24px;
+    margin-top: 8px;
+}
+
+#pricing-projects .cl-project-card {
+    position: relative;
+    background: #FFFFFF;
+    border: 1px solid rgba(1, 122, 255, 0.2);
+    border-radius: 12px;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+a.cl-pricing-project-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+}
+
+a.cl-pricing-project-link:hover {
+    box-shadow: 0 6px 20px rgba(1, 122, 255, 0.18);
+    transform: translateY(-2px);
+    border-color: rgba(1, 122, 255, 0.45);
+}
+
+a.cl-pricing-project-link:focus-visible {
+    outline: 2px solid #017AFF;
+    outline-offset: 3px;
+}
+
+#pricing-projects .cl-project-card-tab {
+    position: absolute;
+    top: -16px;
+    left: 24px;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 26px;
     color: #017AFF;
+    background: #FFFFFF;
+    border: 1px solid rgba(1, 122, 255, 0.35);
+    white-space: nowrap;
+    max-width: calc(100% - 48px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#pricing-projects .cl-project-card-price {
+    padding: 28px 24px 20px;
+    text-align: center;
+    border-radius: 12px 12px 0 0;
+}
+
+#pricing-projects .cl-project-price-amount {
+    font-family: 'Inter', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+#pricing-projects .cl-project-card-body {
+    padding: 20px 24px 28px;
+    flex: 1;
+}
+
+#pricing-projects .cl-project-card-body p {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #364153;
+}
+
+/* Tier 1 — $49 */
+#pricing-projects .cl-project-tier-1 .cl-project-card-price {
+    background: rgba(1, 122, 255, 0.12);
+}
+#pricing-projects .cl-project-tier-1 .cl-project-price-amount {
+    color: #017AFF;
+}
+
+/* Tier 2 — $198 */
+#pricing-projects .cl-project-tier-2 .cl-project-card-price {
+    background: rgba(1, 122, 255, 0.28);
+}
+#pricing-projects .cl-project-tier-2 .cl-project-price-amount {
+    color: #017AFF;
+}
+
+/* Tier 3 — $398 */
+#pricing-projects .cl-project-tier-3 .cl-project-card-price {
+    background: #017AFF;
+}
+#pricing-projects .cl-project-tier-3 .cl-project-price-amount {
+    color: #FFFFFF;
+}
+#pricing-projects .cl-project-tier-3 .cl-project-card-tab {
+    background: #017AFF;
+    color: #FFFFFF;
+    border-color: #017AFF;
+}
+
+.cl-projects-footer {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.cl-projects-footer-lead {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 28px;
+    color: #017AFF;
+    margin: 0 0 12px;
+}
+
+.cl-projects-footer-bonus {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #017AFF;
+    margin: 0 0 8px;
+}
+
+.cl-projects-footer-bonus strong {
+    font-weight: 700;
+}
+
+.cl-projects-accent {
+    color: #E7000B;
+    font-weight: 700;
+}
+
+.cl-projects-footer-referral {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #017AFF;
+    margin: 0;
+}
+
+.cl-projects-footer-referral strong {
+    font-weight: 700;
+}
+
+.cl-projects-cta-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+}
+
+.cl-projects-bootcamp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: #017AFF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cl-projects-bootcamp-btn:hover {
+    background: #005bbf;
+}
+
+.cl-pricing-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    padding: 8px 0;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #017AFF;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.cl-pricing-back-btn:hover {
+    opacity: 0.75;
+}
+
+.cl-pricing-bootcamp-view[hidden] {
+    display: none !important;
+}
+
+#pricing-projects[hidden] {
+    display: none !important;
 }
 
 /* ---- Bootcamp application modal ---- */
@@ -2637,7 +2856,7 @@ body.cl-modal-open {
 }
 
 .cl-bootcamp-progress .ob-seg.is-active {
-    background: #017AFF;
+    background: #011F5B;
 }
 
 .cl-bootcamp-step[hidden] {
@@ -2653,7 +2872,7 @@ body.cl-modal-open {
 }
 
 .cl-bootcamp-question span {
-    color: #017AFF;
+    color: #011F5B;
 }
 
 .cl-bootcamp-topics {
@@ -2687,8 +2906,8 @@ body.cl-modal-open {
 
 .cl-bootcamp-major-wrap input:focus {
     outline: none;
-    border-color: #017AFF;
-    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.12);
+    border-color: #011F5B;
+    box-shadow: 0 0 0 3px rgba(1, 31, 91, 0.12);
 }
 
 .cl-bootcamp-work-exp {
@@ -2728,8 +2947,8 @@ body.cl-modal-open {
 
 .cl-bootcamp-select-group select:focus {
     outline: none;
-    border-color: #017AFF;
-    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.12);
+    border-color: #011F5B;
+    box-shadow: 0 0 0 3px rgba(1, 31, 91, 0.12);
 }
 
 .cl-bootcamp-hours {
@@ -2759,8 +2978,8 @@ body.cl-modal-open {
 
 .cl-bootcamp-why-wrap textarea:focus {
     outline: none;
-    border-color: #017AFF;
-    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.12);
+    border-color: #011F5B;
+    box-shadow: 0 0 0 3px rgba(1, 31, 91, 0.12);
 }
 
 .cl-bootcamp-actions {
@@ -2799,7 +3018,7 @@ body.cl-modal-open {
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     font-weight: 400;
-    color: #017AFF;
+    color: #011F5B;
     text-transform: uppercase;
     text-decoration: none;
     line-height: 20px;
@@ -2862,6 +3081,17 @@ body.cl-modal-open {
     .cl-pricing-recommended {
         width: 100%;
         max-width: 400px;
+    }
+    .cl-projects-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+    #pricing-projects .cl-project-card-tab {
+        font-size: 18px;
+        line-height: 24px;
+    }
+    #pricing-projects .cl-project-price-amount {
+        font-size: 36px;
     }
 }
 
@@ -3038,8 +3268,8 @@ body.cl-modal-open {
    -------------------------------------------------------------------------- */
 
 .form-control:focus {
-    border-color: #017AFF;
-    box-shadow: 0 0 0 3px rgba(1, 122, 255, 0.1);
+    border-color: #011F5B;
+    box-shadow: 0 0 0 3px rgba(1, 31, 91, 0.1);
 }
 
 /* --------------------------------------------------------------------------
@@ -3078,7 +3308,7 @@ body.cl-modal-open {
     margin: 0;
 }
 .acc-gradient-text {
-    background: linear-gradient(90deg, #017AFF, #610199);
+    background: linear-gradient(90deg, #011F5B, #610199);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -3111,7 +3341,7 @@ body.cl-modal-open {
     align-items: center;
     padding: 10px;
     gap: 10px;
-    background: #017AFF;
+    background: #011F5B;
     border-radius: 4px;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
@@ -3140,20 +3370,20 @@ body.cl-modal-open {
     padding: 10px;
     gap: 10px;
     background: #FFFFFF;
-    border: 1px solid #017AFF;
+    border: 1px solid #011F5B;
     border-radius: 4px;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
     text-transform: uppercase;
-    color: #017AFF;
+    color: #011F5B;
     text-decoration: none;
     white-space: nowrap;
 }
 .acc-btn-secondary:hover {
-    background: rgba(1, 122, 255, 0.05);
-    color: #017AFF;
+    background: rgba(1, 31, 91, 0.05);
+    color: #011F5B;
     text-decoration: none;
 }
 .acc-btn-kickoff {
@@ -3196,7 +3426,7 @@ body.cl-modal-open {
     height: 318px;
     left: 0;
     top: 0;
-    background: linear-gradient(112.46deg, #017AFF -3.6%, #80BCFF 103.67%);
+    background: linear-gradient(112.46deg, #011F5B -3.6%, #80BCFF 103.67%);
     border-radius: 4px;
     transform: rotate(2.45deg);
 }
@@ -3209,10 +3439,10 @@ body.cl-modal-open {
     z-index: 1;
 }
 
-/* ---- ACC Journey (Frame 180, bg rgba(1,122,255,0.05), padding 56px) ---- */
+/* ---- ACC Journey (Frame 180, bg rgba(1,31,91,0.05), padding 56px) ---- */
 .acc-journey {
     width: 100%;
-    background: rgba(1, 122, 255, 0.05);
+    background: rgba(1, 31, 91, 0.05);
 }
 .acc-journey-inner {
     max-width: 1280px;
@@ -3381,7 +3611,7 @@ body.cl-modal-open {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: linear-gradient(130.2deg, #017AFF 0.23%, #018F99 93.13%);
+    background: linear-gradient(130.2deg, #011F5B 0.23%, #018F99 93.13%);
     flex-shrink: 0;
 }
 .acc-story-info {
@@ -3408,7 +3638,7 @@ body.cl-modal-open {
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
-    color: #017AFF;
+    color: #011F5B;
 }
 .acc-story-quote {
     font-family: 'Inter', sans-serif;
@@ -3450,7 +3680,7 @@ body.cl-modal-open {
 /* ---- ACC CTA (Frame 191, gradient bg, padding 80px) ---- */
 .acc-cta {
     width: 100%;
-    background: linear-gradient(95.68deg, #017AFF 0.3%, #610199 130.82%);
+    background: linear-gradient(95.68deg, #011F5B 0.3%, #610199 130.82%);
 }
 .acc-cta-inner {
     max-width: 1280px;
@@ -3493,12 +3723,12 @@ body.cl-modal-open {
     font-size: 14px;
     line-height: 20px;
     text-transform: uppercase;
-    color: #017AFF;
+    color: #011F5B;
     text-decoration: none;
 }
 .acc-cta-btn:hover {
     background: #f0f0f0;
-    color: #017AFF;
+    color: #011F5B;
     text-decoration: none;
 }
 .acc-cta-btn svg {
@@ -3809,7 +4039,7 @@ body.ob-page #copyright {
 }
 .ob-progress-fill {
     height: 100%;
-    background: #017AFF;
+    background: #011F5B;
     border-radius: 3px;
     transition: width 0.4s ease;
     width: 0;
@@ -3906,7 +4136,7 @@ body.ob-page #copyright {
     gap: 10px;
 }
 .ob-check-icon {
-    color: #017AFF;
+    color: #011F5B;
     font-weight: 700;
     font-size: 16px;
 }
@@ -3917,7 +4147,7 @@ body.ob-page #copyright {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: #017AFF;
+    background: #011F5B;
     color: #FFFFFF;
     font-family: 'Inter', sans-serif;
     font-size: 16px;
@@ -3976,7 +4206,7 @@ body.ob-page #copyright {
 .ob-progress-5 .ob-progress-segments .ob-seg:nth-child(-n+5),
 .ob-progress-6 .ob-progress-segments .ob-seg:nth-child(-n+6),
 .ob-progress-7 .ob-progress-segments .ob-seg:nth-child(-n+7) {
-    background: #017AFF;
+    background: #011F5B;
 }
 .ob-q-title {
     font-family: 'Inter', sans-serif;
@@ -4009,13 +4239,13 @@ body.ob-page #copyright {
     user-select: none;
 }
 .ob-option:hover {
-    border-color: #017AFF;
-    background: rgba(1, 122, 255, 0.04);
+    border-color: #011F5B;
+    background: rgba(1, 31, 91, 0.04);
 }
 .ob-option.ob-selected {
-    border-color: #017AFF;
-    background: rgba(1, 122, 255, 0.08);
-    color: #017AFF;
+    border-color: #011F5B;
+    background: rgba(1, 31, 91, 0.08);
+    color: #011F5B;
     font-weight: 500;
 }
 .ob-option.ob-selected::before {
@@ -4056,12 +4286,12 @@ body.ob-page #copyright {
     white-space: nowrap;
 }
 .ob-chip:hover {
-    border-color: #017AFF;
-    background: rgba(1, 122, 255, 0.04);
+    border-color: #011F5B;
+    background: rgba(1, 31, 91, 0.04);
 }
 .ob-chip.ob-selected {
-    border-color: #017AFF;
-    background: #017AFF;
+    border-color: #011F5B;
+    background: #011F5B;
     color: #FFFFFF;
     font-weight: 500;
 }
@@ -4084,7 +4314,7 @@ body.ob-page #copyright {
     background: #FAFAFA;
 }
 .ob-text-input:focus {
-    border-color: #017AFF;
+    border-color: #011F5B;
     background: #FFFFFF;
 }
 
@@ -4106,7 +4336,7 @@ body.ob-page #copyright {
     background: #FAFAFA;
 }
 .ob-textarea:focus {
-    border-color: #017AFF;
+    border-color: #011F5B;
     background: #FFFFFF;
 }
 .ob-word-count {
@@ -4148,7 +4378,7 @@ body.ob-page #copyright {
     font-size: 15px;
     font-weight: 600;
     color: #FFFFFF;
-    background: #017AFF;
+    background: #011F5B;
     border: none;
     border-radius: 8px;
     padding: 12px 32px;
@@ -4166,7 +4396,7 @@ body.ob-page #copyright {
     cursor: not-allowed;
 }
 .ob-btn-complete {
-    background: linear-gradient(135deg, #017AFF 0%, #5A0199 100%);
+    background: linear-gradient(135deg, #011F5B 0%, #5A0199 100%);
     padding: 12px 36px;
 }
 .ob-btn-complete:hover:not(:disabled) {
@@ -4216,7 +4446,7 @@ body.ob-page #copyright {
     font-family: 'Inter', sans-serif;
     font-size: 32px;
     font-weight: 700;
-    color: #017AFF;
+    color: #011F5B;
 }
 .ob-analyzing-text {
     font-family: 'Inter', sans-serif;
@@ -4247,7 +4477,7 @@ body.ob-page #copyright {
     width: 140px;
     height: 140px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #017AFF 0%, #5A0199 100%);
+    background: linear-gradient(135deg, #011F5B 0%, #5A0199 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -4294,7 +4524,7 @@ body.ob-page #copyright {
     font-family: 'Inter', sans-serif;
     font-size: 22px;
     font-weight: 700;
-    color: #017AFF;
+    color: #011F5B;
 }
 .ob-result-unlock {
     background: #F8FAFC;
@@ -4391,7 +4621,7 @@ body.ob-page #copyright {
     background: #FAFAFA;
 }
 .ob-form-group input:focus {
-    border-color: #017AFF;
+    border-color: #011F5B;
     background: #FFFFFF;
 }
 .ob-checkbox-label {
@@ -4407,10 +4637,10 @@ body.ob-page #copyright {
     margin-top: 2px;
     width: 18px;
     height: 18px;
-    accent-color: #017AFF;
+    accent-color: #011F5B;
 }
 .ob-checkbox-label a {
-    color: #017AFF;
+    color: #011F5B;
     text-decoration: underline;
 }
 .ob-btn-register {
@@ -4425,7 +4655,7 @@ body.ob-page #copyright {
     color: #999;
 }
 .ob-account-signin a {
-    color: #017AFF;
+    color: #011F5B;
     font-weight: 600;
     text-decoration: none;
 }
@@ -4499,8 +4729,8 @@ body {
 }
 .clp-hero-image {
     flex: 0 0 auto;
-    width: 451px;
-    height: 301px;
+    width: 550px;
+    height: 380px;
     border-radius: 4px;
     overflow: hidden;
     background: transparent;
@@ -4509,7 +4739,7 @@ body {
 .clp-hero-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
 }
 .clp-hero-content {
@@ -4545,7 +4775,7 @@ body {
 .clp-title-underline {
     width: 60px;
     height: 1px;
-    background: #017AFF;
+    background: #011F5B;
 }
 .clp-tag {
     display: inline-flex;
@@ -4558,7 +4788,7 @@ body {
     font-weight: 600;
     font-size: 10px;
     line-height: 12px;
-    color: #017AFF;
+    color: #011F5B;
     text-align: center;
     white-space: nowrap;
 }
@@ -4588,22 +4818,22 @@ body {
     min-width: 215px;
     height: 42px;
     background: #FFFFFF;
-    border: 1px solid #017AFF;
+    border: 1px solid #011F5B;
     border-radius: 8px;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-    color: #017AFF;
+    color: #011F5B;
     text-decoration: none;
     cursor: pointer;
     transition: background 0.15s ease, color 0.15s ease;
 }
 .clp-btn-secondary:hover,
 .clp-btn-secondary:focus {
-    background: rgba(1, 122, 255, 0.05);
-    color: #017AFF;
+    background: rgba(1, 31, 91, 0.05);
+    color: #011F5B;
     text-decoration: none;
 }
 .clp-btn-secondary svg {
@@ -4679,7 +4909,7 @@ body {
     height: 66px;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid rgba(1, 122, 255, 0.5);
+    border: 2px solid rgba(1, 31, 91, 0.5);
     background: #F4F6F8;
 }
 .cl-featured-event-speaker-avatar img {
@@ -4693,6 +4923,10 @@ body {
     flex-direction: column;
     gap: 6px;
     min-width: 0;
+}
+.clp-hero-content .cl-featured-event-speaker-card {
+    width: 100%;
+    max-width: 658px;
 }
 .cl-featured-event-speaker-name {
     margin: 0 !important;
@@ -4716,7 +4950,7 @@ body {
 
 /* REGISTER NOW button (Figma Frame 41) — filled Heerise-blue pill. */
 .cl-featured-event--compact .cl-btn-primary {
-    background: #017AFF !important;
+    background: #011F5B !important;
     border-radius: 8px !important;
     padding: 12px 20px !important;
     min-width: 165px;
@@ -4734,15 +4968,15 @@ body {
     flex-direction: row-reverse;
 }
 .cl-featured-event--text-left .cl-hero-image {
-    width: 455px;
-    height: 398px; /* matches Figma Frame 335 image column height */
-    background: #000000;
+    width: 550px;
+    height: 420px; /* matches Figma Frame 335 image column height */
+    background: transparent;
 }
 .cl-featured-event--text-left .cl-hero-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center 35%; /* keep the table + "career LAB" pillar in frame */
+    object-fit: contain;
+    object-position: center center;
     display: block;
 }
 @media (max-width: 992px) {
@@ -4763,7 +4997,7 @@ body {
     border-radius: 50%;
     overflow: hidden;
     background: #F4F6F8;
-    border: 2px solid #017AFF;
+    border: 2px solid #011F5B;
     box-shadow: 0 2px 8px rgba(0, 16, 33, 0.08);
 }
 .clp-speaker-avatar img {
@@ -4788,7 +5022,7 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.6px;
-    color: #017AFF !important;
+    color: #011F5B !important;
 }
 .clp-speaker-name {
     font-size: 15px !important;

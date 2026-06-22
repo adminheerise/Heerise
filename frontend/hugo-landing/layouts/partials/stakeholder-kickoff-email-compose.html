@@ -1,0 +1,465 @@
+<!-- *** PHASE 3 — S3.02 COMPOSE: Gmail UI + compose modal + coaching tooltip ***
+     Two stages driven by JS state machine:
+       1) "subject"  → tooltip "Write a subject line for the email"
+                       Next button unlocks when subject ≥ 3 chars
+       2) "body"     → tooltip "Now, draft the body of the email…"
+                       Send button submits and proceeds to the next phase  -->
+<section class="sks-page sks-page--email-compose" aria-label="Outreach Email — Gmail composer">
+    <div class="sks-shell sks-shell--email-compose">
+        <header class="sks-top">
+            <div class="sks-brand">LUMINA<span class="sks-brand-sep" aria-hidden="true">&bull;</span>SIM</div>
+            <nav class="sks-nav" aria-label="Simulation steps">
+                <span class="sks-step">Assignment Brief</span>
+                <span class="sks-step">Research</span>
+                <span class="sks-step sks-step-active">Outreach Email</span>
+                <span class="sks-step">Meeting Agenda</span>
+                <span class="sks-step">Kick-off Call</span>
+                <span class="sks-step">Manager Brief</span>
+                <span class="sks-step">Results</span>
+            </nav>
+        </header>
+
+        <div class="sks-emc-stage">
+            <div class="sks-emc-frame">
+                {{/* Browser chrome (3 dots + URL bar) */}}
+                <div class="sks-emc-browser">
+                    <span class="sks-emc-dot sks-emc-dot--r" aria-hidden="true"></span>
+                    <span class="sks-emc-dot sks-emc-dot--y" aria-hidden="true"></span>
+                    <span class="sks-emc-dot sks-emc-dot--g" aria-hidden="true"></span>
+                    <div class="sks-emc-browser-nav" aria-hidden="true">
+                        <span class="sks-emc-ico">&lsaquo;</span>
+                        <span class="sks-emc-ico sks-emc-ico--dim">&rsaquo;</span>
+                        <span class="sks-emc-ico">&#8635;</span>
+                    </div>
+                    <div class="sks-emc-urlbar">
+                        <span class="sks-emc-lock" aria-hidden="true"></span>
+                        <span class="sks-emc-url">gmail.com</span>
+                    </div>
+                </div>
+
+                {{/* Gmail app */}}
+                <div class="sks-emc-app">
+                    {{/* App header: hamburger + Gmail logo + search + help/settings/apps + avatar */}}
+                    <header class="sks-emc-app-header">
+                        <div class="sks-emc-app-header-left">
+                            <span class="sks-emc-menu-ico" aria-hidden="true"></span>
+                            <span class="sks-emc-wordmark" aria-hidden="true">
+                                <span class="sks-emc-g-red">G</span>mail
+                            </span>
+                        </div>
+                        <div class="sks-emc-search-wrap">
+                            <span class="sks-emc-search-ico" aria-hidden="true"></span>
+                            <span class="sks-emc-search-ph">Search mail</span>
+                        </div>
+                        <div class="sks-emc-app-header-right" aria-hidden="true">
+                            <span class="sks-emc-hd-ico sks-emc-hd-ico--help" title="Help"></span>
+                            <span class="sks-emc-hd-ico sks-emc-hd-ico--gear" title="Settings"></span>
+                            <span class="sks-emc-hd-ico sks-emc-hd-ico--apps" title="Google apps"></span>
+                            <span class="sks-emc-hd-avatar" title="Account"></span>
+                        </div>
+                    </header>
+
+                    <div class="sks-emc-app-body">
+                        {{/* Left rail */}}
+                        <aside class="sks-emc-rail">
+                            <div class="sks-emc-compose-wrap">
+                                <button type="button" class="sks-emc-compose-btn" tabindex="-1">
+                                    <span class="sks-emc-compose-plus" aria-hidden="true">+</span>
+                                    <span class="sks-emc-compose-txt">Compose</span>
+                                </button>
+                            </div>
+                            <ul class="sks-emc-sidenav">
+                                <li class="sks-emc-navrow sks-emc-navrow--inbox">
+                                    <span class="sks-emc-navlabel sks-emc-navlabel--accent">Inbox</span>
+                                    <span class="sks-emc-navcount">1</span>
+                                </li>
+                                <li class="sks-emc-navrow"><span class="sks-emc-navlabel">Starred</span></li>
+                                <li class="sks-emc-navrow"><span class="sks-emc-navlabel">Snoozed</span></li>
+                                <li class="sks-emc-navrow"><span class="sks-emc-navlabel">Sent</span></li>
+                                <li class="sks-emc-navrow"><span class="sks-emc-navlabel">Drafts</span><span class="sks-emc-navcount sks-emc-navcount--muted">1</span></li>
+                                <li class="sks-emc-navrow"><span class="sks-emc-navlabel">Spam</span><span class="sks-emc-navcount sks-emc-navcount--muted">3</span></li>
+                                <li class="sks-emc-navrow"><span class="sks-emc-navlabel">Trash</span></li>
+                                <li class="sks-emc-navrow"><span class="sks-emc-navlabel sks-emc-navlabel--bold">Categories</span></li>
+                                <li class="sks-emc-navrow sks-emc-navrow--more"><span class="sks-emc-navlabel">More</span></li>
+                            </ul>
+                            <div class="sks-emc-meet" aria-hidden="true">
+                                <div class="sks-emc-meet-h">Meet</div>
+                                <div class="sks-emc-navrow"><span class="sks-emc-navlabel">New meeting</span></div>
+                                <div class="sks-emc-navrow"><span class="sks-emc-navlabel">Join a meeting</span></div>
+                            </div>
+                            <div class="sks-emc-hangouts" aria-hidden="true">
+                                <div class="sks-emc-meet-h">Hangouts</div>
+                                <button type="button" class="sks-emc-signin" tabindex="-1">Sign in</button>
+                            </div>
+                        </aside>
+
+                        {{/* Main inbox view */}}
+                        <main class="sks-emc-main">
+                            <div class="sks-emc-toolbar">
+                                <span class="sks-emc-tb-check" aria-hidden="true"></span>
+                                <span class="sks-emc-tb-ico" aria-hidden="true">&#8635;</span>
+                                <span class="sks-emc-tb-dots" aria-hidden="true"></span>
+                                <span class="sks-emc-tb-meta">1&ndash;50 of 2,619</span>
+                            </div>
+                            <div class="sks-emc-cats">
+                                <button type="button" class="sks-emc-tab sks-emc-tab--on" tabindex="-1">
+                                    <span class="sks-emc-tab-t">Primary</span>
+                                    <span class="sks-emc-tab-bar" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="sks-emc-tab" tabindex="-1">
+                                    <span class="sks-emc-tab-t">Social</span>
+                                    <span class="sks-emc-badge sks-emc-badge--social">1 new</span>
+                                </button>
+                                <button type="button" class="sks-emc-tab" tabindex="-1">
+                                    <span class="sks-emc-tab-t">Promotions</span>
+                                    <span class="sks-emc-badge sks-emc-badge--promo">6 new</span>
+                                    <span class="sks-emc-tab-prev">Nextdoor, Message fro&hellip;</span>
+                                </button>
+                                <button type="button" class="sks-emc-tab" tabindex="-1">
+                                    <span class="sks-emc-tab-t">Updates</span>
+                                </button>
+                            </div>
+                            <div class="sks-emc-rows">
+                                <button type="button" class="sks-emc-row" tabindex="-1" aria-label="Email from Maya Chen, Project Brief">
+                                    <span class="sks-emc-row-check" aria-hidden="true"></span>
+                                    <span class="sks-emc-row-star" aria-hidden="true"></span>
+                                    <span class="sks-emc-row-flag" aria-hidden="true"></span>
+                                    <span class="sks-emc-from">Maya Chen</span>
+                                    <span class="sks-emc-subj-wrap">
+                                        <span class="sks-emc-subj">Project Brief</span>
+                                        <span class="sks-emc-dash">&mdash;</span>
+                                        <span class="sks-emc-prev">Hey, here are the details of the project</span>
+                                    </span>
+                                    <time class="sks-emc-time" datetime="22:41">10:41 PM</time>
+                                </button>
+                            </div>
+                        </main>
+
+                        {{/* Right thin sidebar */}}
+                        <aside class="sks-emc-rightbar" aria-hidden="true">
+                            <span class="sks-emc-rb-ico"></span>
+                            <span class="sks-emc-rb-ico"></span>
+                            <span class="sks-emc-rb-ico"></span>
+                            <span class="sks-emc-rb-ico"></span>
+                        </aside>
+                    </div>
+
+                    {{/* Compose modal pinned to bottom-right of the gmail app */}}
+                    <form class="sks-emc-compose" id="sks-emc-compose" autocomplete="off">
+                        <div class="sks-emc-compose-head">
+                            <span class="sks-emc-compose-title">New Message</span>
+                            <span class="sks-emc-compose-controls" aria-hidden="true">
+                                <span class="sks-emc-compose-min">&minus;</span>
+                                <span class="sks-emc-compose-close">&times;</span>
+                            </span>
+                        </div>
+                        <div class="sks-emc-compose-body">
+                            <div class="sks-emc-row-from">
+                                <span class="sks-emc-fld-label">From</span>
+                                <span class="sks-emc-fld-val">John Doe &lt;supercoolman@gmail.com&gt;</span>
+                            </div>
+                            <div class="sks-emc-row-to">
+                                <span class="sks-emc-fld-label">To</span>
+                                <span class="sks-emc-chip"><span class="sks-emc-chip-dot sks-emc-chip-dot--j" aria-hidden="true">J</span>Jordan Kim<span class="sks-emc-chip-x" aria-hidden="true">&times;</span></span>
+                                <span class="sks-emc-chip"><span class="sks-emc-chip-dot sks-emc-chip-dot--p" aria-hidden="true">P</span>Priya Nair<span class="sks-emc-chip-x" aria-hidden="true">&times;</span></span>
+                            </div>
+                            <div class="sks-emc-row-cc">
+                                <span class="sks-emc-fld-label">Cc</span>
+                                <span class="sks-emc-chip"><span class="sks-emc-chip-dot sks-emc-chip-dot--m" aria-hidden="true">M</span>Maya Chen<span class="sks-emc-chip-x" aria-hidden="true">&times;</span></span>
+                                <span class="sks-emc-bcc">Bcc</span>
+                            </div>
+                            <div class="sks-emc-row-subject">
+                                <label class="sks-visually-hidden" for="sks-emc-subject">Subject</label>
+                                <input type="text" id="sks-emc-subject" name="subject" class="sks-emc-subject" placeholder="Subject" maxlength="120" />
+                            </div>
+                            <div class="sks-emc-row-body">
+                                <label class="sks-visually-hidden" for="sks-emc-body">Message body</label>
+                                <textarea id="sks-emc-body" name="body" class="sks-emc-body" rows="8" placeholder=""></textarea>
+                            </div>
+                            <div class="sks-emc-counter" id="sks-emc-counter" aria-live="polite">0/300</div>
+                        </div>
+                        <div class="sks-emc-compose-foot">
+                            <button type="button" class="sks-emc-send" id="sks-emc-send" aria-label="Send email" disabled>
+                                <span class="sks-emc-send-txt">Send</span>
+                                <span class="sks-emc-send-sep" aria-hidden="true"></span>
+                                <span class="sks-emc-send-caret" aria-hidden="true">&#9662;</span>
+                            </button>
+                            <span class="sks-emc-foot-icons" aria-hidden="true">
+                                <span class="sks-emc-foot-ico"></span>
+                                <span class="sks-emc-foot-ico"></span>
+                                <span class="sks-emc-foot-ico"></span>
+                                <span class="sks-emc-foot-ico"></span>
+                                <span class="sks-emc-foot-ico"></span>
+                                <span class="sks-emc-foot-ico"></span>
+                                <span class="sks-emc-foot-ico"></span>
+                            </span>
+                            <span class="sks-emc-foot-trash" aria-hidden="true"></span>
+                        </div>
+                    </form>
+
+                    {{/* Coaching tooltip — black pill that points at the active field.
+                         Stage transitions move it from "subject" → "body". */}}
+                    <div class="sks-emc-coach" id="sks-emc-coach" data-stage="subject">
+                        <div class="sks-emc-coach-bubble">
+                            <p class="sks-emc-coach-text" id="sks-emc-coach-text">Write a subject line for the email</p>
+                            <button type="button" class="sks-emc-next" id="sks-emc-next" hidden>Next</button>
+                        </div>
+                        <span class="sks-emc-coach-cursor" aria-hidden="true">
+                            {{/* Right-pointing arrow: bubble → active field of compose modal. */}}
+                            <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
+                                <path d="M0 7 H17 M13 2 L19 7 L13 12"
+                                      stroke="currentColor" stroke-width="2"
+                                      stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                            </svg>
+                        </span>
+                    </div>
+
+                    {{/* Hint widget — small trigger pill that opens a popup overlay.
+                         The popup itself is a self-contained card with a close button;
+                         it is NOT auto-opened on stage change. The trigger is visible
+                         only during the body drafting stage. Content is sourced from
+                         docs/PHASE3_OUTREACH_EMAIL_GRADING_PLAN.md. */}}
+                    <div class="sks-emc-hint" id="sks-emc-hint" hidden>
+                        <button type="button" class="sks-emc-hint-toggle" id="sks-emc-hint-toggle" aria-expanded="false" aria-controls="sks-emc-hint-popup">
+                            <span class="sks-emc-hint-bulb" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2.5a7 7 0 0 0-4.2 12.6c.7.5 1.2 1.3 1.2 2.2V18a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-.7c0-.9.5-1.7 1.2-2.2A7 7 0 0 0 12 2.5Z"
+                                          fill="#EFD358" stroke="#43A6DD" stroke-width="1.2" stroke-linejoin="round"/>
+                                    <path d="M10 21h4M10.5 23h3" stroke="#B3B3B3" stroke-width="1.2" stroke-linecap="round"/>
+                                </svg>
+                            </span>
+                            <span class="sks-emc-hint-label">Hint</span>
+                        </button>
+
+                        {{/* Popup overlay — anchored to the gmail-app frame, lifts above the
+                             compose modal. Hidden by default; toggled by the trigger pill. */}}
+                        <div class="sks-emc-hint-popup" id="sks-emc-hint-popup" role="dialog" aria-modal="false" aria-labelledby="sks-emc-hint-popup-title" hidden>
+                            <header class="sks-emc-hint-popup-head">
+                                <span class="sks-emc-hint-bulb sks-emc-hint-bulb--head" aria-hidden="true">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                                        <path d="M12 2.5a7 7 0 0 0-4.2 12.6c.7.5 1.2 1.3 1.2 2.2V18a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-.7c0-.9.5-1.7 1.2-2.2A7 7 0 0 0 12 2.5Z"
+                                              fill="#EFD358" stroke="#43A6DD" stroke-width="1.2" stroke-linejoin="round"/>
+                                        <path d="M10 21h4M10.5 23h3" stroke="#B3B3B3" stroke-width="1.2" stroke-linecap="round"/>
+                                    </svg>
+                                </span>
+                                <h3 class="sks-emc-hint-popup-title" id="sks-emc-hint-popup-title">Hint</h3>
+                                {{/* The shrink/collapse glyph IS the close button — single dismiss control. */}}
+                                <button type="button" class="sks-emc-hint-popup-close" id="sks-emc-hint-close" aria-label="Close hint">
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                                        <path d="M5 2 V5 H2 M9 12 V9 H12" stroke="#0A0A0A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </header>
+                            <div class="sks-emc-hint-popup-body">
+                                <nav class="sks-emc-hint-rail" aria-label="Hint sections">
+                                    <button type="button" class="sks-emc-hint-tab is-on" data-section="1">
+                                        <span class="sks-emc-hint-tab-num">SECTION 1</span>
+                                        <span class="sks-emc-hint-tab-name">CONTEXT &amp;<br/>CREDIBILITY</span>
+                                    </button>
+                                    <button type="button" class="sks-emc-hint-tab" data-section="2">
+                                        <span class="sks-emc-hint-tab-num">SECTION 2</span>
+                                        <span class="sks-emc-hint-tab-name">MEETING<br/>PURPOSE</span>
+                                    </button>
+                                    <button type="button" class="sks-emc-hint-tab" data-section="3">
+                                        <span class="sks-emc-hint-tab-num">SECTION 3</span>
+                                        <span class="sks-emc-hint-tab-name">PRE-CALL<br/>QUESTION</span>
+                                    </button>
+                                    <button type="button" class="sks-emc-hint-tab" data-section="4">
+                                        <span class="sks-emc-hint-tab-num">SECTION 4</span>
+                                        <span class="sks-emc-hint-tab-name">SCHEDULING</span>
+                                    </button>
+                                    <button type="button" class="sks-emc-hint-tab" data-section="5">
+                                        <span class="sks-emc-hint-tab-num">SECTION 5</span>
+                                        <span class="sks-emc-hint-tab-name">CLOSE</span>
+                                    </button>
+                                </nav>
+                                <div class="sks-emc-hint-content" id="sks-emc-hint-content" aria-live="polite">
+                                    Introduce yourself and show that you&rsquo;ve read the brief. What do you know about the project that tells them you&rsquo;ve prepared?
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>{{/* /.sks-emc-app */}}
+            </div>{{/* /.sks-emc-frame */}}
+        </div>{{/* /.sks-emc-stage */}}
+    </div>
+</section>
+
+<script>
+(function () {
+    var subjectEl     = document.getElementById('sks-emc-subject');
+    var bodyEl        = document.getElementById('sks-emc-body');
+    var counterEl     = document.getElementById('sks-emc-counter');
+    var coachEl       = document.getElementById('sks-emc-coach');
+    var coachTxt      = document.getElementById('sks-emc-coach-text');
+    var nextBtn       = document.getElementById('sks-emc-next');
+    var sendBtn       = document.getElementById('sks-emc-send');
+    var hintEl        = document.getElementById('sks-emc-hint');
+    var hintToggle    = document.getElementById('sks-emc-hint-toggle');
+    var hintPopup     = document.getElementById('sks-emc-hint-popup');
+    var hintClose     = document.getElementById('sks-emc-hint-close');
+    var hintContent   = document.getElementById('sks-emc-hint-content');
+
+    if (!subjectEl || !bodyEl || !nextBtn || !sendBtn || !coachEl) return;
+
+    var SUBJECT_MIN = 3;     // minimum chars to unlock Next
+    var BODY_MIN    = 8;     // minimum WORDS to unlock Send (rough draft threshold)
+    var BODY_MAX    = 300;   // hard word-count cap from the rubric (Phase 3 plan §2.7)
+
+    var STAGES = {
+        subject: 'Write a subject line for the email',
+        body:    'Now, draft the body of the email. Click the Hint for guidance if you need help with what to include. Click the Send button when you are done.'
+    };
+
+    /* Hint section copy mirrors the rubric in docs/PHASE3_OUTREACH_EMAIL_GRADING_PLAN.md.
+       Edit copy here, not in the HTML, so the panel stays a single source of truth. */
+    var SECTIONS = {
+        '1': 'Introduce yourself, state your role on the project, and reference Maya\u2019s brief so Jordan and Priya know who you are and why you\u2019re reaching out.',
+        '2': 'What is this call for? What will you accomplish together in 45 minutes?',
+        '3': 'Ask one question that will help you prepare even better for the call. Make it a question that only Jordan or Priya can answer, not something you can Google.',
+        '4': 'Provide specific availability windows over the next two weeks to streamline scheduling.',
+        '5': 'Closes professionally with a forward-looking statement about the collaboration.'
+    };
+
+    /* ---------- word counting + hard cap ---------- */
+    function countWords(str) {
+        var s = (str || '').trim();
+        if (!s) return 0;
+        return s.split(/\s+/).length;
+    }
+
+    var lastBodyValue = '';
+
+    function updateBodyCounter() {
+        var words = countWords(bodyEl.value);
+        counterEl.textContent = words + '/' + BODY_MAX;
+        counterEl.classList.toggle('is-warn',  words > BODY_MAX - 30 && words <= BODY_MAX);
+        counterEl.classList.toggle('is-error', words >= BODY_MAX);
+        return words;
+    }
+
+    /* ---------- stage machine ---------- */
+    function setStage(name) {
+        coachEl.setAttribute('data-stage', name);
+        coachTxt.textContent = STAGES[name] || '';
+        if (name === 'subject') {
+            // Next stays HIDDEN (not just disabled) until subject ≥ 3 chars.
+            var ok = subjectEl.value.trim().length >= SUBJECT_MIN;
+            nextBtn.hidden = !ok;
+            nextBtn.disabled = !ok;
+            nextBtn.classList.toggle('is-active', ok);
+            sendBtn.disabled = true;
+            sendBtn.classList.remove('is-active');
+            if (hintEl) hintEl.hidden = true;
+        } else if (name === 'body') {
+            nextBtn.hidden = true;
+            nextBtn.disabled = true;
+            var words = updateBodyCounter();
+            var ok = words >= BODY_MIN && words <= BODY_MAX;
+            sendBtn.disabled = !ok;
+            sendBtn.classList.toggle('is-active', ok);
+            // Show the Hint TRIGGER on body stage. The popup itself stays
+            // closed until the learner clicks the trigger — never auto-opens.
+            if (hintEl) hintEl.hidden = false;
+            setHintOpen(false);
+        }
+    }
+
+    subjectEl.addEventListener('input', function () {
+        if (coachEl.getAttribute('data-stage') !== 'subject') return;
+        var ok = subjectEl.value.trim().length >= SUBJECT_MIN;
+        nextBtn.hidden = !ok;
+        nextBtn.disabled = !ok;
+        nextBtn.classList.toggle('is-active', ok);
+    });
+
+    bodyEl.addEventListener('input', function () {
+        // Hard cap at 300 WORDS — if user pushes past, snap value back.
+        var words = countWords(bodyEl.value);
+        if (words > BODY_MAX) {
+            bodyEl.value = lastBodyValue;
+            words = countWords(bodyEl.value);
+        } else {
+            lastBodyValue = bodyEl.value;
+        }
+        counterEl.textContent = words + '/' + BODY_MAX;
+        counterEl.classList.toggle('is-warn',  words > BODY_MAX - 30 && words < BODY_MAX);
+        counterEl.classList.toggle('is-error', words >= BODY_MAX);
+        if (coachEl.getAttribute('data-stage') === 'body') {
+            var ok = words >= BODY_MIN && words <= BODY_MAX;
+            sendBtn.disabled = !ok;
+            sendBtn.classList.toggle('is-active', ok);
+        }
+    });
+
+    nextBtn.addEventListener('click', function () {
+        if (subjectEl.value.trim().length < SUBJECT_MIN) return;
+        setStage('body');
+        try { bodyEl.focus(); } catch (e) {}
+    });
+
+    sendBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (sendBtn.disabled) return;
+        // Run the rule-based scorer client-side (see static/js/outreach-email-scoring.js
+        // and docs/PHASE3_OUTREACH_EMAIL_GRADING_PLAN.md). Result is persisted to
+        // sessionStorage; the result page reads it on load. When the backend
+        // endpoint ships, swap this for an authenticated POST and keep the
+        // same shape so the result page does not change.
+        if (window.HeeriseOutreachScorer) {
+            var result = window.HeeriseOutreachScorer.score({
+                subject: subjectEl.value,
+                body:    bodyEl.value
+            });
+            window.HeeriseOutreachScorer.save(result);
+        }
+        window.location.assign('/acc/stakeholder-kickoff/email/result/');
+    });
+
+    /* ---------- hint popup overlay + section switching ---------- */
+    function setHintOpen(open) {
+        if (!hintPopup || !hintToggle) return;
+        hintPopup.hidden = !open;
+        hintToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (hintEl) hintEl.setAttribute('data-open', open ? 'true' : 'false');
+    }
+    if (hintEl && hintToggle && hintPopup && hintContent) {
+        hintToggle.addEventListener('click', function () {
+            var open = hintPopup.hidden;
+            setHintOpen(open);
+        });
+        if (hintClose) {
+            hintClose.addEventListener('click', function () { setHintOpen(false); });
+        }
+        // Tab switching inside the popup
+        hintPopup.addEventListener('click', function (e) {
+            var tab = e.target.closest('.sks-emc-hint-tab');
+            if (!tab) return;
+            var key = tab.getAttribute('data-section');
+            if (!SECTIONS[key]) return;
+            hintPopup.querySelectorAll('.sks-emc-hint-tab').forEach(function (t) {
+                t.classList.toggle('is-on', t === tab);
+            });
+            hintContent.textContent = SECTIONS[key];
+        });
+    }
+
+    setStage('subject');
+})();
+</script>
+
+<style>
+.sks-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+</style>
+<!-- *** PHASE 3 — S3.02 COMPOSE END *** -->

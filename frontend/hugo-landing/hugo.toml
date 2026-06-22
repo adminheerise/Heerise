@@ -119,6 +119,13 @@ pluralizelisttitles = false
     "stakeholder-kickoff-outreach-intro",
     "stakeholder-kickoff-outreach-email",
     "stakeholder-kickoff-outreach-feedback",
+    "stakeholder-kickoff-email-intro",
+    "stakeholder-kickoff-email-compose",
+    "stakeholder-kickoff-email-result",
+    "stakeholder-kickoff-agenda-intro",
+    "stakeholder-kickoff-agenda-ready",
+    "stakeholder-kickoff-agenda-build",
+    "stakeholder-kickoff-agenda-result",
   ]
 
   disabled_logo = false
@@ -216,38 +223,49 @@ pluralizelisttitles = false
   enable = true
   label = "Upcoming Event"
   badge = "Featured"
-  title = "Career Lab Workshop"
+  title = "Co-Pilot, Not Autopilot"
   # Event date/time pill shown inline next to the title (replaces the
   # old "Coming Soon" pill and the countdown block).
-  subtitle = "8-9PM, April 28, 2026"
+  # subtitle = "8-9PM, April 28, 2026"
   # Compact mode keeps the two-column layout but hides the stats + countdown
   # that are part of the non-compact variant.
   coming_soon = true
   countdown_deadline = ""
-  cta_text = "REGISTER NOW"
-  cta_url = "/career-lab/workshop/"
+  cta_text = "Sign up"
+  # Query flag survives redirects better than #hash; sessionStorage is also set
+  # on Featured CTA click in featured_event.html (see heerise_open_bootcamp).
+  cta_url = "/career-lab/workshop/?openBootcamp=1"
   # Featured event hero image — Career Lab session photo.
-  image = "/img/career-lab-hero.png"
+  image = "/img/career-lab-ai-copilot-hero-penn.png"
   image_alt = "Career Lab session in progress"
   # Description — new "Ready to Start Your Career..." webinar content.
   # When description_heading / description_points are set they render in
   # place of the older description1 / description2 paragraphs.
   description_heading = "Ready to Start Your Career in the U.S.?"
-  description_intro = "Learn how international students navigate the U.S. job market:"
+  description_intro = "Explore how AI can act as a co-pilot, not an autopilot, in career development:"
   description_points = [
-    "Current market trends",
-    "Job-search strategies",
-    "Where to find opportunities",
-    "How to design strong resumes and cover letters that secure interviews",
+    "Clarify career goals and discover personalized next steps",
+    "Identify skill gaps and build targeted learning plans",
+    "Strengthen resumes, interviews, and job applications with AI support",
+    "Keep human judgment at the center while using AI to move forward with confidence",
   ]
   # Legacy fallback paragraphs (ignored when description_heading is set).
   description1 = ""
   description2 = ""
   # Speaker block — renders inside a bordered card on the homepage featured
   # event. Leave speaker_name empty to hide the whole block.
-  speaker_name = "Christa Hunter"
-  speaker_title = "Director of Career Services<br/>Graduate School of Education, University of Pennsylvania"
-  speaker_avatar = "/img/career-lab-workshop-speaker.png"
+  speaker_name = "Linda A"
+  speaker_title = "Senior Instructional Designer<br/>Upenn GSE"
+  speaker_avatar = "/img/instructors/lindaA.jpg"
+
+# Career Lab — per-project checkout URLs (Stripe etc.). Fill when payment is live.
+[params.career_lab_project_payments]
+  job_aid = ""
+  training_proposal = ""
+  professional_deliverables = ""
+  design_document = ""
+  interactive_scenario = ""
+  portfolio_website = ""
 
 # ============================================================
 # NEW: Social links for footer

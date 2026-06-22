@@ -4,12 +4,6 @@
 {{ $compact := $fe.coming_soon }}
 <section class="cl-hero cl-featured-event cl-featured-event--text-left{{ if $compact }} cl-featured-event--compact{{ end }}">
     <div class="cl-hero-shell">
-        {{ if $fe.label }}
-        <div class="cl-featured-event-header">
-            <h2 class="cl-featured-event-title">{{ $fe.label }}</h2>
-            <div class="cl-featured-event-line" aria-hidden="true"></div>
-        </div>
-        {{ end }}
         <div class="cl-hero-inner">
             <div class="cl-hero-image">
                 {{ if $fe.badge }}
@@ -18,6 +12,12 @@
                 <img src="{{ default "/img/career-lab-workshop.png" $fe.image }}" alt="{{ default $fe.title $fe.image_alt }}" />
             </div>
             <div class="cl-hero-content">
+                {{ if $fe.label }}
+                <div class="cl-featured-event-header">
+                    <h2 class="cl-featured-event-title">{{ $fe.label }}</h2>
+                    <div class="cl-featured-event-line" aria-hidden="true"></div>
+                </div>
+                {{ end }}
                 <div class="cl-hero-top">
                     {{/* Split title on the LAST space so multi-word brand names
                          (e.g. "Career Lab Workshop") underline the brand portion
@@ -122,5 +122,21 @@
 <script src="/js/countdown.js"></script>
 <script>document.addEventListener("DOMContentLoaded", function() { if (window.HeeriseCountdown) HeeriseCountdown.initAll(".cl-countdown"); });</script>
 {{ end }}
+{{/* Persist intent to open workshop sign-up modal: hash is often dropped on
+     redirect/CDN; sessionStorage survives the navigation. career-lab.js reads
+     `heerise_open_bootcamp` on the workshop page. */}}
+<script>
+(function () {
+  var root = document.querySelector(".cl-featured-event");
+  if (!root) return;
+  var a = root.querySelector(".cl-cta-buttons .cl-btn-primary");
+  if (!a) return;
+  var href = (a.getAttribute("href") || "").toLowerCase();
+  if (href.indexOf("/career-lab/workshop") === -1) return;
+  a.addEventListener("click", function () {
+    try { sessionStorage.setItem("heerise_open_bootcamp", "1"); } catch (e) {}
+  });
+})();
+</script>
 {{ end }}
 <!-- *** FEATURED EVENT END *** -->

@@ -708,6 +708,38 @@
       });
   }
 
+  function clientScoreToFeedbackPayload(subjectVal, bodyVal) {
+    if (!window.HeeriseOutreachScorer) return null;
+    var client = window.HeeriseOutreachScorer.score({ subject: subjectVal, body: bodyVal });
+    var idMap = { context: "context_credibility" };
+    var criteria = (client.scorecards || []).map(function (c) {
+      var id = idMap[c.criterion] || c.criterion;
+      var label = window.HeeriseOutreachScorer.tierLabel(c.score);
+      var body = window.HeeriseOutreachScorer.tierBody(c.criterion, c.score);
+      return {
+        id: id,
+        score: c.score,
+        feedback: label + " \u2014 " + body,
+      };
+    });
+    return {
+      criteria: criteria,
+      total_score: client.total || 0,
+      overall_level: (client.tier || "proficient").toUpperCase(),
+      stakeholder_response: "",
+      word_count: client.body_word_count || 0,
+    };
+  }
+
+  function saveFeedbackAndGo(payload) {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch (e) {
+      /* continue */
+    }
+    window.location.assign(feedbackUrl);
+  }
+
   function submitEmailScore(subjectVal, bodyVal) {
     if (!send || scoringBusy) return;
     if (!bodyVal) return;
@@ -733,18 +765,25 @@
       .then(parseApiResponse)
       .then(function (data) {
         setScoringUi("ok", "Scoring complete!", "Opening your feedback…");
-        try {
-          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        } catch (e) {
-          /* continue */
-        }
         window.setTimeout(function () {
-          window.location.assign(feedbackUrl);
+          saveFeedbackAndGo(data);
         }, 400);
       })
       .catch(function (err) {
         scoringBusy = false;
         if (send) send.classList.remove("is-loading");
+        var offline = clientScoreToFeedbackPayload(subjectVal, bodyVal);
+        if (offline) {
+          setScoringUi(
+            "ok",
+            "Using offline scoring",
+            "The API is unavailable — showing rule-based feedback."
+          );
+          window.setTimeout(function () {
+            saveFeedbackAndGo(offline);
+          }, 600);
+          return;
+        }
         var msg = (err && err.message) || "Could not score your email.";
         if (err && err.name === "AbortError") {
           msg = "Scoring timed out. Check that the API server is running, then try again.";
@@ -775,7 +814,22 @@
 
   if (send) {
     send.addEventListener("click", function () {
-      if (send.disabled) return;
+      if (send.disabled) {
+        if (!root.classList.contains("oe--p2")) {
+          setScoringUi(
+            "err",
+            "Finish the subject first",
+            "Enter a subject line, click Next, then draft the email body before sending."
+          );
+        } else if (!bodyOk()) {
+          setScoringUi(
+            "err",
+            "Add more to your email",
+            "Write at least 3 words in the body (max 300 words), then click Send."
+          );
+        }
+        return;
+      }
       var subjectVal = sub ? sub.value.trim() : "";
       var bodyVal = body ? body.value.trim() : "";
       submitEmailScore(subjectVal, bodyVal);

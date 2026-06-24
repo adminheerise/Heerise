@@ -1,0 +1,23 @@
+{{ $next := "/acc/stakeholder-kickoff/kickoff/call/" | relURL }}
+<!-- PHASE 5 — P5.1: pre-call intro (Figma Phase 5 - 1) -->
+<section class="sks-page sks-page--lumina-dialog sks-page--kickoff-intro" aria-label="Kick-off Call — introduction">
+    <div class="sks-shell sks-shell--kickoff-intro">
+        {{ partial "stakeholder-kickoff-kickoff-nav.html" . }}
+
+        <div class="sks-main">
+            <div class="sks-scene sks-scene--kickoff-intro">
+                <div class="sks-person sks-person--kickoff-intro">
+                    <img src="{{ "img/lumina-manager.png" | relURL }}" width="456" height="684" alt="Maya, your manager" />
+                </div>
+                <div class="sks-dialog-col sks-dialog-col--kickoff-intro">
+                    <div class="sks-bubble sks-bubble--organize sks-bubble--kickoff-intro">
+                        <p class="sks-kc-intro-copy">Jordan and Priya are joining in a few seconds, now get ready for your first kick-off call!</p>
+                    </div>
+                    <div class="sks-actions sks-actions--kickoff-intro">
+                        <a href="{{ $next }}" class="sks-btn sks-btn--kickoff-start">Start the Call</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

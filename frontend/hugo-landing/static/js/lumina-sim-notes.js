@@ -41,6 +41,11 @@
     "stakeholder-kickoff-agenda-ready": "agenda ready",
     "stakeholder-kickoff-agenda-build": "agenda build",
     "stakeholder-kickoff-agenda-result": "agenda result",
+    "stakeholder-kickoff-kickoff-intro": "kickoff intro",
+    "stakeholder-kickoff-kickoff-notes-intro": "kickoff notes-intro",
+    "stakeholder-kickoff-kickoff-countdown": "kickoff countdown",
+    "stakeholder-kickoff-kickoff-live": "kickoff live",
+    "stakeholder-kickoff-kickoff-result": "kickoff result",
   };
 
   var root = document.getElementById("lumina-sim-notes-root");

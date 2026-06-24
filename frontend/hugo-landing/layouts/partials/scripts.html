@@ -35,3 +35,11 @@
 <script src="{{ "js/agenda-builder.js" | relURL }}?{{ now.Unix }}" defer></script>
 {{ end }}
 
+{{ $kickoffIds := slice "stakeholder-kickoff-kickoff-intro" "stakeholder-kickoff-kickoff-notes-intro" "stakeholder-kickoff-kickoff-countdown" "stakeholder-kickoff-kickoff-live" "stakeholder-kickoff-kickoff-result" }}
+{{ if in $kickoffIds .Params.id }}
+<script src="{{ "js/stakeholder-sim-username.js" | relURL }}?{{ now.Unix }}"></script>
+{{ end }}
+{{ if eq .Params.id "stakeholder-kickoff-kickoff-countdown" }}
+<script src="{{ "js/kickoff-countdown.js" | relURL }}?{{ now.Unix }}"></script>
+{{ end }}
+

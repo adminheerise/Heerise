@@ -24,6 +24,8 @@
 {{/* Phase 3: stakeholder outreach compose + Gemini scoring */}}
 {{ if eq .Params.id "stakeholder-kickoff-outreach-compose" }}
 <link href="{{ "css/outreach-email-mock.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+<link href="{{ "css/outreach-feedback.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+<script src="{{ "js/outreach-email-scoring.js" | relURL }}?{{ now.Unix }}"></script>
 {{ end }}
 
 {{ if eq .Params.id "stakeholder-kickoff-outreach-feedback" }}
@@ -55,6 +57,14 @@
 
 {{ if or (eq .Params.id "stakeholder-kickoff-agenda-build") (eq .Params.id "stakeholder-kickoff-agenda-result") }}
 <script src="{{ "js/agenda-scoring.js" | relURL }}?{{ now.Unix }}"></script>
+{{ end }}
+
+{{/* PHASE 5 — Kick-off Call module */}}
+{{ $kickoffIds := slice "stakeholder-kickoff-kickoff-intro" "stakeholder-kickoff-kickoff-notes-intro" "stakeholder-kickoff-kickoff-countdown" "stakeholder-kickoff-kickoff-live" "stakeholder-kickoff-kickoff-result" }}
+{{ if in $kickoffIds .Params.id }}
+<link href="{{ "css/stakeholder-kickoff-sim.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+<link href="{{ "css/kickoff-call.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&family=Lato:wght@400;700&family=Inter:wght@400;500;600;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 {{ end }}
 
 <!-- Navbar: #011F5B override (loads last - overrides theme purple/teal) -->

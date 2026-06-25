@@ -3556,159 +3556,125 @@ a.cl-pricing-project-link:focus-visible {
     display: none;
 }
 
-/* ---- ACC Stories (Frame 181, bg white, padding 56px) ---- */
-.acc-stories {
+/* ---- ACC Level Up + CTA (Frame 279, shared gradient) ---- */
+.acc-level-cta {
     width: 100%;
-    background: #FFFFFF;
+    background: linear-gradient(94.87deg, #017AFF -14.63%, #610199 97.94%);
 }
-.acc-stories-inner {
+
+.acc-level-cta-inner {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 56px;
+    padding: 80px 24px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    box-sizing: border-box;
 }
-.acc-stories-scroll {
+
+.acc-level-up {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 61px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.acc-level-up-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 19px;
+    max-width: 645px;
+    text-align: center;
+}
+
+.acc-level-up-title {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 32px;
+    line-height: 39px;
+    color: #FFFFFF;
+}
+
+.acc-level-up-subtitle {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+}
+
+.acc-level-cards {
     display: flex;
     flex-direction: row;
-    align-items: stretch;
-    gap: 24px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    padding-bottom: 8px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-.acc-stories-scroll::-webkit-scrollbar {
-    display: none;
-}
-.acc-story-card {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    padding: 24px;
-    gap: 48px;
-    width: 440px;
-    min-width: 440px;
-    height: 268px;
-    background: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    gap: 24px;
+    width: 100%;
+}
+
+.acc-level-card-img {
+    width: 250px;
+    height: 375px;
+    object-fit: cover;
     border-radius: 4px;
     flex-shrink: 0;
 }
-.acc-story-top {
-    display: flex;
-    flex-direction: row;
+
+.acc-level-arrow {
+    display: inline-flex;
     align-items: center;
-    gap: 17px;
-    width: 100%;
-}
-.acc-story-avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: linear-gradient(130.2deg, #011F5B 0.23%, #018F99 93.13%);
+    justify-content: center;
+    width: 48px;
+    height: 48px;
     flex-shrink: 0;
 }
-.acc-story-info {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-.acc-story-name {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 19px;
-    color: rgba(0, 0, 0, 0.8);
-}
-.acc-story-role {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    color: rgba(0, 0, 0, 0.6);
-}
-.acc-story-company {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    color: #011F5B;
-}
-.acc-story-quote {
-    font-family: 'Inter', sans-serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    color: rgba(0, 0, 0, 0.6);
-    margin: 0;
-    width: 100%;
-}
-.acc-scrollbar-wrap {
-    width: 757px;
-    margin: 16px auto 0;
-    padding: 0 4px;
-}
-.acc-scrollbar-track {
-    position: relative;
-    width: 100%;
-    height: 8px;
-    background: #E5E5E5;
-    border-radius: 24px;
-}
-.acc-scrollbar-thumb {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 8px;
-    background: #CBCBCB;
-    border-radius: 24px;
-    width: 40%;
-    transition: left 0.15s ease;
-    cursor: grab;
-}
-.acc-scrollbar-thumb:active {
-    cursor: grabbing;
-}
 
-/* ---- ACC CTA (Frame 191, gradient bg, padding 80px) ---- */
-.acc-cta {
-    width: 100%;
-    background: linear-gradient(95.68deg, #011F5B 0.3%, #610199 130.82%);
-}
-.acc-cta-inner {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 80px 247px;
+.acc-cta-block {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 36px;
+    width: 100%;
+    max-width: 786px;
 }
+
+.acc-cta-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    text-align: center;
+}
+
 .acc-cta-title {
     font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: 32px;
+    font-weight: 700;
+    font-size: 28px;
     line-height: 48px;
     text-align: center;
     color: #FFFFFF;
     margin: 0;
 }
+
 .acc-cta-subtitle {
     font-family: 'Inter', sans-serif;
-    font-weight: 200;
+    font-weight: 400;
     font-size: 16px;
     line-height: 19px;
     text-align: center;
     color: #FFFFFF;
     margin: 0;
 }
+
 .acc-cta-btn {
     display: flex;
     flex-direction: row;
@@ -3716,6 +3682,8 @@ a.cl-pricing-project-link:focus-visible {
     align-items: center;
     padding: 10px;
     gap: 10px;
+    min-width: 341px;
+    height: 40px;
     background: #FFFFFF;
     border-radius: 4px;
     font-family: 'Inter', sans-serif;
@@ -3723,17 +3691,21 @@ a.cl-pricing-project-link:focus-visible {
     font-size: 14px;
     line-height: 20px;
     text-transform: uppercase;
-    color: #011F5B;
+    color: #017AFF;
     text-decoration: none;
+    box-sizing: border-box;
 }
+
 .acc-cta-btn:hover {
     background: #f0f0f0;
-    color: #011F5B;
+    color: #017AFF;
     text-decoration: none;
 }
+
 .acc-cta-btn svg {
     width: 24px;
     height: 24px;
+    flex-shrink: 0;
 }
 
 /* ---- ACC Footer (Frame 21, 1280×430, bg #001021) ---- */
@@ -3912,18 +3884,18 @@ body.acc-page-deprecated {
     .acc-journey-inner {
         padding: 40px 20px;
     }
-    .acc-stories-inner {
-        padding: 40px 20px;
-    }
-    .acc-stories-grid {
-        overflow-x: auto;
-    }
-    .acc-cta-inner {
+    .acc-level-cta-inner {
         padding: 60px 20px;
     }
-    .acc-scrollbar-wrap {
-        width: 100%;
-        max-width: 757px;
+    .acc-level-up {
+        gap: 40px;
+    }
+    .acc-level-up-title {
+        font-size: 26px;
+        line-height: 32px;
+    }
+    .acc-level-cards {
+        gap: 16px;
     }
     .acc-footer-row {
         flex-direction: column;
@@ -3932,6 +3904,23 @@ body.acc-page-deprecated {
     .acc-footer-inner {
         padding: 27px 20px 20px;
         gap: 32px;
+    }
+}
+
+@media (max-width: 960px) {
+    .acc-level-card-img {
+        width: 200px;
+        height: 300px;
+    }
+
+    .acc-level-arrow {
+        width: 36px;
+        height: 36px;
+    }
+
+    .acc-level-arrow svg {
+        width: 36px;
+        height: 36px;
     }
 }
 
@@ -3953,10 +3942,10 @@ body.acc-page-deprecated {
         width: 100%;
         justify-content: center;
     }
-    .acc-story-card {
-        min-width: 300px;
-        width: 300px;
-        height: auto;
+    .acc-cta-btn {
+        min-width: 0;
+        width: 100%;
+        max-width: 341px;
     }
     .acc-cta-title {
         font-size: 24px;

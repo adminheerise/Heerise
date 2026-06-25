@@ -49,7 +49,7 @@
         </div>
 
         <div class="clp-hero-image">
-            <img src="{{ .Site.Params.featured_event.image }}" alt="{{ .Site.Params.featured_event.image_alt }}" />
+            <img src="{{ default "/img/career-lab-speaker-series-copilot.png" $fe.image }}" alt="{{ default "Career Lab Speaker Series" $fe.image_alt }}" />
         </div>
     </div>
 </section>

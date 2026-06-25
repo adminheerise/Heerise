@@ -241,9 +241,9 @@ pluralizelisttitles = false
   # Query flag survives redirects better than #hash; sessionStorage is also set
   # on Featured CTA click in featured_event.html (see heerise_open_bootcamp).
   cta_url = "/career-lab/workshop/?openBootcamp=1"
-  # Featured event hero image — Career Lab session photo.
-  image = "/img/career-lab-ai-copilot-hero-penn.png"
-  image_alt = "Career Lab session in progress"
+  # Featured event hero image — Career Lab Speaker Series poster.
+  image = "/img/career-lab-speaker-series-copilot.png"
+  image_alt = "Career Lab Speaker Series — Co-Pilot, Not Autopilot: Human-Centered AI in Instructional Design"
   # Description — new "Ready to Start Your Career..." webinar content.
   # When description_heading / description_points are set they render in
   # place of the older description1 / description2 paragraphs.

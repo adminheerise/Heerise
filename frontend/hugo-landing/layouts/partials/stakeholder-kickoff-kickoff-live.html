@@ -1,0 +1,28 @@
+{{ $resultUrl := "/acc/stakeholder-kickoff/kickoff/result/" | relURL }}
+<!-- PHASE 5 — P5.4: live kick-off call with participants (Figma Phase 5 - 4) -->
+<section class="sks-page sks-page--kickoff-live" aria-label="Kick-off Call — live meeting">
+    <div class="sks-kc-shell sks-kc-shell--split">
+        {{ partial "stakeholder-kickoff-kickoff-nav.html" . }}
+
+        <div class="sks-kc-split">
+            <div class="sks-kc-split-main">
+                {{ partial "stakeholder-kickoff-kickoff-zoom-live.html" . }}
+                <div class="sks-kc-live-actions">
+                    <a href="{{ $resultUrl }}" class="sks-btn sks-btn--kickoff-end">End Call</a>
+                </div>
+            </div>
+            {{ partial "stakeholder-kickoff-kickoff-notes-review.html" . }}
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+  var section = document.querySelector('[data-kc-notes-section="kickoff-call"]');
+  if (section) {
+    section.scrollIntoView({ block: "nearest" });
+    var scroll = document.querySelector(".sks-kc-notes-review-scroll");
+    if (scroll) scroll.scrollTop = scroll.scrollHeight;
+  }
+})();
+</script>

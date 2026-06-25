@@ -51,7 +51,7 @@
         partial:
             "You’re on the right track! Your agenda covers most of the essentials. There are just a few gaps (like a missing key item or slightly off timing) that could weaken the flow of the conversation. With a small tweak or two, you can make this agenda more complete and effective. Take a moment to refine it before sending.",
         weak:
-            "Your agenda signals solution-first thinking or skips the highest-stakes discovery work. Before you send, revise so discovery leads and risky items wait until after you’ve earned the right to propose solutions."
+            "You’re on the right track! Your agenda covers most of the essentials. There are just a few gaps (like a missing key item or slightly off timing) that could weaken the flow of the conversation. With a small tweak or two, you can make this agenda more complete and effective. Take a moment to refine it before sending."
     };
 
     var MAYA = {

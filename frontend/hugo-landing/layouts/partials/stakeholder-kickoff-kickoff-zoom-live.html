@@ -1,0 +1,52 @@
+{{/* PHASE 5 — P5.4: live kick-off call with participant gallery */}}
+{{ $jordan := "img/kickoff-jordan-thumb.png" | relURL }}
+{{ $priya := "img/kickoff-priya-thumb.png" | relURL }}
+{{ $you := "img/kickoff-you-avatar.png" | relURL }}
+<div class="sks-kc-zoom sks-kc-zoom--live" aria-label="Live kick-off call">
+    <div class="sks-kc-zoom-frame">
+        <div class="sks-kc-zoom-browser" aria-hidden="true">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="sks-kc-zoom-video">
+            <div class="sks-kc-zoom-toolbar sks-kc-zoom-toolbar--tl">
+                <span class="sks-kc-zoom-shield" aria-hidden="true"></span>
+                <span class="sks-kc-zoom-sound">Original Sound: Off</span>
+            </div>
+            <div class="sks-kc-zoom-toolbar sks-kc-zoom-toolbar--tr">View</div>
+
+            <div class="sks-kc-participant-strip">
+                <div class="sks-kc-participant-tile">
+                    <img src="{{ $jordan }}" alt="" width="29" height="29" />
+                    <span class="sks-kc-participant-name">Jordan</span>
+                </div>
+                <div class="sks-kc-participant-tile">
+                    <img src="{{ $priya }}" alt="" width="29" height="29" />
+                    <span class="sks-kc-participant-name">Priya</span>
+                </div>
+                <div class="sks-kc-participant-tile sks-kc-participant-tile--you">
+                    <img src="{{ $you }}" alt="" width="29" height="29" />
+                    <span class="sks-kc-participant-name">You</span>
+                </div>
+            </div>
+
+            <div class="sks-kc-gallery">
+                <div class="sks-kc-gallery-tile sks-kc-gallery-tile--jordan">
+                    <img src="{{ $jordan }}" alt="Jordan Kim" class="sks-kc-gallery-avatar" />
+                    <span class="sks-kc-participant-name">Jordan</span>
+                </div>
+                <div class="sks-kc-gallery-tile sks-kc-gallery-tile--priya">
+                    <img src="{{ $priya }}" alt="Dr. Priya Nair" class="sks-kc-gallery-avatar" />
+                    <span class="sks-kc-participant-name">Priya</span>
+                </div>
+                <div class="sks-kc-gallery-tile sks-kc-gallery-tile--you">
+                    <img src="{{ $you }}" alt="You" class="sks-kc-gallery-avatar sks-kc-gallery-avatar--placeholder" />
+                    <span class="sks-kc-participant-name">You</span>
+                </div>
+            </div>
+        </div>
+        <div class="sks-kc-zoom-controls" aria-hidden="true">
+            <div class="sks-kc-zoom-controls-bar"></div>
+            <span class="sks-kc-zoom-end">End</span>
+        </div>
+    </div>
+</div>

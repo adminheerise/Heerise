@@ -1,0 +1,40 @@
+{{ $countdownUrl := "/acc/stakeholder-kickoff/kickoff/call/countdown/" | relURL }}
+<!-- PHASE 5 — P5.2: notes onboarding before kick-off call (Figma Phase 5 - 2) -->
+<section class="sks-page sks-page--kickoff-notes-intro" aria-label="Kick-off Call — review notes">
+    <div class="sks-kc-shell">
+        {{ partial "stakeholder-kickoff-kickoff-nav.html" . }}
+
+        <div class="sks-kc-stage sks-kc-stage--centered">
+            {{ partial "stakeholder-kickoff-kickoff-zoom-empty.html" (dict "countdown" false) }}
+        </div>
+    </div>
+
+    <div class="sks-kc-notes-intro is-visible" id="sks-kc-notes-intro" aria-hidden="false">
+        <div class="sks-kc-notes-intro-backdrop" aria-hidden="true"></div>
+        <div class="sks-kc-notes-intro-tooltip-wrap">
+            <div class="sks-kc-notes-intro-bubble" role="dialog" aria-labelledby="sks-kc-notes-intro-text">
+                <p id="sks-kc-notes-intro-text" class="sks-kc-notes-intro-bubble-text">
+                    Click <strong>Notes</strong> to review everything you have prepared for the meeting. Make sure to review your notes carefully before entering the meeting.
+                </p>
+            </div>
+            <div class="sks-kc-notes-intro-cursor" aria-hidden="true"></div>
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+  var nextUrl = {{ $countdownUrl | jsonify }};
+  var navigated = false;
+  function goNext() {
+    if (navigated) return;
+    navigated = true;
+    window.location.assign(nextUrl);
+  }
+  document.addEventListener("lumina-notes:opened", goNext);
+  document.getElementById("lumina-sim-notes-fab") &&
+    document.getElementById("lumina-sim-notes-fab").addEventListener("click", function () {
+      window.setTimeout(goNext, 400);
+    });
+})();
+</script>

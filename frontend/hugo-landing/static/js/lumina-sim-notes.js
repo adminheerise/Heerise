@@ -29,7 +29,8 @@
     "stakeholder-kickoff-gap-analysis": "brief-gap-analysis",
     "stakeholder-kickoff-zoom-meeting": "brief-zoom meeting",
     "stakeholder-kickoff-outreach-intro": "outreach-intro",
-    "stakeholder-kickoff-outreach-email": "brief-email",
+    "stakeholder-kickoff-brief-email": "brief-email",
+    "stakeholder-kickoff-outreach-compose": "outreach-compose",
     "stakeholder-kickoff-outreach-feedback": "outreach-feedback",
     "stakeholder-kickoff-research": "research",
     "stakeholder-kickoff-research-workspace": "research-workspace",
@@ -40,6 +41,11 @@
     "stakeholder-kickoff-agenda-ready": "agenda ready",
     "stakeholder-kickoff-agenda-build": "agenda build",
     "stakeholder-kickoff-agenda-result": "agenda result",
+    "stakeholder-kickoff-kickoff-intro": "kickoff intro",
+    "stakeholder-kickoff-kickoff-notes-intro": "kickoff notes-intro",
+    "stakeholder-kickoff-kickoff-countdown": "kickoff countdown",
+    "stakeholder-kickoff-kickoff-live": "kickoff live",
+    "stakeholder-kickoff-kickoff-result": "kickoff result",
   };
 
   var root = document.getElementById("lumina-sim-notes-root");

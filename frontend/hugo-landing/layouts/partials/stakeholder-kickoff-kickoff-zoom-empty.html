@@ -1,0 +1,21 @@
+{{/* PHASE 5 — pre-call Zoom window (empty video / P5.2 & P5.3)
+     Pass (dict "countdown" true) to show countdown overlay; omit or false for P5.2. */}}
+{{ $zoomUi := "img/lumina-zoom-ui.png" | relURL }}
+{{ $showCountdown := false }}
+{{ if isset . "countdown" }}
+  {{ $showCountdown = .countdown }}
+{{ end }}
+<div class="sks-kc-zoom sks-kc-zoom--empty" aria-label="Simulated Zoom meeting">
+    <div class="sks-kc-zoom-window">
+        <img src="{{ $zoomUi }}" alt="" class="sks-kc-zoom-img" width="1072" height="542" loading="eager" decoding="async" />
+        {{ if $showCountdown }}
+        <div class="sks-kc-countdown" id="sks-kc-countdown">
+            <div class="sks-kc-countdown-inner">
+                <p class="sks-kc-countdown-label">Video Meeting Starting in</p>
+                <p class="sks-kc-countdown-num" id="sks-kc-countdown-num" aria-live="assertive">30</p>
+                <button type="button" class="sks-kc-countdown-skip" id="sks-kc-countdown-skip">Skip</button>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</div>

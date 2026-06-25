@@ -1,0 +1,75 @@
+<!-- PHASE 5 — P5.5: kick-off call overall rating STRONG / PARTIAL / WEAK (Figma Phase 5 - 5) -->
+<section class="sks-page sks-page--kickoff-result" aria-label="Kick-off Call — result" data-kc-result-root>
+    <div class="sks-kc-shell sks-kc-shell--result">
+        {{ partial "stakeholder-kickoff-kickoff-nav.html" . }}
+
+        <main class="sks-kcr-main">
+            <div class="sks-kcr-hero">
+                <p class="sks-kcr-kicker">The Overall Rating of Your Call Was</p>
+                <h1 class="sks-kcr-tier" data-kc-tier-label>STRONG</h1>
+                <div class="sks-kcr-stars" data-kc-stars-mount aria-hidden="true">
+                    {{ partial "sks-emr-stars.html" (dict "count" 3 "size" 48) }}
+                </div>
+            </div>
+
+            <div class="sks-kcr-feedback sks-kcr-feedback--strong" data-kc-feedback>
+                <p class="sks-kcr-feedback-text" data-kc-feedback-text>You ran a focused and well-structured kickoff call. You used the agenda to set expectations, confirmed stakeholder roles, and asked targeted questions that uncovered what success really means for both Jordan and Priya. Most importantly, you noticed the tension between speed, accuracy, audience needs, and scope, and you turned that tension into clear next steps with owners and dates. This shows strong discovery thinking and meeting leadership.</p>
+            </div>
+
+            <div class="sks-kcr-actions">
+                <a href="#" class="sks-btn sks-btn--kickoff-continue" data-kc-continue>Continue</a>
+            </div>
+        </main>
+    </div>
+</section>
+
+<script>
+(function () {
+  var TIERS = {
+    strong: {
+      label: "STRONG",
+      stars: 3,
+      feedback:
+        "You ran a focused and well-structured kickoff call. You used the agenda to set expectations, confirmed stakeholder roles, and asked targeted questions that uncovered what success really means for both Jordan and Priya. Most importantly, you noticed the tension between speed, accuracy, audience needs, and scope, and you turned that tension into clear next steps with owners and dates. This shows strong discovery thinking and meeting leadership.",
+    },
+    partial: {
+      label: "PARTIAL",
+      stars: 2,
+      feedback:
+        "You gathered useful information during the kickoff call, but some parts of the conversation could have been more structured or better connected to the project goals. You asked good questions and moved the discussion forward, but you may have missed chances to clarify priorities, align success metrics, or set clear next steps. The meeting was productive overall, but a few open questions remain that could create confusion later in the project.",
+    },
+    weak: {
+      label: "WEAK",
+      stars: 1,
+      feedback:
+        "The kickoff call did not create enough clarity or alignment. Instead of using the meeting to uncover stakeholder goals, audience needs, constraints, and decision owners, the conversation either moved too quickly into solutions or stayed too vague. As a result, the project direction, scope, and success criteria remain unclear. Before moving forward, you need to revisit the key questions and confirm what success looks like, what constraints matter most, and who needs to make decisions.",
+    },
+  };
+
+  var params = new URLSearchParams(window.location.search);
+  var tierKey = (params.get("tier") || "strong").toLowerCase();
+  if (!TIERS[tierKey]) tierKey = "strong";
+  var tier = TIERS[tierKey];
+
+  var root = document.querySelector("[data-kc-result-root]");
+  if (!root) return;
+
+  var labelEl = root.querySelector("[data-kc-tier-label]");
+  var feedbackEl = root.querySelector("[data-kc-feedback]");
+  var feedbackText = root.querySelector("[data-kc-feedback-text]");
+  var starsMount = root.querySelector("[data-kc-stars-mount]");
+
+  if (labelEl) labelEl.textContent = tier.label;
+  if (feedbackText) feedbackText.textContent = tier.feedback;
+  if (feedbackEl) {
+    feedbackEl.classList.remove("sks-kcr-feedback--strong", "sks-kcr-feedback--partial", "sks-kcr-feedback--weak");
+    feedbackEl.classList.add("sks-kcr-feedback--" + tierKey);
+  }
+  if (starsMount) {
+    var stars = starsMount.querySelectorAll(".sks-emr-star");
+    for (var i = 0; i < stars.length; i++) {
+      stars[i].classList.toggle("is-dim", i >= tier.stars);
+    }
+  }
+})();
+</script>

@@ -117,7 +117,8 @@ pluralizelisttitles = false
     "stakeholder-kickoff-research",
     "stakeholder-kickoff-research-workspace",
     "stakeholder-kickoff-outreach-intro",
-    "stakeholder-kickoff-outreach-email",
+    "stakeholder-kickoff-brief-email",
+    "stakeholder-kickoff-outreach-compose",
     "stakeholder-kickoff-outreach-feedback",
     "stakeholder-kickoff-email-intro",
     "stakeholder-kickoff-email-compose",
@@ -126,6 +127,11 @@ pluralizelisttitles = false
     "stakeholder-kickoff-agenda-ready",
     "stakeholder-kickoff-agenda-build",
     "stakeholder-kickoff-agenda-result",
+    "stakeholder-kickoff-kickoff-intro",
+    "stakeholder-kickoff-kickoff-notes-intro",
+    "stakeholder-kickoff-kickoff-countdown",
+    "stakeholder-kickoff-kickoff-live",
+    "stakeholder-kickoff-kickoff-result",
   ]
 
   disabled_logo = false

@@ -25,6 +25,7 @@
 {{ if eq .Params.id "stakeholder-kickoff-outreach-compose" }}
 <link href="{{ "css/outreach-email-mock.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 <link href="{{ "css/outreach-feedback.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+<script src="{{ "js/outreach-email-api.js" | relURL }}?{{ now.Unix }}"></script>
 <script src="{{ "js/outreach-email-scoring.js" | relURL }}?{{ now.Unix }}"></script>
 {{ end }}
 
@@ -43,11 +44,9 @@
 {{ end }}
 
 
-{{/* Phase 3 outreach-email scorer — loaded in <head> so the global
-     window.HeeriseOutreachScorer is defined before any inline body
-     script runs. The compose page calls .score() + .save() in its Send
-     handler; the result page calls .load() + the hydration helpers. */}}
+{{/* Phase 3 outreach-email scorer — offline rules only for QA test mode fallback */}}
 {{ if or (eq .Params.id "stakeholder-kickoff-email-compose") (eq .Params.id "stakeholder-kickoff-email-result") }}
+<script src="{{ "js/outreach-email-api.js" | relURL }}?{{ now.Unix }}"></script>
 <script src="{{ "js/outreach-email-scoring.js" | relURL }}?{{ now.Unix }}"></script>
 {{ end }}
 

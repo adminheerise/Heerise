@@ -401,20 +401,32 @@
 
     sendBtn.addEventListener('click', function (e) {
         e.preventDefault();
-        if (sendBtn.disabled) return;
-        // Run the rule-based scorer client-side (see static/js/outreach-email-scoring.js
-        // and docs/PHASE3_OUTREACH_EMAIL_GRADING_PLAN.md). Result is persisted to
-        // sessionStorage; the result page reads it on load. When the backend
-        // endpoint ships, swap this for an authenticated POST and keep the
-        // same shape so the result page does not change.
-        if (window.HeeriseOutreachScorer) {
-            var result = window.HeeriseOutreachScorer.score({
-                subject: subjectEl.value,
-                body:    bodyEl.value
-            });
-            window.HeeriseOutreachScorer.save(result);
+        if (sendBtn.disabled || sendBtn.classList.contains('is-loading')) return;
+        if (!window.HeeriseOutreachEmailApi) {
+            window.alert('Scoring is unavailable. Reload the page and try again.');
+            return;
         }
-        window.location.assign('/acc/stakeholder-kickoff/email/result/');
+        var subjectVal = subjectEl.value;
+        var bodyVal = bodyEl.value;
+        var feedbackUrl = '/acc/stakeholder-kickoff/outreach-feedback/';
+        sendBtn.disabled = true;
+        sendBtn.classList.add('is-loading');
+        var prevLabel = sendBtn.textContent;
+        sendBtn.textContent = 'Scoring…';
+
+        window.HeeriseOutreachEmailApi.submit({
+            subject: subjectVal,
+            body: bodyVal,
+            feedbackUrl: feedbackUrl,
+            onError: function (err, msg) {
+                sendBtn.disabled = false;
+                sendBtn.classList.remove('is-loading');
+                sendBtn.textContent = prevLabel;
+                window.alert(msg || 'Could not score your email.');
+            },
+        }).catch(function () {
+            /* onError handled */
+        });
     });
 
     /* ---------- hint popup overlay + section switching ---------- */

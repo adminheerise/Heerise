@@ -58,6 +58,10 @@
     {{ partial "lumina-sim-notes.html" . }}
     {{ end }}
 
+    {{ if and (isset .Params "id") (hasPrefix .Params.id "stakeholder-kickoff") }}
+    {{ partial "lumina-sim-test-nav.html" . }}
+    {{ end }}
+
     {{ partial "scripts.html" . }}
 
   </body>

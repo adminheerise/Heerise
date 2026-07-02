@@ -329,6 +329,55 @@
       ? window.SKS_OUTREACH_FEEDBACK_URL.trim()
       : "{{ $oeFeedback }}";
   var STORAGE_KEY = "heeriseOutreachEmailFeedback";
+  var DRAFT_STORAGE_KEY = "heeriseOutreachEmailDraft";
+  var DRAFT_TTL_MS = 12 * 60 * 60 * 1000;
+
+  function saveDraft() {
+    try {
+      var payload = {
+        subject: sub ? sub.value : "",
+        body: body ? body.value : "",
+        savedAt: Date.now(),
+      };
+      window.localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(payload));
+    } catch (e) {
+      /* ignore storage failures */
+    }
+  }
+
+  function loadDraft() {
+    try {
+      var raw = window.localStorage.getItem(DRAFT_STORAGE_KEY);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") return null;
+      var savedAt = typeof parsed.savedAt === "number" ? parsed.savedAt : 0;
+      if (!savedAt || Date.now() - savedAt > DRAFT_TTL_MS) {
+        window.localStorage.removeItem(DRAFT_STORAGE_KEY);
+        return null;
+      }
+      return {
+        subject: typeof parsed.subject === "string" ? parsed.subject : "",
+        body: typeof parsed.body === "string" ? parsed.body : "",
+      };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function applyDraft(draft) {
+    if (!draft) return;
+    if (sub && typeof draft.subject === "string") {
+      sub.value = draft.subject;
+    }
+    if (body && typeof draft.body === "string") {
+      body.value = draft.body;
+    }
+    syncCaret();
+    syncSubjectNext();
+    syncCount();
+    syncSend();
+  }
 
   function syncHintMaxHeight() {
     if (!hint || !hint.classList.contains("oe-hint--expanded")) {
@@ -615,6 +664,7 @@
     sub.addEventListener("input", function () {
       syncCaret();
       syncSubjectNext();
+      saveDraft();
     });
     sub.addEventListener("focus", syncCaret);
     sub.addEventListener("blur", syncCaret);
@@ -623,6 +673,7 @@
     body.addEventListener("input", function () {
       syncCount();
       syncSend();
+      saveDraft();
     });
   }
 
@@ -759,6 +810,10 @@
   }
 
   applyFromLine();
+  var initialDraft = loadDraft();
+  if (initialDraft) {
+    applyDraft(initialDraft);
+  }
   phase(1);
   setHintSection(0);
   requestAnimationFrame(function () {

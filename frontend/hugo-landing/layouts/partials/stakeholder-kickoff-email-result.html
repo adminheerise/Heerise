@@ -95,6 +95,10 @@
    and rewrites each rubric card + the overall hero. The static markup above
    serves as a fallback if the result is missing (direct navigation). */
 (function () {
+    if (sessionStorage.getItem('heeriseOutreachEmailFeedback')) {
+        window.location.replace('/acc/stakeholder-kickoff/outreach-feedback/');
+        return;
+    }
     if (!window.HeeriseOutreachScorer) return;
     var result = window.HeeriseOutreachScorer.load();
     if (!result) return;

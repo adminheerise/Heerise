@@ -108,6 +108,10 @@ secrets.json
 config.json
 credentials.json
 
+# Firebase CLI local cache (created by `firebase deploy`, do not commit)
+.firebase/
+firepit-log.txt
+
 # =========================
 #   Python notebook / data
 # =========================

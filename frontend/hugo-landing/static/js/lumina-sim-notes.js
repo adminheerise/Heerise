@@ -46,6 +46,7 @@
     "stakeholder-kickoff-kickoff-countdown": "kickoff countdown",
     "stakeholder-kickoff-kickoff-live": "kickoff live",
     "stakeholder-kickoff-kickoff-result": "kickoff result",
+    "stakeholder-kickoff-manager-brief": "manager brief",
   };
 
   var root = document.getElementById("lumina-sim-notes-root");
@@ -352,8 +353,15 @@
 
   function applyFabPosition() {
     if (!state.fabPos) return;
-    fab.style.left = state.fabPos.left + "px";
-    fab.style.top = state.fabPos.top + "px";
+    var w = fab.offsetWidth || 56;
+    var h = fab.offsetHeight || 56;
+    var maxL = Math.max(4, window.innerWidth - w - 4);
+    var maxT = Math.max(4, window.innerHeight - h - 4);
+    var left = Math.min(maxL, Math.max(4, state.fabPos.left));
+    var top = Math.min(maxT, Math.max(4, state.fabPos.top));
+    state.fabPos = { left: left, top: top };
+    fab.style.left = left + "px";
+    fab.style.top = top + "px";
     fab.style.right = "auto";
     fab.style.bottom = "auto";
   }
@@ -474,9 +482,19 @@
     return true;
   }
 
+  function resetFabToDefault() {
+    state.fabPos = null;
+    fab.style.left = "";
+    fab.style.top = "";
+    fab.style.right = "";
+    fab.style.bottom = "";
+    saveState();
+  }
+
   window.LuminaSimNotes = window.LuminaSimNotes || {};
   window.LuminaSimNotes.appendToPage = appendToPage;
   window.LuminaSimNotes.appendHere = function (text) { return appendToPage(pageId, text); };
   window.LuminaSimNotes.open = function () { if (!open) setOpen(true); };
   window.LuminaSimNotes.close = function () { if (open) setOpen(false); };
+  window.LuminaSimNotes.resetFabToDefault = resetFabToDefault;
 })();

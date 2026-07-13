@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 
 from ..deps import get_current_user_optional
 from ..models import User
+from ..services.kickoff import agents as kickoff_agents
 from ..services.outreach_email import score_outreach_email
 
 logger = logging.getLogger(__name__)
@@ -54,6 +55,48 @@ def _maya_script(who: str) -> str:
         "Read it, then come back and let me know what you think you know, what you don't know "
         "(things to ask in the kickoff), and what questions you need answered before that call."
     )
+
+
+class KickoffAgentIn(BaseModel):
+    runtime_context: dict = Field(default_factory=dict)
+
+
+class KickoffAgentOut(BaseModel):
+    spoken_response: str
+
+
+@router.post("/kickoff/jordan/respond", response_model=KickoffAgentOut)
+async def kickoff_jordan_respond(body: KickoffAgentIn):
+    """Independent Jordan Kim inference for Phase 5 live call."""
+    try:
+        text = await kickoff_agents.jordan_respond(body.runtime_context or {})
+        return KickoffAgentOut(spoken_response=text)
+    except RuntimeError as e:
+        msg = str(e)
+        if "GEMINI_API_KEY" in msg:
+            raise HTTPException(status_code=503, detail="Kickoff agents are not configured") from e
+        logger.exception("kickoff jordan respond failed")
+        raise HTTPException(status_code=502, detail=msg) from e
+    except Exception as e:
+        logger.exception("kickoff jordan respond failed")
+        raise HTTPException(status_code=502, detail="Failed to generate Jordan response") from e
+
+
+@router.post("/kickoff/priya/respond", response_model=KickoffAgentOut)
+async def kickoff_priya_respond(body: KickoffAgentIn):
+    """Independent Dr. Priya Nair inference for Phase 5 live call."""
+    try:
+        text = await kickoff_agents.priya_respond(body.runtime_context or {})
+        return KickoffAgentOut(spoken_response=text)
+    except RuntimeError as e:
+        msg = str(e)
+        if "GEMINI_API_KEY" in msg:
+            raise HTTPException(status_code=503, detail="Kickoff agents are not configured") from e
+        logger.exception("kickoff priya respond failed")
+        raise HTTPException(status_code=502, detail=msg) from e
+    except Exception as e:
+        logger.exception("kickoff priya respond failed")
+        raise HTTPException(status_code=502, detail="Failed to generate Priya response") from e
 
 
 @router.post("/outreach-email-score", response_model=OutreachEmailScoreOut)

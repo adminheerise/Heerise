@@ -2185,6 +2185,26 @@ body.cl-modal-open {
     line-height: 17px;
 }
 
+/* Project tab — portfolio sample opens in new tab */
+a.cl-project-sample-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    display: block;
+}
+
+a.cl-project-sample-link:hover {
+    box-shadow: 0 6px 20px rgba(1, 122, 255, 0.18);
+    transform: translateY(-2px);
+    border-color: rgba(1, 122, 255, 0.45);
+}
+
+a.cl-project-sample-link:focus-visible {
+    outline: 2px solid #017AFF;
+    outline-offset: 3px;
+}
+
 /* ---- Project cards — blue tinted ---- */
 .cl-project-card {
     background-color: rgba(1, 31, 91, 0.1);

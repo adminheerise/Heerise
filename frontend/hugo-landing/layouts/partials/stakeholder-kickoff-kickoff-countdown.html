@@ -1,18 +1,19 @@
-{{ $liveUrl := "/acc/stakeholder-kickoff/kickoff/call/live/" | relURL }}
-<!-- PHASE 5 — P5.3: notes open + meeting countdown (Figma Phase 5 - 3) -->
-<section class="sks-page sks-page--kickoff-countdown" aria-label="Kick-off Call — countdown">
-    <div class="sks-kc-shell sks-kc-shell--split">
-        {{ partial "stakeholder-kickoff-kickoff-nav.html" . }}
-
-        <div class="sks-kc-split">
-            <div class="sks-kc-split-main">
-                {{ partial "stakeholder-kickoff-kickoff-zoom-empty.html" (dict "countdown" true) }}
-            </div>
-            {{ partial "stakeholder-kickoff-kickoff-notes-review.html" . }}
-        </div>
-    </div>
-</section>
-
-<script>
-window.SKS_KC_LIVE_URL = {{ $liveUrl | jsonify }};
-</script>
+{{ $liveUrl := "/acc/stakeholder-kickoff/kickoff/call/live/" | relURL }}
+<!-- PHASE 5 — P5.3: meeting countdown (live layout + timer in video area) -->
+<section class="sks-page sks-page--kickoff-countdown" aria-label="Kick-off Call — countdown">
+    <div class="sks-kc-shell sks-kc-shell--split">
+        {{ partial "stakeholder-kickoff-kickoff-nav.html" . }}
+
+        <div class="sks-kc-split sks-kc-split--live">
+            <div class="sks-kc-split-main sks-kc-split-main--live">
+                {{ partial "stakeholder-kickoff-kickoff-zoom-waiting.html" (dict "countdown" true) }}
+                {{ partial "stakeholder-kickoff-kickoff-pre-live-bottom.html" . }}
+            </div>
+            {{ partial "stakeholder-kickoff-kickoff-compose-placeholder.html" . }}
+        </div>
+    </div>
+</section>
+
+<script>
+window.SKS_KC_LIVE_URL = "{{ $liveUrl }}";
+</script>

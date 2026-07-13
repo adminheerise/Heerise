@@ -132,6 +132,7 @@ pluralizelisttitles = false
     "stakeholder-kickoff-kickoff-countdown",
     "stakeholder-kickoff-kickoff-live",
     "stakeholder-kickoff-kickoff-result",
+    "stakeholder-kickoff-manager-brief",
   ]
 
   disabled_logo = false

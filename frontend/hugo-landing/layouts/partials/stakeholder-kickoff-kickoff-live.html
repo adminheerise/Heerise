@@ -1,28 +1,28 @@
 {{ $resultUrl := "/acc/stakeholder-kickoff/kickoff/result/" | relURL }}
 <!-- PHASE 5 — P5.4: live kick-off call with participants (Figma Phase 5 - 4) -->
-<section class="sks-page sks-page--kickoff-live" aria-label="Kick-off Call — live meeting">
+<section class="sks-page sks-page--kickoff-live" id="sks-kc-live-root" aria-label="Kick-off Call — live meeting" data-result-url="{{ $resultUrl }}">
     <div class="sks-kc-shell sks-kc-shell--split">
         {{ partial "stakeholder-kickoff-kickoff-nav.html" . }}
 
-        <div class="sks-kc-split">
-            <div class="sks-kc-split-main">
+        <div class="sks-kc-split sks-kc-split--live">
+            <div class="sks-kc-split-main sks-kc-split-main--live">
                 {{ partial "stakeholder-kickoff-kickoff-zoom-live.html" . }}
+                <div class="sks-kc-live-panel sks-kc-live-panel--transcript">
+                    <p class="sks-kc-live-status" id="sks-kc-live-status" aria-live="polite"></p>
+                    <p class="sks-kc-agenda-clock" id="sks-kc-agenda-clock"></p>
+                    <div class="sks-kc-transcript" id="sks-kc-transcript" aria-label="Meeting transcript"></div>
+                </div>
                 <div class="sks-kc-live-actions">
-                    <a href="{{ $resultUrl }}" class="sks-btn sks-btn--kickoff-end">End Call</a>
+                    <button type="button" class="sks-btn sks-btn--kickoff-end" id="sks-kc-end-call">End Call</button>
                 </div>
             </div>
-            {{ partial "stakeholder-kickoff-kickoff-notes-review.html" . }}
+            <aside class="sks-kc-live-compose" aria-label="Your reply">
+                <form class="sks-kc-reply-form sks-kc-reply-form--vertical" id="sks-kc-reply-form">
+                    <label class="sks-kc-compose-label" for="sks-kc-reply-input">Your response</label>
+                    <textarea class="sks-kc-reply-input sks-kc-reply-input--vertical" id="sks-kc-reply-input" rows="12" placeholder="Type your response in English…"></textarea>
+                    <button type="submit" class="sks-btn sks-btn--kickoff-send" id="sks-kc-reply-send">Send</button>
+                </form>
+            </aside>
         </div>
     </div>
 </section>
-
-<script>
-(function () {
-  var section = document.querySelector('[data-kc-notes-section="kickoff-call"]');
-  if (section) {
-    section.scrollIntoView({ block: "nearest" });
-    var scroll = document.querySelector(".sks-kc-notes-review-scroll");
-    if (scroll) scroll.scrollTop = scroll.scrollHeight;
-  }
-})();
-</script>

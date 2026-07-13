@@ -8,6 +8,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+{{ if eq .Params.id "career-lab-portfolio-sample" }}
+<link href="{{ "css/career-lab-portfolio-sample.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+{{ end }}
+
 {{ if eq .Params.id "stakeholder-kickoff" }}
 <link href="{{ "css/stakeholder-kickoff.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 {{ end }}
@@ -59,11 +63,14 @@
 {{ end }}
 
 {{/* PHASE 5 — Kick-off Call module */}}
-{{ $kickoffIds := slice "stakeholder-kickoff-kickoff-intro" "stakeholder-kickoff-kickoff-notes-intro" "stakeholder-kickoff-kickoff-countdown" "stakeholder-kickoff-kickoff-live" "stakeholder-kickoff-kickoff-result" }}
+{{ $kickoffIds := slice "stakeholder-kickoff-kickoff-intro" "stakeholder-kickoff-kickoff-notes-intro" "stakeholder-kickoff-kickoff-countdown" "stakeholder-kickoff-kickoff-live" "stakeholder-kickoff-kickoff-result" "stakeholder-kickoff-manager-brief" }}
 {{ if in $kickoffIds .Params.id }}
 <link href="{{ "css/stakeholder-kickoff-sim.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 <link href="{{ "css/kickoff-call.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&family=Lato:wght@400;700&family=Inter:wght@400;500;600;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+{{ end }}
+{{ if eq .Params.id "stakeholder-kickoff-manager-brief" }}
+<link href="{{ "css/manager-brief.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
 {{ end }}
 
 <!-- Navbar: #011F5B override (loads last - overrides theme purple/teal) -->

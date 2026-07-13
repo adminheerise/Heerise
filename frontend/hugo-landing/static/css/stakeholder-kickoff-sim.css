@@ -2252,6 +2252,14 @@ body:has(.sks-page--zoom-meeting) #content {
 /* ---------- Zoom page: Notes onboarding overlay (Frame 117) ---------- */
 /* Full-viewport dim backdrop + dashed ring around the FAB + dark tooltip + cursor arrow.
    The FAB itself is rendered by the Notes partial and sits on top of this overlay. */
+/* Zoom onboarding: keep Notes FAB above QA bar and aligned with dashed ring */
+body:has(.sks-page--zoom-meeting) .lumina-sim-notes-fab {
+    z-index: calc(var(--lumina-notes-z) + 4);
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
 .sks-zm-notes-intro {
     position: fixed;
     inset: 0;
@@ -5999,8 +6007,9 @@ a.sks-btn--email-intro:focus {
 /* --- LUMINA SIM internal QA toolbar (?sim_test=1) — remove before public launch --- */
 .lumina-sim-test-nav {
     position: fixed;
-    right: 12px;
+    left: 12px;
     bottom: 12px;
+    right: auto;
     z-index: 10050;
     display: flex;
     flex-wrap: wrap;

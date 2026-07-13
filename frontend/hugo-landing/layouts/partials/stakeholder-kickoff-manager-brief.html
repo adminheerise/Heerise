@@ -1,0 +1,50 @@
+{{ $retryUrl := "/acc/stakeholder-kickoff/kickoff/intro/" | relURL }}
+{{ $nextUrl := "/acc/stakeholder-kickoff/" | relURL }}
+<!-- PHASE 6 — Manager Brief + Performance Snapshot (Figma Manager Brief) -->
+<section class="sks-page sks-page--manager-brief" aria-label="Manager Brief" data-mb-root data-retry-url="{{ $retryUrl }}" data-next-url="{{ $nextUrl }}">
+    <div class="sks-mb-shell">
+        {{ partial "stakeholder-kickoff-manager-brief-nav.html" . }}
+
+        <div class="sks-mb-main">
+            <div class="sks-mb-maya-row">
+                <div class="sks-mb-maya-portrait">
+                    <img src="{{ "img/lumina-manager.png" | relURL }}" width="171" height="257" alt="Maya, your manager" />
+                </div>
+                <div class="sks-mb-bubble-wrap">
+                    <div class="sks-mb-bubble">
+                        <div class="sks-mb-bubble-inner">
+                            <span class="sks-mb-bubble-ico" aria-hidden="true">&#128079;</span>
+                            <p class="sks-mb-bubble-copy" data-mb-maya-copy>A kickoff call plays a key role in the success and direction of a project. You have now run one. Whatever score you got today, you are more prepared for the real one than you were an hour ago. The habits you built here: the gap analysis, the hypotheses, the agenda, the questions. Those are yours now. Use them.</p>
+                        </div>
+                        <div class="sks-mb-bubble-fade" aria-hidden="true"></div>
+                        <button type="button" class="sks-mb-bubble-scroll" aria-label="Scroll coaching message" data-mb-scroll-bubble>
+                            <span aria-hidden="true">&#8595;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sks-mb-snapshot">
+                <h2 class="sks-mb-snapshot-title">Performance Snapshot</h2>
+
+                <div class="sks-mb-radar-panel">
+                    <div class="sks-mb-radar-chart" data-mb-radar-chart aria-hidden="true">
+                        <svg class="sks-mb-radar-svg" viewBox="0 0 400 400" role="img" aria-label="Performance radar chart"></svg>
+                    </div>
+                    <div class="sks-mb-radar-labels" data-mb-radar-labels>
+                        <span class="sks-mb-radar-label sks-mb-radar-label--top" data-mb-label="0">Knowing What You Don't Know</span>
+                        <span class="sks-mb-radar-label sks-mb-radar-label--tr" data-mb-label="1">Hypothesis-driven Research</span>
+                        <span class="sks-mb-radar-label sks-mb-radar-label--br" data-mb-label="2">Stakeholder Credibility</span>
+                        <span class="sks-mb-radar-label sks-mb-radar-label--bl" data-mb-label="3">Agenda Design</span>
+                        <span class="sks-mb-radar-label sks-mb-radar-label--tl" data-mb-label="4">Discovery Facilitation</span>
+                    </div>
+                </div>
+
+                <div class="sks-mb-actions">
+                    <a href="{{ $nextUrl }}" class="sks-btn sks-btn--mb-next" data-mb-next>Next Module</a>
+                    <a href="{{ $retryUrl }}" class="sks-mb-retry" data-mb-retry>Retry</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

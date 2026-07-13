@@ -153,6 +153,8 @@ docker-compose.override.yml
 # =========================
 #   Custom project
 # =========================
+# Local-only payment checkout UI demos & plans (never push to remote)
+/payment-checkout-demo/
 # Ignore compiled static exports
 frontend/export/
 # Ignore local database

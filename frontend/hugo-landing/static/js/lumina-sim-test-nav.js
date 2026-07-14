@@ -66,6 +66,12 @@
         "/acc/stakeholder-kickoff/kickoff/call/live/",
         "/acc/stakeholder-kickoff/kickoff/result/",
       ],
+      next: "/acc/stakeholder-kickoff/manager-brief/",
+    },
+    {
+      id: "manager-brief",
+      label: "Phase 6 · Manager Brief",
+      paths: ["/acc/stakeholder-kickoff/manager-brief/"],
       next: EXIT_URL,
     },
   ];

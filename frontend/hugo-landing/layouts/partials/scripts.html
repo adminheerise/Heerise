@@ -19,7 +19,7 @@
 <!-- owl carousel -->
 <script src="{{ "js/owl.carousel.min.js" | relURL }}"></script>
 
-{{ if or (eq .Params.id "stakeholder-kickoff") (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") (eq .Params.id "stakeholder-kickoff-outreach-intro") (eq .Params.id "stakeholder-kickoff-brief-email") (eq .Params.id "stakeholder-kickoff-outreach-compose") (eq .Params.id "stakeholder-kickoff-outreach-feedback") (eq .Params.id "stakeholder-kickoff-email-intro") (eq .Params.id "stakeholder-kickoff-email-compose") (eq .Params.id "stakeholder-kickoff-email-result") (eq .Params.id "stakeholder-kickoff-agenda-intro") (eq .Params.id "stakeholder-kickoff-agenda-ready") (eq .Params.id "stakeholder-kickoff-agenda-build") (eq .Params.id "stakeholder-kickoff-agenda-result") (eq .Params.id "stakeholder-kickoff-zoom-meeting") (eq .Params.id "stakeholder-kickoff-kickoff-intro") (eq .Params.id "stakeholder-kickoff-kickoff-notes-intro") (eq .Params.id "stakeholder-kickoff-kickoff-countdown") (eq .Params.id "stakeholder-kickoff-kickoff-live") (eq .Params.id "stakeholder-kickoff-kickoff-result") }}
+{{ if or (eq .Params.id "stakeholder-kickoff") (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") (eq .Params.id "stakeholder-kickoff-outreach-intro") (eq .Params.id "stakeholder-kickoff-brief-email") (eq .Params.id "stakeholder-kickoff-outreach-compose") (eq .Params.id "stakeholder-kickoff-outreach-feedback") (eq .Params.id "stakeholder-kickoff-email-intro") (eq .Params.id "stakeholder-kickoff-email-compose") (eq .Params.id "stakeholder-kickoff-email-result") (eq .Params.id "stakeholder-kickoff-agenda-intro") (eq .Params.id "stakeholder-kickoff-agenda-ready") (eq .Params.id "stakeholder-kickoff-agenda-build") (eq .Params.id "stakeholder-kickoff-agenda-result") (eq .Params.id "stakeholder-kickoff-zoom-meeting") (eq .Params.id "stakeholder-kickoff-kickoff-intro") (eq .Params.id "stakeholder-kickoff-kickoff-notes-intro") (eq .Params.id "stakeholder-kickoff-kickoff-countdown") (eq .Params.id "stakeholder-kickoff-kickoff-live") (eq .Params.id "stakeholder-kickoff-kickoff-result") (eq .Params.id "stakeholder-kickoff-manager-brief") }}
 <script src="{{ "js/lumina-sim-test-nav.js" | relURL }}?{{ now.Unix }}"></script>
 {{ end }}
 {{ if or (eq .Params.id "stakeholder-kickoff") (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") (eq .Params.id "stakeholder-kickoff-outreach-intro") (eq .Params.id "stakeholder-kickoff-brief-email") (eq .Params.id "stakeholder-kickoff-outreach-compose") (eq .Params.id "stakeholder-kickoff-outreach-feedback") }}
@@ -38,11 +38,46 @@
 <script src="{{ "js/agenda-builder.js" | relURL }}?{{ now.Unix }}" defer></script>
 {{ end }}
 
-{{ $kickoffIds := slice "stakeholder-kickoff-kickoff-intro" "stakeholder-kickoff-kickoff-notes-intro" "stakeholder-kickoff-kickoff-countdown" "stakeholder-kickoff-kickoff-live" "stakeholder-kickoff-kickoff-result" }}
+{{ $kickoffIds := slice "stakeholder-kickoff-kickoff-intro" "stakeholder-kickoff-kickoff-notes-intro" "stakeholder-kickoff-kickoff-countdown" "stakeholder-kickoff-kickoff-live" "stakeholder-kickoff-kickoff-result" "stakeholder-kickoff-manager-brief" }}
 {{ if in $kickoffIds .Params.id }}
 <script src="{{ "js/stakeholder-sim-username.js" | relURL }}?{{ now.Unix }}"></script>
 {{ end }}
 {{ if eq .Params.id "stakeholder-kickoff-kickoff-countdown" }}
 <script src="{{ "js/kickoff-countdown.js" | relURL }}?{{ now.Unix }}"></script>
+<script src="{{ "js/kickoff/kickoff-constants.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/sample-agenda-note.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/kickoff-phase4-bridge.js" | relURL }}?{{ now.Unix }}" defer></script>
+{{ end }}
+{{ if eq .Params.id "stakeholder-kickoff-kickoff-notes-intro" }}
+<script src="{{ "js/kickoff/kickoff-constants.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/sample-agenda-note.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/kickoff-phase4-bridge.js" | relURL }}?{{ now.Unix }}" defer></script>
+{{ end }}
+{{ if eq .Params.id "stakeholder-kickoff-kickoff-live" }}
+<script src="{{ "js/kickoff/storage-ttl.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/kickoff-constants.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/kickoff-core.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/kickoff-api.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/sample-agenda-note.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/kickoff-phase4-bridge.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/kickoff-live-controller.js" | relURL }}?{{ now.Unix }}" defer></script>
+{{ end }}
+{{ if eq .Params.id "stakeholder-kickoff-kickoff-result" }}
+<script src="{{ "js/kickoff/storage-ttl.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/kickoff-constants.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/kickoff-result.js" | relURL }}?{{ now.Unix }}" defer></script>
+{{ end }}
+{{ if eq .Params.id "stakeholder-kickoff-manager-brief" }}
+<script src="{{ "js/manager-brief/manager-brief.js" | relURL }}?{{ now.Unix }}" defer></script>
+{{ end }}
+{{ if eq .Params.id "stakeholder-kickoff-kickoff-intro" }}
+<script src="{{ "js/kickoff/kickoff-constants.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/sample-agenda-note.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/kickoff-phase4-bridge.js" | relURL }}?{{ now.Unix }}" defer></script>
+{{ end }}
+{{ if eq .Params.id "stakeholder-kickoff-agenda-result" }}
+<script src="{{ "js/kickoff/kickoff-constants.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/sample-agenda-note.js" | relURL }}?{{ now.Unix }}" defer></script>
+<script src="{{ "js/kickoff/kickoff-phase4-bridge.js" | relURL }}?{{ now.Unix }}" defer></script>
 {{ end }}
 

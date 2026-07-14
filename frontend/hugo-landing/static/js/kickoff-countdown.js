@@ -12,6 +12,9 @@
 
   function goLive() {
     if (timer) window.clearInterval(timer);
+    try {
+      sessionStorage.setItem("heerise_kickoff_enter_live", "1");
+    } catch (e) {}
     window.location.assign(liveUrl);
   }
 

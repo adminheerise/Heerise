@@ -1,0 +1,321 @@
+/* =============================================================
+ * PHASE 6 — Manager Brief + Performance Snapshot
+ * ============================================================= */
+
+.sks-page--manager-brief {
+    min-height: 100vh;
+    background: #ffffff;
+    box-sizing: border-box;
+    font-family: 'Lexend', 'Inter', system-ui, sans-serif;
+}
+
+.sks-mb-shell {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 40px 85px 56px;
+    box-sizing: border-box;
+}
+
+.sks-mb-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 72px;
+    padding: 48px 0 0;
+    max-width: 1028px;
+    margin: 0 auto;
+}
+
+/* ---------- Maya coaching row ---------- */
+.sks-mb-maya-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 72px;
+    width: 100%;
+}
+
+.sks-mb-maya-portrait {
+    flex: none;
+    width: 171px;
+}
+
+.sks-mb-maya-portrait img {
+    display: block;
+    width: 171px;
+    height: auto;
+    max-height: 257px;
+    object-fit: contain;
+    transform: scaleX(-1);
+}
+
+.sks-mb-bubble-wrap {
+    flex: 1;
+    min-width: 0;
+}
+
+.sks-mb-bubble {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 50px;
+    min-height: 187px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0 25px 25px 94px;
+}
+
+.sks-mb-bubble-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 18px;
+    width: 100%;
+    max-height: 115px;
+    overflow: hidden;
+}
+
+.sks-mb-bubble-inner.is-expanded {
+    max-height: none;
+    overflow: visible;
+}
+
+.sks-mb-bubble-ico {
+    flex: none;
+    font-size: 48px;
+    line-height: 1;
+}
+
+.sks-mb-bubble-copy {
+    margin: 0;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+    color: #1f1f1f;
+}
+
+.sks-mb-bubble-fade {
+    position: absolute;
+    left: 116px;
+    right: 50px;
+    bottom: 25px;
+    height: 37px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) -215%, #ffffff 69%);
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.sks-mb-bubble-inner.is-expanded + .sks-mb-bubble-fade,
+.sks-mb-bubble.is-expanded .sks-mb-bubble-fade {
+    opacity: 0;
+}
+
+.sks-mb-bubble-scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #4f81e5;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    display: none;
+}
+
+.sks-mb-bubble.has-overflow .sks-mb-bubble-scroll {
+    display: block;
+}
+
+.sks-mb-bubble.is-expanded .sks-mb-bubble-scroll {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ---------- Performance snapshot ---------- */
+.sks-mb-snapshot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 64px;
+    width: min(888px, 100%);
+    padding: 100px;
+    background: rgba(1, 122, 255, 0.05);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.sks-mb-snapshot-title {
+    margin: 0;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+    color: #000000;
+}
+
+.sks-mb-radar-panel {
+    position: relative;
+    width: 100%;
+    max-width: 689px;
+    min-height: 313px;
+}
+
+.sks-mb-radar-chart {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 0 auto;
+}
+
+.sks-mb-radar-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.sks-mb-radar-labels {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.sks-mb-radar-label {
+    position: absolute;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.7);
+    max-width: 180px;
+}
+
+.sks-mb-radar-label--top {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.sks-mb-radar-label--tr {
+    top: 38%;
+    right: 0;
+    text-align: left;
+}
+
+.sks-mb-radar-label--br {
+    bottom: 0;
+    right: 8%;
+    text-align: left;
+}
+
+.sks-mb-radar-label--bl {
+    bottom: 0;
+    left: 8%;
+    text-align: right;
+}
+
+.sks-mb-radar-label--tl {
+    top: 38%;
+    left: 0;
+    text-align: right;
+}
+
+/* ---------- Actions ---------- */
+.sks-mb-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.sks-btn--mb-next {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 288px;
+    height: 48px;
+    padding: 0 100px;
+    background: #000000;
+    border-radius: 8px;
+    color: #ffffff;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 15px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.sks-btn--mb-next:hover {
+    color: #ffffff;
+    opacity: 0.92;
+}
+
+.sks-mb-retry {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 15px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.sks-mb-retry:hover {
+    text-decoration: underline;
+    color: #000000;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+    .sks-mb-shell {
+        padding: 32px 40px 48px;
+    }
+
+    .sks-mb-maya-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
+
+    .sks-mb-bubble {
+        border-radius: 25px;
+        padding: 24px 28px;
+    }
+
+    .sks-mb-bubble-fade {
+        left: 28px;
+        right: 28px;
+    }
+
+    .sks-mb-snapshot {
+        padding: 48px 24px;
+    }
+
+    .sks-mb-radar-label {
+        font-size: 13px;
+        max-width: 130px;
+    }
+}
+
+@media (max-width: 720px) {
+    .sks-mb-radar-panel {
+        min-height: 360px;
+    }
+
+    .sks-mb-radar-label--tr,
+    .sks-mb-radar-label--tl {
+        top: 42%;
+    }
+}

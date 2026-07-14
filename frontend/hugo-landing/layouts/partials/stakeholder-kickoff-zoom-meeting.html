@@ -940,17 +940,12 @@
   }
 
   /** Full-page onboarding: dim bg + dashed ring + tooltip. Dismissed when user opens the Notes panel. */
-  var NOTES_INTRO_SEEN_KEY = "heerise_lumina_notes_zoom_intro_seen_v1";
-  function introAlreadySeen() {
-    try { return window.localStorage.getItem(NOTES_INTRO_SEEN_KEY) === "1"; }
-    catch (e) { return false; }
-  }
-  function markIntroSeen() {
-    try { window.localStorage.setItem(NOTES_INTRO_SEEN_KEY, "1"); } catch (e) {}
-  }
   function showNotesIntro() {
     var el = document.getElementById("sks-zm-notes-intro");
     if (!el) return;
+    if (window.LuminaSimNotes && typeof window.LuminaSimNotes.resetFabToDefault === "function") {
+      window.LuminaSimNotes.resetFabToDefault();
+    }
     el.hidden = false;
     el.classList.add("is-visible");
   }
@@ -965,7 +960,6 @@
   function beginMeetingSequence() {
     if (meetingStarted) return;
     meetingStarted = true;
-    markIntroSeen();
     hideNotesIntro();
     runZoomWindowStartCountdown();
   }
@@ -983,11 +977,8 @@
     if (transcriptPanel) transcriptPanel.hidden = !transcriptVisible;
     updateToggleLabel();
 
-    if (introAlreadySeen()) {
-      beginMeetingSequence();
-    } else {
-      showNotesIntro();
-    }
+    /* Always show Notes onboarding before countdown (Wireframe 28). Never skip via localStorage. */
+    showNotesIntro();
   });
 })();
 </script>

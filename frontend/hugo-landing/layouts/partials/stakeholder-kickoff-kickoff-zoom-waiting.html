@@ -1,0 +1,28 @@
+{{/* PHASE 5 — pre-call empty Zoom room (NOT Phase 1 Maya briefing PNG) */}}
+{{ $showCountdown := false }}
+{{ if isset . "countdown" }}
+  {{ $showCountdown = .countdown }}
+{{ end }}
+<div class="sks-kc-zoom sks-kc-zoom--waiting" aria-label="Waiting for kick-off call">
+    <div class="sks-kc-zoom-frame">
+        <div class="sks-kc-zoom-browser" aria-hidden="true">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="sks-kc-zoom-video sks-kc-zoom-video--waiting">
+            <div class="sks-kc-zoom-waiting-room" aria-hidden="true"></div>
+            {{ if $showCountdown }}
+            <div class="sks-kc-countdown" id="sks-kc-countdown">
+                <div class="sks-kc-countdown-inner">
+                    <p class="sks-kc-countdown-label">Video Meeting Starting in</p>
+                    <p class="sks-kc-countdown-num" id="sks-kc-countdown-num" aria-live="assertive">30</p>
+                    <button type="button" class="sks-kc-countdown-skip" id="sks-kc-countdown-skip">Skip</button>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+        <div class="sks-kc-zoom-controls" aria-hidden="true">
+            <div class="sks-kc-zoom-controls-bar"></div>
+            <span class="sks-kc-zoom-end">End</span>
+        </div>
+    </div>
+</div>

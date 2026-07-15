@@ -2190,25 +2190,102 @@ a.cl-project-sample-link {
     text-decoration: none;
     color: inherit;
     cursor: pointer;
-    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
     display: block;
+    background: #ffffff;
+    border: 1px solid rgba(1, 31, 91, 0.12);
+    border-radius: 20px;
+    box-shadow: 0 20px 45px rgba(1, 31, 91, 0.09), inset 0 0 0 1px rgba(255,255,255,0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+a.cl-project-sample-link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.45), transparent 35%);
+    opacity: 0.7;
 }
 
 a.cl-project-sample-link:hover {
-    box-shadow: 0 6px 20px rgba(1, 122, 255, 0.18);
-    transform: translateY(-2px);
-    border-color: rgba(1, 122, 255, 0.45);
+    box-shadow: 0 26px 55px rgba(1, 31, 91, 0.18), inset 0 0 0 1px rgba(1, 31, 91, 0.08);
+    transform: translateY(-4px);
+    border-color: rgba(1, 31, 91, 0.18);
 }
 
 a.cl-project-sample-link:focus-visible {
-    outline: 2px solid #017AFF;
+    outline: 3px solid rgba(1, 31, 91, 0.8);
     outline-offset: 3px;
+}
+
+a.cl-project-sample-link .cl-card-icon {
+    background-color: #011F5B;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+a.cl-project-sample-link .cl-card-title,
+a.cl-project-sample-link .cl-card-title.cl-project-title {
+    color: #0A0A0A;
+}
+
+a.cl-project-sample-link .cl-card-desc {
+    color: #5F6370;
+}
+
+a.cl-project-sample-link .cl-project-sample-badge {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(241, 245, 255, 0.95);
+    color: #011F5B;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid rgba(1, 31, 91, 0.12);
+    box-shadow: 0 4px 10px rgba(1, 31, 91, 0.08);
+}
+
+a.cl-project-sample-link .cl-project-sample-badge-icon {
+    width: 12px;
+    height: 12px;
+}
+
+a.cl-project-sample-link .cl-project-sample-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: #011F5B;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 10px 20px rgba(1, 31, 91, 0.18);
+}
+
+a.cl-project-sample-link .cl-project-sample-cta-icon {
+    width: 16px;
+    height: 16px;
 }
 
 /* ---- Project cards — blue tinted ---- */
 .cl-project-card {
     background-color: rgba(1, 31, 91, 0.1);
     border: 1px solid #DBEAFE;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 /* Row gap between card rows (54px per Figma) */

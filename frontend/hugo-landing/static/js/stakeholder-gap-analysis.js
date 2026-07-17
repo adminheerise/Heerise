@@ -234,6 +234,34 @@
       }
     });
 
+    var lists = { known: [], research: [], stakeholder: [] };
+    document.querySelectorAll(".sks-gap-card").forEach(function (card) {
+      var zoneEl = card.closest(".sks-gap-zone");
+      if (!zoneEl) return;
+      var zone = zoneEl.getAttribute("data-zone");
+      if (!lists[zone]) return;
+      var label = (card.textContent || "").replace(/\s+/g, " ").trim();
+      if (label) lists[zone].push(label);
+    });
+
+    var coach = anyUnplaced ? "CC-03" : anyIncorrect ? "CC-02" : "CC-01";
+    var passed = !anyUnplaced && !anyIncorrect;
+    try {
+      localStorage.setItem(
+        "heerise_phase1_cc01",
+        JSON.stringify({
+          card_id: "CC-01",
+          passed: passed,
+          coach: coach,
+          score: passed ? 3 : anyUnplaced ? 1 : 2,
+          confirmed_facts: lists.known,
+          research_needed: lists.research,
+          ask_stakeholder: lists.stakeholder,
+          completed_at: new Date().toISOString(),
+        })
+      );
+    } catch (e) {}
+
     if (anyUnplaced) {
       showCoachTopRetry();
       setActionRetry();

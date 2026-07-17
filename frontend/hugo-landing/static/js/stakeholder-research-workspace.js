@@ -52,9 +52,108 @@
     });
   }
 
+  var HYPOTHESIS_KEY = "heerise_phase2_hypothesis";
+  var hypothesisInput = document.getElementById("sks-rw-hypothesis-input");
+  var hypothesisSave = document.getElementById("sks-rw-hypothesis-save");
+  var hypothesisErr = document.getElementById("sks-rw-hypothesis-err");
+  var hypothesisSaved = document.getElementById("sks-rw-hypothesis-saved");
+
+  function loadHypothesis() {
+    try {
+      var raw = localStorage.getItem(HYPOTHESIS_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function hasSavedHypothesis() {
+    var h = loadHypothesis();
+    return !!(h && (h.hypothesis || "").trim().length >= 12);
+  }
+
+  function scoreHypothesis(text, openedCount, followupCount) {
+    var len = (text || "").trim().length;
+    if (len < 12) return 1;
+    var score = len >= 40 ? 3 : 2;
+    if (openedCount >= 8) score = Math.min(3, score + 0);
+    if (followupCount >= 1 && score < 3) score = Math.min(3, score + 1);
+    return score;
+  }
+
+  function countOpened() {
+    return Object.keys(doneMap).filter(function (k) {
+      return doneMap[k];
+    }).length;
+  }
+
+  function countFollowups() {
+    try {
+      var raw = localStorage.getItem("heeriseResearchWorkspaceFollowUps");
+      if (!raw) return 0;
+      var o = JSON.parse(raw);
+      return o && typeof o === "object" ? Object.keys(o).length : 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  function saveHypothesis() {
+    if (!hypothesisInput) return false;
+    var text = (hypothesisInput.value || "").trim();
+    if (hypothesisErr) hypothesisErr.hidden = true;
+    if (text.length < 12) {
+      if (hypothesisErr) {
+        hypothesisErr.textContent = "Write at least a short hypothesis (12+ characters), then save.";
+        hypothesisErr.hidden = false;
+      }
+      return false;
+    }
+    var opened = countOpened();
+    var followups = countFollowups();
+    var score = scoreHypothesis(text, opened, followups);
+    var payload = {
+      card_id: "CC-P2",
+      hypothesis: text,
+      score: score,
+      tier: score >= 3 ? "strong" : score >= 2 ? "partial" : "weak",
+      coverage: { opened_q: opened, followups: followups },
+      saved_at: new Date().toISOString(),
+    };
+    try {
+      localStorage.setItem(HYPOTHESIS_KEY, JSON.stringify(payload));
+    } catch (e) {}
+    if (hypothesisSaved) hypothesisSaved.hidden = false;
+    syncContinue();
+    return true;
+  }
+
+  function restoreHypothesis() {
+    var h = loadHypothesis();
+    if (!h || !hypothesisInput) return;
+    if (h.hypothesis) hypothesisInput.value = h.hypothesis;
+    if (hypothesisSaved && (h.hypothesis || "").trim().length >= 12) {
+      hypothesisSaved.hidden = false;
+    }
+  }
+
+  if (hypothesisSave) {
+    hypothesisSave.addEventListener("click", function () {
+      saveHypothesis();
+    });
+  }
+  if (hypothesisInput) {
+    hypothesisInput.addEventListener("input", function () {
+      if (hypothesisSaved) hypothesisSaved.hidden = true;
+      if (hypothesisErr) hypothesisErr.hidden = true;
+      syncContinue();
+    });
+  }
+
   function syncContinue() {
     if (!continueEl) return;
-    var ok = allCategoriesComplete();
+    var ok = allCategoriesComplete() && hasSavedHypothesis();
     continueEl.classList.toggle("sks-rw-continue--ready", ok);
     continueEl.setAttribute("aria-disabled", ok ? "false" : "true");
     continueEl.tabIndex = ok ? 0 : -1;
@@ -74,6 +173,7 @@
       markDetailsDone(details);
     });
     syncCardLabels();
+    restoreHypothesis();
     syncContinue();
   }
 
@@ -427,6 +527,13 @@
     continueEl.addEventListener("click", function (ev) {
       if (!continueEl.classList.contains("sks-rw-continue--ready")) {
         ev.preventDefault();
+        if (allCategoriesComplete() && !hasSavedHypothesis()) {
+          if (hypothesisErr) {
+            hypothesisErr.textContent = "Please save one hypothesis before continuing.";
+            hypothesisErr.hidden = false;
+          }
+          if (hypothesisInput) hypothesisInput.focus();
+        }
       }
     });
   }

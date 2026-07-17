@@ -1,6 +1,6 @@
 {{ $retryUrl := "/acc/stakeholder-kickoff/kickoff/intro/" | relURL }}
 {{ $nextUrl := "/acc/stakeholder-kickoff/" | relURL }}
-<!-- PHASE 6 — Manager Brief + Performance Snapshot (Figma Manager Brief) -->
+<!-- PHASE 6 — Manager Brief + Performance Snapshot -->
 <section class="sks-page sks-page--manager-brief" aria-label="Manager Brief" data-mb-root data-retry-url="{{ $retryUrl }}" data-next-url="{{ $nextUrl }}">
     <div class="sks-mb-shell">
         {{ partial "stakeholder-kickoff-manager-brief-nav.html" . }}
@@ -12,12 +12,14 @@
                 </div>
                 <div class="sks-mb-bubble-wrap">
                     <div class="sks-mb-bubble">
-                        <div class="sks-mb-bubble-inner">
-                            <span class="sks-mb-bubble-ico" aria-hidden="true">&#128079;</span>
-                            <p class="sks-mb-bubble-copy" data-mb-maya-copy>A kickoff call plays a key role in the success and direction of a project. You have now run one. Whatever score you got today, you are more prepared for the real one than you were an hour ago. The habits you built here: the gap analysis, the hypotheses, the agenda, the questions. Those are yours now. Use them.</p>
+                        <div class="sks-mb-bubble-inner" data-mb-analysis>
+                            <span class="sks-mb-bubble-ico" aria-hidden="true">&#128075;</span>
+                            <div class="sks-mb-analysis" data-mb-analysis-body>
+                                <p class="sks-mb-bubble-copy sks-mb-analysis-loading" data-mb-loading>Building your performance summary…</p>
+                            </div>
                         </div>
                         <div class="sks-mb-bubble-fade" aria-hidden="true"></div>
-                        <button type="button" class="sks-mb-bubble-scroll" aria-label="Scroll coaching message" data-mb-scroll-bubble>
+                        <button type="button" class="sks-mb-bubble-scroll" aria-label="Expand performance summary" data-mb-scroll-bubble>
                             <span aria-hidden="true">&#8595;</span>
                         </button>
                     </div>

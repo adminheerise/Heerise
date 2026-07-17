@@ -103,6 +103,11 @@
     } catch (e) {
       /* continue */
     }
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch (e2) {
+      /* continue */
+    }
     global.location.assign(url || feedbackUrl());
   }
 

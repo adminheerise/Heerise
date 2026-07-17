@@ -252,6 +252,22 @@
             </div>
 
             <div class="sks-rw-footer">
+                <div class="sks-rw-hypothesis" id="sks-rw-hypothesis">
+                    <label class="sks-rw-hypothesis-label" for="sks-rw-hypothesis-input">
+                        One Hypothesis <span class="sks-rw-hypothesis-req">(required before continue)</span>
+                    </label>
+                    <p class="sks-rw-hypothesis-hint">Based on your research, write the one main hypothesis you want to test in the kickoff.</p>
+                    <textarea
+                        id="sks-rw-hypothesis-input"
+                        class="sks-rw-hypothesis-input"
+                        rows="3"
+                        maxlength="600"
+                        placeholder="Based on what I've researched, I believe…"
+                    ></textarea>
+                    <p class="sks-rw-hypothesis-err" id="sks-rw-hypothesis-err" hidden>Please save one hypothesis before continuing.</p>
+                    <button type="button" class="sks-btn sks-btn--caps sks-rw-hypothesis-save" id="sks-rw-hypothesis-save">Save hypothesis</button>
+                    <p class="sks-rw-hypothesis-saved" id="sks-rw-hypothesis-saved" hidden>Hypothesis saved.</p>
+                </div>
                 <a href="{{ "/acc/stakeholder-kickoff/outreach-intro/" | relURL }}" class="sks-btn sks-btn--caps sks-rw-continue" id="sks-rw-continue" aria-disabled="true">Continue</a>
             </div>
         </div>

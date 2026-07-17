@@ -13,6 +13,7 @@ from ..deps import get_current_user_optional
 from ..models import User
 from ..services.kickoff import agents as kickoff_agents
 from ..services.outreach_email import score_outreach_email
+from ..services.manager_debrief import fallback_debrief, generate_manager_debrief
 
 logger = logging.getLogger(__name__)
 
@@ -114,6 +115,43 @@ async def outreach_email_score(body: OutreachEmailScoreIn):
     except Exception as e:
         logger.exception("outreach email score failed")
         raise HTTPException(status_code=502, detail="Failed to score email") from e
+
+
+class ManagerDebriefIn(BaseModel):
+    report: dict = Field(default_factory=dict)
+
+
+class ManagerDebriefOut(BaseModel):
+    headline: str = ""
+    score_strip: list = Field(default_factory=list)
+    sections: list = Field(default_factory=list)
+    source: str = "gemini"
+
+
+@router.post("/manager-debrief", response_model=ManagerDebriefOut)
+async def manager_debrief(body: ManagerDebriefIn):
+    """Phase 6: generate collapsible Maya analysis from a structured scoring report."""
+    report = body.report or {}
+    try:
+        result = await generate_manager_debrief(report)
+        return ManagerDebriefOut(**{
+            "headline": result.get("headline") or "Simulation Complete — Your Performance Summary",
+            "score_strip": result.get("score_strip") or [],
+            "sections": result.get("sections") or [],
+            "source": result.get("source") or "gemini",
+        })
+    except RuntimeError as e:
+        msg = str(e)
+        if "GEMINI_API_KEY" in msg:
+            fb = fallback_debrief(report)
+            return ManagerDebriefOut(**fb)
+        logger.exception("manager debrief failed; using fallback")
+        fb = fallback_debrief(report)
+        return ManagerDebriefOut(**fb)
+    except Exception:
+        logger.exception("manager debrief failed; using fallback")
+        fb = fallback_debrief(report)
+        return ManagerDebriefOut(**fb)
 
 
 @router.get("/maya-zoom-narration")

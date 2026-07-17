@@ -335,6 +335,9 @@
         try {
             sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
         } catch (e) { /* ignore */ }
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        } catch (e2) { /* ignore */ }
         return payload;
     }
 

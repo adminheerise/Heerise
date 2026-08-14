@@ -230,11 +230,8 @@
                 });
                 c.classList.toggle("is-used", used);
                 c.setAttribute("draggable", used ? "false" : "true");
-                var lab = c.querySelector(".sks-ab-pool-chip-label");
-                if (lab) {
-                    lab.tabIndex = used ? -1 : 0;
-                    lab.setAttribute("aria-disabled", used ? "true" : "false");
-                }
+                c.setAttribute("aria-disabled", used ? "true" : "false");
+                c.tabIndex = used ? -1 : 0;
             }
         }
 
@@ -405,13 +402,6 @@
                 toggleHint(hint);
                 return;
             }
-            var label = ev.target.closest(".sks-ab-pool-chip-label");
-            if (label && pool.contains(label)) {
-                var ch = label.closest(".sks-ab-pool-chip");
-                if (ch.classList.contains("is-used")) return;
-                addItem(ch.getAttribute("data-ab-item-id"));
-                return;
-            }
             var chipOnly = ev.target.closest(".sks-ab-pool-chip");
             if (chipOnly && pool.contains(chipOnly) && !chipOnly.classList.contains("is-used")) {
                 addItem(chipOnly.getAttribute("data-ab-item-id"));
@@ -425,30 +415,58 @@
                 toggleHint(hint);
                 return;
             }
-            var label = ev.target.closest(".sks-ab-pool-chip-label");
-            if (label && pool.contains(label) && (ev.key === "Enter" || ev.key === " ")) {
-                var ch = label.closest(".sks-ab-pool-chip");
-                if (ch.classList.contains("is-used")) return;
+            var chip = ev.target.closest(".sks-ab-pool-chip");
+            if (
+                chip &&
+                pool.contains(chip) &&
+                !chip.classList.contains("is-used") &&
+                (ev.key === "Enter" || ev.key === " ")
+            ) {
                 ev.preventDefault();
-                addItem(ch.getAttribute("data-ab-item-id"));
+                addItem(chip.getAttribute("data-ab-item-id"));
             }
         });
 
+        function dragSourceEl(ev) {
+            var t = ev.target;
+            if (t && t.nodeType !== 1) t = t.parentElement;
+            return t;
+        }
+
         pool.addEventListener("dragstart", function (ev) {
-            if (ev.target.closest(".sks-ab-hint")) {
+            var src = dragSourceEl(ev);
+            if (!src || typeof src.closest !== "function") {
                 ev.preventDefault();
                 return;
             }
-            var chip = ev.target.closest(".sks-ab-pool-chip");
-            if (!chip || chip.classList.contains("is-used")) {
+            if (src.closest(".sks-ab-hint")) {
+                ev.preventDefault();
+                return;
+            }
+            var chip = src.closest(".sks-ab-pool-chip");
+            if (!chip || !pool.contains(chip) || chip.classList.contains("is-used")) {
                 ev.preventDefault();
                 return;
             }
             var id = chip.getAttribute("data-ab-item-id");
-            ev.dataTransfer.setData("text/plain", id);
-            ev.dataTransfer.effectAllowed = "copy";
+            try {
+                ev.dataTransfer.setData("text/plain", id);
+                ev.dataTransfer.effectAllowed = "copy";
+            } catch (err) {
+                ev.preventDefault();
+                return;
+            }
+            chip.classList.add("is-dragging");
         });
 
+        pool.addEventListener("dragend", function (ev) {
+            var src = dragSourceEl(ev);
+            var chip = src && src.closest ? src.closest(".sks-ab-pool-chip") : null;
+            if (chip) chip.classList.remove("is-dragging");
+            pool.querySelectorAll(".sks-ab-pool-chip.is-dragging").forEach(function (c) {
+                c.classList.remove("is-dragging");
+            });
+        });
         ["dragenter", "dragover"].forEach(function (evt) {
             drop.addEventListener(evt, function (e) {
                 e.preventDefault();

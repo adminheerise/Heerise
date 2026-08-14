@@ -1,0 +1,14 @@
+{
+  "source": "Maya Zoom Call v3.mp4",
+  "durationSec": 36,
+  "note": "Cue times in seconds against the ~36s master. Runtime scales by video.duration / durationSec.",
+  "cues": [
+    { "start": 0.0, "end": 4.5, "text": "Hey {name}. We've been asked to build sales enablement training for Aria Agent." },
+    { "start": 4.5, "end": 8.6, "text": "The product just launched and the sales team is struggling to ramp." },
+    { "start": 8.6, "end": 11.6, "text": "I'm assigning this to you as lead designer." },
+    { "start": 11.6, "end": 22.4, "text": "You'll start to run the full analysis phase and schedule a kickoff call with Jordan Kim (Sales Manager) and Dr. Priya Nair, the product lead." },
+    { "start": 22.4, "end": 24.6, "text": "They're your key stakeholders." },
+    { "start": 24.6, "end": 27.2, "text": "I'm sending you the project brief." },
+    { "start": 27.2, "end": 35.5, "text": "Read it, then come back and let me know what you think you know, what you don't know — things to ask in the kickoff — and what questions you need answered before that call." }
+  ]
+}

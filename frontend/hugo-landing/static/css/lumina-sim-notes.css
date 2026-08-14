@@ -1,8 +1,9 @@
 /**
- * LUMINA · SIM — floating notes (overlay panel only; never shifts #all layout)
+ * LUMINA · SIM — floating notes.
+ * Docked open: shrink #all into the left column so the stage stays fully visible.
  */
 :root {
-  --lumina-notes-width: min(56vw, 560px);
+  --lumina-notes-width: min(42vw, 480px);
   --lumina-notes-sidebar-w: 180px;
   --lumina-notes-fab-size: 56px;
   --lumina-notes-z: 2147483000;
@@ -93,9 +94,38 @@
   display: none !important;
 }
 
-/* Docked panel open: nudge FAB left so it stays beside the overlay (no body padding) */
+/* Docked panel open: nudge FAB left so it stays beside the panel */
 body.lumina-notes-open:not(.lumina-notes-panel-floating) .lumina-sim-notes-fab {
   right: calc(var(--lumina-notes-width) + 20px);
+}
+
+/*
+ * Docked open (≥769px): compress the main stage into the remaining left width
+ * so content is not covered by the notes panel.
+ */
+@media (min-width: 769px) {
+  body.lumina-notes-open:not(.lumina-notes-panel-floating) {
+    overflow-x: hidden;
+  }
+
+  body.lumina-notes-open:not(.lumina-notes-panel-floating) #all {
+    width: calc(100vw - var(--lumina-notes-width));
+    max-width: calc(100vw - var(--lumina-notes-width));
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box;
+    overflow-x: auto;
+    transition: width 0.28s ease, max-width 0.28s ease;
+  }
+
+  body.lumina-notes-open:not(.lumina-notes-panel-floating) #content,
+  body.lumina-notes-open:not(.lumina-notes-panel-floating) .sks-page {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box;
+  }
 }
 
 /* Legacy small tooltip (optional; Zoom page no longer uses first-run tip) */
@@ -127,7 +157,7 @@ body.lumina-notes-open:not(.lumina-notes-panel-floating) .lumina-sim-notes-fab {
   font-weight: 600;
 }
 
-/* Panel: overlays the right edge only — does NOT resize page content */
+/* Panel: docked to the right edge; #all shrinks on the left when open */
 .lumina-sim-notes-panel {
   position: fixed;
   top: 0;
@@ -250,9 +280,9 @@ body.lumina-notes-open .lumina-sim-notes-panel.lumina-sim-notes-panel--visible:n
   font: 500 13px/1.3 Inter, system-ui, sans-serif;
   text-align: left;
   cursor: pointer;
-  white-space: nowrap;
+  white-space: normal;
   overflow: hidden;
-  text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 .lumina-sim-notes-tab:hover {
@@ -379,4 +409,22 @@ body:has(.sks-page--outreach-intro) .lumina-sim-notes-tooltip {
   bottom: auto;
   top: calc(clamp(96px, 16vh, 128px) + var(--lumina-notes-fab-size) + 12px);
   right: clamp(20px, 4vw, 44px);
+}
+
+/* Gmail Assignment Brief: keep Notes FAB above the mock browser chrome */
+body:has(.sks-page--brief-email) #lumina-sim-notes-root,
+body:has(.sks-page--ab-gmail) #lumina-sim-notes-root {
+  z-index: 2147483646;
+}
+
+body:has(.sks-page--brief-email) .lumina-sim-notes-fab,
+body:has(.sks-page--ab-gmail) .lumina-sim-notes-fab {
+  z-index: 2147483647;
+  bottom: 28px;
+  right: 28px;
+}
+
+body:has(.sks-page--brief-email) .lumina-sim-notes-panel,
+body:has(.sks-page--ab-gmail) .lumina-sim-notes-panel {
+  z-index: 2147483647;
 }

@@ -11,13 +11,22 @@
     TTL_HOURS: 6,
     TTL_WRAPPER_KEY: "heerise_lumina_sim_ttl_v1",
     SAMPLE_AGENDA_MARKER: "[Sample Agenda · 14 minutes]",
-    SAMPLE_AGENDA_TAB: "stakeholder-kickoff-kickoff-intro",
+    SAMPLE_AGENDA_TAB: "phase-kickoff-call",
     KICKOFF_INTRO_PATH: "/acc/stakeholder-kickoff/kickoff/intro/",
     MANAGER_BRIEF_PATH: "/acc/stakeholder-kickoff/manager-brief/",
     MAX_LLM_CALLS: 30,
     MAX_AGENT_CALLS_PER_TURN: 2,
+    /** One retry only for transient network blips — not for 503 / config errors */
     RETRY_ON_FAILURE: 1,
-    API_TIMEOUT_MS: 3600000,
+    /**
+     * Must stay above backend GEMINI_KICKOFF_TIMEOUT_SEC (+ network/proxy headroom).
+     * Backend default is 40s; frontend waits 45s so a late Gemini reply can still land.
+     */
+    API_TIMEOUT_MS: 45000,
+    /** After a 503 "not configured", skip further Gemini calls this session */
+    FAIL_FAST_ON_UNCONFIGURED: true,
+    /** Soft progress hint while waiting (ms) */
+    WAIT_HINT_MS: 8000,
     SCENES: ["S5.02", "S5.03", "S5.04", "S5.05", "S5.06", "S5.07", "S5.08", "S5.09"],
     AGENDA: [
       { id: 1, label: "Introductions & project brief assumptions", durationSec: 120, scenes: ["S5.02", "S5.03", "S5.04"], dp: "DP5" },

@@ -67,6 +67,7 @@
     if (!root) return;
 
     var brief = tabText([
+      "phase-assignment-brief",
       "stakeholder-kickoff-workspace",
       "stakeholder-kickoff-brief-organize",
       "stakeholder-kickoff-gap-analysis",
@@ -76,7 +77,11 @@
       if (briefCard) briefCard.textContent = brief.slice(0, 800);
     }
 
-    var research = tabText(["stakeholder-kickoff-research-workspace", "stakeholder-kickoff-research"]);
+    var research = tabText([
+      "phase-research",
+      "stakeholder-kickoff-research-workspace",
+      "stakeholder-kickoff-research",
+    ]);
     if (research) {
       var researchSection = root.querySelector(".sks-kc-notes-section:nth-child(2)");
       if (researchSection) {
@@ -85,7 +90,13 @@
       }
     }
 
-    var agendaText = tabText([C.SAMPLE_AGENDA_TAB, "stakeholder-kickoff-agenda-result"]);
+    var agendaText = tabText([
+      C.SAMPLE_AGENDA_TAB,
+      "phase-meeting-agenda",
+      "phase-kickoff-call",
+      "stakeholder-kickoff-agenda-result",
+      "stakeholder-kickoff-kickoff-intro",
+    ]);
     var agendaHtml = agendaText ? renderAgendaFromMarker(agendaText) : null;
     if (agendaHtml) {
       var agendaCard = root.querySelector(".sks-kc-notes-section:nth-child(3) .sks-kc-notes-card");

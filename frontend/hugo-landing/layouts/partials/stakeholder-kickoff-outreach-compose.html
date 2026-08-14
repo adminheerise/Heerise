@@ -124,8 +124,16 @@
                                 <div id="oe-hint" class="oe-hint" hidden>
                                     <div class="oe-hint-top">
                                         <button type="button" id="oe-hint-head" class="oe-hint-head" aria-expanded="false" aria-controls="oe-hint-panel" aria-label="Open hint guidance">
-                                            <span class="oe-hint-ic" aria-hidden="true"></span>
+                                            <span class="oe-hint-ic" aria-hidden="true">
+                                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" focusable="false">
+                                                    <path d="M12 2.5a7 7 0 0 0-4.2 12.6c.7.5 1.2 1.3 1.2 2.2V18a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-.7c0-.9.5-1.7 1.2-2.2A7 7 0 0 0 12 2.5Z"
+                                                          fill="#F6D453" stroke="#1A73E8" stroke-width="1.35" stroke-linejoin="round"/>
+                                                    <path d="M10 21h4M10.5 23h3" stroke="#5F6368" stroke-width="1.35" stroke-linecap="round"/>
+                                                    <path d="M10.2 14.2h3.6" stroke="#B8860B" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+                                                </svg>
+                                            </span>
                                             <strong>Hint</strong>
+                                            <span class="oe-hint-cta">Click for guidance</span>
                                         </button>
                                         <div id="oe-hint-controls" class="oe-hint-controls" hidden>
                                             <button type="button" id="oe-hint-collapse" class="oe-hint-x" aria-expanded="true" aria-controls="oe-hint-panel" aria-label="Close hint panel">&times;</button>
@@ -198,9 +206,12 @@
                                         </div>
                                     </div>
                                     <footer class="oe-pop-ft">
-                                        <button type="button" class="oe-send" id="oe-send" disabled>
-                                            <span>Send</span><i class="sep"></i><i class="chev"></i>
-                                        </button>
+                                        <div class="oe-send-wrap">
+                                            <button type="button" class="oe-send" id="oe-send" aria-disabled="true">
+                                                <span>Send</span><i class="sep"></i><i class="chev"></i>
+                                            </button>
+                                            <p class="oe-send-tip" id="oe-send-tip" role="status" aria-live="polite" hidden></p>
+                                        </div>
                                         <div class="oe-icons" aria-hidden="true">
                                             <span class="oe-ft-ic oe-ft-ic-format" title="Formatting options">A</span>
                                             <span class="oe-ft-ic" title="Attach files">
@@ -305,8 +316,10 @@
   var caret = document.getElementById("oe-caret");
   var cnt = document.getElementById("oe-ccnt");
   var send = document.getElementById("oe-send");
+  var sendTip = document.getElementById("oe-send-tip");
   var hintTxt = document.getElementById("oe-hint-txt");
   var hintSecBtns = hintPanel ? hintPanel.querySelectorAll("[data-oe-hint-sec]") : [];
+  var MIN_BODY_WORDS = 3;
 
   var hintCopy = [
     "Introduce yourself and show that you\u2019ve read the brief. What do you know about the project that tells them you\u2019ve prepared?",
@@ -551,7 +564,8 @@
 
     var isP2 = v === 2;
 
-    sub.readOnly = !isP2 ? false : true;
+    // Subject stays editable after Next so learners can revise it anytime.
+    if (sub) sub.readOnly = false;
     body.readOnly = !isP2;
     body.tabIndex = isP2 ? 0 : -1;
 
@@ -625,12 +639,39 @@
   function bodyOk() {
     if (!body) return false;
     var words = countWords(body.value);
-    return words >= 3 && words <= MAX_BODY_WORDS;
+    return words >= MIN_BODY_WORDS && words <= MAX_BODY_WORDS;
+  }
+
+  function sendBlockReason() {
+    if (!root.classList.contains("oe--p2")) {
+      return "Finish the subject first, then click Next.";
+    }
+    if (!subjectOk()) {
+      return "Add a subject line before sending.";
+    }
+    if (!body) return "Draft the email body before sending.";
+    var words = countWords(body.value);
+    if (words < MIN_BODY_WORDS) {
+      return "Not enough words (need at least " + MIN_BODY_WORDS + ").";
+    }
+    if (words > MAX_BODY_WORDS) {
+      return "Too many words (max " + MAX_BODY_WORDS + ").";
+    }
+    return "";
   }
 
   function syncSend() {
-    var p2 = root.classList.contains("oe--p2");
-    send.disabled = !p2 || !bodyOk();
+    if (!send) return;
+    var reason = sendBlockReason();
+    var canSend = !reason;
+    send.disabled = false;
+    send.setAttribute("aria-disabled", canSend ? "false" : "true");
+    send.classList.toggle("is-ready", canSend);
+    send.classList.toggle("is-blocked", !canSend);
+    if (sendTip && (canSend || sendTip.hidden)) {
+      sendTip.hidden = true;
+      sendTip.textContent = "";
+    }
   }
 
   if (nextBt) {
@@ -664,6 +705,7 @@
     sub.addEventListener("input", function () {
       syncCaret();
       syncSubjectNext();
+      syncSend();
       saveDraft();
     });
     sub.addEventListener("focus", syncCaret);
@@ -750,10 +792,11 @@
         }, 400);
       },
       onOfflineFallback: function (offline) {
+        // Localhost only — production never uses this path.
         setScoringUi(
           "ok",
-          "Using offline scoring (QA test mode)",
-          "API unavailable — showing rule-based feedback."
+          "Using local offline scoring",
+          "API unavailable on localhost — showing rule-based feedback."
         );
         window.setTimeout(function () {
           saveFeedbackAndGo(offline);
@@ -762,7 +805,11 @@
       onError: function (err, msg) {
         scoringBusy = false;
         if (send) send.classList.remove("is-loading");
-        setScoringUi("err", "Scoring failed", msg);
+        setScoringUi(
+          "err",
+          "Scoring failed",
+          msg || "Could not reach the Gemini scoring API. Click Try again."
+        );
       },
     }).catch(function () {
       /* onError already handled */
@@ -787,19 +834,11 @@
 
   if (send) {
     send.addEventListener("click", function () {
-      if (send.disabled) {
-        if (!root.classList.contains("oe--p2")) {
-          setScoringUi(
-            "err",
-            "Finish the subject first",
-            "Enter a subject line, click Next, then draft the email body before sending."
-          );
-        } else if (!bodyOk()) {
-          setScoringUi(
-            "err",
-            "Add more to your email",
-            "Write at least 3 words in the body (max 300 words), then click Send."
-          );
+      var reason = sendBlockReason();
+      if (reason) {
+        if (sendTip) {
+          sendTip.hidden = false;
+          sendTip.textContent = reason;
         }
         return;
       }

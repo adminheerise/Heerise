@@ -415,21 +415,27 @@
     try {
       var key = "heerise_lumina_sim_notes_v1";
       var raw = window.localStorage.getItem(key);
-      var state = raw ? JSON.parse(raw) : { v: 1, tabs: [], activeTabKey: null, panelFloat: null };
-      if (!state || state.v !== 1 || !Array.isArray(state.tabs)) {
-        state = { v: 1, tabs: [], activeTabKey: null, panelFloat: null };
+      var state = raw ? JSON.parse(raw) : { v: 2, tabs: [], activeTabKey: null, panelFloat: null };
+      if (!state || !Array.isArray(state.tabs)) {
+        state = { v: 2, tabs: [], activeTabKey: null, panelFloat: null };
       }
-      var pid = currentPageId();
+      var phaseKey = "phase-research";
+      var apiMap = window.LuminaSimNotes;
+      if (apiMap && typeof apiMap.phaseKeyForPage === "function") {
+        phaseKey = apiMap.phaseKeyForPage(currentPageId()) || phaseKey;
+      }
       var tab = null;
       for (var i = 0; i < state.tabs.length; i++) {
-        if (state.tabs[i].key === pid) { tab = state.tabs[i]; break; }
+        if (state.tabs[i].key === phaseKey) { tab = state.tabs[i]; break; }
       }
       if (!tab) {
-        tab = { key: pid, label: pid, text: "" };
+        tab = { key: phaseKey, label: "Research", text: "" };
         state.tabs.push(tab);
       }
+      tab.label = "Research";
       tab.text = (tab.text || "") + text;
-      state.activeTabKey = pid;
+      state.activeTabKey = phaseKey;
+      state.v = 2;
       window.localStorage.setItem(key, JSON.stringify(state));
       return true;
     } catch (e) {

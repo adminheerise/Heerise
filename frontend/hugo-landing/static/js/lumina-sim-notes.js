@@ -1,59 +1,84 @@
 /**
  * LUMINA · SIM — persistent floating notes.
  *
- * Behaviour:
- *  - Tabs live in a VERTICAL sidebar inside the panel (left column). The editor is the right column.
- *  - A tab for a stage is created LAZILY: it only appears in the sidebar after the user has typed
- *    at least one non-whitespace character on that stage.
- *  - Badge on the FAB = number of stages that currently have non-empty notes. 0 → hidden.
- *  - The FAB is persistent across eligible pages and can be dragged freely; the panel is draggable
- *    by its header once floated.
- *  - When the panel first opens on a page, a `lumina-notes:opened` custom event is fired so that
- *    other flows on that page (e.g. the Zoom meeting countdown) can react.
+ * Tabs are grouped by simulation PHASE (not per page), matching the step nav:
+ *   Assignment Brief · Research · Outreach Email · Meeting Agenda · Kick-off Call · Manager Brief
  *
- * Copy: use real LUMINA SIM stage names only. Do NOT ship placeholder academic examples
- * (e.g. "1. Identifying tacit…") — those were wireframe style references only.
+ * A phase tab appears only after the user has typed non-empty content for that phase.
+ * Opening the docked panel shrinks #all so the main stage stays fully visible on the left.
  */
 (function () {
   var STORAGE_KEY = "heerise_lumina_sim_notes_v1";
+  var STORAGE_VERSION = 2;
 
-  /** Display labels per simulation page id — stage-based naming.
-   *  Adding a page id here is REQUIRED — the controller bails out for any
-   *  page id missing from this map, which means an absent entry silently
-   *  disables the FAB drag, click, and panel even though the markup still
-   *  renders. Keep this list in sync with `lumina_notes_page_ids` in hugo.toml. */
-  var PAGE_LABELS = {
-    "stakeholder-kickoff-sim": "brief-sim intro",
-    "stakeholder-kickoff-workspace": "brief-workspace",
-    "stakeholder-kickoff-brief-organize": "brief-organize",
-    "stakeholder-kickoff-gap-analysis": "brief-gap-analysis",
-    "stakeholder-kickoff-zoom-meeting": "brief-zoom meeting",
-    "stakeholder-kickoff-outreach-intro": "outreach-intro",
-    "stakeholder-kickoff-brief-email": "brief-email",
-    "stakeholder-kickoff-outreach-compose": "outreach-compose",
-    "stakeholder-kickoff-outreach-feedback": "outreach-feedback",
-    "stakeholder-kickoff-research": "research",
-    "stakeholder-kickoff-research-workspace": "research-workspace",
-    "stakeholder-kickoff-email-intro": "outreach intro",
-    "stakeholder-kickoff-email-compose": "outreach draft",
-    "stakeholder-kickoff-email-result": "outreach result",
-    "stakeholder-kickoff-agenda-intro": "agenda intro",
-    "stakeholder-kickoff-agenda-ready": "agenda ready",
-    "stakeholder-kickoff-agenda-build": "agenda build",
-    "stakeholder-kickoff-agenda-result": "agenda result",
-    "stakeholder-kickoff-kickoff-intro": "kickoff intro",
-    "stakeholder-kickoff-kickoff-notes-intro": "kickoff notes-intro",
-    "stakeholder-kickoff-kickoff-countdown": "kickoff countdown",
-    "stakeholder-kickoff-kickoff-live": "kickoff live",
-    "stakeholder-kickoff-kickoff-result": "kickoff result",
-    "stakeholder-kickoff-manager-brief": "manager brief",
+  var PHASES = [
+    { key: "phase-assignment-brief", label: "Assignment Brief" },
+    { key: "phase-research", label: "Research" },
+    { key: "phase-outreach-email", label: "Outreach Email" },
+    { key: "phase-meeting-agenda", label: "Meeting Agenda" },
+    { key: "phase-kickoff-call", label: "Kick-off Call" },
+    { key: "phase-manager-brief", label: "Manager Brief" },
+  ];
+
+  var PHASE_BY_KEY = {};
+  PHASES.forEach(function (p) {
+    PHASE_BY_KEY[p.key] = p;
+  });
+
+  /** Map each simulation page id → phase key. Keep in sync with hugo.toml lumina_notes_page_ids. */
+  var PAGE_TO_PHASE = {
+    "stakeholder-kickoff-sim": "phase-assignment-brief",
+    "stakeholder-kickoff-workspace": "phase-assignment-brief",
+    "stakeholder-kickoff-brief-organize": "phase-assignment-brief",
+    "stakeholder-kickoff-gap-analysis": "phase-assignment-brief",
+    "stakeholder-kickoff-zoom-meeting": "phase-assignment-brief",
+    "stakeholder-kickoff-brief-email": "phase-assignment-brief",
+
+    "stakeholder-kickoff-research": "phase-research",
+    "stakeholder-kickoff-research-workspace": "phase-research",
+
+    "stakeholder-kickoff-outreach-intro": "phase-outreach-email",
+    "stakeholder-kickoff-outreach-compose": "phase-outreach-email",
+    "stakeholder-kickoff-outreach-feedback": "phase-outreach-email",
+    "stakeholder-kickoff-email-intro": "phase-outreach-email",
+    "stakeholder-kickoff-email-compose": "phase-outreach-email",
+    "stakeholder-kickoff-email-result": "phase-outreach-email",
+
+    "stakeholder-kickoff-agenda-intro": "phase-meeting-agenda",
+    "stakeholder-kickoff-agenda-ready": "phase-meeting-agenda",
+    "stakeholder-kickoff-agenda-build": "phase-meeting-agenda",
+    "stakeholder-kickoff-agenda-result": "phase-meeting-agenda",
+
+    "stakeholder-kickoff-kickoff-intro": "phase-kickoff-call",
+    "stakeholder-kickoff-kickoff-notes-intro": "phase-kickoff-call",
+    "stakeholder-kickoff-kickoff-countdown": "phase-kickoff-call",
+    "stakeholder-kickoff-kickoff-live": "phase-kickoff-call",
+    "stakeholder-kickoff-kickoff-result": "phase-kickoff-call",
+
+    "stakeholder-kickoff-manager-brief": "phase-manager-brief",
   };
+
+  function phaseKeyForPage(pageId) {
+    return PAGE_TO_PHASE[pageId] || null;
+  }
+
+  function phaseLabel(phaseKey) {
+    return (PHASE_BY_KEY[phaseKey] && PHASE_BY_KEY[phaseKey].label) || phaseKey;
+  }
+
+  /** Resolve a tab lookup key: phase key, or legacy page id → phase. */
+  function resolveTabKey(key) {
+    if (!key) return null;
+    if (PHASE_BY_KEY[key]) return key;
+    return phaseKeyForPage(key) || key;
+  }
 
   var root = document.getElementById("lumina-sim-notes-root");
   if (!root) return;
 
   var pageId = (root.getAttribute("data-lumina-page-id") || "").trim();
-  if (!pageId || !PAGE_LABELS[pageId]) return;
+  var phaseKey = phaseKeyForPage(pageId);
+  if (!pageId || !phaseKey) return;
 
   var fab = root.querySelector(".lumina-sim-notes-fab");
   var badge = root.querySelector(".lumina-sim-notes-badge");
@@ -68,8 +93,7 @@
 
   if (!fab || !panel || !tabstrip || !editor) return;
 
-  var state = loadState();
-  var currentDraft = ""; // editor buffer for the current page, even before a tab exists
+  var currentDraft = "";
   var open = false;
   var hasFiredOpenEvent = false;
   var dragging = false;
@@ -77,10 +101,34 @@
   var dragStartY = 0;
   var panelStartL = 0;
   var panelStartT = 0;
-  var floated = !!(state.panelFloat && state.panelFloat.w);
 
   function defaultState() {
-    return { v: 1, tabs: [], activeTabKey: null, panelFloat: null, fabPos: null };
+    return { v: STORAGE_VERSION, tabs: [], activeTabKey: null, panelFloat: null, fabPos: null };
+  }
+
+  function migrateTabs(rawTabs) {
+    var byPhase = {};
+    (rawTabs || []).forEach(function (t) {
+      if (!t || typeof t.key !== "string" || typeof t.text !== "string") return;
+      var pk = resolveTabKey(t.key);
+      if (!PHASE_BY_KEY[pk]) return;
+      var text = t.text || "";
+      if (!byPhase[pk]) {
+        byPhase[pk] = { key: pk, label: phaseLabel(pk), text: text };
+      } else if (text.trim()) {
+        var cur = byPhase[pk].text || "";
+        if (!cur.trim()) byPhase[pk].text = text;
+        else if (cur.indexOf(text) < 0) byPhase[pk].text = cur.replace(/\s+$/, "") + "\n\n" + text;
+      }
+    });
+    var ordered = [];
+    PHASES.forEach(function (p) {
+      if (byPhase[p.key] && (byPhase[p.key].text || "").trim()) {
+        byPhase[p.key].label = p.label;
+        ordered.push(byPhase[p.key]);
+      }
+    });
+    return ordered;
   }
 
   function loadState() {
@@ -88,13 +136,14 @@
       var raw = window.localStorage.getItem(STORAGE_KEY);
       if (!raw) return defaultState();
       var o = JSON.parse(raw);
-      if (!o || o.v !== 1 || !Array.isArray(o.tabs)) return defaultState();
-      return {
-        v: 1,
-        tabs: o.tabs.filter(function (t) {
-          return t && typeof t.key === "string" && typeof t.text === "string";
-        }),
-        activeTabKey: typeof o.activeTabKey === "string" ? o.activeTabKey : null,
+      if (!o || !Array.isArray(o.tabs)) return defaultState();
+      var tabs = migrateTabs(o.tabs);
+      var active = typeof o.activeTabKey === "string" ? resolveTabKey(o.activeTabKey) : null;
+      if (active && !PHASE_BY_KEY[active]) active = null;
+      var next = {
+        v: STORAGE_VERSION,
+        tabs: tabs,
+        activeTabKey: active,
         panelFloat:
           o.panelFloat && typeof o.panelFloat.left === "number"
             ? { left: o.panelFloat.left, top: o.panelFloat.top, w: o.panelFloat.w, h: o.panelFloat.h }
@@ -104,18 +153,78 @@
             ? { left: o.fabPos.left, top: o.fabPos.top }
             : null,
       };
+      if (o.v !== STORAGE_VERSION) {
+        try {
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+        } catch (e) {}
+      }
+      return next;
     } catch (e) {
       return defaultState();
     }
   }
 
+  /** Sample Agenda belongs in Kick-off notes only after Phase 4 completes. */
+  var SAMPLE_AGENDA_MARKER = "[Sample Agenda · 14 minutes]";
+  var KICKOFF_PHASE = "phase-kickoff-call";
+
+  function phase4AgendaReady() {
+    try {
+      if (localStorage.getItem("heerise_phase4_sample_agenda_ready") === "1") return true;
+      if (sessionStorage.getItem("heerise_agenda_result") || localStorage.getItem("heerise_agenda_result")) return true;
+    } catch (e) {}
+    return false;
+  }
+
+  function stripPrematureSampleAgenda(s) {
+    if (!s || !Array.isArray(s.tabs) || phase4AgendaReady()) return s;
+    /* Only strip while learner is still before Kick-off Call. */
+    if (phaseKey === KICKOFF_PHASE || phaseKey === "phase-manager-brief") return s;
+    var changed = false;
+    var nextTabs = [];
+    s.tabs.forEach(function (t) {
+      if (!t || t.key !== KICKOFF_PHASE) {
+        nextTabs.push(t);
+        return;
+      }
+      var text = t.text || "";
+      var idx = text.indexOf(SAMPLE_AGENDA_MARKER);
+      if (idx < 0) {
+        nextTabs.push(t);
+        return;
+      }
+      changed = true;
+      var cleaned = text.slice(0, idx).replace(/\s+$/, "").trim();
+      if (cleaned) {
+        t.text = cleaned;
+        nextTabs.push(t);
+      } else if (s.activeTabKey === KICKOFF_PHASE) {
+        s.activeTabKey = null;
+      }
+    });
+    if (changed) {
+      s.tabs = nextTabs;
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+      } catch (e) {}
+    }
+    return s;
+  }
+
+  var state = stripPrematureSampleAgenda(loadState());
+  var floated = !!(state.panelFloat && state.panelFloat.w);
+
   function saveState() {
-    try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+    try {
+      state.v = STORAGE_VERSION;
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {}
   }
 
   function findTab(key) {
+    var k = resolveTabKey(key);
     for (var i = 0; i < state.tabs.length; i++) {
-      if (state.tabs[i].key === key) return state.tabs[i];
+      if (state.tabs[i].key === k) return state.tabs[i];
     }
     return null;
   }
@@ -126,7 +235,6 @@
     return findTab(k);
   }
 
-  /** Count of stages with non-empty notes (trimmed). */
   function nonEmptyCount() {
     var n = 0;
     for (var i = 0; i < state.tabs.length; i++) {
@@ -142,10 +250,27 @@
     badge.hidden = n <= 0;
   }
 
+  function sortedVisibleTabs() {
+    var visible = state.tabs.filter(function (t) {
+      return (t.text || "").trim().length > 0;
+    });
+    var order = {};
+    PHASES.forEach(function (p, i) {
+      order[p.key] = i;
+    });
+    visible.sort(function (a, b) {
+      var ia = order[a.key];
+      var ib = order[b.key];
+      if (ia == null) ia = 999;
+      if (ib == null) ib = 999;
+      return ia - ib;
+    });
+    return visible;
+  }
+
   function renderTabs() {
     tabstrip.innerHTML = "";
-    // only show tabs for stages that actually have non-empty content
-    var visible = state.tabs.filter(function (t) { return (t.text || "").trim().length > 0; });
+    var visible = sortedVisibleTabs();
     if (emptyHint) emptyHint.hidden = visible.length > 0;
     for (var i = 0; i < visible.length; i++) {
       (function (tab) {
@@ -175,12 +300,6 @@
     }
   }
 
-  /**
-   * Persist whatever is in the editor. Rules:
-   *  - If active tab exists in state → update its text (even to empty) and remove if now empty.
-   *  - If no active tab AND editor has content → create the tab for current pageId.
-   *  - If no active tab AND editor empty → do nothing (no tab yet).
-   */
   function commitEditor() {
     if (!editor) return;
     var text = editor.value;
@@ -189,16 +308,16 @@
     var tab = activeTab();
     if (tab) {
       tab.text = text;
+      tab.label = phaseLabel(tab.key);
       if (trimmed.length === 0) {
-        // drop empty tab
-        state.tabs = state.tabs.filter(function (t) { return t.key !== tab.key; });
+        state.tabs = state.tabs.filter(function (t) {
+          return t.key !== tab.key;
+        });
         state.activeTabKey = null;
       }
     } else if (trimmed.length > 0) {
-      // lazily create tab for current page
-      var label = PAGE_LABELS[pageId];
-      state.tabs.push({ key: pageId, label: label, text: text });
-      state.activeTabKey = pageId;
+      state.tabs.push({ key: phaseKey, label: phaseLabel(phaseKey), text: text });
+      state.activeTabKey = phaseKey;
     }
     saveState();
   }
@@ -208,8 +327,6 @@
     if (t) {
       editor.value = t.text || "";
     } else {
-      // no active tab: if the active key is the current page and we have a draft, show it;
-      // otherwise show the draft for this page (empty by default).
       editor.value = currentDraft;
     }
     renderTabs();
@@ -250,29 +367,37 @@
   function setOpen(v) {
     open = v;
     document.body.classList.toggle("lumina-notes-open", open);
+    document.documentElement.classList.toggle("lumina-notes-open", open);
     panel.classList.toggle("lumina-sim-notes-panel--visible", open);
     panel.setAttribute("aria-hidden", open ? "false" : "true");
     fab.setAttribute("aria-expanded", open ? "true" : "false");
     if (open) {
       applyPanelLayout();
       document.body.classList.toggle("lumina-notes-panel-floating", floated);
-      // when opening, prefer to show the tab for THIS page if it exists
-      var existingForPage = findTab(pageId);
-      if (existingForPage) state.activeTabKey = pageId;
+      document.documentElement.classList.toggle("lumina-notes-panel-floating", floated);
+      var existingForPhase = findTab(phaseKey);
+      if (existingForPhase) state.activeTabKey = phaseKey;
       syncEditorFromActive();
-      try { editor.focus({ preventScroll: true }); } catch (e) {}
+      try {
+        editor.focus({ preventScroll: true });
+      } catch (e) {}
       if (!hasFiredOpenEvent) {
         hasFiredOpenEvent = true;
         try {
-          document.dispatchEvent(new CustomEvent("lumina-notes:opened", { detail: { pageId: pageId } }));
+          document.dispatchEvent(
+            new CustomEvent("lumina-notes:opened", { detail: { pageId: pageId, phaseKey: phaseKey } })
+          );
         } catch (e) {}
       }
     } else {
       document.body.classList.remove("lumina-notes-panel-floating");
+      document.documentElement.classList.remove("lumina-notes-panel-floating");
     }
   }
 
-  function hideLegacyTooltip() { if (tooltip) tooltip.hidden = true; }
+  function hideLegacyTooltip() {
+    if (tooltip) tooltip.hidden = true;
+  }
 
   function startDrag(e) {
     if (!open) return;
@@ -291,12 +416,15 @@
       panel.style.right = "auto";
       panel.style.bottom = "auto";
       document.body.classList.add("lumina-notes-panel-floating");
+      document.documentElement.classList.add("lumina-notes-panel-floating");
     }
     dragStartX = e.clientX;
     dragStartY = e.clientY;
     panelStartL = state.panelFloat.left;
     panelStartT = state.panelFloat.top;
-    try { panel.setPointerCapture(e.pointerId); } catch (err) {}
+    try {
+      panel.setPointerCapture(e.pointerId);
+    } catch (err) {}
   }
 
   function onMove(e) {
@@ -323,11 +451,10 @@
     saveState();
   }
 
-  // Prime editor draft from any existing tab for this page (so user sees previous notes).
-  var existing = findTab(pageId);
+  var existing = findTab(phaseKey);
   if (existing) {
     currentDraft = existing.text || "";
-    state.activeTabKey = pageId;
+    state.activeTabKey = phaseKey;
   } else {
     state.activeTabKey = null;
   }
@@ -338,11 +465,34 @@
   applyPanelLayout();
   hideLegacyTooltip();
 
-  /* ------------------------------------------------------------------
-   * FAB drag — press + hold and move to reposition the icon anywhere on
-   * the viewport. Small movements are still treated as taps (toggle panel).
-   * ---------------------------------------------------------------- */
-  var FAB_DRAG_THRESHOLD = 6; // px
+  /* Phase 5: pull Sample Agenda into notes if Phase 4→5 inject already wrote it
+     (or inject now if the bridge runs slightly later). */
+  if (phaseKey === KICKOFF_PHASE) {
+    setTimeout(function () {
+      if (window.HeeriseSampleAgendaNote && typeof window.HeeriseSampleAgendaNote.ensure === "function") {
+        window.HeeriseSampleAgendaNote.ensure(true);
+      }
+      /* Reload tabs from storage in case inject wrote directly to localStorage */
+      try {
+        var raw = window.localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        var o = JSON.parse(raw);
+        if (!o || !Array.isArray(o.tabs)) return;
+        state.tabs = migrateTabs(o.tabs);
+        if (o.activeTabKey) state.activeTabKey = resolveTabKey(o.activeTabKey);
+        var active = findTab(phaseKey);
+        if (active) {
+          currentDraft = active.text || "";
+          state.activeTabKey = phaseKey;
+        }
+        setBadgeCount();
+        renderTabs();
+        if (open) syncEditorFromActive();
+      } catch (e) {}
+    }, 150);
+  }
+
+  var FAB_DRAG_THRESHOLD = 6;
   var fabDragging = false;
   var fabDragStarted = false;
   var suppressNextFabClick = false;
@@ -382,7 +532,7 @@
   }
 
   fab.addEventListener("pointerdown", function (e) {
-    if (e.button !== undefined && e.button !== 0) return; // left-click / primary only
+    if (e.button !== undefined && e.button !== 0) return;
     suppressNextFabClick = false;
     fabDragging = true;
     fabDragStarted = false;
@@ -391,7 +541,9 @@
     var rect = fab.getBoundingClientRect();
     fabStartLeft = rect.left;
     fabStartTop = rect.top;
-    try { fab.setPointerCapture(e.pointerId); } catch (err) {}
+    try {
+      fab.setPointerCapture(e.pointerId);
+    } catch (err) {}
   });
 
   window.addEventListener("pointermove", function (e) {
@@ -452,14 +604,11 @@
     saveState();
   });
 
-  /**
-   * Public API so other page scripts (e.g. research-workspace stakeholder-question
-   * modal) can append formatted note blocks to the correct stage's tab.
-   */
-  function appendToPage(targetPageId, text) {
-    if (!targetPageId || typeof text !== "string" || text.length === 0) return false;
-    if (!PAGE_LABELS[targetPageId]) return false;
-    var tab = findTab(targetPageId);
+  function appendToPhase(targetKey, text) {
+    if (!targetKey || typeof text !== "string" || text.length === 0) return false;
+    var pk = resolveTabKey(targetKey);
+    if (!PHASE_BY_KEY[pk]) return false;
+    var tab = findTab(pk);
     var prefix = "";
     if (tab) {
       var current = tab.text || "";
@@ -467,19 +616,24 @@
         prefix = /\n$/.test(current) ? "\n" : "\n\n";
       }
       tab.text = current + prefix + text;
+      tab.label = phaseLabel(pk);
     } else {
-      state.tabs.push({ key: targetPageId, label: PAGE_LABELS[targetPageId], text: text });
+      state.tabs.push({ key: pk, label: phaseLabel(pk), text: text });
     }
-    state.activeTabKey = targetPageId;
+    state.activeTabKey = pk;
     saveState();
-    // Reflect in live UI if the panel is open on this page.
-    if (targetPageId === pageId) {
-      currentDraft = (findTab(pageId) || {}).text || "";
+    if (pk === phaseKey) {
+      currentDraft = (findTab(phaseKey) || {}).text || "";
       if (open) syncEditorFromActive();
     }
     setBadgeCount();
     renderTabs();
     return true;
+  }
+
+  /** @deprecated name kept for callers — accepts page id or phase key */
+  function appendToPage(targetPageId, text) {
+    return appendToPhase(targetPageId, text);
   }
 
   function resetFabToDefault() {
@@ -493,8 +647,17 @@
 
   window.LuminaSimNotes = window.LuminaSimNotes || {};
   window.LuminaSimNotes.appendToPage = appendToPage;
-  window.LuminaSimNotes.appendHere = function (text) { return appendToPage(pageId, text); };
-  window.LuminaSimNotes.open = function () { if (!open) setOpen(true); };
-  window.LuminaSimNotes.close = function () { if (open) setOpen(false); };
+  window.LuminaSimNotes.appendToPhase = appendToPhase;
+  window.LuminaSimNotes.appendHere = function (text) {
+    return appendToPhase(phaseKey, text);
+  };
+  window.LuminaSimNotes.open = function () {
+    if (!open) setOpen(true);
+  };
+  window.LuminaSimNotes.close = function () {
+    if (open) setOpen(false);
+  };
   window.LuminaSimNotes.resetFabToDefault = resetFabToDefault;
+  window.LuminaSimNotes.phaseKeyForPage = phaseKeyForPage;
+  window.LuminaSimNotes.PHASES = PHASES.slice();
 })();

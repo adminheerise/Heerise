@@ -1,5 +1,5 @@
 (function () {
-  /** Answer key aligned with CC-01 (Confirmed Facts / Research / Stakeholder) */
+  /** Answer key aligned with CC-01 (Known Information / Research Tasks / Stakeholder Questions) */
   var CORRECT = {
     c1: "known",
     c2: "research",
@@ -11,28 +11,28 @@
     c8: "known",
   };
 
-  /** Under each incorrect card (partial success) */
+  var CATEGORY_LABEL = {
+    known: "Known Information",
+    research: "Research Tasks",
+    stakeholder: "Stakeholder Questions",
+  };
+
+  /** Shown in “Items to correct” when a card is misclassified */
   var FEEDBACK = {
-    c1:
-      "This is a confirmed product fact from the brief—it belongs under Known Information.",
-    c2:
-      "This is organizational benchmark data that should be researched independently before the call.",
-    c3:
-      "This is a stakeholder-specific expectation that must be surfaced directly during the kickoff call.",
-    c4:
-      "This is demographic data that can be investigated through independent research before the meeting.",
-    c5:
-      "You can look for existing internal training records or documentation to find this information independently.",
-    c6:
-      "Dr. Nair’s view of ‘good’ training is a stakeholder perspective—ask her in the kickoff, not a generic fact.",
-    c7:
-      "What’s already been tried can be uncovered from documents, SMEs, and history—Research.",
-    c8:
-      "Review the project brief to see if you can find this information.",
+    c1: "review the project brief to see if you can find this information",
+    c2: "This is organizational benchmark data that should be researched independently before the call.",
+    c3: "This is a stakeholder-specific expectation that must be surfaced directly during the kickoff call.",
+    c4: "This is demographic data that can be investigated through independent research before the meeting",
+    c5: "You can look for existing internal training records or documentation to find this information independently.",
+    c6: "Only the stakeholder herself can define her personal vision for success.",
+    c7: "This historical context can be found through independent research or by reviewing past project records.",
+    c8: "review the project brief to see if you can find this information",
   };
 
   var grid = document.getElementById("sks-gap-mid-grid");
   var gapBody = document.getElementById("sks-gap-body");
+  var gapWork = document.getElementById("sks-gap-work");
+  var gapInstruct = document.getElementById("sks-gap-instruct");
   var midLabel = document.getElementById("sks-gap-mid-label");
   var actionBtn = document.getElementById("sks-gap-action");
   var successPanel = document.getElementById("sks-gap-success-panel");
@@ -40,18 +40,73 @@
   var coachTop = document.getElementById("sks-gap-coach-top");
   var coachTopCc02 = document.getElementById("sks-gap-coach-top-cc02");
   var coachTopCc03 = document.getElementById("sks-gap-coach-top-cc03");
+  var errorReview = document.getElementById("sks-gap-error-review");
+  var errorReviewList = document.getElementById("sks-gap-error-review-list");
   var zones = document.querySelectorAll(".sks-gap-zone");
   var slots = document.querySelectorAll(".sks-gap-slot");
   var submitted = false;
+  var ZONE_LABEL = {
+    known: "I Know This Already",
+    research: "I Need to Research More",
+    stakeholder: "I Will Ask in Kickoff",
+  };
 
   if (!grid || !actionBtn) return;
 
+  function cardPlainLabel(card) {
+    var clone = card.cloneNode(true);
+    var fb = clone.querySelector(".sks-gap-card-feedback");
+    if (fb) fb.remove();
+    return (clone.textContent || "").replace(/\s+/g, " ").trim();
+  }
+
+  function setExerciseVisible(visible) {
+    if (gapWork) gapWork.hidden = !visible;
+    if (actionBtn) actionBtn.hidden = !visible;
+  }
+
+  function clearErrorReview() {
+    if (errorReview) errorReview.hidden = true;
+    if (errorReviewList) errorReviewList.innerHTML = "";
+  }
+
+  function renderErrorReview(items) {
+    if (!errorReview || !errorReviewList) return;
+    errorReviewList.innerHTML = "";
+    if (!items || !items.length) {
+      errorReview.hidden = true;
+      return;
+    }
+    items.forEach(function (item) {
+      var li = document.createElement("li");
+      li.className = "sks-gap-error-review-item";
+      var title = document.createElement("p");
+      title.className = "sks-gap-error-review-item-title";
+      title.textContent = item.label;
+      var meta = document.createElement("p");
+      meta.className = "sks-gap-error-review-item-meta";
+      meta.textContent =
+        "You placed this in “" +
+        (ZONE_LABEL[item.got] || item.got) +
+        "”. Belongs in " +
+        (CATEGORY_LABEL[item.expected] || item.expected) +
+        ". " +
+        item.reason;
+      li.appendChild(title);
+      li.appendChild(meta);
+      errorReviewList.appendChild(li);
+    });
+    errorReview.hidden = false;
+  }
+
+  function clearReviewBoard() {
+    if (zonesShell) zonesShell.classList.remove("sks-gap-zones-shell--review");
+    clearErrorReview();
+  }
+
   function setActionRetry() {
-    actionBtn.hidden = false;
-    actionBtn.dataset.phase = "retry";
-    actionBtn.textContent = "RETRY";
-    actionBtn.setAttribute("aria-label", "Retry and reset categorization");
-    actionBtn.classList.add("sks-gap-action--retry");
+    /* Footer RETRY removed on feedback — revise via coach "Try again" only. */
+    actionBtn.hidden = true;
   }
 
   function setActionSubmit() {
@@ -150,30 +205,41 @@
     if (coachTopCc03) coachTopCc03.hidden = true;
     if (gapBody) {
       gapBody.classList.remove("sks-gap-body--post-submit");
+      gapBody.classList.remove("sks-gap-body--review-errors");
     }
+    clearReviewBoard();
     if (midLabel) midLabel.hidden = false;
     if (grid) grid.hidden = false;
+    if (gapInstruct) gapInstruct.hidden = false;
+    setExerciseVisible(true);
   }
 
-  function showCoachTopPartial() {
+  function showCoachTopPartial(errorItems) {
     hideSuccessPanel();
-    hideCoachTop();
     if (coachTop) coachTop.hidden = false;
     if (coachTopCc02) coachTopCc02.hidden = false;
-    if (gapBody) gapBody.classList.add("sks-gap-body--post-submit");
-    if (midLabel) midLabel.hidden = true;
-    if (grid) grid.hidden = true;
-    if (coachTop) coachTop.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (coachTopCc03) coachTopCc03.hidden = true;
+    if (gapBody) {
+      gapBody.classList.add("sks-gap-body--post-submit");
+      gapBody.classList.add("sks-gap-body--review-errors");
+    }
+    renderErrorReview(errorItems || []);
+    /* Feedback screen: coach panel only — hide the drag/drop exercise board. */
+    setExerciseVisible(false);
+    if (errorReview) {
+      errorReview.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    } else if (coachTop) {
+      coachTop.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }
 
   function showCoachTopRetry() {
     hideSuccessPanel();
-    hideCoachTop();
     if (coachTop) coachTop.hidden = false;
     if (coachTopCc03) coachTopCc03.hidden = false;
+    if (coachTopCc02) coachTopCc02.hidden = true;
     if (gapBody) gapBody.classList.add("sks-gap-body--post-submit");
-    if (midLabel) midLabel.hidden = true;
-    if (grid) grid.hidden = true;
+    setExerciseVisible(false);
     if (coachTop) coachTop.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -184,9 +250,8 @@
       gapBody.classList.add("sks-gap-body--post-submit");
       gapBody.classList.add("sks-gap-body--success-all");
     }
-    if (midLabel) midLabel.hidden = true;
-    if (grid) grid.hidden = true;
-    if (zonesShell) zonesShell.classList.add("sks-gap-zones-shell--success");
+    setExerciseVisible(false);
+    if (actionBtn) actionBtn.hidden = true;
     if (successPanel)
       successPanel.scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -194,6 +259,8 @@
   function hideAllCoaching() {
     hideSuccessPanel();
     hideCoachTop();
+    setExerciseVisible(true);
+    setActionSubmit();
   }
 
   function runSubmit() {
@@ -202,6 +269,7 @@
 
     var anyUnplaced = false;
     var anyIncorrect = false;
+    var errorItems = [];
 
     document.querySelectorAll(".sks-gap-card").forEach(function (card) {
       clearFeedback(card);
@@ -223,10 +291,17 @@
       } else {
         anyIncorrect = true;
         card.classList.add("sks-gap-card--incorrect");
+        var msg = FEEDBACK[id] || "Try moving this to a different column.";
+        errorItems.push({
+          id: id,
+          label: cardPlainLabel(card),
+          got: got,
+          expected: expected,
+          reason: msg,
+        });
         var wrap = document.createElement("div");
         wrap.className = "sks-gap-card-feedback";
         wrap.setAttribute("role", "status");
-        var msg = FEEDBACK[id] || "Try moving this to a different column.";
         wrap.innerHTML =
           '<span class="sks-gap-card-feedback-ico" aria-hidden="true">\u00d7</span><span class="sks-gap-card-feedback-txt"></span>';
         wrap.querySelector(".sks-gap-card-feedback-txt").textContent = msg;
@@ -240,7 +315,7 @@
       if (!zoneEl) return;
       var zone = zoneEl.getAttribute("data-zone");
       if (!lists[zone]) return;
-      var label = (card.textContent || "").replace(/\s+/g, " ").trim();
+      var label = cardPlainLabel(card);
       if (label) lists[zone].push(label);
     });
 
@@ -269,7 +344,7 @@
       showSuccessPanel();
       setActionRetry();
     } else {
-      showCoachTopPartial();
+      showCoachTopPartial(errorItems);
       setActionRetry();
     }
   }
@@ -316,6 +391,12 @@
       return;
     }
     runSubmit();
+  });
+
+  document.querySelectorAll("[data-gap-revise]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      runRetry();
+    });
   });
 
   updateCounts();

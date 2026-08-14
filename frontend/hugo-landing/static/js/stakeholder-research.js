@@ -3,35 +3,39 @@
   var btn = document.getElementById("sks-research-next");
   var nextWrap = document.getElementById("sks-research-next-wrap");
   var startWrap = document.getElementById("sks-research-start-wrap");
+  var startBtn = document.querySelector(".sks-research-start-btn");
   if (!lines.length || !btn) return;
+
+  var RESEARCH_KEYS = [
+    "heeriseResearchWorkspaceQ",
+    "heeriseResearchWorkspaceFollowUps",
+    "heerise_phase2_hypothesis",
+  ];
 
   var i = 0;
   var last = lines.length - 1;
 
   function showLine(idx) {
     lines.forEach(function (el, j) {
+      el.hidden = j !== idx;
       el.classList.remove("sks-research-line--peek");
-      if (j === idx) {
-        el.hidden = false;
-      } else if (j === idx + 1 && idx < last) {
-        el.hidden = false;
-        el.classList.add("sks-research-line--peek");
-      } else {
-        el.hidden = true;
-      }
     });
     var onLast = idx >= last;
     if (onLast) {
-      btn.hidden = true;
-      btn.setAttribute("aria-hidden", "true");
       if (nextWrap) nextWrap.hidden = true;
       if (startWrap) startWrap.hidden = false;
     } else {
-      btn.hidden = false;
-      btn.removeAttribute("aria-hidden");
       if (nextWrap) nextWrap.hidden = false;
       if (startWrap) startWrap.hidden = true;
     }
+  }
+
+  function clearResearchProgress() {
+    RESEARCH_KEYS.forEach(function (key) {
+      try {
+        localStorage.removeItem(key);
+      } catch (e) {}
+    });
   }
 
   btn.addEventListener("click", function () {
@@ -40,10 +44,15 @@
     showLine(i);
   });
 
-  btn.setAttribute(
-    "aria-label",
-    "Next: show following paragraph",
-  );
+  /* Entering the research intro starts a fresh attempt (e.g. after redoing Phase 1).
+     Phase-nav review links to workspace, so mid-run resume is preserved. */
+  clearResearchProgress();
+
+  if (startBtn) {
+    startBtn.addEventListener("click", function () {
+      clearResearchProgress();
+    });
+  }
 
   showLine(0);
 })();

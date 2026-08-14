@@ -94,12 +94,87 @@
     terminate("SIMULATION_TERMINATED_GEMINI_FAILURE");
   }
 
-  function fallbackReply(agent) {
-    var item = C.AGENDA[state.agenda_item_index] || C.AGENDA[0];
-    if (agent === "priya") {
-      return "Before I can commit, I need clarity on learner constraints and what evidence you need from us on " + item.label + ".";
+  function fallbackReply(agent, userText) {
+    var scene = state.current_scene || "S5.02";
+    var lower = (userText || "").toLowerCase();
+    var jordanByScene = {
+      "S5.02":
+        "Yes — I'm Jordan, Sales. I own ramp and sales success metrics. Treat the brief assumption as confirmed: Aria just launched and we need reps ready under the 15-day pressure.",
+      "S5.03":
+        "Confirmed on my side: I own sales outcomes and ramp speed. My definition of good is reps running confident Aria discovery calls around the 30-day mark.",
+      "S5.04":
+        "I'm good locking roles — sales metrics with me, product accuracy with Priya. Let's keep this discovery-first and not turn today into a demo review.",
+      "S5.05":
+        "Audience-wise we've got a mixed experience range — some veterans, a lot of newer reps. Access is uneven, so keep enablement practical and short.",
+      "S5.06":
+        "If I have to prioritize one module first, put ramp / discovery conversations first. Product comparison and Aria demos can wait if we can't do all three.",
+      "S5.07":
+        "Scope trade-off from me: ship the highest-priority ramp module first. I'm fine deferring comparison and demo modules.",
+      "S5.08":
+        "I need next steps with owners and dates. I'll own sales success metrics; let's lock a follow-up this week.",
+      "S5.09":
+        "Agreed — send the action list with owners. I'll take sales metrics; don't leave timeline open-ended.",
+    };
+    var priyaByScene = {
+      "S5.02":
+        "I'm Priya — product/SME. I own accuracy and review quality. I won't greenlight content that overpromises Aria capabilities.",
+      "S5.03":
+        "From SME: good means reps speak accurately and credibly in discovery. Confirm any brief assumption that sounds like a feature promise before we teach it.",
+      "S5.04":
+        "Roles work for me: I own product accuracy and SME review; Jordan owns ramp pressure. Keep today discovery-first.",
+      "S5.05":
+        "About 31% of the cohort are non-native English speakers, so scenarios and language load matter. Mixed experience is real — don't design only for veterans.",
+      "S5.06":
+        "If we prioritize, choose accuracy over adding more modules. A thin demo or comparison module that teaches the wrong thing is worse than deferring it.",
+      "S5.07":
+        "I'm fine deferring extra modules. Whatever we keep must be accurate — no overpromising Aria capabilities.",
+      "S5.08":
+        "You're the designer — give a clear recommendation. Also plan for my review bottleneck: draft around Day 6, feedback Day 7 if workload allows.",
+      "S5.09":
+        "I'll own SME review. Put the Day 6/Day 7 review window on the plan so we don't slip accuracy for speed.",
+    };
+
+    if (/priority|a\)|b\)|c\)|trade-?off|defer|three modules|all three/i.test(lower)) {
+      if (agent === "priya") {
+        return "I'd pick accuracy first — option closer to demo credibility — and defer extra modules that we can't review well.";
+      }
+      return "I'd pick faster ramp / discovery first, and defer product comparison and a separate demo module for later.";
     }
-    return "That helps — can you spell out what you want us to confirm on " + item.label + " before we move on?";
+    if (/non-native|english|language|experience range|veteran|audience|constraint/i.test(lower)) {
+      if (agent === "priya") {
+        return "Yes — roughly 31% non-native English speakers, mixed experience levels. Design for clarity and cross-cultural scenarios, not just veteran shortcuts.";
+      }
+      return "Mixed experience range on my team — veterans and newer reps. Keep it practical; access and time are limited.";
+    }
+    if (/role|jordan owns|priya owns|assumption|15-day|checklist|confirm these|yes or no/i.test(lower)) {
+      if (agent === "priya") {
+        return "Yes on my ownership of product accuracy and SME review. Discovery-first today is correct. I'll flag any brief assumption that overstates Aria.";
+      }
+      return "Yes — I own sales ramp/success metrics. Aria is new and the 15-day pressure is real. Discovery-first today works for me.";
+    }
+    if (/owner|friday|monday|next step|follow-?up|success gap|recommendation/i.test(lower)) {
+      if (agent === "priya") {
+        return "I'll own SME review timing. Give us a concrete recommendation, and put Day 6 draft / Day 7 review on the plan.";
+      }
+      return "I'll own sales metrics. Send next steps with owners and a follow-up date — Friday draft / Monday check-in works if you can hit it.";
+    }
+
+    var pool = agent === "priya" ? priyaByScene : jordanByScene;
+    return pool[scene] || pool["S5.02"];
+  }
+
+  function looksLikeMetaLoop(text) {
+    var t = (text || "").toLowerCase();
+    if (!t.trim()) return true;
+    return (
+      /what('s| is) the decision you need/.test(t) ||
+      /what should we lock down about/.test(t) ||
+      /what specifically do you need from me on/.test(t) ||
+      /what evidence would make you confident about/.test(t) ||
+      /what do you need confirmed about/.test(t) ||
+      /spell out what you want us to confirm on/.test(t) ||
+      /need clarity on learner constraints and what evidence/.test(t)
+    );
   }
 
   function maybeSceneEntry() {
@@ -118,20 +193,32 @@
       terminate("SIMULATION_TERMINATED_GEMINI_FAILURE");
       return Promise.reject(new Error("over budget"));
     }
-    if (!api) return Promise.resolve(fallbackReply(agent));
-    if (agent === "priya") {
-      return api.priyaRespond(ctx).catch(function () {
-        return fallbackReply("priya");
-      });
+    function useFallback(reason) {
+      if (reason) {
+        setStatus("Stakeholders offline (" + reason + ") — using local replies. Check backend GEMINI_API_KEY.");
+      }
+      return fallbackReply(agent, userText);
     }
-    return api.jordanRespond(ctx).catch(function () {
-      return fallbackReply("jordan");
-    });
+    if (!api) return Promise.resolve(useFallback("no API client"));
+    var req =
+      agent === "priya"
+        ? api.priyaRespond(ctx)
+        : api.jordanRespond(ctx);
+    return req
+      .then(function (reply) {
+        if (looksLikeMetaLoop(reply)) return useFallback("meta-loop blocked");
+        return reply;
+      })
+      .catch(function (err) {
+        var msg = (err && err.message) || "request failed";
+        if (/503|not configured/i.test(msg)) return useFallback("Gemini not configured");
+        return useFallback("API error");
+      });
   }
 
   function redirectLine(classification) {
     if (classification.input_class === "NON_ENGLISH") return C.NON_ENGLISH_PROMPT;
-    return "Let's stay focused on the kickoff agenda — what do you need from us on " + (C.AGENDA[state.agenda_item_index] || C.AGENDA[0]).label + "?";
+    return "Let's stay on the kickoff — from my side, ramp and discovery readiness are the priority.";
   }
 
   function handleEmpty() {
@@ -162,36 +249,80 @@
     }
 
     var speakers = routing.speakers.slice(0, C.MAX_AGENT_CALLS_PER_TURN);
-    var chain = Promise.resolve(null);
-    speakers.forEach(function (agent) {
-      chain = chain.then(function (prev) {
-        return callAgent(agent, classification, userText, prev).then(function (reply) {
-          postLine(speakerLabel(agent), reply, agent);
-          return reply;
+    var waitHintTimer = setTimeout(function () {
+      setStatus("Still waiting on stakeholders — hang tight…");
+    }, (C && C.WAIT_HINT_MS) || 8000);
+
+    function finishTurn() {
+      if ((state.scene_turns[state.current_scene] || 0) >= 2) {
+        if (state.current_scene !== "S5.09") {
+          core.advanceScene(state);
+          maybeSceneEntry();
+        } else {
+          state.status = "completed";
+        }
+      }
+      renderClock();
+      core.saveState(state);
+      if (state.status === "completed") {
+        core.persistResult(state);
+        setStatus("Call complete. You can end the call to see your rating.");
+      }
+    }
+
+    var repliesPromise;
+    if (routing.parallel && speakers.length > 1) {
+      setStatus(
+        speakers
+          .map(speakerLabel)
+          .join(" & ")
+          .replace("Dr. Priya Nair", "Priya") + " are responding…"
+      );
+      repliesPromise = Promise.all(
+        speakers.map(function (agent) {
+          return callAgent(agent, classification, userText, null).then(function (reply) {
+            return { agent: agent, reply: reply };
+          });
+        })
+      ).then(function (results) {
+        speakers.forEach(function (agent) {
+          for (var i = 0; i < results.length; i++) {
+            if (results[i].agent === agent) {
+              postLine(speakerLabel(agent), results[i].reply, agent);
+              break;
+            }
+          }
         });
       });
-    });
+    } else {
+      var chain = Promise.resolve(null);
+      speakers.forEach(function (agent) {
+        chain = chain.then(function (prev) {
+          setStatus(speakerLabel(agent) + " is responding…");
+          return callAgent(agent, classification, userText, prev).then(function (reply) {
+            postLine(speakerLabel(agent), reply, agent);
+            return reply;
+          });
+        });
+      });
+      repliesPromise = chain;
+    }
 
-    return chain
-      .then(function () {
-        if ((state.scene_turns[state.current_scene] || 0) >= 2) {
-          if (state.current_scene !== "S5.09") {
-            core.advanceScene(state);
-            maybeSceneEntry();
-          } else {
-            state.status = "completed";
-          }
-        }
-        renderClock();
-        core.saveState(state);
-        if (state.status === "completed") {
-          core.persistResult(state);
-          setStatus("Call complete. You can end the call to see your rating.");
-        }
-      })
+    return repliesPromise
+      .then(finishTurn)
       .catch(function () {
         geminiFail();
+      })
+      .finally(function () {
+        clearTimeout(waitHintTimer);
       });
+  }
+
+  function clearIdle() {
+    if (idleWarnTimer) clearTimeout(idleWarnTimer);
+    if (idleTimer) clearTimeout(idleTimer);
+    idleWarnTimer = null;
+    idleTimer = null;
   }
 
   function onSubmit(e) {
@@ -207,7 +338,10 @@
       return;
     }
     busy = true;
+    clearIdle();
     setStatus("Stakeholders are responding…");
+    if (inputEl) inputEl.disabled = true;
+    if (sendBtn) sendBtn.disabled = true;
     postLine("You", text.trim(), "user");
     if (inputEl) inputEl.value = "";
 
@@ -215,33 +349,48 @@
     if (classification.blocked) {
       postLine("Jordan Kim", "Let's stay on the kickoff agenda.", "jordan");
       busy = false;
+      if (inputEl) inputEl.disabled = false;
+      if (sendBtn) sendBtn.disabled = false;
       setStatus("");
       core.saveState(state);
+      resetIdle();
       return;
     }
     if (!classification.allowed_to_agent) {
       postLine("Jordan Kim", redirectLine(classification), "jordan");
       busy = false;
+      if (inputEl) inputEl.disabled = false;
+      if (sendBtn) sendBtn.disabled = false;
       setStatus("");
       core.saveState(state);
+      resetIdle();
       return;
     }
 
     afterUserTurn(text.trim(), classification).finally(function () {
       busy = false;
-      setStatus(state.status === "completed" ? "Call complete. You can end the call to see your rating." : "");
+      if (inputEl) inputEl.disabled = false;
+      if (sendBtn) sendBtn.disabled = false;
+      if (state.status === "completed") {
+        setStatus("Call complete. You can end the call to see your rating.");
+      } else if (api && api.isGeminiUnavailable && api.isGeminiUnavailable()) {
+        setStatus("Using local stakeholder replies (Gemini unavailable). Add GEMINI_API_KEY to backend/.env and restart.");
+      } else {
+        setStatus("");
+      }
       resetIdle();
     });
   }
 
   function resetIdle() {
-    if (state.status !== "active") return;
-    if (idleWarnTimer) clearTimeout(idleWarnTimer);
-    if (idleTimer) clearTimeout(idleTimer);
+    if (state.status !== "active" || busy) return;
+    clearIdle();
     idleWarnTimer = setTimeout(function () {
+      if (busy || state.status !== "active") return;
       setStatus("The call is waiting for your response. Please reply to keep the meeting moving.");
     }, 60000);
     idleTimer = setTimeout(function () {
+      if (busy || state.status !== "active") return;
       state.status = "SIMULATION_TERMINATED_IDLE";
       terminate("SIMULATION_TERMINATED_IDLE");
     }, 120000);

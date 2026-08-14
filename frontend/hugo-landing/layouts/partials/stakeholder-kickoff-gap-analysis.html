@@ -1,4 +1,4 @@
-<!-- *** Gap Analysis: instruction → 8 fixed slots → 3 columns (strict layout) *** -->
+<!-- *** Gap Analysis: instruction �?8 fixed slots �?3 columns (strict layout) *** -->
 <section class="sks-page sks-page--gap-analysis" aria-label="Gap analysis activity">
     <div class="sks-shell sks-shell--gap">
         <header class="sks-top">
@@ -15,19 +15,16 @@
         </header>
 
         <div class="sks-gap-body" id="sks-gap-body">
-            <!-- After Submit (partial / retry): Maya + bubble + tips — reference order above Instruction -->
+            <!-- After Submit (partial / retry): Maya + bubble + tips �?reference order above Instruction -->
             <div class="sks-gap-coach-top" id="sks-gap-coach-top" hidden>
                 <div class="sks-gap-coach-top-inner" id="sks-gap-coach-top-cc02" hidden>
                     <div class="sks-gap-maya-row sks-gap-maya-row--coach-hero">
-                        <img class="sks-gap-maya-avatar sks-gap-maya-avatar--hero" src="{{ "img/lumina-manager.png" | relURL }}" width="216" height="216" alt="Maya">
+                        <img class="sks-gap-maya-avatar sks-gap-maya-avatar--hero" src="{{ "img/lumina-manager.png" | relURL }}?v=20260814b" width="216" height="216" alt="Maya">
                         <div class="sks-gap-maya-bubble-wrap">
                             <div class="sks-gap-maya-bubble" role="status">
                                 <div class="sks-gap-maya-bubble-main">
                                     <span class="sks-gap-maya-bubble-ico" aria-hidden="true">&#9757;&#65039;</span>
                                     <p class="sks-gap-maya-bubble-txt">You&rsquo;re on the right track, but our Gap Analysis needs a little tuning. You&rsquo;ve misclassified a few items, which might lead to awkward questions in the kickoff or wasted research time later.</p>
-                                </div>
-                                <div class="sks-gap-maya-bubble-arrow" aria-hidden="true">
-                                    <span class="sks-gap-maya-bubble-arrow-inner">&#8595;</span>
                                 </div>
                             </div>
                         </div>
@@ -50,20 +47,22 @@
                                 <p class="sks-gap-p1-body">Let&rsquo;s refine your categories to maximize our research efficiency and ensure we make the most of our time with Jordan and Dr. Nair.</p>
                             </div>
                         </div>
+                        <div class="sks-gap-error-review" id="sks-gap-error-review" hidden>
+                            <h3 class="sks-gap-error-review-title">Items to correct</h3>
+                            <ul class="sks-gap-error-review-list" id="sks-gap-error-review-list"></ul>
+                        </div>
+                        <button type="button" class="sks-btn sks-btn--caps sks-gap-revise-btn" data-gap-revise>Try again</button>
                     </div>
                 </div>
 
                 <div class="sks-gap-coach-top-inner sks-gap-coach-top-inner--retry" id="sks-gap-coach-top-cc03" hidden>
                     <div class="sks-gap-maya-row sks-gap-maya-row--coach-hero">
-                        <img class="sks-gap-maya-avatar sks-gap-maya-avatar--hero" src="{{ "img/lumina-manager.png" | relURL }}" width="216" height="216" alt="Maya">
+                        <img class="sks-gap-maya-avatar sks-gap-maya-avatar--hero" src="{{ "img/lumina-manager.png" | relURL }}?v=20260814b" width="216" height="216" alt="Maya">
                         <div class="sks-gap-maya-bubble-wrap">
                             <div class="sks-gap-maya-bubble" role="status">
                                 <div class="sks-gap-maya-bubble-main">
                                     <span class="sks-gap-maya-bubble-ico" aria-hidden="true">&#128073;</span>
                                     <p class="sks-gap-maya-bubble-txt">Wait a second! I love the enthusiasm to jump straight into research, but experienced Instructional Designers always frame their discovery first. Think of a Gap Analysis as your compass; without it, you&rsquo;re just gathering data without a destination. Let&rsquo;s categorize our knowns and unknowns.</p>
-                                </div>
-                                <div class="sks-gap-maya-bubble-arrow" aria-hidden="true">
-                                    <span class="sks-gap-maya-bubble-arrow-inner">&#8595;</span>
                                 </div>
                             </div>
                         </div>
@@ -73,23 +72,20 @@
                             <span class="sks-gap-p1-ico" aria-hidden="true">&#128073;</span>
                             <p class="sks-gap-p1-nextonly-txt"><strong>Next Step</strong> Let&rsquo;s go back and complete the Gap Analysis to define your research plan.</p>
                         </div>
+                        <button type="button" class="sks-btn sks-btn--caps sks-gap-revise-btn" data-gap-revise>Try again</button>
                     </div>
                 </div>
             </div>
 
-            <div class="sks-gap-work" id="sks-gap-work">
-            <!-- All-correct success (P1): hero → results summary → instruction → zones -->
+            <!-- Success feedback (outside exercise work area) -->
             <div class="sks-gap-success-panel" id="sks-gap-success-panel" hidden>
                 <div class="sks-gap-maya-row sks-gap-maya-row--success">
-                    <img class="sks-gap-maya-avatar sks-gap-maya-avatar--hero" src="{{ "img/lumina-manager.png" | relURL }}" width="216" height="216" alt="Maya">
+                    <img class="sks-gap-maya-avatar sks-gap-maya-avatar--hero" src="{{ "img/lumina-manager.png" | relURL }}?v=20260814b" width="216" height="216" alt="Maya">
                     <div class="sks-gap-success-bubble-wrap">
                         <div class="sks-gap-success-bubble" role="status">
                             <div class="sks-gap-success-bubble-main">
                                 <span class="sks-gap-success-clap" aria-hidden="true">&#x1F44F;&#x1F44F;</span>
                                 <p class="sks-gap-success-bubble-txt"><strong>Spot on! You&rsquo;ve nailed the Gap Analysis.</strong> By distinguishing between what we know, what we can find out ourselves, and what requires stakeholder input, you&rsquo;ve built a bulletproof research plan. This is exactly how we stay efficient.</p>
-                            </div>
-                            <div class="sks-gap-maya-bubble-arrow" aria-hidden="true">
-                                <span class="sks-gap-maya-bubble-arrow-inner">&#8595;</span>
                             </div>
                         </div>
                     </div>
@@ -135,12 +131,13 @@
                 </div>
             </div>
 
+            <div class="sks-gap-work" id="sks-gap-work">
             <div class="sks-gap-instruct" id="sks-gap-instruct">
                 <p class="sks-gap-instruct-lead"><strong>Instruction:</strong> categorize these items into three columns:</p>
                 <ul class="sks-gap-instruct-list">
                     <li><strong>Known Information:</strong> What you know from the brief.</li>
-                    <li><strong>Stakeholder Questions:</strong> Items that can only be answered by stakeholders.</li>
                     <li><strong>Research Tasks:</strong> Items you can investigate independently before the call.</li>
+                    <li><strong>Stakeholder Questions:</strong> Items that can only be answered by stakeholders.</li>
                 </ul>
             </div>
 
@@ -179,14 +176,14 @@
                             I KNOW THIS ALREADY <span class="sks-gap-zone-count" aria-live="polite"></span>
                         </h3>
                     </div>
-                    <div class="sks-gap-zone sks-gap-zone--stakeholder" data-zone="stakeholder">
-                        <h3 class="sks-gap-zone-title">
-                            I WILL ASK IN KICKOFF <span class="sks-gap-zone-count" aria-live="polite"></span>
-                        </h3>
-                    </div>
                     <div class="sks-gap-zone sks-gap-zone--research" data-zone="research">
                         <h3 class="sks-gap-zone-title">
                             I NEED TO RESEARCH MORE <span class="sks-gap-zone-count" aria-live="polite"></span>
+                        </h3>
+                    </div>
+                    <div class="sks-gap-zone sks-gap-zone--stakeholder" data-zone="stakeholder">
+                        <h3 class="sks-gap-zone-title">
+                            I WILL ASK IN KICKOFF <span class="sks-gap-zone-count" aria-live="polite"></span>
                         </h3>
                     </div>
                 </div>

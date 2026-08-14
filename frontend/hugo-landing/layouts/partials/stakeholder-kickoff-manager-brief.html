@@ -1,27 +1,29 @@
 {{ $retryUrl := "/acc/stakeholder-kickoff/kickoff/intro/" | relURL }}
-{{ $nextUrl := "/acc/stakeholder-kickoff/" | relURL }}
-<!-- PHASE 6 â€” Manager Brief + Performance Snapshot -->
-<section class="sks-page sks-page--manager-brief" aria-label="Manager Brief" data-mb-root data-retry-url="{{ $retryUrl }}" data-next-url="{{ $nextUrl }}">
+{{ $homeUrl := "/acc/stakeholder-kickoff/" | relURL }}
+<!-- PHASE 6 â€?Manager Brief + Performance Snapshot -->
+<section
+    class="sks-page sks-page--manager-brief"
+    aria-label="Manager Brief"
+    data-mb-root
+    data-retry-url="{{ $retryUrl }}"
+    data-home-url="{{ $homeUrl }}"
+>
     <div class="sks-mb-shell">
         {{ partial "stakeholder-kickoff-manager-brief-nav.html" . }}
 
         <div class="sks-mb-main">
             <div class="sks-mb-maya-row">
                 <div class="sks-mb-maya-portrait">
-                    <img src="{{ "img/lumina-manager.png" | relURL }}" width="171" height="257" alt="Maya, your manager" />
+                    <img src="{{ "img/lumina-manager.png" | relURL }}?v=20260814b" width="171" height="257" alt="Maya, your manager" />
                 </div>
                 <div class="sks-mb-bubble-wrap">
-                    <div class="sks-mb-bubble">
-                        <div class="sks-mb-bubble-inner" data-mb-analysis>
+                    <div class="sks-mb-bubble is-expanded">
+                        <div class="sks-mb-bubble-inner is-expanded" data-mb-analysis>
                             <span class="sks-mb-bubble-ico" aria-hidden="true">&#128075;</span>
                             <div class="sks-mb-analysis" data-mb-analysis-body>
-                                <p class="sks-mb-bubble-copy sks-mb-analysis-loading" data-mb-loading>Building your performance summaryâ€¦</p>
+                                <p class="sks-mb-bubble-copy sks-mb-analysis-loading" data-mb-loading>Building your performance summaryâ€?/p>
                             </div>
                         </div>
-                        <div class="sks-mb-bubble-fade" aria-hidden="true"></div>
-                        <button type="button" class="sks-mb-bubble-scroll" aria-label="Expand performance summary" data-mb-scroll-bubble>
-                            <span aria-hidden="true">&#8595;</span>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -43,9 +45,27 @@
                 </div>
 
                 <div class="sks-mb-actions">
-                    <a href="{{ $nextUrl }}" class="sks-btn sks-btn--mb-next" data-mb-next>Next Module</a>
-                    <a href="{{ $retryUrl }}" class="sks-mb-retry" data-mb-retry>Retry</a>
+                    <button type="button" class="sks-btn sks-btn--mb-finish" data-mb-finish>Finish Simulation</button>
+                    <a href="{{ $retryUrl }}" class="sks-mb-retry" data-mb-retry>Retry Kick-off Call</a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Closing celebration overlay -->
+    <div class="sks-mb-closing-screen" id="sks-mb-closing" hidden aria-hidden="true">
+        <canvas class="sks-mb-fireworks" id="sks-mb-fireworks" aria-hidden="true"></canvas>
+        <div class="sks-mb-closing-card" role="dialog" aria-labelledby="sks-mb-closing-title" aria-describedby="sks-mb-closing-desc">
+            <p class="sks-mb-closing-eyebrow">LUMINA Â· SIM</p>
+            <h2 id="sks-mb-closing-title" class="sks-mb-closing-title">Thank you for completing the Stakeholder Kickoff</h2>
+            <p id="sks-mb-closing-desc" class="sks-mb-closing-desc">
+                You practiced gap analysis, research, outreach, agenda design, and a live discovery call.
+                Carry these habits into your next real kickoff.
+            </p>
+            <ul class="sks-mb-closing-stats" data-mb-closing-stats aria-label="Session summary"></ul>
+            <div class="sks-mb-closing-actions">
+                <a href="{{ $homeUrl }}" class="sks-btn sks-btn--mb-finish">Back to Simulation Home</a>
+                <a href="{{ $retryUrl }}" class="sks-mb-retry">Retry Kick-off Call</a>
             </div>
         </div>
     </div>

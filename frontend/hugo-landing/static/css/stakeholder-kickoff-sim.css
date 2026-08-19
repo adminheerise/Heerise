@@ -3162,6 +3162,28 @@ body.sks-rw-qmodal-open {
 }
 
 @media (max-width: 640px) {
+    .sks-rw-q-sum {
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .sks-rw-q-text {
+        flex: 1 1 0;
+    }
+
+    .sks-rw-q-follow {
+        order: 3;
+        flex: 0 0 calc(100% - 34px);
+        max-width: calc(100% - 34px);
+        margin-left: 34px;
+        box-sizing: border-box;
+        overflow-wrap: anywhere;
+    }
+
+    .sks-rw-q-chev {
+        order: 4;
+    }
+
     .sks-rw-q-follow {
         font-size: 13px;
         white-space: normal;
@@ -6340,4 +6362,137 @@ a.sks-btn--email-intro:focus {
 .lumina-sim-test-nav__btn--exit {
     border-color: rgba(255, 120, 120, 0.55);
     background: rgba(180, 40, 40, 0.35);
+}
+
+/* Workspace mobile layout: keep the Slack mock readable instead of squeezing its columns. */
+@media (max-width: 900px) {
+    .sks-page--workspace {
+        padding: 16px 12px 24px;
+    }
+
+    .sks-page--workspace .sks-shell {
+        max-width: none;
+    }
+
+    .sks-page--workspace .sks-nav {
+        gap: 14px;
+    }
+
+    .sks-workspace {
+        padding: 8px 0 12px;
+    }
+
+    .sks-ws-window {
+        min-height: min(680px, calc(100vh - 150px));
+    }
+
+    .sks-ws-titlebar {
+        gap: 8px;
+        padding: 8px 10px;
+    }
+
+    .sks-ws-titlebar-nav,
+    .sks-ws-titlebar-actions {
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    .sks-ws-search-wrap {
+        min-width: 0;
+    }
+
+    .sks-ws-search {
+        min-width: 0;
+        padding: 8px 10px;
+    }
+
+    .sks-ws-body {
+        flex-direction: column;
+    }
+
+    .sks-ws-rail {
+        width: 100%;
+        min-height: 48px;
+        flex: 0 0 auto;
+        flex-direction: row;
+        padding: 8px 12px;
+    }
+
+    .sks-ws-rail-icons {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .sks-ws-sidebar {
+        width: 100%;
+        max-height: 154px;
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        overflow-y: auto;
+    }
+
+    .sks-ws-chat-head {
+        padding: 10px 14px;
+    }
+
+    .sks-ws-feed {
+        padding: 16px 14px 12px;
+    }
+
+    .sks-ws-msg-body {
+        overflow-wrap: anywhere;
+    }
+
+    .sks-ws-compose {
+        padding: 8px;
+    }
+
+    .sks-ws-compose-bar {
+        gap: 8px;
+    }
+
+    .sks-ws-compose-input-wrap {
+        min-height: 64px;
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 520px) {
+    .sks-page--workspace {
+        padding-inline: 8px;
+    }
+
+    .sks-page--workspace .sks-brand {
+        font-size: 20px;
+    }
+
+    .sks-ws-titlebar-nav {
+        display: none;
+    }
+
+    .sks-ws-titlebar-actions {
+        gap: 6px;
+    }
+
+    .sks-ws-win {
+        display: none;
+    }
+
+    .sks-ws-sidebar {
+        max-height: 132px;
+    }
+
+    .sks-ws-msg-meta {
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .sks-ws-msg-body {
+        font-size: 14px;
+    }
+
+    .sks-ws-compose-bar {
+        font-size: 11px;
+    }
 }

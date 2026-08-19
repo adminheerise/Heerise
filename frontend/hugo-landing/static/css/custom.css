@@ -3810,6 +3810,48 @@ a.cl-pricing-project-link:focus-visible {
 body.acc-page-deprecated {
     display: none !important;
 }
+
+/* ACC page mobile canvas: do not inherit a narrow theme content column. */
+body:has(.acc-level-cta) #all,
+body:has(.acc-level-cta) #content {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+}
+
+body:has(.acc-level-cta) {
+    overflow-x: hidden;
+}
+
+body:has(.acc-level-cta) .acc-level-cta {
+    width: 100%;
+    overflow: hidden;
+}
+
+@media (max-width: 640px) {
+    .acc-level-cta-inner {
+        padding: 48px 16px;
+    }
+
+    .acc-level-cards {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .acc-level-card-img {
+        width: min(250px, calc(100vw - 48px));
+        height: auto;
+        aspect-ratio: 2 / 3;
+    }
+
+    .acc-level-arrow {
+        transform: rotate(90deg);
+    }
+}
 .acc-footer {
     width: 100%;
     background: #001021;

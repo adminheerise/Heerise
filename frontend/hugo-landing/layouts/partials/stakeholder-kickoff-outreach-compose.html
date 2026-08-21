@@ -291,6 +291,33 @@
     </div>
 </section>
 
+    <form class="oe-mobile-compose" id="oe-mobile-compose" autocomplete="off">
+      <div class="oe-mobile-browser"><span class="oe-mobile-dots"></span><strong>gmail.com</strong><span class="oe-mobile-avatar"></span></div>
+      <header class="oe-mobile-appbar"><span class="oe-mobile-menu">&#9776;</span><strong><b>G</b>mail</strong><span class="oe-mobile-search">Search mail</span><span class="oe-mobile-account"></span></header>
+      <div class="oe-mobile-tabs"><span>Inbox</span><span>Draft</span></div>
+      <section class="oe-mobile-message">
+        <header><strong>New Message</strong><span>&minus;&nbsp;&nbsp;&times;</span></header>
+        <div class="oe-mobile-fields">
+          <div><label>From</label><span id="oe-mobile-from"></span></div>
+          <div><label>To</label><span class="oe-mobile-chip"><i>J</i>Jordan Kim</span><span class="oe-mobile-chip"><i>P</i>Priya Nair</span></div>
+          <div><label>Cc</label><span class="oe-mobile-chip"><i>M</i>Maya Chen</span><span class="oe-mobile-bcc">Bcc</span></div>
+          <label class="oe-mobile-visually-hidden" for="oe-mobile-subject">Subject</label>
+          <input id="oe-mobile-subject" type="text" placeholder="Subject" maxlength="996" autocomplete="off" />
+          <label class="oe-mobile-visually-hidden" for="oe-mobile-body">Message body</label>
+          <textarea id="oe-mobile-body" rows="10"></textarea>
+          <span class="oe-mobile-count"><span id="oe-mobile-count-value">0</span>/300</span>
+        </div>
+        <footer><button type="button" id="oe-mobile-send" disabled>Send <span>&#9662;</span></button><span>A&nbsp;&nbsp; &#128206;&nbsp;&nbsp; &#128221;&nbsp;&nbsp; &#128247;</span></footer>
+      </section>
+      <div class="oe-mobile-coach" id="oe-mobile-coach"><p id="oe-mobile-coach-text">Write a subject line for the email</p><button type="button" class="oe-mobile-coach-dismiss" id="oe-mobile-coach-dismiss">Close</button><button type="button" id="oe-mobile-next" hidden>Next</button></div>
+      <div class="oe-mobile-hint" id="oe-mobile-hint" hidden>
+        <button type="button" id="oe-mobile-hint-toggle">&#128161; Hint</button>
+        <div id="oe-mobile-hint-panel" hidden><header><strong>Hint</strong><button type="button" id="oe-mobile-hint-close">&times;</button></header><nav>
+          <button type="button" class="is-on" data-mobile-hint="0">1</button><button type="button" data-mobile-hint="1">2</button><button type="button" data-mobile-hint="2">3</button><button type="button" data-mobile-hint="3">4</button><button type="button" data-mobile-hint="4">5</button>
+        </nav><p id="oe-mobile-hint-text"></p></div>
+      </div>
+    </form>
+
 <div id="oe-scoring" class="oe-scoring" hidden aria-live="polite" role="status">
     <div class="oe-scoring-inner">
         <p id="oe-scoring-msg" class="oe-scoring-msg">Analyzing your email&hellip;</p>
@@ -319,6 +346,21 @@
   var sendTip = document.getElementById("oe-send-tip");
   var hintTxt = document.getElementById("oe-hint-txt");
   var hintSecBtns = hintPanel ? hintPanel.querySelectorAll("[data-oe-hint-sec]") : [];
+  var mobileSub = document.getElementById("oe-mobile-subject");
+  var mobileBody = document.getElementById("oe-mobile-body");
+  var mobileFrom = document.getElementById("oe-mobile-from");
+  var mobileCount = document.getElementById("oe-mobile-count-value");
+  var mobileNext = document.getElementById("oe-mobile-next");
+  var mobileSend = document.getElementById("oe-mobile-send");
+  var mobileCoach = document.getElementById("oe-mobile-coach");
+  var mobileCoachDismiss = document.getElementById("oe-mobile-coach-dismiss");
+  var mobileCoachDismissed = false;
+  var mobileCoachText = document.getElementById("oe-mobile-coach-text");
+  var mobileHint = document.getElementById("oe-mobile-hint");
+  var mobileHintToggle = document.getElementById("oe-mobile-hint-toggle");
+  var mobileHintPanel = document.getElementById("oe-mobile-hint-panel");
+  var mobileHintClose = document.getElementById("oe-mobile-hint-close");
+  var mobileHintText = document.getElementById("oe-mobile-hint-text");
   var MIN_BODY_WORDS = 3;
 
   var hintCopy = [
@@ -336,6 +378,12 @@
     hintSecBtns.forEach(function (btn, n) {
       btn.classList.toggle("on", n === i);
     });
+    if (mobileHintText) mobileHintText.textContent = hintCopy[i];
+    if (mobileHintPanel) {
+      mobileHintPanel.querySelectorAll("[data-mobile-hint]").forEach(function (btn, n) {
+        btn.classList.toggle("is-on", n === i);
+      });
+    }
   }
   var feedbackUrl =
     typeof window.SKS_OUTREACH_FEEDBACK_URL === "string" && window.SKS_OUTREACH_FEEDBACK_URL.trim()
@@ -390,6 +438,30 @@
     syncSubjectNext();
     syncCount();
     syncSend();
+    syncMobile();
+  }
+
+  function syncMobile() {
+    if (mobileSub && sub && mobileSub.value !== sub.value) mobileSub.value = sub.value;
+    if (mobileBody && body && mobileBody.value !== body.value) mobileBody.value = body.value;
+    if (mobileFrom && fromLine) mobileFrom.textContent = fromLine.textContent;
+    if (mobileCount && body) mobileCount.textContent = String(countWords(body.value));
+    var isP2 = root.classList.contains("oe--p2");
+    if (mobileCoach) mobileCoach.setAttribute("data-stage", isP2 ? "body" : "subject");
+    if (mobileCoach) mobileCoach.hidden = mobileCoachDismissed;
+    if (mobileBody) {
+      mobileBody.readOnly = !isP2;
+      mobileBody.tabIndex = isP2 ? 0 : -1;
+    }
+    if (mobileCoachText) mobileCoachText.textContent = isP2
+      ? "Now, draft the body of the email. Click Hint for guidance, then send when you are done."
+      : "Write a subject line for the email";
+    if (mobileNext) {
+      mobileNext.hidden = isP2 || !subjectOk();
+      mobileNext.disabled = !subjectOk();
+    }
+    if (mobileSend) mobileSend.disabled = !isP2 || !!sendBlockReason();
+    if (mobileHint) mobileHint.hidden = !isP2;
   }
 
   function syncHintMaxHeight() {
@@ -563,6 +635,7 @@
     root.setAttribute("data-oe-phase", String(v));
 
     var isP2 = v === 2;
+    mobileCoachDismissed = false;
 
     // Subject stays editable after Next so learners can revise it anytime.
     if (sub) sub.readOnly = false;
@@ -582,6 +655,7 @@
     syncSend();
     syncCount();
     syncSubjectNext();
+    syncMobile();
 
     if (isP2) {
       setTimeout(function () {
@@ -634,6 +708,7 @@
     if (countEl) {
       countEl.classList.toggle("oe-count--over", words > MAX_BODY_WORDS);
     }
+    if (mobileCount) mobileCount.textContent = String(words);
   }
 
   function bodyOk() {
@@ -672,6 +747,7 @@
       sendTip.hidden = true;
       sendTip.textContent = "";
     }
+    if (mobileSend) mobileSend.disabled = !canSend || !root.classList.contains("oe--p2");
   }
 
   if (nextBt) {
@@ -680,6 +756,14 @@
       phase(2);
     });
   }
+
+  if (mobileNext) mobileNext.addEventListener("click", function () {
+    if (nextBt) nextBt.click();
+  });
+  if (mobileCoachDismiss) mobileCoachDismiss.addEventListener("click", function () {
+    mobileCoachDismissed = true;
+    if (mobileCoach) mobileCoach.hidden = true;
+  });
 
   if (hintHead && hintPanel) {
     hintHead.addEventListener("click", function () {
@@ -707,6 +791,7 @@
       syncSubjectNext();
       syncSend();
       saveDraft();
+      syncMobile();
     });
     sub.addEventListener("focus", syncCaret);
     sub.addEventListener("blur", syncCaret);
@@ -716,8 +801,20 @@
       syncCount();
       syncSend();
       saveDraft();
+      syncMobile();
     });
   }
+
+  if (mobileSub) mobileSub.addEventListener("input", function () {
+    if (!sub) return;
+    sub.value = mobileSub.value;
+    sub.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  if (mobileBody) mobileBody.addEventListener("input", function () {
+    if (!body) return;
+    body.value = mobileBody.value;
+    body.dispatchEvent(new Event("input", { bubbles: true }));
+  });
 
   var scoringOverlay = document.getElementById("oe-scoring");
   var scoringMsg = document.getElementById("oe-scoring-msg");
@@ -847,6 +944,20 @@
       submitEmailScore(subjectVal, bodyVal);
     });
   }
+
+  if (mobileSend) mobileSend.addEventListener("click", function () {
+    if (send) send.click();
+  });
+  if (mobileHintToggle && mobileHintPanel) mobileHintToggle.addEventListener("click", function () {
+    mobileHintPanel.hidden = !mobileHintPanel.hidden;
+  });
+  if (mobileHintClose) mobileHintClose.addEventListener("click", function () {
+    if (mobileHintPanel) mobileHintPanel.hidden = true;
+  });
+  if (mobileHintPanel) mobileHintPanel.addEventListener("click", function (event) {
+    var btn = event.target.closest("[data-mobile-hint]");
+    if (btn) setHintSection(parseInt(btn.getAttribute("data-mobile-hint"), 10));
+  });
 
   applyFromLine();
   var initialDraft = loadDraft();

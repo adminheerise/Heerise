@@ -3162,6 +3162,28 @@ body.sks-rw-qmodal-open {
 }
 
 @media (max-width: 640px) {
+    .sks-rw-q-sum {
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .sks-rw-q-text {
+        flex: 1 1 0;
+    }
+
+    .sks-rw-q-follow {
+        order: 3;
+        flex: 0 0 calc(100% - 34px);
+        max-width: calc(100% - 34px);
+        margin-left: 34px;
+        box-sizing: border-box;
+        overflow-wrap: anywhere;
+    }
+
+    .sks-rw-q-chev {
+        order: 4;
+    }
+
     .sks-rw-q-follow {
         font-size: 13px;
         white-space: normal;
@@ -4362,6 +4384,153 @@ a.sks-btn--email-intro:focus {
   color: #1F1F1F;
 }
 .sks-emc-coach-cursor svg { display: block; }
+
+/* Dedicated mobile email composer. The desktop Gmail mock remains untouched. */
+.sks-emc-mobile-view {
+    display: none;
+}
+
+@media (max-width: 720px), (pointer: coarse) and (max-width: 1024px) {
+    .sks-emc-desktop-view {
+        display: none;
+    }
+
+    .sks-emc-mobile-view {
+        display: block;
+        position: relative;
+        min-height: calc(100vh - 150px);
+        padding: 0 0 24px;
+        background: #f8fafd;
+        border: 1px solid #dfe3e8;
+        border-radius: 14px;
+        overflow: hidden;
+        color: #202124;
+        font-family: Roboto, Arial, sans-serif;
+    }
+
+    .sks-emc-mobile-browser {
+        height: 38px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 12px;
+        background: #252629;
+        color: #fff;
+        font-size: 12px;
+    }
+
+    .sks-emc-mobile-browser > span:first-child {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #ff635b;
+        box-shadow: 12px 0 #f5c34f, 24px 0 #52c765;
+        margin-right: 24px;
+    }
+
+    .sks-emc-mobile-browser strong {
+        flex: 1;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .sks-emc-mobile-avatar,
+    .sks-emc-mobile-account {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #c49a74, #6b472f);
+    }
+
+    .sks-emc-mobile-topline {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 54px;
+        padding: 0 14px;
+        background: #fff;
+        border-bottom: 1px solid #e5e8eb;
+    }
+
+    .sks-emc-mobile-topline strong {
+        font-size: 19px;
+        font-weight: 500;
+    }
+
+    .sks-emc-mobile-topline strong b { color: #4285f4; }
+    .sks-emc-mobile-menu { font-size: 18px; color: #5f6368; }
+
+    .sks-emc-mobile-search {
+        flex: 1;
+        min-width: 0;
+        padding: 10px 12px;
+        border-radius: 20px;
+        background: #f1f3f4;
+        color: #6f7479;
+        font-size: 12px;
+    }
+
+    .sks-emc-mobile-inbox {
+        display: flex;
+        justify-content: space-between;
+        padding: 14px 16px 10px;
+        color: #c84031;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .sks-emc-mobile-inbox span:last-child { color: #777; font-weight: 400; }
+
+    .sks-emc-mobile-card {
+        margin: 0 10px;
+        background: #fff;
+        border: 1px solid #d9dee5;
+        border-radius: 10px;
+        box-shadow: 0 5px 18px rgba(32, 33, 36, 0.12);
+        overflow: hidden;
+    }
+
+    .sks-emc-mobile-card > header {
+        display: flex;
+        justify-content: space-between;
+        padding: 13px 14px;
+        background: linear-gradient(#f1f6ff, #dce9fb);
+        border-bottom: 1px solid #c4d7f5;
+        font-size: 14px;
+    }
+
+    .sks-emc-mobile-fields { position: relative; padding: 10px 14px 0; }
+    .sks-emc-mobile-fields > div { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 7px 0; border-bottom: 1px solid #f0f1f3; font-size: 12px; }
+    .sks-emc-mobile-fields label:not(.sks-visually-hidden) { width: 38px; color: #697078; }
+    .sks-emc-mobile-fields > div > span:not(.sks-emc-mobile-chip) { color: #4b5055; }
+    .sks-emc-mobile-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px 3px 3px; border: 1px solid #d9dee5; border-radius: 18px; color: #174ea6; font-size: 12px; }
+    .sks-emc-mobile-chip i { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: #4285f4; color: #fff; font-style: normal; font-size: 10px; }
+    .sks-emc-mobile-chip:nth-of-type(2) i { background: #34a853; }
+    .sks-emc-mobile-chip:nth-of-type(3) i { background: #ea4335; }
+    .sks-emc-mobile-bcc { margin-left: auto; color: #1a73e8 !important; }
+    .sks-emc-mobile-fields > input { width: 100%; padding: 12px 0; border: 0; border-bottom: 2px solid #1a73e8; outline: 0; font: inherit; font-size: 14px; }
+    .sks-emc-mobile-fields > textarea { width: 100%; min-height: 230px; padding: 12px 2px 34px; border: 0; outline: 0; resize: vertical; font: 14px/1.45 Roboto, sans-serif; }
+    .sks-emc-mobile-counter { position: absolute; right: 14px; bottom: 8px; padding: 4px 7px; border: 1px solid #dadce0; border-radius: 4px; background: #eff1f3; color: #5f6368; font-size: 11px; }
+
+    .sks-emc-mobile-card > footer { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-top: 1px solid #eef0f2; }
+    .sks-emc-mobile-card > footer button { padding: 10px 17px; border: 0; border-radius: 22px; background: #1a73e8; color: #fff; font-weight: 700; }
+    .sks-emc-mobile-card > footer button:disabled { background: #eef0f1; color: #80868b; }
+    .sks-emc-mobile-tools { color: #697078; font-size: 16px; white-space: nowrap; }
+
+    .sks-emc-mobile-coach { margin: 14px 10px 0; padding: 13px 14px; border-radius: 10px; background: #111; color: #fff; box-shadow: 0 5px 14px rgba(0,0,0,.2); }
+    .sks-emc-mobile-coach p { margin: 0 0 10px; font-size: 14px; line-height: 1.4; }
+    .sks-emc-mobile-coach button { display: block; margin-left: auto; padding: 8px 18px; border: 0; border-radius: 4px; background: #1a73e8; color: #fff; font-weight: 700; }
+    .sks-emc-mobile-coach button[hidden] { display: none; }
+    .sks-emc-mobile-hint { margin: 12px 10px 0; }
+    .sks-emc-mobile-hint > button { padding: 9px 14px; border: 1px solid #f9ab00; border-radius: 18px; background: #ffe082; color: #202124; font-weight: 700; }
+    .sks-emc-mobile-hint > div { margin-top: 8px; padding: 12px; border: 1px solid #f9ab00; border-radius: 10px; background: #fff; }
+    .sks-emc-mobile-hint header { display: flex; justify-content: space-between; }
+    .sks-emc-mobile-hint header button { border: 0; background: none; font-size: 20px; }
+    .sks-emc-mobile-hint nav { display: flex; gap: 5px; margin: 12px 0; }
+    .sks-emc-mobile-hint nav button { flex: 1; padding: 6px 0; border: 0; border-radius: 4px; background: #f1f3f4; }
+    .sks-emc-mobile-hint nav button.is-on { background: #111; color: #fff; }
+    .sks-emc-mobile-hint p { margin: 0; font-size: 13px; line-height: 1.5; }
+}
 
 /* ===== Responsive: stack/scale gracefully on smaller screens ========== */
 @media (max-width: 980px) {
@@ -6340,4 +6509,137 @@ a.sks-btn--email-intro:focus {
 .lumina-sim-test-nav__btn--exit {
     border-color: rgba(255, 120, 120, 0.55);
     background: rgba(180, 40, 40, 0.35);
+}
+
+/* Workspace mobile layout: keep the Slack mock readable instead of squeezing its columns. */
+@media (max-width: 900px) {
+    .sks-page--workspace {
+        padding: 16px 12px 24px;
+    }
+
+    .sks-page--workspace .sks-shell {
+        max-width: none;
+    }
+
+    .sks-page--workspace .sks-nav {
+        gap: 14px;
+    }
+
+    .sks-workspace {
+        padding: 8px 0 12px;
+    }
+
+    .sks-ws-window {
+        min-height: min(680px, calc(100vh - 150px));
+    }
+
+    .sks-ws-titlebar {
+        gap: 8px;
+        padding: 8px 10px;
+    }
+
+    .sks-ws-titlebar-nav,
+    .sks-ws-titlebar-actions {
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    .sks-ws-search-wrap {
+        min-width: 0;
+    }
+
+    .sks-ws-search {
+        min-width: 0;
+        padding: 8px 10px;
+    }
+
+    .sks-ws-body {
+        flex-direction: column;
+    }
+
+    .sks-ws-rail {
+        width: 100%;
+        min-height: 48px;
+        flex: 0 0 auto;
+        flex-direction: row;
+        padding: 8px 12px;
+    }
+
+    .sks-ws-rail-icons {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .sks-ws-sidebar {
+        width: 100%;
+        max-height: 154px;
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        overflow-y: auto;
+    }
+
+    .sks-ws-chat-head {
+        padding: 10px 14px;
+    }
+
+    .sks-ws-feed {
+        padding: 16px 14px 12px;
+    }
+
+    .sks-ws-msg-body {
+        overflow-wrap: anywhere;
+    }
+
+    .sks-ws-compose {
+        padding: 8px;
+    }
+
+    .sks-ws-compose-bar {
+        gap: 8px;
+    }
+
+    .sks-ws-compose-input-wrap {
+        min-height: 64px;
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 520px) {
+    .sks-page--workspace {
+        padding-inline: 8px;
+    }
+
+    .sks-page--workspace .sks-brand {
+        font-size: 20px;
+    }
+
+    .sks-ws-titlebar-nav {
+        display: none;
+    }
+
+    .sks-ws-titlebar-actions {
+        gap: 6px;
+    }
+
+    .sks-ws-win {
+        display: none;
+    }
+
+    .sks-ws-sidebar {
+        max-height: 132px;
+    }
+
+    .sks-ws-msg-meta {
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .sks-ws-msg-body {
+        font-size: 14px;
+    }
+
+    .sks-ws-compose-bar {
+        font-size: 11px;
+    }
 }

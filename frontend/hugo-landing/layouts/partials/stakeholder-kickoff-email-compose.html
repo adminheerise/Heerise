@@ -19,7 +19,7 @@
             </nav>
         </header>
 
-        <div class="sks-emc-stage">
+        <div class="sks-emc-stage sks-emc-desktop-view">
             <div class="sks-emc-frame">
                 {{/* Browser chrome (3 dots + URL bar) */}}
                 <div class="sks-emc-browser">
@@ -283,6 +283,33 @@
                 </div>{{/* /.sks-emc-app */}}
             </div>{{/* /.sks-emc-frame */}}
         </div>{{/* /.sks-emc-stage */}}
+
+        <form class="sks-emc-mobile-view" id="sks-emc-mobile-compose" autocomplete="off">
+            <div class="sks-emc-mobile-browser"><span></span><strong>gmail.com</strong><span class="sks-emc-mobile-avatar"></span></div>
+            <div class="sks-emc-mobile-topline"><span class="sks-emc-mobile-menu">&#9776;</span><strong><b>G</b>mail</strong><span class="sks-emc-mobile-search">Search mail</span><span class="sks-emc-mobile-account"></span></div>
+            <div class="sks-emc-mobile-inbox"><span>Inbox</span><span>Draft</span></div>
+            <div class="sks-emc-mobile-card">
+                <header><strong>New Message</strong><span aria-hidden="true">&minus;&nbsp;&nbsp;&times;</span></header>
+                <div class="sks-emc-mobile-fields">
+                    <div><label>From</label><span>John Doe &lt;supercoolman@gmail.com&gt;</span></div>
+                    <div><label>To</label><span class="sks-emc-mobile-chip"><i>J</i>Jordan Kim</span><span class="sks-emc-mobile-chip"><i>P</i>Priya Nair</span></div>
+                    <div><label>Cc</label><span class="sks-emc-mobile-chip"><i>M</i>Maya Chen</span><span class="sks-emc-mobile-bcc">Bcc</span></div>
+                    <label class="sks-visually-hidden" for="sks-emc-mobile-subject">Subject</label>
+                    <input id="sks-emc-mobile-subject" type="text" placeholder="Subject" maxlength="120" />
+                    <label class="sks-visually-hidden" for="sks-emc-mobile-body">Message body</label>
+                    <textarea id="sks-emc-mobile-body" rows="9"></textarea>
+                    <span class="sks-emc-mobile-counter" id="sks-emc-mobile-counter">0/300</span>
+                </div>
+                <footer><button type="button" id="sks-emc-mobile-send" disabled>Send <span>&#9662;</span></button><span class="sks-emc-mobile-tools">A&nbsp;&nbsp; &#128206;&nbsp;&nbsp; &#128221;&nbsp;&nbsp; &#128247;</span></footer>
+            </div>
+            <div class="sks-emc-mobile-coach" id="sks-emc-mobile-coach"><p id="sks-emc-mobile-coach-text">Write a subject line for the email</p><button type="button" id="sks-emc-mobile-next" hidden>Next</button></div>
+            <div class="sks-emc-mobile-hint" id="sks-emc-mobile-hint" hidden>
+                <button type="button" id="sks-emc-mobile-hint-toggle">&#128161; Hint</button>
+                <div id="sks-emc-mobile-hint-popup" hidden><header><strong>Hint</strong><button type="button" id="sks-emc-mobile-hint-close">&times;</button></header><nav>
+                    <button type="button" class="is-on" data-section="1">1</button><button type="button" data-section="2">2</button><button type="button" data-section="3">3</button><button type="button" data-section="4">4</button><button type="button" data-section="5">5</button>
+                </nav><p id="sks-emc-mobile-hint-content">Introduce yourself, state your role on the project, and reference Maya's brief so Jordan and Priya know who you are and why you are reaching out.</p></div>
+            </div>
+        </form>
     </div>
 </section>
 
@@ -300,6 +327,19 @@
     var hintPopup     = document.getElementById('sks-emc-hint-popup');
     var hintClose     = document.getElementById('sks-emc-hint-close');
     var hintContent   = document.getElementById('sks-emc-hint-content');
+    var mobileView    = document.getElementById('sks-emc-mobile-compose');
+    var mobileSubject = document.getElementById('sks-emc-mobile-subject');
+    var mobileBody    = document.getElementById('sks-emc-mobile-body');
+    var mobileCounter = document.getElementById('sks-emc-mobile-counter');
+    var mobileCoach   = document.getElementById('sks-emc-mobile-coach');
+    var mobileCoachTxt = document.getElementById('sks-emc-mobile-coach-text');
+    var mobileNext    = document.getElementById('sks-emc-mobile-next');
+    var mobileSend    = document.getElementById('sks-emc-mobile-send');
+    var mobileHint    = document.getElementById('sks-emc-mobile-hint');
+    var mobileHintToggle = document.getElementById('sks-emc-mobile-hint-toggle');
+    var mobileHintPopup = document.getElementById('sks-emc-mobile-hint-popup');
+    var mobileHintClose = document.getElementById('sks-emc-mobile-hint-close');
+    var mobileHintContent = document.getElementById('sks-emc-mobile-hint-content');
 
     if (!subjectEl || !bodyEl || !nextBtn || !sendBtn || !coachEl) return;
 
@@ -339,6 +379,25 @@
         return words;
     }
 
+    function updateMobileState(name) {
+        if (!mobileView) return;
+        if (mobileSubject && mobileSubject.value !== subjectEl.value) mobileSubject.value = subjectEl.value;
+        if (mobileBody && mobileBody.value !== bodyEl.value) mobileBody.value = bodyEl.value;
+        if (mobileCounter) mobileCounter.textContent = countWords(bodyEl.value) + '/' + BODY_MAX;
+        if (mobileCoach) mobileCoach.setAttribute('data-stage', name);
+        if (mobileCoachTxt) mobileCoachTxt.textContent = STAGES[name] || '';
+        if (mobileNext) {
+            var subjectReady = subjectEl.value.trim().length >= SUBJECT_MIN;
+            mobileNext.hidden = name !== 'subject' || !subjectReady;
+            mobileNext.disabled = !subjectReady;
+        }
+        if (mobileSend) {
+            var bodyReady = countWords(bodyEl.value) >= BODY_MIN && countWords(bodyEl.value) <= BODY_MAX;
+            mobileSend.disabled = name !== 'body' || !bodyReady;
+        }
+        if (mobileHint) mobileHint.hidden = name !== 'body';
+    }
+
     /* ---------- stage machine ---------- */
     function setStage(name) {
         coachEl.setAttribute('data-stage', name);
@@ -364,6 +423,7 @@
             if (hintEl) hintEl.hidden = false;
             setHintOpen(false);
         }
+        updateMobileState(name);
     }
 
     subjectEl.addEventListener('input', function () {
@@ -372,6 +432,7 @@
         nextBtn.hidden = !ok;
         nextBtn.disabled = !ok;
         nextBtn.classList.toggle('is-active', ok);
+        updateMobileState('subject');
     });
 
     bodyEl.addEventListener('input', function () {
@@ -391,13 +452,34 @@
             sendBtn.disabled = !ok;
             sendBtn.classList.toggle('is-active', ok);
         }
+        updateMobileState(coachEl.getAttribute('data-stage'));
     });
+
+    if (mobileSubject) {
+        mobileSubject.addEventListener('input', function () {
+            subjectEl.value = mobileSubject.value;
+            subjectEl.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+    }
+    if (mobileBody) {
+        mobileBody.addEventListener('input', function () {
+            bodyEl.value = mobileBody.value;
+            bodyEl.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+    }
 
     nextBtn.addEventListener('click', function () {
         if (subjectEl.value.trim().length < SUBJECT_MIN) return;
         setStage('body');
         try { bodyEl.focus(); } catch (e) {}
     });
+
+    if (mobileNext) {
+        mobileNext.addEventListener('click', function () {
+            nextBtn.click();
+            try { mobileBody.focus(); } catch (e) {}
+        });
+    }
 
     sendBtn.addEventListener('click', function (e) {
         e.preventDefault();
@@ -429,6 +511,13 @@
         });
     });
 
+    if (mobileSend) {
+        mobileSend.addEventListener('click', function (e) {
+            e.preventDefault();
+            sendBtn.click();
+        });
+    }
+
     /* ---------- hint popup overlay + section switching ---------- */
     function setHintOpen(open) {
         if (!hintPopup || !hintToggle) return;
@@ -454,6 +543,21 @@
                 t.classList.toggle('is-on', t === tab);
             });
             hintContent.textContent = SECTIONS[key];
+        });
+    }
+
+    if (mobileHintToggle && mobileHintPopup) {
+        mobileHintToggle.addEventListener('click', function () {
+            mobileHintPopup.hidden = !mobileHintPopup.hidden;
+        });
+        if (mobileHintClose) mobileHintClose.addEventListener('click', function () { mobileHintPopup.hidden = true; });
+        mobileHintPopup.addEventListener('click', function (e) {
+            var tab = e.target.closest('[data-section]');
+            if (!tab || !SECTIONS[tab.getAttribute('data-section')]) return;
+            mobileHintPopup.querySelectorAll('[data-section]').forEach(function (item) {
+                item.classList.toggle('is-on', item === tab);
+            });
+            mobileHintContent.textContent = SECTIONS[tab.getAttribute('data-section')];
         });
     }
 

@@ -40,24 +40,24 @@
 
   const openProjectPayment = (projectId, paymentUrl) => {
     const url = (paymentUrl || "").trim();
-    if (url) {
+    if (url && url !== "#") {
       window.location.assign(url);
       return;
     }
-    document.dispatchEvent(new CustomEvent("heerise:project-payment-pending", {
-      detail: { projectId, paymentUrl: url },
-    }));
+    if (projectId) {
+      window.location.assign("/select-method/?product_id=" + encodeURIComponent(projectId));
+    }
   };
   window.HeeriseCareerLab = { ...(window.HeeriseCareerLab || {}), openProjectPayment };
 
   $$(".cl-pricing-project-link").forEach(link => {
     link.addEventListener("click", (e) => {
+      const href = (link.getAttribute("href") || "").trim();
       const paymentUrl = (link.dataset.paymentUrl || "").trim();
       const projectId = link.dataset.projectId || "";
-      if (!paymentUrl) {
-        e.preventDefault();
-        openProjectPayment(projectId, paymentUrl);
-      }
+      if (href && href !== "#") return;
+      e.preventDefault();
+      openProjectPayment(projectId, paymentUrl);
     });
   });
 

@@ -265,14 +265,7 @@ pluralizelisttitles = false
   speaker_title = "Senior Instructional Designer<br/>Upenn GSE"
   speaker_avatar = "/img/instructors/lindaA.jpg"
 
-# Career Lab — per-project checkout URLs (Stripe etc.). Fill when payment is live.
-[params.career_lab_project_payments]
-  job_aid = ""
-  training_proposal = ""
-  professional_deliverables = ""
-  design_document = ""
-  interactive_scenario = ""
-  portfolio_website = ""
+# Career Lab checkout is wired to /select-method/?product_id=... (server-side prices).
 
 # ============================================================
 # NEW: Social links for footer

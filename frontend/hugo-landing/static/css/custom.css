@@ -2629,6 +2629,14 @@ a.cl-project-sample-link .cl-project-sample-cta-icon {
     line-height: 20px;
     border: none;
     margin-top: 56px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.cl-pricing-btn + .cl-pricing-btn {
+    margin-top: 10px;
 }
 
 .cl-pricing-btn-primary {
@@ -2638,6 +2646,24 @@ a.cl-project-sample-link .cl-project-sample-cta-icon {
 
 .cl-pricing-btn-primary:hover {
     background-color: #005bbf;
+    color: #FFFFFF;
+}
+
+a.cl-pricing-btn {
+    color: inherit;
+}
+
+a.cl-pricing-btn-primary,
+a.cl-pricing-btn-primary:hover,
+a.cl-pricing-btn-primary:focus {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+a.cl-pricing-btn-secondary,
+a.cl-pricing-btn-secondary:hover,
+a.cl-pricing-btn-secondary:focus {
+    text-decoration: none;
 }
 
 .cl-pricing-btn-secondary {

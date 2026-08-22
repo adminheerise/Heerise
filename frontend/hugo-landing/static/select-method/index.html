@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Select Payment Method — HeeRise Academy</title>
+  <link rel="icon" href="/img/logo-transparent.png" type="image/png" />
+  <link rel="stylesheet" href="/css/checkout.css" />
+</head>
+<body>
+  <div class="brand-bar">
+    <a href="/">HeeRise Academy</a>
+    <span>Secure checkout</span>
+  </div>
+  <div class="checkout-shell">
+    <header class="checkout-header">
+      <h1>Select Payment Method</h1>
+      <p>Enter your details, then choose how you would like to pay. Your card or wallet is charged to HeeRise Academy. A receipt is emailed after payment succeeds.</p>
+    </header>
+
+    <div class="checkout-grid">
+      <main class="checkout-main">
+        <div class="progress">
+          <span class="is-active">1. Method</span>
+          <span>→</span>
+          <span>2. Pay</span>
+          <span>→</span>
+          <span>3. Done</span>
+        </div>
+        <p class="checkout-error" id="checkout-error" role="alert"></p>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="first-name">First name</label>
+            <input id="first-name" type="text" autocomplete="given-name" placeholder="Student" required />
+          </div>
+          <div class="form-field">
+            <label for="email">Email for receipt</label>
+            <input id="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+          </div>
+        </div>
+        <nav class="method-list" id="method-list" aria-label="Payment methods"></nav>
+      </main>
+      <aside class="checkout-aside" id="order-summary">
+        <h2 style="margin:0 0 16px;font-size:16px;color:#011f5b;">Order Summary</h2>
+        <div class="summary-row"><span>Product</span><strong data-product-name>—</strong></div>
+        <div class="summary-total"><span>Total</span><span data-amount>—</span></div>
+      </aside>
+    </div>
+  </div>
+  <script src="/js/checkout/context.js"></script>
+  <script src="/js/checkout/api.js"></script>
+  <script src="/js/checkout/select-method.js"></script>
+</body>
+</html>

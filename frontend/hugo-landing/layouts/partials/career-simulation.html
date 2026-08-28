@@ -1,0 +1,36 @@
+<main class="career-simulation" aria-labelledby="career-simulation-title">
+    <div class="career-simulation__shell">
+        <header class="career-simulation__header">
+            <div class="career-simulation__eyebrow">Rehearsal Room</div>
+            <div class="career-simulation__title-row">
+                <h1 id="career-simulation-title">Career Simulation</h1>
+                <span>Scene &mdash; Intake</span>
+            </div>
+        </header>
+
+        <nav class="career-simulation__steps" aria-label="Simulation steps">
+            <span class="is-active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </nav>
+
+        <section class="career-simulation__panel career-simulation__intake" aria-labelledby="job-description-title">
+            <h2 id="job-description-title">Paste the job description</h2>
+            <p>Any education-related role &mdash; teacher, instructional designer, curriculum developer, program coordinator, school counselor, EdTech specialist. We&rsquo;ll build the rehearsal around it.</p>
+            <form id="career-simulation-form" action="{{ "/career-simulation/" | relURL }}" method="get">
+                <label for="career-simulation-job">Job description</label>
+                <textarea id="career-simulation-job" name="jobDescription" required placeholder="Paste the full job posting here..."></textarea>
+                <button type="submit">Read the script</button>
+                <p class="career-simulation__status" id="career-simulation-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section class="career-simulation__panel career-simulation__loading-panel is-hidden" id="career-simulation-loading" aria-labelledby="career-simulation-loading-title" aria-live="polite">
+            <div class="career-simulation__loading-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <p id="career-simulation-loading-title">Reading the job description</p>
+        </section>
+    </div>
+</main>

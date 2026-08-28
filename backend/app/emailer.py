@@ -12,6 +12,7 @@ def send_email(
     *,
     from_email: str | None = None,
     reply_to: str | None = None,
+    html_body: str | None = None,
 ) -> None:
     """
     Send a plain-text email via SMTP.
@@ -44,6 +45,8 @@ def send_email(
     if reply_to:
         msg["Reply-To"] = reply_to
     msg.set_content(text_body)
+    if html_body:
+        msg.add_alternative(html_body, subtype="html")
 
     if use_ssl:
         with smtplib.SMTP_SSL(host, port, timeout=20) as s:

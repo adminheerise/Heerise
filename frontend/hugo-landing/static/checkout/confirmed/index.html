@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Payment Successful — HeeRise Academy</title>
+  <link rel="icon" href="/img/logo-transparent.png" type="image/png" />
+  <link rel="stylesheet" href="/css/checkout.css" />
+</head>
+<body>
+  <div class="brand-bar">
+    <a href="/">HeeRise Academy</a>
+    <span>Order confirmation</span>
+  </div>
+  <div class="confirmation-shell">
+    <section class="confirmation-view is-active">
+      <div class="success-hero">
+        <div class="success-check">✓</div>
+        <h1>Payment Successful!</h1>
+        <p>Welcome to the LXD &amp; ID Career Lab.</p>
+      </div>
+
+      <div class="confirmation-section">
+        <h2>ORDER SUMMARY</h2>
+        <div class="confirmation-row"><span>Order Number</span><strong data-order-id></strong></div>
+        <div class="confirmation-row"><span>Date</span><strong data-order-date></strong></div>
+        <div class="confirmation-row"><span>Program</span><strong><span data-program>Instructional Design Bootcamp</span><br /><small data-program-detail>8 Weeks, Synchronous Online</small></strong></div>
+        <div class="confirmation-row confirmation-row-total"><span>Amount Paid</span><strong data-amount></strong></div>
+      </div>
+
+      <div class="confirmation-section">
+        <h2>WHAT HAPPENS NEXT?</h2>
+        <ol class="next-steps">
+          <li>
+            <strong>Check your inbox</strong>
+            <p>We've sent a detailed receipt and confirmation to your email.</p>
+          </li>
+          <li>
+            <strong>Complete your survey</strong>
+            <p>Fill out the Pre-Bootcamp Survey to share your experience, goals, and tech comfort level.</p>
+          </li>
+          <li>
+            <strong>Watch for your Welcome Packet</strong>
+            <p>One week before the program starts, you'll receive the syllabus, schedule, tech setup guide, WeChat group link, and LMS login instructions.</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="confirmation-footer">
+        <a class="btn-primary" href="https://www.heeriseacademy.com/contact/" id="survey-btn">Take the Pre-Bootcamp Survey</a>
+        <p class="help-line">Need help? Contact our admin team at <a href="mailto:admin@heeriseacademy.com">admin@heeriseacademy.com</a></p>
+      </div>
+    </section>
+  </div>
+  <script src="/js/checkout/context.js"></script>
+  <script src="/js/checkout/confirmed.js"></script>
+</body>
+</html>

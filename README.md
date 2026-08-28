@@ -155,6 +155,36 @@ npm run dev
 
 > 注意：后端在启动时会 `create_all` 自动建表（适合 MVP 开发阶段）。
 
+#### Career Lab 支付（Stripe + PayPal）
+真实扣款会进入你们的 **Stripe / PayPal 商户账户**，再按平台节奏结算到公司银行账户。
+
+**密钥怎么申请、填到哪里：** 见 [docs/PAYMENTS_KEYS_SETUP.md](docs/PAYMENTS_KEYS_SETUP.md)。
+
+- **`STRIPE_SECRET_KEY`**：`sk_test_...`（测试）或 `sk_live_...`（真收款）
+- **`STRIPE_WEBHOOK_SECRET`**：Stripe Dashboard → Webhooks 的签名密钥
+- **`PAYPAL_CLIENT_ID` / `PAYPAL_CLIENT_SECRET`**：PayPal Developer Dashboard REST app
+- **`PAYPAL_ENV`**：`sandbox` 或 `live`
+- **`FRONTEND_BASE`**：成功页域名（生产为 `https://www.heeriseacademy.com`）
+- **`PRE_BOOTCAMP_SURVEY_URL`**：确认页 / 邮件里的 Pre-Bootcamp Survey 链接
+- **`MAIL_FROM_INVOICE`**：收据发件人（建议 `admin@heeriseacademy.com`）
+- **`PAYMENTS_NOTIFY_EMAIL`**：内部入账通知邮箱
+
+Webhook 地址（需在 Stripe / PayPal 后台登记）：
+
+- Stripe：`https://www.heeriseacademy.com/api/payments/webhooks/stripe`
+- PayPal：`https://www.heeriseacademy.com/api/payments/webhooks/paypal`
+
+结账路径：
+
+- 选支付方式：`/select-method/?product_id=bootcamp-premium`
+- Card：`/methods/card/`
+- PayPal：`/methods/paypal/`
+- Google Pay：`/methods/google-pay/`
+- Apple Pay：`/methods/apple-pay/`
+- 成功页：`/checkout/confirmed/`
+
+本地用 Stripe 测试卡 `4242 4242 4242 4242`。Apple Pay / Google Pay 会在 Stripe Checkout 支持的浏览器上自动出现。SMTP 配好后，支付成功会给学员发 *Order Confirmation & Next Steps: LXD & ID Career Lab*，并打开 Web Confirmation 页。
+
 ### 2.2 前端（`frontend/`）
 - **`NEXT_PUBLIC_API_BASE`**：后端 API 基地址（默认 `http://localhost:8000`）
 

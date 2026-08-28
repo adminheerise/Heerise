@@ -318,3 +318,32 @@ class OnboardingPreCache(Base):
     answers_json = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     user_id = Column(String, ForeignKey("users.id", ondelete="SET NULL"), nullable=True, index=True)
+
+
+class PaymentOrder(Base):
+    """Career Lab / bootcamp checkout order. Filled by Stripe or PayPal."""
+
+    __tablename__ = "payment_orders"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    order_number = Column(String(16), unique=True, nullable=False, index=True)
+    product_id = Column(String(80), nullable=False, index=True)
+    product_name = Column(String(255), nullable=False)
+    amount_cents = Column(Integer, nullable=False)
+    currency = Column(String(8), nullable=False, default="USD")
+    method = Column(String(32), nullable=False)
+    status = Column(String(24), nullable=False, default="pending", index=True)
+    customer_email = Column(String(255), nullable=False, index=True)
+    first_name = Column(String(100), nullable=False, default="Student")
+    payment_method_display = Column(String(120), nullable=True)
+    provider = Column(String(24), nullable=False)
+    stripe_session_id = Column(String(255), nullable=True, index=True)
+    stripe_payment_intent_id = Column(String(255), nullable=True, index=True)
+    paypal_order_id = Column(String(64), nullable=True, index=True)
+    provider_ref = Column(String(255), nullable=True)
+    email_sent_at = Column(DateTime, nullable=True)
+    paid_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
+    )

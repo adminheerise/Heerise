@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Google Pay — HeeRise Academy</title>
+  <link rel="icon" href="/img/logo-transparent.png" type="image/png" />
+  <link rel="stylesheet" href="/css/checkout.css" />
+</head>
+<body>
+  <div class="brand-bar">
+    <a href="/">HeeRise Academy</a>
+    <span>Google Pay</span>
+  </div>
+  <div class="checkout-shell">
+    <a class="back-link" id="back-link" href="/select-method/">← Back to payment methods</a>
+    <div class="checkout-grid">
+      <main class="checkout-main">
+        <div class="progress"><span>1. Method</span><span>→</span><span class="is-active">2. Pay</span><span>→</span><span>3. Done</span></div>
+        <h2 style="margin:0 0 8px;font-size:20px;">Google Pay</h2>
+        <p class="note">Continue to Stripe Checkout. On Chrome and supported Android devices, choose Google Pay to charge your saved card. The payout goes to HeeRise Academy.</p>
+        <p class="checkout-error" id="checkout-error" role="alert"></p>
+        <button type="button" class="btn-wallet btn-wallet--google" id="pay-btn">Pay with Google Pay</button>
+      </main>
+      <aside class="checkout-aside" id="order-summary"></aside>
+    </div>
+  </div>
+  <script src="/js/checkout/context.js"></script>
+  <script src="/js/checkout/api.js"></script>
+  <script src="/js/checkout/method-page.js"></script>
+  <script>
+    HeeriseMethodPage.init({
+      onReady: function (api) {
+        document.getElementById("pay-btn").addEventListener("click", function () {
+          api.runPay("google_pay", this);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

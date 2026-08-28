@@ -1,5 +1,4 @@
 <!-- ========== TAB: Pricing ========== -->
-{{ $pay := .Site.Params.career_lab_project_payments | default dict }}
 <div class="cl-tab-content" id="pricing">
     <!-- Layer 1: Learn with Projects -->
     <div class="cl-section-inner cl-pricing-section" id="pricing-projects">
@@ -10,10 +9,9 @@
             </div>
 
             <div class="cl-projects-grid">
-                <a href="{{ $pay.job_aid | default "#" }}"
+                <a href="/select-method/?product_id=job-aid"
                    class="cl-project-card cl-pricing-project-link cl-project-tier-1"
                    data-project-id="job-aid"
-                   data-payment-url="{{ $pay.job_aid | default "" }}"
                    aria-label="Job Aid — $49">
                     <div class="cl-project-card-tab">Job Aid</div>
                     <div class="cl-project-card-price">
@@ -24,10 +22,9 @@
                     </div>
                 </a>
 
-                <a href="{{ $pay.training_proposal | default "#" }}"
+                <a href="/select-method/?product_id=training-proposal"
                    class="cl-project-card cl-pricing-project-link cl-project-tier-2"
                    data-project-id="training-proposal"
-                   data-payment-url="{{ $pay.training_proposal | default "" }}"
                    aria-label="Training Proposal — $198">
                     <div class="cl-project-card-tab">Training Proposal</div>
                     <div class="cl-project-card-price">
@@ -38,10 +35,9 @@
                     </div>
                 </a>
 
-                <a href="{{ $pay.professional_deliverables | default "#" }}"
+                <a href="/select-method/?product_id=professional-deliverables"
                    class="cl-project-card cl-pricing-project-link cl-project-tier-2"
                    data-project-id="professional-deliverables"
-                   data-payment-url="{{ $pay.professional_deliverables | default "" }}"
                    aria-label="Professional Deliverables — $198">
                     <div class="cl-project-card-tab">Professional Deliverables</div>
                     <div class="cl-project-card-price">
@@ -52,10 +48,9 @@
                     </div>
                 </a>
 
-                <a href="{{ $pay.design_document | default "#" }}"
+                <a href="/select-method/?product_id=design-document"
                    class="cl-project-card cl-pricing-project-link cl-project-tier-2"
                    data-project-id="design-document"
-                   data-payment-url="{{ $pay.design_document | default "" }}"
                    aria-label="Design Document — $198">
                     <div class="cl-project-card-tab">Design Document</div>
                     <div class="cl-project-card-price">
@@ -66,10 +61,9 @@
                     </div>
                 </a>
 
-                <a href="{{ $pay.interactive_scenario | default "#" }}"
+                <a href="/select-method/?product_id=interactive-scenario"
                    class="cl-project-card cl-pricing-project-link cl-project-tier-3"
                    data-project-id="interactive-scenario"
-                   data-payment-url="{{ $pay.interactive_scenario | default "" }}"
                    aria-label="Interactive Scenario — $398">
                     <div class="cl-project-card-tab">Interactive Scenario</div>
                     <div class="cl-project-card-price">
@@ -80,10 +74,9 @@
                     </div>
                 </a>
 
-                <a href="{{ $pay.portfolio_website | default "#" }}"
+                <a href="/select-method/?product_id=portfolio-website"
                    class="cl-project-card cl-pricing-project-link cl-project-tier-3"
                    data-project-id="portfolio-website"
-                   data-payment-url="{{ $pay.portfolio_website | default "" }}"
                    aria-label="Portfolio Website — $398">
                     <div class="cl-project-card-tab">Portfolio Website</div>
                     <div class="cl-project-card-price">
@@ -153,7 +146,8 @@
                         <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Student Procures Own Software</li>
                         <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Certificate of Completion</li>
                     </ul>
-                    <button class="cl-pricing-btn cl-pricing-btn-secondary cl-bootcamp-open">APPLY NOW</button>
+                    <a class="cl-pricing-btn cl-pricing-btn-secondary" href="/select-method/?product_id=bootcamp-basic">PAY NOW</a>
+                    <button type="button" class="cl-pricing-btn cl-pricing-btn-secondary cl-bootcamp-open">APPLY NOW</button>
                 </div>
 
                 <div class="cl-pricing-card cl-pricing-recommended">
@@ -174,7 +168,8 @@
                         <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>1 Year Free Articulate 360 AI (Value $1,449/yr)</li>
                         <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Certificate + Alumni + 6 Months Post-Grad Career Services</li>
                     </ul>
-                    <button class="cl-pricing-btn cl-pricing-btn-primary cl-bootcamp-open">APPLY NOW</button>
+                    <a class="cl-pricing-btn cl-pricing-btn-primary" href="/select-method/?product_id=bootcamp-premium">PAY NOW</a>
+                    <button type="button" class="cl-pricing-btn cl-pricing-btn-secondary cl-bootcamp-open">APPLY NOW</button>
                 </div>
 
                 <div class="cl-pricing-card cl-pricing-elite">
@@ -194,7 +189,8 @@
                         <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Student Procures Own Software</li>
                         <li class="cl-pf-item"><span class="cl-pf-check">&#10003;</span>Certificate + Alumni Network Access</li>
                     </ul>
-                    <button class="cl-pricing-btn cl-pricing-btn-secondary cl-bootcamp-open">APPLY NOW</button>
+                    <a class="cl-pricing-btn cl-pricing-btn-secondary" href="/select-method/?product_id=bootcamp-standard">PAY NOW</a>
+                    <button type="button" class="cl-pricing-btn cl-pricing-btn-secondary cl-bootcamp-open">APPLY NOW</button>
                 </div>
             </div>
         </div>

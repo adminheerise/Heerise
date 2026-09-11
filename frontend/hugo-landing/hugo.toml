@@ -21,7 +21,8 @@ pluralizelisttitles = false
 
 # ============================================================
 # Main Menu (matches Figma design)
-# HOME | ABOUT | AI CAREER CO-PILOT | SERVICE | CONTACT
+# HOME | AI CAREER CO-PILOT | SERVICE | CONTACT
+# (ABOUT removed — content now lives on the homepage)
 # ============================================================
 [menu]
 [[menu.main]]
@@ -30,11 +31,11 @@ pluralizelisttitles = false
   url        = "/"
   weight     = 1
 
-[[menu.main]]
-  name       = "ABOUT"
-  identifier = "menu.about"
-  url        = "/about/"
-  weight     = 2
+# [[menu.main]]
+#   name       = "ABOUT"
+#   identifier = "menu.about"
+#   url        = "/about/"
+#   weight     = 2
 
 [[menu.main]]
   name       = "AI CAREER CO-PILOT"
@@ -227,7 +228,9 @@ pluralizelisttitles = false
 # NEW: Featured Event (data-driven)
 # ============================================================
 [params.featured_event]
-  enable = true
+  # Homepage no longer shows this block (About Us replaced it).
+  # Keep enable/config for Career Lab workshop pages that still read these params.
+  enable = false
   label = "Upcoming Event"
   badge = "Featured"
   title = "Co-Pilot, Not Autopilot"

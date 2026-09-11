@@ -14,7 +14,8 @@
 
         {{ partial "hero_home.html" . }}
 
-        {{ partial "featured_event.html" . }}
+        {{/* Homepage: About Us content replaces former Upcoming Event / featured_event block */}}
+        {{ partial "about.html" . }}
 
         {{ partial "footer.html" . }}
 

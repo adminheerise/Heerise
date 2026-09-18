@@ -1,9 +1,10 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, Header, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
 from typing import Optional
 from .db import SessionLocal
 import os
+import secrets
 from .models import User, UserRole
 from .integrations.local_jwt_auth import LocalJwtAuthProvider
 from .integrations.firebase_auth import FirebaseAuthProvider
@@ -43,6 +44,24 @@ def require_admin(user: User = Depends(get_current_user)) -> User:
     if user.role != UserRole.admin:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin only")
     return user
+
+
+def require_lumina_admin_key(
+    x_lumina_admin_key: Optional[str] = Header(None, alias="X-Lumina-Admin-Key"),
+) -> None:
+    """Protect Lumina test-user read APIs with a dedicated admin key (not Heerise admin JWT)."""
+    expected = (os.getenv("LUMINA_ADMIN_KEY") or "").strip()
+    if not expected:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="LUMINA_ADMIN_KEY is not configured",
+        )
+    provided = (x_lumina_admin_key or "").strip()
+    if not provided or not secrets.compare_digest(provided, expected):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid Lumina admin key",
+        )
 
 
 def get_current_user_optional(

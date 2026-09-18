@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .db import Base, engine
-from .routers import auth, onboarding, me, admin, contact, syllabus, career_lab, sim, payments
+from .routers import auth, onboarding, me, admin, contact, syllabus, career_lab, sim, payments, lumina_test_users
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -39,6 +39,7 @@ app.include_router(syllabus.router, prefix=API_PREFIX)
 app.include_router(career_lab.router, prefix=API_PREFIX)
 app.include_router(sim.router, prefix=API_PREFIX)
 app.include_router(payments.router, prefix=API_PREFIX)
+app.include_router(lumina_test_users.router, prefix=API_PREFIX)
 
 
 @app.on_event("startup")

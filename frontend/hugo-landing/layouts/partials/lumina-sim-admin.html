@@ -1,0 +1,80 @@
+<!-- *** LUMINA SIM ADMIN (test users) *** -->
+<section class="lum-adm" aria-labelledby="lum-adm-title">
+  <header class="lum-adm-top">
+    <div>
+      <div class="lum-adm-brand" id="lum-adm-title">LUMINA · SIM</div>
+      <nav class="lum-adm-tabs" aria-label="Admin sections">
+        <button type="button" class="lum-adm-tab is-active" data-tab="users" aria-current="page">Users</button>
+      </nav>
+    </div>
+    <div class="lum-adm-top-right">
+      <span id="lum-adm-meta" class="lum-adm-meta">—</span>
+      <a class="lum-adm-back" href="/acc/stakeholder-kickoff/register/">&lt;- Back</a>
+    </div>
+  </header>
+
+  <div id="lum-adm-lock" class="lum-adm-lock">
+    <h2 class="lum-adm-lock-title">Admin access</h2>
+    <p class="lum-adm-lock-sub">Enter the Lumina admin key to view registrant data. This key is never embedded in the page.</p>
+    <label class="lum-adm-field" for="lum-adm-key">
+      <span>Admin key</span>
+      <input id="lum-adm-key" type="password" autocomplete="current-password" placeholder="LUMINA_ADMIN_KEY" />
+    </label>
+    <label class="lum-adm-remember">
+      <input id="lum-adm-remember" type="checkbox" checked />
+      <span>Remember on this device (so the shortcut opens the database directly next time)</span>
+    </label>
+    <p id="lum-adm-lock-error" class="lum-adm-error" role="alert" hidden></p>
+    <button type="button" id="lum-adm-unlock" class="lum-adm-btn">Unlock</button>
+  </div>
+
+  <div id="lum-adm-panel" class="lum-adm-panel" hidden>
+    <div class="lum-adm-panel-actions">
+      <button type="button" id="lum-adm-lock-btn" class="lum-adm-lock-btn">Lock</button>
+    </div>
+    <div class="lum-adm-stats" role="list">
+      <div class="lum-adm-stat" role="listitem">
+        <div class="lum-adm-stat-label">Total Users</div>
+        <div class="lum-adm-stat-value" id="lum-adm-stat-total">0</div>
+      </div>
+      <div class="lum-adm-stat" role="listitem">
+        <div class="lum-adm-stat-label">Email Subscribers</div>
+        <div class="lum-adm-stat-value" id="lum-adm-stat-sub">0</div>
+      </div>
+      <div class="lum-adm-stat" role="listitem">
+        <div class="lum-adm-stat-label">This Month</div>
+        <div class="lum-adm-stat-value" id="lum-adm-stat-month">0</div>
+      </div>
+    </div>
+
+    <div class="lum-adm-search-wrap">
+      <input
+        id="lum-adm-search"
+        class="lum-adm-search"
+        type="search"
+        placeholder="Search by name or email..."
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="lum-adm-table-wrap">
+      <table class="lum-adm-table">
+        <thead>
+          <tr>
+            <th scope="col" class="lum-adm-check-col"><span class="sr-only">Select</span></th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Subscribed</th>
+            <th scope="col">Registered</th>
+          </tr>
+        </thead>
+        <tbody id="lum-adm-tbody">
+          <tr class="lum-adm-empty-row">
+            <td colspan="5">No users registered yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<!-- *** LUMINA SIM ADMIN END *** -->

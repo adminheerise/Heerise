@@ -1,0 +1,345 @@
+/* Lumina register + admin (pre-kickoff gate) */
+.lum-reg {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #111111;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+.lum-reg-top {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 24px 0;
+}
+
+.lum-reg-brand {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+}
+
+.lum-reg-card {
+  max-width: 560px;
+  margin: 48px auto 80px;
+  padding: 0 24px;
+}
+
+.lum-reg-title {
+  margin: 0 0 12px;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.lum-reg-sub {
+  margin: 0 0 32px;
+  color: #6b7280;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.lum-reg-field {
+  margin-bottom: 20px;
+}
+
+.lum-reg-field label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.lum-reg-field input {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 10px;
+  background: #f3f4f6;
+  padding: 14px 16px;
+  font-size: 1rem;
+}
+
+.lum-reg-field input:focus {
+  outline: 2px solid #111111;
+  outline-offset: 1px;
+}
+
+.lum-reg-check {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 16px 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #374151;
+}
+
+.lum-reg-check input {
+  margin-top: 3px;
+  flex: 0 0 auto;
+}
+
+.lum-reg-check a {
+  color: #111111;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.lum-reg-error {
+  color: #b91c1c;
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+}
+
+.lum-reg-submit {
+  margin-top: 28px;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 16px 20px;
+  cursor: pointer;
+}
+
+.lum-reg-submit:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+/* Admin */
+.lum-adm {
+  min-height: 100vh;
+  background: #fafafa;
+  color: #111111;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  padding: 24px clamp(16px, 4vw, 40px) 48px;
+}
+
+.lum-adm-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.lum-adm-brand {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.lum-adm-tabs {
+  display: flex;
+  gap: 18px;
+}
+
+.lum-adm-tab {
+  border: none;
+  background: transparent;
+  padding: 6px 0;
+  font-weight: 600;
+  color: #9ca3af;
+  border-bottom: 2px solid transparent;
+  cursor: default;
+}
+
+.lum-adm-tab.is-active {
+  color: #111111;
+  border-bottom-color: #111111;
+}
+
+.lum-adm-top-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.lum-adm-meta {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.lum-adm-back {
+  color: #111111;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.lum-adm-lock {
+  max-width: 420px;
+  margin: 40px auto;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.lum-adm-lock-title {
+  margin: 0 0 8px;
+  font-size: 1.35rem;
+}
+
+.lum-adm-lock-sub {
+  margin: 0 0 20px;
+  color: #6b7280;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.lum-adm-field {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.lum-adm-field span {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.lum-adm-field input,
+.lum-adm-search {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 10px;
+  background: #f3f4f6;
+  padding: 12px 14px;
+  font-size: 1rem;
+}
+
+.lum-adm-btn {
+  border: none;
+  border-radius: 10px;
+  background: #111111;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 12px 18px;
+  cursor: pointer;
+}
+
+.lum-adm-remember {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  color: #374151;
+  line-height: 1.4;
+}
+
+.lum-adm-remember input {
+  margin-top: 3px;
+}
+
+.lum-adm-panel-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.lum-adm-lock-btn {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+.lum-adm-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.lum-adm-stat {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.lum-adm-stat-label {
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+}
+
+.lum-adm-stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.lum-adm-search-wrap {
+  margin-bottom: 16px;
+}
+
+.lum-adm-table-wrap {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: auto;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.lum-adm-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.lum-adm-table th,
+.lum-adm-table td {
+  text-align: left;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 0.95rem;
+}
+
+.lum-adm-table th {
+  color: #6b7280;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.lum-adm-empty-row td {
+  text-align: center;
+  color: #9ca3af;
+  padding: 48px 16px;
+}
+
+.lum-adm-check-col {
+  width: 40px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 720px) {
+  .lum-adm-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .lum-adm-top {
+    flex-direction: column;
+  }
+}

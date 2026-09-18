@@ -8,7 +8,8 @@
 #   STRIPE_WEBHOOK_SECRET — Stripe webhook signing secret
 #   PAYPAL_CLIENT_ID / PAYPAL_CLIENT_SECRET — PayPal REST app credentials
 #   PRE_BOOTCAMP_SURVEY_URL — Google Form (or other) for the confirmation CTA
-#   MAIL_FROM_INVOICE / PAYMENTS_NOTIFY_EMAIL — payment receipt sender / admin notify
+#   PAYMENTS_NOTIFY_EMAIL — payment receipt sender / admin notify
+#   LUMINA_ADMIN_KEY — admin key for Lumina test-user dashboard (X-Lumina-Admin-Key)
 #
 # Optional:
 #   (GEMINI_MODEL is set to gemini-2.5-flash in this workflow)
@@ -103,6 +104,7 @@ jobs:
             PRE_BOOTCAMP_SURVEY_URL=${{ secrets.PRE_BOOTCAMP_SURVEY_URL }}
             MAIL_FROM_INVOICE=${{ secrets.MAIL_FROM_INVOICE }}
             PAYMENTS_NOTIFY_EMAIL=${{ secrets.PAYMENTS_NOTIFY_EMAIL }}
+            LUMINA_ADMIN_KEY=${{ secrets.LUMINA_ADMIN_KEY }}
 
   deploy-frontend:
     needs: changes

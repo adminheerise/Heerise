@@ -1,0 +1,66 @@
+<!-- *** LUMINA REGISTER (pre–Stakeholder Kickoff) *** -->
+<section class="lum-reg" aria-labelledby="lum-reg-title">
+  <header class="lum-reg-top">
+    <div class="lum-reg-brand">LUMINA · SIM</div>
+  </header>
+
+  <div class="lum-reg-card">
+    <h1 id="lum-reg-title" class="lum-reg-title">Before we begin, tell us about yourself.</h1>
+    <p class="lum-reg-sub">
+      This helps us personalize your Lumina experience. Your information is kept private and secure.
+    </p>
+
+    <form id="lum-reg-form" class="lum-reg-form" novalidate>
+      <div class="lum-reg-field">
+        <label for="lum-reg-name">Full Name <span aria-hidden="true">*</span></label>
+        <input
+          id="lum-reg-name"
+          name="full_name"
+          type="text"
+          maxlength="200"
+          autocomplete="name"
+          required
+          placeholder="e.g. Alex Johnson"
+        />
+      </div>
+
+      <div class="lum-reg-field">
+        <label for="lum-reg-email">Email Address <span aria-hidden="true">*</span></label>
+        <input
+          id="lum-reg-email"
+          name="email"
+          type="email"
+          maxlength="255"
+          autocomplete="email"
+          required
+          placeholder="e.g. alex@email.com"
+        />
+      </div>
+
+      <label class="lum-reg-check">
+        <input id="lum-reg-terms" name="terms_accepted" type="checkbox" required />
+        <span>
+          I have read and agree to the
+          <a href="/terms-of-service/" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+          and
+          <a href="/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+          <span aria-hidden="true">*</span>
+        </span>
+      </label>
+
+      <label class="lum-reg-check">
+        <input id="lum-reg-subscribe" name="subscribed" type="checkbox" />
+        <span>
+          I&rsquo;d like to receive product updates, tips, and news from Lumina (optional, unsubscribe anytime).
+        </span>
+      </label>
+
+      <p id="lum-reg-error" class="lum-reg-error" role="alert" hidden></p>
+
+      <button type="submit" id="lum-reg-submit" class="lum-reg-submit">
+        Continue <span aria-hidden="true">→</span>
+      </button>
+    </form>
+  </div>
+</section>
+<!-- *** LUMINA REGISTER END *** -->

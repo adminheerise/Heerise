@@ -311,6 +311,22 @@ class CareerLabApplication(Base):
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 
+class LuminaTestUser(Base):
+    """Lumina sim registrants collected before the Stakeholder Kickoff Call."""
+
+    __tablename__ = "lumina_test_users"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    full_name = Column(String(200), nullable=False)
+    email = Column(String(255), nullable=False, unique=True, index=True)
+    subscribed = Column(Boolean, nullable=False, default=False)
+    terms_accepted_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
+    )
+
+
 class OnboardingPreCache(Base):
     __tablename__ = "onboarding_pre_cache"
     id = Column(Integer, primary_key=True, autoincrement=True)

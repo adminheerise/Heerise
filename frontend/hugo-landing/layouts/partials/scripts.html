@@ -19,6 +19,18 @@
 <!-- owl carousel -->
 <script src="{{ "js/owl.carousel.min.js" | relURL }}"></script>
 
+{{ if and (isset .Params "id") (hasPrefix .Params.id "stakeholder-kickoff") }}
+<script src="{{ "js/lumina-gate.js" | relURL }}?{{ now.Unix }}"></script>
+{{ end }}
+
+{{ if eq .Params.id "lumina-register" }}
+<script src="{{ "js/lumina-register.js" | relURL }}?{{ now.Unix }}"></script>
+{{ end }}
+
+{{ if eq .Params.id "lumina-sim-admin" }}
+<script src="{{ "js/lumina-sim-admin.js" | relURL }}?{{ now.Unix }}"></script>
+{{ end }}
+
 {{ if or (eq .Params.id "stakeholder-kickoff") (eq .Params.id "stakeholder-kickoff-sim") (eq .Params.id "stakeholder-kickoff-workspace") (eq .Params.id "stakeholder-kickoff-brief-organize") (eq .Params.id "stakeholder-kickoff-gap-analysis") (eq .Params.id "stakeholder-kickoff-research") (eq .Params.id "stakeholder-kickoff-research-workspace") (eq .Params.id "stakeholder-kickoff-outreach-intro") (eq .Params.id "stakeholder-kickoff-brief-email") (eq .Params.id "stakeholder-kickoff-outreach-compose") (eq .Params.id "stakeholder-kickoff-outreach-feedback") (eq .Params.id "stakeholder-kickoff-email-intro") (eq .Params.id "stakeholder-kickoff-email-compose") (eq .Params.id "stakeholder-kickoff-email-result") (eq .Params.id "stakeholder-kickoff-agenda-intro") (eq .Params.id "stakeholder-kickoff-agenda-ready") (eq .Params.id "stakeholder-kickoff-agenda-build") (eq .Params.id "stakeholder-kickoff-agenda-result") (eq .Params.id "stakeholder-kickoff-zoom-meeting") (eq .Params.id "stakeholder-kickoff-kickoff-intro") (eq .Params.id "stakeholder-kickoff-kickoff-notes-intro") (eq .Params.id "stakeholder-kickoff-kickoff-countdown") (eq .Params.id "stakeholder-kickoff-kickoff-live") (eq .Params.id "stakeholder-kickoff-kickoff-result") (eq .Params.id "stakeholder-kickoff-manager-brief") }}
 <script src="{{ "js/lumina-sim-phase-nav.js" | relURL }}?{{ now.Unix }}"></script>
 <script src="{{ "js/lumina-sim-test-nav.js" | relURL }}?{{ now.Unix }}"></script>

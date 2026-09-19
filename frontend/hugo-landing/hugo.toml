@@ -10,6 +10,12 @@ summaryLength = 70
 # not pluralize title pages by default
 pluralizelisttitles = false
 
+# Allow inline HTML in policy markdown pages
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
 [services]
   [services.disqus]
   shortname = ""

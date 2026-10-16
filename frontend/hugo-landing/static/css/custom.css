@@ -1088,6 +1088,86 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 }
 
 /* --------------------------------------------------------------------------
+   8b. HOMEPAGE PARTNERSHIP — below About Us
+   -------------------------------------------------------------------------- */
+.home-partnership {
+    width: 100%;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    padding: 56px 48px 72px;
+    border-top: 1px solid rgba(1, 31, 91, 0.08);
+}
+
+.home-partnership-inner {
+    max-width: 1184px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+.home-partnership-label {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #011F5B;
+}
+
+.home-partnership-logos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 48px 72px;
+}
+
+.home-partnership-logos li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-partnership-logo {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.home-partnership-logo--jhu {
+    height: 88px;
+}
+
+.home-partnership-logo--edbridge {
+    height: 96px;
+    border-radius: 8px;
+}
+
+@media (max-width: 767px) {
+    .home-partnership {
+        padding: 40px 20px 56px;
+    }
+    .home-partnership-logos {
+        gap: 28px;
+    }
+    .home-partnership-logo--jhu {
+        height: 72px;
+    }
+    .home-partnership-logo--edbridge {
+        height: 80px;
+    }
+}
+
+/* --------------------------------------------------------------------------
    9. CONTACT PAGE — Figma: 1280×983
    -------------------------------------------------------------------------- */
 

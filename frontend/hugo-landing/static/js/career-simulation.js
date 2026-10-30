@@ -6,37 +6,15 @@
   var app = document.getElementById("career-simulation-app");
   var restart = document.getElementById("career-simulation-restart");
 
-  var ui = window.CareerSimUI;
-  var intakeBusy = false;
-  var transitioning = false;
-
   if (restart) {
     restart.addEventListener("click", function () { window.sessionStorage.removeItem("careerSimulationJobDescription"); });
   }
 
   if (form && input && status) {
-    form.noValidate = true;
-    status.hidden = true;
-    input.setAttribute("aria-describedby", status.id);
-    input.addEventListener("input", function () { ui.clearError(status); input.removeAttribute("aria-invalid"); });
     form.addEventListener("submit", function (event) {
       event.preventDefault();
-      if (intakeBusy) return;
-      if (!input.value.trim()) {
-        ui.showError(status, "EMPTY_JD");
-        input.setAttribute("aria-invalid", "true");
-        input.focus();
-        return;
-      }
-      try {
-        window.sessionStorage.setItem("careerSimulationJobDescription", input.value.trim());
-      } catch (err) {
-        ui.showError(status, "STORAGE", { focus: true });
-        return;
-      }
-      intakeBusy = true;
-      ui.clearError(status);
-      form.querySelector('button[type="submit"]').disabled = true;
+      if (!input.value.trim()) { input.focus(); status.textContent = "Add a job description to begin."; return; }
+      window.sessionStorage.setItem("careerSimulationJobDescription", input.value.trim());
       form.closest(".career-simulation__intake").classList.add("is-hidden");
       if (loadingPanel) loadingPanel.classList.remove("is-hidden");
       window.setTimeout(function () { window.location.replace("/career-simulation/casting/"); }, 1600);
@@ -56,24 +34,16 @@
   var ratings = {};
 
   function setStage(label, step) {
-    transitioning = false;
-    if (step !== 3) {
-      var context = document.querySelector(".career-sim-context");
-      if (context) context.remove();
-    }
     document.getElementById("career-simulation-scene").textContent = "SCENE \u2014 " + label.toUpperCase();
     document.querySelectorAll(".career-simulation__steps span").forEach(function (bar, index) { bar.classList.toggle("is-active", index <= step); });
   }
 
   function showLoading(message, next) {
-    if (transitioning) return;
-    transitioning = true;
-    app.setAttribute("aria-busy", "true");
     app.classList.add("is-transitioning");
     window.setTimeout(function () {
       app.innerHTML = '<div class="career-simulation__inline-loading"><div class="career-simulation__loading-dots" aria-hidden="true"><span></span><span></span><span></span></div><p>' + message + '</p></div>';
       app.classList.remove("is-transitioning");
-      window.setTimeout(function () { app.removeAttribute("aria-busy"); next(); }, 1050);
+      window.setTimeout(next, 1050);
     }, 180);
   }
 
@@ -87,24 +57,6 @@
     currentScenario = index;
     setStage("Scene " + (index + 1), 3);
     app.innerHTML = '<p class="career-simulation__stage-note">You are meeting with a subject matter expert to improve a learning experience. Your goal is to make the next step concrete and learner-focused.</p><div class="career-simulation__bubble career-simulation__bubble--character"><b>Your role for this scene</b>I am the subject matter expert. I know the content deeply, but I need your help turning it into an experience learners can actually use.</div><div id="career-simulation-thread"></div><div class="career-simulation__input-row"><input id="career-simulation-response" placeholder="Type your response..." type="text"><button class="btn-primary" id="career-simulation-respond" type="button">Respond</button></div><button class="btn-ghost" id="career-simulation-end" type="button">End simulation</button>';
-    var previous = document.querySelector(".career-sim-context");
-    if (previous) previous.remove();
-    app.before(ui.scenarioBar({
-      title: scenarios[index].title,
-      summary: scenarios[index].description,
-      details: [
-        { label: "Your goal", text: "Agree on a practical next step and explain how you will know it helps learners." },
-        { label: "Who you are meeting", text: "A subject matter expert who knows the content and needs your help shaping the learning experience." }
-      ]
-    }));
-    var error = document.createElement("div");
-    error.id = "career-simulation-response-error";
-    error.hidden = true;
-    document.querySelector(".career-simulation__input-row").before(error);
-    var field = document.getElementById("career-simulation-response");
-    field.setAttribute("aria-label", "Your response");
-    field.setAttribute("aria-describedby", error.id);
-    field.addEventListener("input", function () { ui.clearError(error); field.removeAttribute("aria-invalid"); });
     appendBubble("Character", "Where would you start? We have a lot of content and very little time.");
     document.getElementById("career-simulation-respond").addEventListener("click", respond);
     document.getElementById("career-simulation-response").addEventListener("keydown", function (event) { if (event.key === "Enter") respond(); });
@@ -114,25 +66,14 @@
   function appendBubble(who, text) {
     var bubble = document.createElement("div");
     bubble.className = "career-simulation__bubble career-simulation__bubble--" + (who === "You" ? "user" : "character");
-    var label = document.createElement("b");
-    label.textContent = who;
-    bubble.append(label, document.createTextNode(text));
+    bubble.innerHTML = "<b>" + who + "</b>" + text;
     document.getElementById("career-simulation-thread").appendChild(bubble);
   }
 
   function respond() {
-    if (transitioning) return;
     var field = document.getElementById("career-simulation-response");
     var value = field.value.trim();
-    var error = document.getElementById("career-simulation-response-error");
-    if (!value) {
-      ui.showError(error, "EMPTY_MESSAGE");
-      field.setAttribute("aria-invalid", "true");
-      field.focus();
-      return;
-    }
-    ui.clearError(error);
-    field.removeAttribute("aria-invalid");
+    if (!value) return;
     field.value = "";
     appendBubble("You", value);
     appendBubble("Character", "That is useful. How would you make that approach visible in the learner experience, and what evidence would tell you it worked?");

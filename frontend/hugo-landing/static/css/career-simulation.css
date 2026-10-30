@@ -1,11 +1,3 @@
-/* Keep navigation visible on these pages, including before Bootstrap affixes it. */
-body:has(.career-simulation) .navbar-affixed-top {
-    position: sticky !important;
-    top: 0;
-    z-index: 1030;
-    width: 100%;
-}
-
 body:has(.career-simulation) {
     margin: 0;
     background: #17100d;
@@ -17,42 +9,6 @@ body:has(.career-simulation) #all {
 
 .career-simulation .is-hidden {
     display: none;
-}
-
-.career-simulation [hidden] { display: none !important; }
-
-.career-sim-context {
-    position: sticky;
-    top: var(--career-sim-navbar-height, 72px);
-    z-index: 20;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 14px 20px;
-    margin-bottom: 16px;
-    border: 1px solid #a8772a;
-    border-radius: 8px;
-    background: #2a1e17;
-    box-shadow: 0 6px 18px #0004;
-    overflow-wrap: anywhere;
-    font: 14px/1.5 'Trebuchet MS', sans-serif;
-}
-.career-sim-context__eyebrow { margin: 0 0 4px; color: #e2a12e; font-size: 11px; letter-spacing: .1em; }
-.career-sim-context__title { margin: 0 0 6px; color: #f6ead7; font: bold 20px/1.3 Georgia, serif; }
-.career-sim-context__summary { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin: 0; color: #c6b49e; }
-.career-sim-context__details summary { width: fit-content; padding: 7px 0; cursor: pointer; color: #e2a12e; }
-.career-sim-context__body { max-height: 25vh; overflow-y: auto; color: #c6b49e; }
-.career-sim-context__body h3 { margin: 10px 0 4px; color: #f6ead7; font-size: 14px; }
-.career-sim-context__body p { margin: 0 0 8px; }
-.career-sim-error { margin: 12px 0; padding: 12px 16px; border: 1px solid #e6a994; border-radius: 6px; background: #3d231f; color: #ffe6dd; font: 14px/1.5 'Trebuchet MS', sans-serif; }
-.career-sim-error strong { display: block; }
-.career-sim-error p { margin: 4px 0 0; }
-.career-simulation button:disabled { opacity: .55; cursor: wait; }
-.career-simulation :focus-visible { outline: 2px solid #f0b242; outline-offset: 4px; }
-.career-simulation__bubble { overflow-wrap: anywhere; }
-@media (max-width: 560px) {
-    .career-sim-context { padding: 10px 12px; }
-    .career-sim-context__title { font-size: 17px; }
-    .career-simulation__actions { flex-wrap: wrap; }
 }
 
 .career-simulation {

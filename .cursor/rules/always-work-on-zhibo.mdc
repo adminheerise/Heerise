@@ -1,0 +1,25 @@
+---
+description: Always stay on local zhibo; merge remote updates into zhibo only
+alwaysApply: true
+---
+
+# Git branch policy — always work on `zhibo`
+
+## Hard rules
+
+1. **Local checkout must stay on `zhibo`.** Never leave the user on `main`, `jingwen`, or any other branch after a sync unless they explicitly ask to switch away.
+2. **Pull / sync by merging into `zhibo`, not by checking out the source branch.**
+   - Want latest `heerise/main`? → stay on `zhibo`, then `git fetch heerise` + `git merge heerise/main`
+   - Want latest `heerise/zhibo`? → stay on `zhibo`, then `git fetch heerise` + `git merge heerise/zhibo` (or `git pull heerise zhibo`)
+   - Want another remote feature branch? → stay on `zhibo`, then `git merge heerise/<branch>`
+3. **Do not** `git checkout main` (or other remotes) just to “get latest,” then try to come back. That violates this policy.
+4. Prefer **merge** over rebase unless the user explicitly asks for rebase.
+5. After any sync, confirm with:
+   - `git rev-parse --abbrev-ref HEAD` → must be `zhibo`
+   - `git status -sb`
+   - ahead/behind vs `heerise/zhibo` and (if relevant) `heerise/main`
+
+## Allowed exceptions
+
+- User explicitly says to checkout / create another branch.
+- A temporary detached/worktree workflow the user requested (e.g. best-of-n). Still return to `zhibo` when done unless told otherwise.

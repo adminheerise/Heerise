@@ -2,30 +2,131 @@
 <html lang="{{ .Site.LanguageCode }}">
   <head>
     {{ partial "headers.html" . }}
+    {{ partial "custom_headers.html" . }}
     <style>
+      :root {
+        --policy-ink: #111827;
+        --policy-muted: #4b5563;
+        --policy-border: #e5e7eb;
+        --policy-accent: #011f5b;
+        --policy-bg: #f8fafc;
+      }
       html, body {
         margin: 0;
         padding: 0;
-        width: 100%;
-        height: 100%;
-        background: #fff;
-        overflow: hidden;
+        background: var(--policy-bg);
+        color: var(--policy-ink);
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        line-height: 1.65;
       }
-
-      .policy-frame {
-        display: block;
+      .policy-shell {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 32px 20px 80px;
+      }
+      .policy-card {
+        background: #fff;
+        border: 1px solid var(--policy-border);
+        border-radius: 12px;
+        padding: 28px 28px 40px;
+        box-shadow: 0 8px 24px rgba(1, 31, 91, 0.06);
+      }
+      .policy-kicker {
+        margin: 0 0 8px;
+        color: var(--policy-accent);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .policy-card h1 {
+        margin: 0 0 8px;
+        font-size: clamp(1.6rem, 2.4vw, 2rem);
+        line-height: 1.25;
+        color: var(--policy-accent);
+      }
+      .policy-meta {
+        margin: 0 0 24px;
+        color: var(--policy-muted);
+        font-size: 0.95rem;
+      }
+      .policy-body h2 {
+        margin: 2rem 0 0.75rem;
+        font-size: 1.2rem;
+        color: var(--policy-accent);
+      }
+      .policy-body h3 {
+        margin: 1.4rem 0 0.5rem;
+        font-size: 1.05rem;
+      }
+      .policy-body p,
+      .policy-body li {
+        color: #1f2937;
+        font-size: 0.98rem;
+      }
+      .policy-body ul,
+      .policy-body ol {
+        padding-left: 1.25rem;
+      }
+      .policy-body table {
         width: 100%;
-        height: 100vh;
-        border: 0;
+        border-collapse: collapse;
+        margin: 1rem 0 1.5rem;
+        font-size: 0.9rem;
+      }
+      .policy-body th,
+      .policy-body td {
+        border: 1px solid var(--policy-border);
+        padding: 10px 12px;
+        vertical-align: top;
+        text-align: left;
+      }
+      .policy-body th {
+        background: #f1f5f9;
+        color: var(--policy-accent);
+      }
+      .policy-body strong {
+        color: #0f172a;
+      }
+      .policy-notice {
+        margin: 0 0 1.25rem;
+        padding: 12px 14px;
+        border-left: 4px solid var(--policy-accent);
+        background: #eef2ff;
+        color: #111827;
+        font-size: 0.95rem;
+      }
+      .policy-back {
+        display: inline-block;
+        margin-bottom: 16px;
+        color: var(--policy-accent);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+      .policy-back:hover { text-decoration: underline; }
+      @media (max-width: 640px) {
+        .policy-card { padding: 20px 16px 28px; }
+        .policy-body table { display: block; overflow-x: auto; }
       }
     </style>
   </head>
   <body>
-    <iframe
-      class="policy-frame"
-      src="{{ .Params.pdf }}#toolbar=0&navpanes=0&scrollbar=1"
-      title="{{ .Title }}"
-      referrerpolicy="no-referrer"
-    ></iframe>
+    <div class="policy-shell">
+      <a class="policy-back" href="javascript:history.length>1?history.back():location.href='/'">&larr; Back</a>
+      <article class="policy-card">
+        <p class="policy-kicker">HeeRise Legal</p>
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.effective_date }}
+        <p class="policy-meta">
+          Effective Date: {{ . }}
+          {{ with $.Params.last_updated }} · Last Updated: {{ . }}{{ end }}
+        </p>
+        {{ end }}
+        <div class="policy-body">
+          {{ .Content }}
+        </div>
+      </article>
+    </div>
   </body>
 </html>

@@ -1088,6 +1088,131 @@ h6 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 }
 
 /* --------------------------------------------------------------------------
+   8b. HOMEPAGE OUR PARTNERS — below About Us
+   -------------------------------------------------------------------------- */
+.home-partnership {
+    width: 100%;
+    background: #f5f6f8;
+    display: flex;
+    justify-content: center;
+    padding: 72px 48px 88px;
+}
+
+.home-partnership-inner {
+    max-width: 1184px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 56px;
+}
+
+.home-partnership-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.home-partnership-title {
+    margin: 0;
+    font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    line-height: 1.15;
+    color: #011F5B;
+}
+
+.home-partnership-subtitle {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    color: #011F5B;
+    opacity: 0.72;
+}
+
+.home-partnership-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.home-partnership-row {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 40px 56px;
+    align-items: center;
+}
+
+.home-partnership-logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 320px;
+    height: 200px;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.home-partnership-logo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 288px;
+    max-height: 168px;
+    object-fit: contain;
+    object-position: center;
+}
+
+.home-partnership-logo--edbridge {
+    border-radius: 12px;
+}
+
+.home-partnership-copy {
+    margin: 0;
+    max-width: 640px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.55;
+    color: #3C3C3C;
+}
+
+@media (max-width: 767px) {
+    .home-partnership {
+        padding: 48px 20px 64px;
+    }
+    .home-partnership-inner {
+        gap: 40px;
+    }
+    .home-partnership-list {
+        gap: 36px;
+    }
+    .home-partnership-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .home-partnership-logo-wrap {
+        width: 100%;
+        max-width: 320px;
+        height: 180px;
+    }
+    .home-partnership-logo {
+        max-width: 280px;
+        max-height: 148px;
+    }
+    .home-partnership-copy {
+        font-size: 16px;
+    }
+}
+
+/* --------------------------------------------------------------------------
    9. CONTACT PAGE — Figma: 1280×983
    -------------------------------------------------------------------------- */
 
@@ -5233,6 +5358,156 @@ body {
     .clp-speaker-title {
         font-size: 11px !important;
         line-height: 14px !important;
+    }
+}
+
+/* ==========================================================================
+   Workshop — Career Lab Events + Speakers
+   Type: Libre Baskerville headings (site section titles) + Inter body.
+   Color: #011F5B / #3C3C3C.
+   ========================================================================== */
+.clw-events,
+.clw-speakers {
+    width: 100%;
+    background: #FFFFFF;
+}
+.clw-events-inner,
+.clw-speakers-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 12px 53px 72px;
+}
+.clw-events-title,
+.clw-speakers-title {
+    margin: 0 0 40px;
+    font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+    font-size: clamp(2.25rem, 4vw, 3.25rem);
+    line-height: 1.15;
+    color: #011F5B;
+}
+.clw-events-title {
+    display: block;
+    padding: 0;
+    border: 0;
+}
+.clw-events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 36px;
+    align-items: start;
+}
+.clw-event-poster {
+    background: #F4F6F8;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.clw-event-poster img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.clw-event-name {
+    margin: 18px 0 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.35;
+    color: #3C3C3C;
+}
+.clw-event-blurb {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.45;
+    color: #3C3C3C;
+}
+.clw-speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 48px 56px;
+    max-width: 980px;
+}
+.clw-speaker-card {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    margin: 10px;
+    padding: 22px 24px;
+    background: #F4F6F8;
+}
+.clw-speaker-corner {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-color: #011F5B;
+    border-style: solid;
+    pointer-events: none;
+}
+.clw-speaker-corner--tl { top: -8px; left: -8px; border-width: 2px 0 0 2px; }
+.clw-speaker-corner--tr { top: -8px; right: -8px; border-width: 2px 2px 0 0; }
+.clw-speaker-corner--bl { bottom: -8px; left: -8px; border-width: 0 0 2px 2px; }
+.clw-speaker-corner--br { bottom: -8px; right: -8px; border-width: 0 2px 2px 0; }
+.clw-speaker-avatar {
+    flex: 0 0 auto;
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #E7EBF0;
+}
+.clw-speaker-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+}
+.clw-speaker-avatar img.is-portrait {
+    object-position: center 22%;
+}
+.clw-speaker-name {
+    margin: 0 0 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.3;
+    color: #011F5B;
+}
+.clw-speaker-role {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.45;
+    color: #3C3C3C;
+}
+@media (max-width: 992px) {
+    .clw-events-inner,
+    .clw-speakers-inner {
+        padding: 8px 24px 48px;
+    }
+    .clw-events-grid,
+    .clw-speakers-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 520px;
+    }
+}
+@media (max-width: 480px) {
+    .clw-speaker-avatar {
+        width: 84px;
+        height: 84px;
+    }
+    .clw-speaker-name {
+        font-size: 18px;
+    }
+    .clw-speaker-role,
+    .clw-event-blurb {
+        font-size: 15px;
     }
 }
 

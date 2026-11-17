@@ -49,38 +49,33 @@
     </div>
 </section>
 
-<!-- Section 4: Our Partners — below About Us (Vision) -->
+<!-- Section 4: Partner logos -->
 <section class="home-partnership" aria-labelledby="home-partnership-title">
     <div class="home-partnership-inner">
         <header class="home-partnership-header">
             <h2 class="home-partnership-title" id="home-partnership-title">Our Partners</h2>
             <p class="home-partnership-subtitle">More to unlock</p>
         </header>
-
-        <ul class="home-partnership-list">
-            <li class="home-partnership-row">
-                <div class="home-partnership-logo-wrap">
-                    <img
-                        src="/img/partners/johns-hopkins.png"
-                        alt="Johns Hopkins University"
-                        class="home-partnership-logo home-partnership-logo--jhu"
-                    />
-                </div>
-                <p class="home-partnership-copy">
-                    Partner with Johns Hopkins University for International Teaching and Global Leadership as the Extended Learning site. Provide exceptional guidance and coach for JHU ITGL students.
-                </p>
+        <ul class="home-partnership-list" aria-label="Partner organizations">
+            <li class="home-partnership-card">
+                <img src="{{ "img/partners/johns-hopkins.png" | relURL }}"
+                     alt="Johns Hopkins University" width="500" height="281"
+                     class="home-partnership-logo home-partnership-logo--jhu" loading="lazy" decoding="async" />
             </li>
-            <li class="home-partnership-row">
-                <div class="home-partnership-logo-wrap">
-                    <img
-                        src="/img/partners/edbridge.png"
-                        alt="EdBridge"
-                        class="home-partnership-logo home-partnership-logo--edbridge"
-                    />
-                </div>
-                <p class="home-partnership-copy">
-                    Partner with EdBridge to create professional development workshops to navigate current job markets.
-                </p>
+            <li class="home-partnership-card home-partnership-card--dark">
+                <img src="{{ "img/partners/edbridge.png" | relURL }}"
+                     alt="EdBridge" width="588" height="585"
+                     class="home-partnership-logo home-partnership-logo--edbridge" loading="lazy" decoding="async" />
+            </li>
+            <li class="home-partnership-card">
+                <img src="{{ "img/partners/GYEC.png" | relURL }}"
+                     alt="GYE Competition" width="400" height="400"
+                     class="home-partnership-logo home-partnership-logo--gyec" loading="lazy" decoding="async" />
+            </li>
+            <li class="home-partnership-card">
+                <img src="{{ "img/partners/Yu Learning.png" | relURL }}"
+                     alt="YU Learning" width="2000" height="500"
+                     class="home-partnership-logo home-partnership-logo--yu" loading="lazy" decoding="async" />
             </li>
         </ul>
     </div>

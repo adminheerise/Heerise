@@ -13,6 +13,7 @@
         <p class="hero-tagline">
             {{ .Site.Params.hero.tagline }}
         </p>
+        <button type="button" class="hero-cta" aria-disabled="true">Learn Casim AI <span aria-hidden="true">→</span></button>
     </div>
     <!-- ========== VANTA.JS WAVES - SCRIPTS (remove with block above to disable) ========== -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
@@ -20,7 +21,7 @@
     <script>
     (function() {
         var el = document.getElementById('vanta-hero-waves');
-        if (!el) return;
+        if (!el || !window.VANTA || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         VANTA.WAVES({
             el: '#vanta-hero-waves',
             backgroundColor: 0x000204,

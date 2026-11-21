@@ -6,7 +6,7 @@
     {{ partial "custom_headers.html" . }}
   </head>
 
-  <body>
+  <body class="home-page">
 
     <div id="all">
 
@@ -14,8 +14,58 @@
 
         {{ partial "hero_home.html" . }}
 
+        <section class="home-simulation-stats" aria-label="Career simulation highlights">
+            <ul class="home-simulation-stats-list">
+                <li><strong data-home-reveal>1</strong> <span>Job Description</span></li>
+                <li><strong data-home-reveal>3-4</strong> <span>Real-Work Simulations</span></li>
+                <li><strong data-home-reveal>50+</strong> <span>Career Paths</span></li>
+            </ul>
+        </section>
+
+        <section class="home-career-experience" aria-labelledby="home-career-experience-title">
+            <h2 id="home-career-experience-title" data-home-reveal>Experience Your Future Career Today</h2>
+            <ul class="home-career-experience-list" role="list">
+                <li data-home-reveal>
+                    <i class="fa-solid fa-users" aria-hidden="true"></i>
+                    <p>Experience real-life job tasks in AI-powered work environments</p>
+                </li>
+                <li data-home-reveal>
+                    <i class="fa-regular fa-lightbulb" aria-hidden="true"></i>
+                    <p>Solve authentic business challenges and receive performance feedback</p>
+                </li>
+                <li data-home-reveal>
+                    <i class="fa-solid fa-bullseye" aria-hidden="true"></i>
+                    <p>Get detailed performance reports, skill assessments, and career fit scores based on simulated work experience</p>
+                </li>
+            </ul>
+        </section>
+
+        <section class="home-simulation-cta" aria-labelledby="home-simulation-cta-title">
+            <div class="home-simulation-cta-inner" data-home-reveal>
+                <h2 id="home-simulation-cta-title">Ready to Experience Your Future Career?</h2>
+                <p>Join thousands of students who've become job-ready and discoverable to top recruiters through immersive AI simulations.</p>
+            </div>
+        </section>
+
         {{/* Homepage: About Us content replaces former Upcoming Event / featured_event block */}}
         {{ partial "about.html" . }}
+
+        <section class="home-connect" aria-labelledby="home-connect-title">
+            <div class="home-connect-inner" data-home-reveal="up">
+                <h2 class="home-connect-title" id="home-connect-title">Connect With Us</h2>
+                <ul class="home-connect-list" role="list">
+                    {{ with .Site.Params.social.linkedin }}
+                    <li><a href="{{ . }}"><i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+                    {{ end }}
+                    {{ with .Site.Params.social.rednote }}
+                    <li><a href="{{ . }}"><i class="fa-solid fa-book-open" aria-hidden="true"></i> RedNote</a></li>
+                    {{ end }}
+                    {{ with .Site.Params.social.email }}
+                    <li><a href="mailto:{{ . }}"><i class="fa-regular fa-envelope" aria-hidden="true"></i> {{ . }}</a></li>
+                    {{ end }}
+                </ul>
+            </div>
+        </section>
 
         {{ partial "footer.html" . }}
 
@@ -23,6 +73,37 @@
     <!-- /#all -->
 
     {{ partial "scripts.html" . }}
+    <script>
+    (function () {
+        if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        const items = document.querySelectorAll('[data-home-reveal]');
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+
+                entry.target.classList.remove('is-waiting');
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.25 });
+
+        items.forEach(function (item) {
+            item.classList.add('is-waiting');
+            observer.observe(item);
+        });
+    })();
+    (function () {
+        const section = document.querySelector('.home-partnership');
+        const track = section.querySelector('.home-partnership-track');
+        const copy = track.firstElementChild.cloneNode(true);
+        copy.classList.add('home-partnership-copy');
+        copy.setAttribute('aria-hidden', 'true');
+        track.append(copy);
+
+        section.classList.add('has-marquee');
+    })();
+    </script>
 
   </body>
 </html>

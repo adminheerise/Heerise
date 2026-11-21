@@ -6,6 +6,7 @@ from enum import Enum as PyEnum
 from uuid import uuid4
 
 from sqlalchemy import (
+    CheckConstraint,
     Column,
     String,
     Text,
@@ -362,4 +363,45 @@ class PaymentOrder(Base):
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(
         DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
+    )
+
+
+class JobSimUser(Base):
+    """Job Simulation registrants."""
+
+    __tablename__ = "job_sim_users"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    full_name = Column(String(200), nullable=False)
+    email = Column(String(255), nullable=False, unique=True, index=True)
+    subscribed = Column(Boolean, nullable=False, default=False)
+    terms_accepted_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
+    )
+
+
+class JobSimSession(Base):
+    """A registrant's saved simulation and its optional results."""
+
+    __tablename__ = "job_sim_sessions"
+    __table_args__ = (
+        CheckConstraint("difficulty IN ('easy', 'medium', 'hard')", name="ck_job_sim_difficulty"),
+        CheckConstraint("status IN ('in_progress', 'completed')", name="ck_job_sim_status"),
+    )
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    user_id = Column(
+        String, ForeignKey("job_sim_users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    role_title = Column(String(200), nullable=False)
+    project_title = Column(String(255), nullable=False)
+    difficulty = Column(String(16), nullable=False)
+    project_json = Column(Text, nullable=False)
+    status = Column(String(16), nullable=False, default="in_progress")
+    results_json = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False, index=True
     )

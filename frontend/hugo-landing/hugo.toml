@@ -75,6 +75,26 @@ pluralizelisttitles = false
   url        = "/contact/"
   weight     = 5
 
+[[menu.main]]
+  name       = "Try career sim"
+  identifier = "menu.try-career-sim"
+  url        = ""
+  weight     = 6
+
+  [[menu.main]]
+    name       = "Lumina"
+    identifier = "menu.try-career-sim.lumina"
+    parent     = "menu.try-career-sim"
+    url        = "/acc/stakeholder-kickoff/register/"
+    weight     = 1
+
+  [[menu.main]]
+    name       = "Career Simulation"
+    identifier = "menu.try-career-sim.simulation"
+    parent     = "menu.try-career-sim"
+    url        = "/career-simulation/"
+    weight     = 2
+
 # No topbar menu entries (new design has no top info bar)
 
 # ============================================================
@@ -282,6 +302,7 @@ pluralizelisttitles = false
 [params.social]
   linkedin = "https://www.linkedin.com/company/heerise-academy/"
   rednote = "https://www.xiaohongshu.com/user/profile/56a2ba9c4775a729d5355df6"
+  email = "admin@heeriseacademy.com"
 
 [taxonomies]
   category = "categories"

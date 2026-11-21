@@ -1,5 +1,6 @@
 <!-- *** ABOUT PAGE *** -->
 
+{{/*
 <!-- Section 1: Who Are We? — Figma: Frame 266, 1280×520, padding 48px, bg #FFFFFF -->
 <section class="about-whoarewe">
     <div class="about-whoarewe-inner">
@@ -14,70 +15,77 @@
         </div>
     </div>
 </section>
+*/}}
 
-<!-- Section 2: MISSION — Figma: Frame 258, 1280×237.54, bg #011F5B, padding 48px 80px, gap 48px -->
-<section class="about-mission">
-    <div class="about-mission-inner">
-        <div class="about-mv-icon-wrapper">
-            <img src="/img/looper-1.png" alt="" class="about-looper about-looper-1" />
-            <span class="about-mv-label">MISSION</span>
+<div class="about-mission-vision">
+    <!-- Section 2: MISSION — Figma: Frame 258, 1280×237.54, bg #011F5B, padding 48px 80px, gap 48px -->
+    <section class="about-mission">
+        <div class="about-mission-inner" data-home-reveal="up">
+            <div class="about-mv-icon-wrapper">
+                <img src="/img/looper-1.png" alt="" class="about-looper about-looper-1" />
+                <span class="about-mv-label">MISSION</span>
+            </div>
+            <p class="about-mission-text">
+                Provide authentic work tasks in a simulated learning environment to guide career exploration, helping users connect with employers directly and land meaningful internships and future jobs.
+            </p>
         </div>
-        <p class="about-mission-text">
-            To democratize career success by equipping individuals from all backgrounds with the clarity, capabilities, and confidence to thrive in evolving and competitive job markets.
-        </p>
-    </div>
-</section>
+    </section>
 
-<!-- Divider line — Figma: Line 5, opacity 0.6, 1px white -->
-<div class="about-divider"></div>
+    <!-- Divider line — Figma: Line 5, opacity 0.6, 1px white -->
+    <div class="about-divider"></div>
 
-<!-- Section 3: VISION — Figma: Frame 259, 1280×360, bg #011F5B, padding 48px 80px, gap 91px -->
-<section class="about-vision">
-    <div class="about-vision-inner">
-        <div class="about-mv-icon-wrapper">
-            <img src="/img/looper-3.png" alt="" class="about-looper about-looper-3" />
-            <span class="about-mv-label">VISION</span>
+    <!-- Section 3: VISION — Figma: Frame 259, 1280×360, bg #011F5B, padding 48px 80px, gap 91px -->
+    <section class="about-vision">
+        <div class="about-vision-inner" data-home-reveal="up">
+            <div class="about-mv-icon-wrapper">
+                <img src="/img/looper-3.png" alt="" class="about-looper about-looper-3" />
+                <span class="about-mv-label">VISION</span>
+            </div>
+            <div class="about-vision-text">
+                <p>To provide an AI-powered career co-pilot platform that guides individuals through three essential phases of career success:</p>
+                <ul class="about-vision-list">
+                    <li><strong>Career Discovery &amp; Market Alignment</strong> - Help users identify their optimal career paths by analyzing their strengths, interests, and market demand</li>
+                    <li><strong>Targeted Skill Development</strong> - Deliver personalized learning experiences to build in-demand skills and bridge capability gaps</li>
+                    <li><strong>Strategic Job Search &amp; Career Coaching</strong> - Provide expert guidance on job hunting strategies, application optimization, and interview preparation</li>
+                </ul>
+            </div>
         </div>
-        <div class="about-vision-text">
-            <p>To provide an AI-powered career co-pilot platform that guides individuals through three essential phases of career success:</p>
-            <ul class="about-vision-list">
-                <li><strong>Career Discovery &amp; Market Alignment</strong> - Help users identify their optimal career paths by analyzing their strengths, interests, and market demand</li>
-                <li><strong>Targeted Skill Development</strong> - Deliver personalized learning experiences to build in-demand skills and bridge capability gaps</li>
-                <li><strong>Strategic Job Search &amp; Career Coaching</strong> - Provide expert guidance on job hunting strategies, application optimization, and interview preparation</li>
-            </ul>
-        </div>
-    </div>
-</section>
+    </section>
+</div>
 
 <!-- Section 4: Partner logos -->
 <section class="home-partnership" aria-labelledby="home-partnership-title">
-    <div class="home-partnership-inner">
+    <div class="home-partnership-inner" data-home-reveal="up">
         <header class="home-partnership-header">
             <h2 class="home-partnership-title" id="home-partnership-title">Our Partners</h2>
             <p class="home-partnership-subtitle">More to unlock</p>
         </header>
-        <ul class="home-partnership-list" aria-label="Partner organizations">
-            <li class="home-partnership-card">
-                <img src="{{ "img/partners/johns-hopkins.png" | relURL }}"
-                     alt="Johns Hopkins University" width="500" height="281"
-                     class="home-partnership-logo home-partnership-logo--jhu" loading="lazy" decoding="async" />
-            </li>
-            <li class="home-partnership-card home-partnership-card--dark">
-                <img src="{{ "img/partners/edbridge.png" | relURL }}"
-                     alt="EdBridge" width="588" height="585"
-                     class="home-partnership-logo home-partnership-logo--edbridge" loading="lazy" decoding="async" />
-            </li>
-            <li class="home-partnership-card">
-                <img src="{{ "img/partners/GYEC.png" | relURL }}"
-                     alt="GYE Competition" width="400" height="400"
-                     class="home-partnership-logo home-partnership-logo--gyec" loading="lazy" decoding="async" />
-            </li>
-            <li class="home-partnership-card">
-                <img src="{{ "img/partners/Yu Learning.png" | relURL }}"
-                     alt="YU Learning" width="2000" height="500"
-                     class="home-partnership-logo home-partnership-logo--yu" loading="lazy" decoding="async" />
-            </li>
-        </ul>
+        <div class="home-partnership-viewport" tabindex="0" role="group" aria-label="Partner logo carousel">
+            <div class="home-partnership-track">
+                <ul class="home-partnership-list" aria-label="Partner organizations">
+                    <li class="home-partnership-card">
+                        <img src="{{ "img/partners/johns-hopkins.png" | relURL }}"
+                             alt="Johns Hopkins University" width="500" height="281"
+                             class="home-partnership-logo home-partnership-logo--jhu" loading="lazy" decoding="async" />
+                    </li>
+                    <li class="home-partnership-card home-partnership-card--dark">
+                        <img src="{{ "img/partners/edbridge.png" | relURL }}"
+                             alt="EdBridge" width="588" height="585"
+                             class="home-partnership-logo home-partnership-logo--edbridge" loading="lazy" decoding="async" />
+                    </li>
+                    <li class="home-partnership-card">
+                        <img src="{{ "img/partners/GYEC.png" | relURL }}"
+                             alt="GYE Competition" width="400" height="400"
+                             class="home-partnership-logo home-partnership-logo--gyec" loading="lazy" decoding="async" />
+                    </li>
+                    <li class="home-partnership-card">
+                        <img src="{{ "img/partners/Yu Learning.png" | relURL }}"
+                             alt="YU Learning" width="2000" height="500"
+                             class="home-partnership-logo home-partnership-logo--yu" loading="lazy" decoding="async" />
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </section>
 

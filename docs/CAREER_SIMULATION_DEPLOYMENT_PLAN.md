@@ -1,6 +1,7 @@
 # Career Simulation（Rehearsal Room）— 部署到现站方案（细化版）
 
-> **状态**: 方案保留 · 尚未实现  
+> **状态**: 技术方案细节仍有效 · **MVP 产品真源已迁至** `docs/JOB_SIMULATION_MVP_PLAN.md`（产品名 Job Simulation；无自评）  
+> **原状态备注**: 方案保留 · 尚未完整实现  
 > **来源 artifact**: https://claude.ai/public/artifacts/9c422816-caf6-4bf8-a43d-0d115054a59e  
 > **Artifact 标题**: `career_simulation.html` / Rehearsal Room – Career Simulation  
 > **记录日期**: 2026-10-18 · **细化**: 2026-10-19 · **需求更新**: 2026-10-19（晚）  

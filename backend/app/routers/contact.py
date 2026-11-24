@@ -2,7 +2,7 @@
 """
 Public contact form endpoint.
 Stores submissions in DB, sends a receipt email to the user,
-and notifies helloashlee707@gmail.com (or CONTACT_NOTIFY_EMAIL).
+and notifies admin@heeriseacademy.com (or CONTACT_NOTIFY_EMAIL).
 """
 from __future__ import annotations
 
@@ -46,7 +46,7 @@ def _mail_from_contact() -> str | None:
 
 def _team_email() -> str:
     """Where to send internal contact-form notifications."""
-    return os.getenv("CONTACT_NOTIFY_EMAIL", "helloashlee707@gmail.com").strip()
+    return os.getenv("CONTACT_NOTIFY_EMAIL", "admin@heeriseacademy.com").strip()
 
 
 # ---------- Endpoint ----------
@@ -57,7 +57,7 @@ def submit_contact(body: ContactIn, db=Depends(db_sess)):
     Receive a contact form submission.
     1) Store in DB.
     2) Send a receipt / confirmation email to the user.
-    3) Send a notification email to helloashlee707@gmail.com.
+    3) Send a notification email to admin@heeriseacademy.com.
     If SMTP is not configured, log to console (dev-friendly).
     """
     row = ContactSubmission(

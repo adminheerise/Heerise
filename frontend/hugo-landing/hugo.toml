@@ -87,6 +87,8 @@ pluralizelisttitles = false
     parent     = "menu.try-career-sim"
     url        = "/acc/stakeholder-kickoff/register/"
     weight     = 1
+    [menu.main.params]
+      newtab = true
 
   [[menu.main]]
     name       = "Career Simulation"
@@ -94,6 +96,8 @@ pluralizelisttitles = false
     parent     = "menu.try-career-sim"
     url        = "/career-simulation/"
     weight     = 2
+    [menu.main.params]
+      newtab = true
 
 # No topbar menu entries (new design has no top info bar)
 

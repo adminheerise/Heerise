@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .db import Base, engine
 from .routers import auth, onboarding, me, admin, contact, syllabus, career_lab, sim, payments, lumina_test_users
-from .routers import job_sim
+from .routers import job_sim, job_sim_ai
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -42,11 +42,23 @@ app.include_router(sim.router, prefix=API_PREFIX)
 app.include_router(payments.router, prefix=API_PREFIX)
 app.include_router(lumina_test_users.router, prefix=API_PREFIX)
 app.include_router(job_sim.router, prefix=API_PREFIX)
+app.include_router(job_sim_ai.router, prefix=API_PREFIX)
 
 
 @app.on_event("startup")
 def startup() -> None:
     Base.metadata.create_all(bind=engine)
+    try:
+        from .db import SessionLocal
+        from .services.job_sim.seed import seed_explore_catalog_if_empty
+
+        db = SessionLocal()
+        try:
+            seed_explore_catalog_if_empty(db)
+        finally:
+            db.close()
+    except Exception:
+        pass
 
 
 @app.get(f"{API_PREFIX}/health")

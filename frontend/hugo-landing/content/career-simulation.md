@@ -1,6 +1,7 @@
 +++
 title = "Career Simulation"
-id = "career-simulation"
+id = "job-simulation"
 url = "/career-simulation/"
 type = "page"
+layout = "job-simulation"
 +++

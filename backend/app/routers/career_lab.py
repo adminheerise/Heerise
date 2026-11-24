@@ -1,7 +1,7 @@
 # backend/app/routers/career_lab.py
 """
 Career Lab bootcamp application.
-Stores in DB, sends receipt to user, notifies helloashlee707@gmail.com.
+Stores in DB, sends receipt to user, notifies admin@heeriseacademy.com.
 """
 from __future__ import annotations
 
@@ -36,7 +36,7 @@ def _mail_from() -> str | None:
 
 
 def _team_email() -> str:
-    return os.getenv("CONTACT_NOTIFY_EMAIL", "helloashlee707@gmail.com").strip()
+    return os.getenv("CONTACT_NOTIFY_EMAIL", "admin@heeriseacademy.com").strip()
 
 
 @router.post("/apply")

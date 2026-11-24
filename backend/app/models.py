@@ -405,3 +405,24 @@ class JobSimSession(Base):
     updated_at = Column(
         DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False, index=True
     )
+
+
+class JobSimExploreCatalog(Base):
+    """Global Path B career explorations (not bound to a user). Max 3 per direction."""
+
+    __tablename__ = "job_sim_explore_catalog"
+    __table_args__ = (
+        UniqueConstraint("direction_key", "slot_index", name="uq_job_sim_explore_slot"),
+        CheckConstraint("slot_index >= 1 AND slot_index <= 3", name="ck_job_sim_explore_slot"),
+    )
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    direction_key = Column(String(120), nullable=False, index=True)
+    display_title = Column(String(200), nullable=False)
+    source_query = Column(String(255), nullable=False, default="")
+    career_json = Column(Text, nullable=False)
+    slot_index = Column(Integer, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
+    )
